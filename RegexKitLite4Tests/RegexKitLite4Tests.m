@@ -146,7 +146,7 @@
 }
 
 
-- (void)testStringByReplacingOccurrencesOfRegexOptionsMatchingOptionsInRangeErrorUsingBlock
+- (void)testStringByReplacingOccurrencesOfRegexOptionsInRangeErrorEnumerationOptionsUsingBlock
 {
     NSString *pattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
     NSRange entireRange = [self.candidate stringRange];
@@ -158,6 +158,7 @@
         
         for (int i = 0; i < captureCount; i++) {
             NSString *capture = capturedStrings[i];
+            
             if ([capture isMatchedByRegex:dateRegex]) {
                 [replacement appendString:@"cray "];
             }
