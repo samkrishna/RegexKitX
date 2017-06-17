@@ -8,7 +8,7 @@ Basically, I'm reimplementing the API as a function of [NSRegularExpression](htt
 - The false positives that the Clang Static Analyzer flagged in *RKL4*
 - The low-level C code to the ICU regex engine is starting to spit out deprecation warnings on macOS 10.12 Sierra
     - Right now, this looks like it's limited to the OSSpinLock/Unlock family of locking functions
-- The annoyance of having to always remember to invoke the *-licucore* flag on every project
+- The annoyance of having to always remember to **ALWAYS link to the ICU library** on every project
 
 My concern is that no amount of work-arounds or modifications to all the low-level magic will save *RKL4* from being unbuildable in the near-future. So rather than wait for that to happen or deal with the awkwardness of NSRegularExpression, I'm choosing to do this.
 
