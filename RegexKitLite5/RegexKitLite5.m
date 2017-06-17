@@ -100,12 +100,9 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
 {
     NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
-    __block NSUInteger numberOfMatches = 0;
-    [regex enumerateMatchesInString:self options:matchingOptions range:range usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        numberOfMatches++;
-    }];
+    NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
 
-    return (numberOfMatches > 0);
+    return ([matches count] > 0);
 }
 
 #pragma mark - rangeOfRegex:
