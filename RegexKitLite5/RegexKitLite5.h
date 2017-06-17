@@ -58,9 +58,9 @@ extern NSString * const RKLICURegexSubjectStringErrorKey;
 #pragma mark - isMatchedByRegex:
 
 - (BOOL)isMatchedByRegex:(NSString *)pattern;
-- (BOOL)isMatchedByRegex:(NSString *)pattern range:(NSRange)range;
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error;
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error;
+- (BOOL)isMatchedByRegex:(NSString *)pattern inRange:(NSRange)range;
+- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error;
+- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error;
 
 #pragma mark - rangeOfRegex:
 

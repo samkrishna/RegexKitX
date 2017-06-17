@@ -40,16 +40,16 @@
 - (void)testIsMatchedByRegexRange
 {
     NSString *regex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex range:[self.candidate stringRange]], @"Match has failed!");
-    XCTAssertFalse([self.candidate isMatchedByRegex:regex range:NSMakeRange(0, [self.candidate length] / 2)], @"There\'s no way the whole regex should match on half the length of the candidate string");
+    XCTAssertTrue([self.candidate isMatchedByRegex:regex inRange:[self.candidate stringRange]], @"Match has failed!");
+    XCTAssertFalse([self.candidate isMatchedByRegex:regex inRange:NSMakeRange(0, [self.candidate length] / 2)], @"There\'s no way the whole regex should match on half the length of the candidate string");
 }
 
 - (void)testIsMatchedByRegexOptionsRangeError
 {
     // NOTE: Not Comprehensive Yet
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKLCaseless range:[self.candidate stringRange] error:nil], @"Case-insensitive match has failed!");
-    XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKLNoOptions range:[self.candidate stringRange] error:nil], @"Case-sensitive match has failed!");
+    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKLCaseless inRange:[self.candidate stringRange] error:nil], @"Case-insensitive match has failed!");
+    XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKLNoOptions inRange:[self.candidate stringRange] error:nil], @"Case-sensitive match has failed!");
 }
 
 - (void)testIsMatchedByRegexRegexOptionsMatchingOptionsRangeError
@@ -57,8 +57,8 @@
     // NOTE: Not Comprehensive Yet
     NSError *error;
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKLCaseless range:[self.candidate stringRange] error:nil], @"Case-insensitive match has failed!");
-    XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKLNoOptions matchingOptions:0 range:[self.candidate stringRange] error:&error], @"Case-sensitive match has failed! Error: %@", error);
+    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKLCaseless inRange:[self.candidate stringRange] error:nil], @"Case-insensitive match has failed!");
+    XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKLNoOptions matchingOptions:0 inRange:[self.candidate stringRange] error:&error], @"Case-sensitive match has failed! Error: %@", error);
 }
 
 #pragma mark - componentsSeparatedByRegex:
@@ -135,7 +135,6 @@
     NSString *timestamp = [self.candidate stringByMatching:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:0 error:NULL];
     XCTAssert([timestamp isEqualToString:@"2014-05-06 17:03:17"], @"We have a problem here!");
 }
-
 
 - (void)testStringByReplacingOccurrencesOfRegexOptionsMatchingOptionsInRangeErrorUsingBlock
 {

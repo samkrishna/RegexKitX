@@ -85,20 +85,20 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
 
 - (BOOL)isMatchedByRegex:(NSString *)pattern
 {
-    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 range:NSMakeRange(0, [self length]) error:nil];
+    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:NSMakeRange(0, [self length]) error:nil];
 }
 
-- (BOOL)isMatchedByRegex:(NSString *)pattern range:(NSRange)range
+- (BOOL)isMatchedByRegex:(NSString *)pattern inRange:(NSRange)range
 {
-    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 range:range error:nil];
+    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:range error:nil];
 }
 
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error
+- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error
 {
-    return [self isMatchedByRegex:pattern options:options matchingOptions:0 range:range error:error];
+    return [self isMatchedByRegex:pattern options:options matchingOptions:0 inRange:range error:error];
 }
 
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error;
+- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error;
 {
     NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
@@ -139,7 +139,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
     NSMutableArray *matches = [NSMutableArray array];
     
-    if ([self isMatchedByRegex:pattern options:options matchingOptions:matchingOptions range:range error:error]) {
+    if ([self isMatchedByRegex:pattern options:options matchingOptions:matchingOptions inRange:range error:error]) {
         [regex enumerateMatchesInString:self options:matchingOptions range:range usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
             [matches addObject:result];
         }];
