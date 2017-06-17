@@ -40,9 +40,11 @@ extern NSString * const RKLICURegexReplacementStringErrorKey;
 extern NSString * const RKLICURegexSubjectRangeErrorKey;
 extern NSString * const RKLICURegexSubjectStringErrorKey;
 
+#ifndef REGEXKITLITE_VERSION_MAJOR
 @interface NSString (EntireRange)
 - (NSRange)stringRange;
 @end
+#endif
 
 @interface NSString (RegexKitLite5)
 

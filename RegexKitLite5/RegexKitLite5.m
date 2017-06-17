@@ -29,6 +29,7 @@ NSString * const RKLICURegexReplacementStringErrorKey  = @"RKLICURegexReplacemen
 NSString * const RKLICURegexSubjectRangeErrorKey       = @"RKLICURegexSubjectRange";
 NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectString";
 
+#ifndef REGEXKITLITE_VERSION_MAJOR
 @implementation NSString (EntireRange)
 
 - (NSRange)stringRange
@@ -37,6 +38,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
 }
 
 @end
+#endif
 
 @implementation NSString (RegexKitLite5)
 
@@ -280,6 +282,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
 #pragma mark - captureComponentsMatchedByRegex:
 
 #pragma mark - arrayOfCaptureComponentsMatchedByRegex:
+// Eventually use this: https://gist.github.com/kamiro/3902122
 
 #pragma mark - arrayOfDictionariesByMatchingRegex:
 
