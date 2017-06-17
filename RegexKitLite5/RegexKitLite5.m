@@ -29,7 +29,6 @@ NSString * const RKLICURegexReplacementStringErrorKey  = @"RKLICURegexReplacemen
 NSString * const RKLICURegexSubjectRangeErrorKey       = @"RKLICURegexSubjectRange";
 NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectString";
 
-#ifndef REGEXKITLITE_VERSION_MAJOR
 @implementation NSString (EntireRange)
 
 - (NSRange)stringRange
@@ -38,7 +37,6 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
 }
 
 @end
-#endif
 
 @implementation NSString (RegexKitLite5)
 
