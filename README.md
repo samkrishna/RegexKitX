@@ -18,7 +18,7 @@ A few caveats:
 1. I have not done **any** performance testing on this, but I am almost certain this API re-implementation is slower than the low-level magic code that @johnezang originally wrote.
 1. `RKLRegexEnumerationOptions` is deprecated.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
-1. @johnezang chose to go with the Perl implementation rather than the ICU implemenation when separating strings using the word boundary '\b' metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
+1. @johnezang chose to go with the Perl implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
 
 ## Tests
 
