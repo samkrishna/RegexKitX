@@ -135,7 +135,7 @@
     XCTAssert(failRange.location == NSNotFound, @"This should not work!");
 }
 
-- (void)testStringByMatchingOptionsMatchingOptionsInRangeCaptureError
+- (void)testStringByMatchingOptionsInRangeCaptureError
 {
     // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
     
@@ -207,4 +207,40 @@
     XCTAssert([output isMatchedByRegex:@"marinated"], @"The block didn't work!");
     XCTAssertFalse([output isMatchedByRegex:@"FAIL"], @"The block should NOT have inserted \'FAIL\'!!");
 }
+
+- (void)testComponentsMatchedByRegexOptionsRangeCaptureError
+{
+    NSString *list      = @"$10.23, $1024.42, $3099";
+    NSRange   listRange = NSMakeRange(0UL, [list length]);
+    NSArray  *listItems = [list componentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" options:RKLNoOptions range:listRange capture:3L error:NULL];
+    
+    // listItems == [NSArray arrayWithObjects:@"23", @"42", @"", NULL];
+    NSString *component1 = listItems[0];
+    NSString *component2 = listItems[1];
+    XCTAssert([component1 isEqualToString:@"23"], @"This should match!");
+    XCTAssert([component2 isEqualToString:@"42"], @"This should match!");
+}
+
+- (void)testCaptureCountWithOptionsError
+{
+    NSString *pattern = @"\\$((\\d+)(?:\\.(\\d+)|\\.?))";
+    NSError *error;
+    NSInteger captureCount = [pattern captureCountWithOptions:RKLNoOptions error:&error];
+    XCTAssert(captureCount == 3, @"This should be 4!");
+}
+
+- (void)testEnumerateStringsSeparatedByRegex
+{
+    // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
+
+    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:@"(,(\\s*))" usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        NSString *firstString = capturedStrings[0];
+        NSRange range1 = capturedRanges[0];
+        NSRange range2 = capturedRanges[1];
+        NSLog(@"firstString = %@ and range1 = %@ and range2 = %@", firstString, NSStringFromRange(range1), NSStringFromRange(range2));
+    }];
+    
+    XCTAssert(result, @"This should be YES");
+}
+
 @end
