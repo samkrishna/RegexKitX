@@ -14,16 +14,16 @@ My concern is that no amount of work-arounds or modifications to all the low-lev
 
 A few caveats:
 
-1. As of 2017-06-17, the API has not been fully re-implemented yet. But it's coming along.
-2. I have not done **any** performance testing on this, but I am almost certain this API re-implementation is slower than the low-level magic code that @johnezang originally wrote.
-3. `RKLRegexEnumerationOptions` is deprecated.
-4. I'm exposing the `NSMatchingOptions` as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API and am exposing the original argument-rich API.
+1. This is a naive re-implementation. There's very little that's currently elegant about the code.
+1. I have not done **any** performance testing on this, but I am almost certain this API re-implementation is slower than the low-level magic code that @johnezang originally wrote.
+1. `RKLRegexEnumerationOptions` is deprecated.
+1. I'm exposing the `NSMatchingOptions` as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API and am exposing the original argument-rich API.
 
 ## Tests
 
 1. I have started a Unit Test file that tests the baseline argument-rich methods for expected behavior.
-2. There's a whole set of test cases in the original [RegexKit 0.6.0](https://sourceforge.net/projects/regexkit/files/regexkit/RegexKit_0.6.0/) sources that I have yet to vet, port, and integrate.
-3. @johnezang also included a few test executables in his *RKL4* sources, but those have not been ported yet.
+1. There's a whole set of test cases in the original [RegexKit 0.6.0](https://sourceforge.net/projects/regexkit/files/regexkit/RegexKit_0.6.0/) sources that I have yet to vet, port, and integrate.
+1. @johnezang also included a few test executables in his *RKL4* sources, but those have not been ported yet.
 
 
 
