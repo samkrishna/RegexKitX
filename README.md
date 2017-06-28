@@ -15,7 +15,7 @@ My concern is that no amount of work-arounds or modifications to all the low-lev
 A few caveats:
 
 1. This is a naive re-implementation. There's very little that's currently elegant and/or performant about the code.
-1. I have not done **any** performance testing on this, but I am almost certain this API re-implementation is slower than the low-level magic code that @johnezang originally wrote.
+1. I have not done **any** performance testing on this, but I am certain this API re-implementation is slower than the low-level magic code that @johnezang originally wrote.
 1. `RKLRegexEnumerationOptions` is deprecated.
 1. The `RKLICURegex...Error` keys are deprecated in exchange for the NSRegularExpression instantiation errors.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
