@@ -182,9 +182,9 @@
     
     pattern = @"pick(led)?";
     NSString *newCandidate = @"Peter Piper picked a peck of pickled peppers;\n"
-                            "A peck of pickled peppers Peter Piper picked;\n"
-                            "If Peter Piper picked a peck of pickled peppers,\n"
-                            "Where's the peck of pickled peppers Peter Piper picked?";
+                            @"A peck of pickled peppers Peter Piper picked;\n"
+                            @"If Peter Piper picked a peck of pickled peppers,\n"
+                            @"Where's the peck of pickled peppers Peter Piper picked?";
     output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[newCandidate stringRange] error:NULL usingBlock:^NSString *(NSInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
         if ([capturedStrings[0] isMatchedByRegex:@"^pick$"]) {
             return @"select";
@@ -319,8 +319,8 @@
 
 - (void)testOriginalEnumeratorExample
 {
-    NSString     *searchString    = @"one\ntwo\n\nfour\n";
-    NSString     *regexString     = @"(?m)^.*$";
+    NSString *searchString = @"one\ntwo\n\nfour\n";
+    NSString *regexString = @"(?m)^.*$";
     __block NSUInteger line = 0UL;
     __block NSUInteger matchCount = 0;
     
