@@ -243,4 +243,20 @@
     XCTAssert(result, @"This should be YES");
 }
 
+- (void)testICUtoPerlOperationalFix
+{
+    // This is from the RKL4 sources:
+    
+    // "I|at|ice I eat rice" split using the regex "\b\s*" demonstrates the problem. ICU bug http://bugs.icu-project.org/trac/ticket/6826
+    // ICU : "", "I", "|", "at", "|", "ice", "", "I", "", "eat", "", "rice" <- Results that RegexKitLite used to produce.
+    // PERL:     "I", "|", "at", "|", "ice",     "I",     "eat",     "rice" <- Results that RegexKitLite now produces.
+    
+    NSString *testString = @"I|at|ice I eat rice";
+    NSString *pattern = @"\\b\\s*";
+    NSArray *components = [testString componentsSeparatedByRegex:pattern];
+    
+    XCTAssert([[components firstObject] isEqualToString:@"I"], @"This should actually be \'I\'");
+    XCTAssert([[components lastObject] isEqualToString:@"rice"], @"This should actually be \'rice\'");
+}
+
 @end

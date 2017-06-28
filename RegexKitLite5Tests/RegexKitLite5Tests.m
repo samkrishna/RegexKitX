@@ -292,7 +292,7 @@
     NSArray *components = [testString componentsSeparatedByRegex:pattern];
     
     XCTAssert([[components firstObject] isEqualToString:@"I"], @"This should actually be \'I\'");
-    XCTAssert([[components lastObject] isEqualToString:@"I"], @"This should actually be \'rice\'");
+    XCTAssert([[components lastObject] isEqualToString:@"rice"], @"This should actually be \'rice\'");
 }
 
 @end
