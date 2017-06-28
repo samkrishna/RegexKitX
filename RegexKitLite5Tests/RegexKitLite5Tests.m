@@ -311,7 +311,7 @@
     NSString *pattern = @"\\b\\s*";
     NSArray *components = [testString componentsSeparatedByRegex:pattern];
     
-    XCTAssertFalse([[components firstObject] isEqualToString:@"I"], @"This used to actually be \'I\'");
+    XCTAssertFalse([[components firstObject] isEqualToString:@"I"], @"For RKL4: This used to be \'I\'");
     XCTAssert([[components lastObject] isEqualToString:@"rice"], @"This should actually be \'rice\'");
 }
 
@@ -347,7 +347,7 @@
     NSLog(@"regexString : '%@'", regexString);
     
     for (NSString *matchedString in [searchString componentsMatchedByRegex:regexString]) {
-        NSLog(@"%lu: %lu '%@'", (u_long)++line, (u_long)[matchedString length], matchedString);
+        NSLog(@"%lu: %lu '%@'", ++line, [matchedString length], matchedString);
         matchCount++;
     }
     
@@ -365,8 +365,7 @@
     NSString *matchedString = [subjectString stringByMatching:regexString capture:1L];
     NSRange matchRange = [subjectString rangeOfRegex:regexString capture:1L];
     
-    XCTAssert(matchRange.location == 10, @"This should be 10");
-    XCTAssert(matchRange.length == 3, @"This should be 3!");
+    XCTAssert(NSEqualRanges(matchRange, NSMakeRange(10, 3)), @"range: %@", NSStringFromRange(matchRange));
 
     NSLog(@"subject: \"%@\"", subjectString);
     NSLog(@"matched: \"%@\"", matchedString);
