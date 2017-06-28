@@ -295,4 +295,59 @@
     XCTAssert([[components lastObject] isEqualToString:@"rice"], @"This should actually be \'rice\'");
 }
 
+- (void)testOriginalEnumeratorExample
+{
+    NSString     *searchString    = @"one\ntwo\n\nfour\n";
+    NSString     *regexString     = @"(?m)^.*$";
+    __block NSUInteger line = 0UL;
+    __block NSUInteger matchCount = 0;
+    
+    NSLog(@"searchString: '%@'", searchString);
+    NSLog(@"regexString : '%@'", regexString);
+    
+    [searchString enumerateStringsMatchedByRegex:regexString usingBlock:^(NSInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        NSString *matchedString = capturedStrings[0];
+        NSLog(@"%lu: %lu '%@'", ++line, [matchedString length], matchedString);
+        matchCount++;
+    }];
+    
+    XCTAssert(matchCount == 4, @"There should have been 4 matches!");
+}
+
+- (void)testForInExample
+{
+    NSString *searchString = @"one\ntwo\n\nfour\n";
+    NSString *regexString  = @"(?m)^.*$";
+    NSUInteger line = 0UL;
+    NSUInteger matchCount = 0;
+    
+    NSLog(@"searchString: '%@'", searchString);
+    NSLog(@"regexString : '%@'", regexString);
+    
+    for (NSString *matchedString in [searchString componentsMatchedByRegex:regexString]) {
+        NSLog(@"%lu: %lu '%@'", (u_long)++line, (u_long)[matchedString length], matchedString);
+        matchCount++;
+    }
+    
+    XCTAssert(matchCount == 4, @"There should have been 4 matches!");
+}
+
+- (void)testLinkExample
+{
+    // Copyright COPYRIGHT_SIGN APPROXIMATELY_EQUAL_TO 2008
+    // Copyright \u00a9 \u2245 2008
+
+    char *utf8CString =  "Copyright \xC2\xA9 \xE2\x89\x85 2008";
+    NSString *regexString = @"Copyright (.*) (\\d+)";
+    NSString *subjectString = [NSString stringWithUTF8String:utf8CString];
+    NSString *matchedString = [subjectString stringByMatching:regexString capture:1L];
+    NSRange matchRange = [subjectString rangeOfRegex:regexString capture:1L];
+    
+    XCTAssert(matchRange.location == 10, @"This should be 10");
+    XCTAssert(matchRange.length == 3, @"This should be 3!");
+
+    NSLog(@"subject: \"%@\"", subjectString);
+    NSLog(@"matched: \"%@\"", matchedString);
+}
+
 @end
