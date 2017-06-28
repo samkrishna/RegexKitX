@@ -70,6 +70,7 @@
 
     // Repurposed from https://stackoverflow.com/a/9185677
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return nil;
     NSArray *matchResults = [regex matchesInString:self options:matchingOptions range:range];
     NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matchResults.count];
     __block NSUInteger pos = 0;
@@ -111,6 +112,7 @@
     }
 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return NO;
     NSUInteger matchCount = [regex numberOfMatchesInString:self options:matchingOptions range:range];
 
     return (matchCount > 0);
@@ -146,7 +148,8 @@
     }
 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
-    
+    if (error) return NSMakeRange(NSNotFound, NSIntegerMax);
+
     if ([self isMatchedByRegex:pattern options:options matchingOptions:matchingOptions inRange:range error:error]) {
         NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
         NSTextCheckingResult *firstMatch = matches[0];
@@ -186,6 +189,7 @@
     }
 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return nil;
     __block NSTextCheckingResult *firstMatch = nil;
     
     [regex enumerateMatchesInString:self options:matchingOptions range:range usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
@@ -226,6 +230,7 @@
     }
     
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return nil;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     NSMutableString *target = [self mutableCopy];
     
@@ -322,6 +327,7 @@
     }
 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return nil;
     
     if ([self isMatchedByRegex:pattern options:options matchingOptions:matchingOptions inRange:range error:error]) {
         NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
@@ -377,6 +383,7 @@
     }
     
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return nil;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     NSTextCheckingResult *firstMatch = matches[0];
     NSMutableArray *captureArray = [NSMutableArray arrayWithCapacity:firstMatch.numberOfRanges];
@@ -423,6 +430,7 @@
     }
 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return nil;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     NSMutableArray *matchCaptures = [NSMutableArray array];
     
@@ -635,11 +643,7 @@
     }
     
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
-    
-    if (error) {
-        return NO;
-    }
-    
+    if (error) return NO;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     __block BOOL blockStop = NO;
     
@@ -687,11 +691,7 @@
     }
     
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
-    
-    if (error) {
-        return NO;
-    }
-    
+    if (error) return NO;
     NSString *cloneString = [NSString stringWithString:self];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     __block BOOL blockStop = NO;
@@ -759,6 +759,7 @@
     }
     
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return nil;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     NSMutableString *target = [NSMutableString stringWithString:self];
     BOOL stop = NO;
@@ -825,6 +826,7 @@
     }
     
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return -1;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     NSInteger count = 0;
     
@@ -858,6 +860,7 @@
     }
     
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return -1;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     NSInteger count = 0;
     BOOL stop = NO;
