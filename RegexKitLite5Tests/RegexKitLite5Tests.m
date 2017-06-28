@@ -12,6 +12,7 @@
 
 @interface RegexKitLite5Tests : XCTestCase
 @property (nonatomic, readwrite, strong) NSString *candidate;
+@property (nonatomic, readwrite, strong) NSMutableArray *unicodeStringsArray;
 @end
 
 @implementation RegexKitLite5Tests
@@ -21,6 +22,25 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.candidate = @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
+    
+    const char *unicodeCStrings[] = {
+        /* 0 */ "pi \xE2\x89\x85 3 (apx eq)",
+        /* 1 */ "\xC2\xA5""55 (yen)",
+        /* 2 */ "\xC3\x86 (ae)",
+        /* 3 */ "Copyright \xC2\xA9 2007",
+        /* 4 */ "Ring of integers \xE2\x84\xA4 (dbl stk Z)",
+        /* 5 */ "At the \xE2\x88\xA9 of two sets.",
+        /* 6 */ "A w\xC5\x8D\xC5\x95\xC4\x91 \xF0\x9D\x8C\xB4\xF4\x8F\x8F\xBC w\xC4\xA9\xC8\x9B\xC8\x9F extra \xC8\xBF\xC5\xA3\xE1\xB9\xBB\xE1\xB8\x9F" "f",
+        /* 7 */ "Frank Tang\xE2\x80\x99s I\xC3\xB1t\xC3\xABrn\xC3\xA2ti\xC3\xB4n\xC3\xA0liz\xC3\xA6ti\xC3\xB8n Secrets",
+        NULL
+    };
+    const char **cString = unicodeCStrings;
+    self.unicodeStringsArray = [NSMutableArray array];
+    
+    while (*cString != NULL) {
+        [self.unicodeStringsArray addObject:[NSString stringWithUTF8String:*cString]];
+        cString++;
+    }
 }
 
 - (void)tearDown
@@ -295,6 +315,8 @@
     XCTAssert([[components lastObject] isEqualToString:@"rice"], @"This should actually be \'rice\'");
 }
 
+#pragma mark - Ported RKL4 Demos/Tests
+
 - (void)testOriginalEnumeratorExample
 {
     NSString     *searchString    = @"one\ntwo\n\nfour\n";
@@ -363,7 +385,6 @@
 
 - (void)testValidRegexString
 {
-
     XCTAssert([@"123" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
     XCTAssert([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
 
@@ -377,6 +398,20 @@
 
     NSString *nilString = nil;
     XCTAssertFalse([nilString isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+}
+
+- (void)testSimpleUnicodeMatching
+{
+    NSString *copyrightString = [self.unicodeStringsArray objectAtIndex:3];
+    NSRange rangeOf2007 = [copyrightString rangeOfRegex:@"2007"];
+    NSRange foundationRange = [copyrightString rangeOfString:@"2007"];
+    XCTAssertTrue(NSEqualRanges(foundationRange, rangeOf2007), @"This should be true");
+    
+    NSArray *regexRanges = [copyrightString rangesOfRegex:@"^(\\w+)\\s+(\\p{Any}+)\\s+(2007)$"];
+    XCTAssertTrue((NSEqualRanges([regexRanges[0] rangeValue], NSMakeRange(0, 16))), @"%@", regexRanges[0]);
+    XCTAssertTrue((NSEqualRanges([regexRanges[1] rangeValue], NSMakeRange(0, 9))), @"%@", regexRanges[1]);
+    XCTAssertTrue((NSEqualRanges([regexRanges[2] rangeValue], NSMakeRange(10, 1))), @"%@", regexRanges[2]);
+    XCTAssertTrue((NSEqualRanges([regexRanges[3] rangeValue], NSMakeRange(12, 4))), @"%@", regexRanges[3]);
 }
 
 
