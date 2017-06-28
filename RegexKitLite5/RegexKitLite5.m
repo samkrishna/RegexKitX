@@ -163,12 +163,12 @@
 
 - (NSArray *)rangesOfRegex:(NSString *)pattern
 {
-    return [self rangesOfRegex:pattern options:0 matchingOptions:0 inRange:[self stringRange] error:NULL];
+    return [self rangesOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL];
 }
 
 - (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)targetRange
 {
-    return [self rangesOfRegex:pattern options:0 matchingOptions:0 inRange:targetRange error:NULL];
+    return [self rangesOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:targetRange error:NULL];
 }
 
 - (NSArray *)rangesOfRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)targetRange error:(NSError **)error
