@@ -338,15 +338,7 @@
 
             for (NSInteger i = 0; i < match.numberOfRanges; i++) {
                 NSRange matchRange = [match rangeAtIndex:i];
-                NSString *matchString = nil;
-                
-                if (matchRange.location != NSNotFound) {
-                    matchString = [self substringWithRange:matchRange];
-                }
-                else {
-                    matchString = @"";
-                }
-                
+                NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : @"";
                 [captureArray addObject:matchString];
             }
             
@@ -390,19 +382,11 @@
     
     for (NSInteger i = 0; i < firstMatch.numberOfRanges; i++) {
         NSRange matchRange = [firstMatch rangeAtIndex:i];
-        NSString *matchString = nil;
-        
-        if (matchRange.location != NSNotFound) {
-            matchString = [self substringWithRange:matchRange];
-        }
-        else {
-            matchString = @"";
-        }
-        
+        NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : @"";
         [captureArray addObject:matchString];
     }
     
-    return captureArray;
+    return [captureArray copy];
 }
 
 #pragma mark - arrayOfCaptureComponentsMatchedByRegex:
@@ -439,22 +423,14 @@
         
         for (NSInteger i = 0; i < match.numberOfRanges; i++) {
             NSRange matchRange = [match rangeAtIndex:i];
-            NSString *matchString = nil;
-            
-            if (matchRange.location != NSNotFound) {
-                matchString = [self substringWithRange:matchRange];
-            }
-            else {
-                matchString = @"";
-            }
-            
+            NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : @"";
             [captureArray addObject:matchString];
         }
         
         [matchCaptures addObject:captureArray];
     }
     
-    return matchCaptures;
+    return [matchCaptures copy];
 }
 
 #pragma mark - arrayOfDictionariesByMatchingRegex:
@@ -620,10 +596,7 @@
         id key = keys[i];
         NSInteger capture = [captures[i] integerValue];
         NSRange captureRange = [self rangeOfRegex:pattern options:options matchingOptions:matchingOptions inRange:range capture:capture error:error];
-        
-        if (captureRange.location != NSNotFound) {
-            dict[key] = [self substringWithRange:captureRange];
-        }
+        dict[key] = (captureRange.location != NSNotFound) ? [self substringWithRange:captureRange] : @"";
     }
     
     return [dict copy];
@@ -655,13 +628,8 @@
         for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
             NSRange subrange = [match rangeAtIndex:rangeIndex];
             rangeCaptures[rangeIndex] = subrange;
-            
-            if (subrange.location != NSNotFound) {
-                [captures addObject:[self substringWithRange:subrange]];
-            }
-            else {
-                [captures addObject:@""];
-            }
+            NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
+            [captures addObject:substring];
         }
         
         rangeCaptures[captureCount] = NSMakeRange(NSNotFound, NSIntegerMax);
@@ -771,13 +739,8 @@
         for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
             NSRange subrange = [match rangeAtIndex:rangeIndex];
             rangeCaptures[rangeIndex] = subrange;
-            
-            if (subrange.location != NSNotFound) {
-                [captures addObject:[self substringWithRange:subrange]];
-            }
-            else {
-                [captures addObject:@""];
-            }
+            NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
+            [captures addObject:substring];
         }
         
         rangeCaptures[captureCount] = NSMakeRange(NSNotFound, NSIntegerMax);
@@ -872,13 +835,8 @@
         for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
             NSRange subrange = [match rangeAtIndex:rangeIndex];
             rangeCaptures[rangeIndex] = subrange;
-            
-            if (subrange.location != NSNotFound) {
-                [captures addObject:[self substringWithRange:subrange]];
-            }
-            else {
-                [captures addObject:@""];
-            }
+            NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
+            [captures addObject:substring];
         }
         
         rangeCaptures[captureCount] = NSMakeRange(NSNotFound, NSIntegerMax);
