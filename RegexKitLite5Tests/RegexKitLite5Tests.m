@@ -291,7 +291,7 @@
     NSString *pattern = @"\\b\\s*";
     NSArray *components = [testString componentsSeparatedByRegex:pattern];
     
-    XCTAssert([[components firstObject] isEqualToString:@"I"], @"This should actually be \'I\'");
+    XCTAssertFalse([[components firstObject] isEqualToString:@"I"], @"This used to actually be \'I\'");
     XCTAssert([[components lastObject] isEqualToString:@"rice"], @"This should actually be \'rice\'");
 }
 
@@ -349,5 +349,35 @@
     NSLog(@"subject: \"%@\"", subjectString);
     NSLog(@"matched: \"%@\"", matchedString);
 }
+
+#pragma mark - Ported RegexKit 0.6 Test Cases
+
+// From core.m
+- (void)testRegexString
+{
+    NSString *pattern123 = [NSString stringWithFormat:@"123"];
+    XCTAssert([pattern123 isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    NSString *patternMAGIC = [NSString stringWithFormat:@"^(Match)\\s+the\\s+(MAGIC)$"];
+    XCTAssert([patternMAGIC isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+}
+
+- (void)testValidRegexString
+{
+
+    XCTAssert([@"123" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssert([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+
+    // ICU fails a number of perfectly good PCRE regexes.
+    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    XCTAssertFalse([@"\\( ( ( (?>[^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    XCTAssertFalse([@"^(Match)\\s+the\\s+((MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&xq) )* \\) )" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+
+    NSString *nilString = nil;
+    XCTAssertFalse([nilString isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+}
+
 
 @end
