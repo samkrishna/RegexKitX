@@ -28,6 +28,6 @@ A few caveats:
 1. I am also taking a pass on most of the RegexKit 0.6 tests because they are:
     - Low-level
     - Have interactions with the long-since deprecated Garbage Collector from 10-ish years ago
-    - Have a difference API modality paradigm than the RKL4 APIs
+    - Have a different API modality paradigm than the RKL4 APIs
 1. @johnezang also included a few test executables in his *RKL4* sources, ~~but those have not been ported yet.~~ are now ported and exist as tests.
 
