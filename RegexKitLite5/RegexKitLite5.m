@@ -10,27 +10,6 @@
 
 #define RKL_EXPECTED(cond, expect)       __builtin_expect((long)(cond), (expect))
 
-#pragma mark - Exported NSString symbols for exception names, error domains, error keys, etc -
-
-NSString * const RKLICURegexException                  = @"RKLICURegexException";
-
-NSString * const RKLICURegexErrorDomain                = @"RKLICURegexErrorDomain";
-
-NSString * const RKLICURegexEnumerationOptionsErrorKey = @"RKLICURegexEnumerationOptions";
-NSString * const RKLICURegexErrorCodeErrorKey          = @"RKLICURegexErrorCode";
-NSString * const RKLICURegexErrorNameErrorKey          = @"RKLICURegexErrorName";
-NSString * const RKLICURegexLineErrorKey               = @"RKLICURegexLine";
-NSString * const RKLICURegexOffsetErrorKey             = @"RKLICURegexOffset";
-NSString * const RKLICURegexPreContextErrorKey         = @"RKLICURegexPreContext";
-NSString * const RKLICURegexPostContextErrorKey        = @"RKLICURegexPostContext";
-NSString * const RKLICURegexRegexErrorKey              = @"RKLICURegexRegex";
-NSString * const RKLICURegexRegexOptionsErrorKey       = @"RKLICURegexRegexOptions";
-NSString * const RKLICURegexReplacedCountErrorKey      = @"RKLICURegexReplacedCount";
-NSString * const RKLICURegexReplacedStringErrorKey     = @"RKLICURegexReplacedString";
-NSString * const RKLICURegexReplacementStringErrorKey  = @"RKLICURegexReplacementString";
-NSString * const RKLICURegexSubjectRangeErrorKey       = @"RKLICURegexSubjectRange";
-NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectString";
-
 @implementation NSString (EntireRange)
 
 - (NSRange)stringRange

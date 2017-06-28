@@ -19,27 +19,6 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
     RKLUnicodeWordBoundaries    = NSRegularExpressionUseUnicodeWordBoundaries
 };
 
-// NSException exception name.
-extern NSString * const RKLICURegexException;
-
-// NSError error domains and user info keys.
-extern NSString * const RKLICURegexErrorDomain;
-
-extern NSString * const RKLICURegexEnumerationOptionsErrorKey;
-extern NSString * const RKLICURegexErrorCodeErrorKey;
-extern NSString * const RKLICURegexErrorNameErrorKey;
-extern NSString * const RKLICURegexLineErrorKey;
-extern NSString * const RKLICURegexOffsetErrorKey;
-extern NSString * const RKLICURegexPreContextErrorKey;
-extern NSString * const RKLICURegexPostContextErrorKey;
-extern NSString * const RKLICURegexRegexErrorKey;
-extern NSString * const RKLICURegexRegexOptionsErrorKey;
-extern NSString * const RKLICURegexReplacedCountErrorKey;
-extern NSString * const RKLICURegexReplacedStringErrorKey;
-extern NSString * const RKLICURegexReplacementStringErrorKey;
-extern NSString * const RKLICURegexSubjectRangeErrorKey;
-extern NSString * const RKLICURegexSubjectStringErrorKey;
-
 @interface NSString (EntireRange)
 - (NSRange)stringRange;
 @end
