@@ -11,7 +11,6 @@
 		6F2B4E821EF5BA6500DB6629 /* RegexKitLite5.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F2B4E801EF5BA6500DB6629 /* RegexKitLite5.h */; };
 		6F2B4E851EF5BA7F00DB6629 /* RegexKitLite5Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2B4E841EF5BA7F00DB6629 /* RegexKitLite5Tests.m */; };
 		6F2B4E8A1EF5BE5C00DB6629 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6F2B4E881EF5BE5C00DB6629 /* LICENSE */; };
-		6F2B4E8B1EF5BE5C00DB6629 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 6F2B4E891EF5BE5C00DB6629 /* README.md */; };
 		6F3813711EF5CEFF00E459F6 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F3813701EF5CEFF00E459F6 /* libicucore.tbd */; };
 		6F3813731EF5CF5C00E459F6 /* RegexKitLite5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2B4E811EF5BA6500DB6629 /* RegexKitLite5.m */; };
 		6F3813A11EF5D5E000E459F6 /* RegexKitLite4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F3813981EF5D5E000E459F6 /* RegexKitLite4.framework */; };
@@ -347,7 +346,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F2B4E8B1EF5BE5C00DB6629 /* README.md in Sources */,
 				6F3813731EF5CF5C00E459F6 /* RegexKitLite5.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -649,6 +647,7 @@
 				6F3813AB1EF5D5E000E459F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6F3813AC1EF5D5E000E459F6 /* Build configuration list for PBXNativeTarget "RegexKitLite4Tests" */ = {
 			isa = XCConfigurationList;
@@ -657,6 +656,7 @@
 				6F3813AE1EF5D5E000E459F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
