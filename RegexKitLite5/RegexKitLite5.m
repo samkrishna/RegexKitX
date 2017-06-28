@@ -726,13 +726,8 @@
             }
             else {
                 rangeCaptures[rangeIndex] = subrange;
-                
-                if (subrange.location != NSNotFound) {
-                    [captures addObject:[self substringWithRange:subrange]];
-                }
-                else {
-                    [captures addObject:@""];
-                }
+                NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
+                [captures addObject:substring];
             }
         }
         
