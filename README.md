@@ -24,7 +24,7 @@ A few caveats:
 ## Tests
 
 1. I have started a Unit Test file that tests the baseline argument-rich methods for expected behavior.
-1. There's a whole set of test cases in the original [RegexKit 0.6.0](https://sourceforge.net/projects/regexkit/files/regexkit/RegexKit_0.6.0/) sources that I have yet to vet, port, and integrate.
+1. There's a whole set of test cases in the original [RegexKit 0.6.0](https://sourceforge.net/projects/regexkit/files/regexkit/RegexKit_0.6.0/) sources ~~that I have yet to vet, port, and integrate.~~
 1. @johnezang also included a few test executables in his *RKL4* sources, but those have not been ported yet.
 
 
