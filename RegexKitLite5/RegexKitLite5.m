@@ -159,6 +159,47 @@
     return NSMakeRange(NSNotFound, 0);
 }
 
+#pragma mark - rangesOfRegex:
+
+- (NSArray *)rangesOfRegex:(NSString *)pattern
+{
+    return [self rangesOfRegex:pattern options:0 matchingOptions:0 inRange:[self stringRange] error:NULL];
+}
+
+- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)targetRange
+{
+    return [self rangesOfRegex:pattern options:0 matchingOptions:0 inRange:targetRange error:NULL];
+}
+
+- (NSArray *)rangesOfRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)targetRange error:(NSError **)error
+{
+    return [self rangesOfRegex:pattern options:options matchingOptions:0 inRange:targetRange error:error];
+}
+
+- (NSArray *)rangesOfRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)targetRange error:(NSError **)error
+{
+    if (error == NULL) {
+        if (![pattern isRegexValid]) nil;
+    }
+
+    NSMutableArray *ranges = [NSMutableArray array];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
+    if (error) return nil;
+
+    if ([self isMatchedByRegex:pattern options:options matchingOptions:matchingOptions inRange:targetRange error:error]) {
+        [regex enumerateMatchesInString:self options:matchingOptions range:targetRange usingBlock:^(NSTextCheckingResult * _Nullable match, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+            for (NSInteger i = 0; i < match.numberOfRanges; i++) {
+                NSRange matchRange = [match rangeAtIndex:i];
+                [ranges addObject:[NSValue valueWithRange:matchRange]];
+            }
+        }];
+
+        return [ranges copy];
+    }
+
+    return nil;
+}
+
 #pragma mark - stringByMatching:
 
 - (NSString *)stringByMatching:(NSString *)pattern

@@ -47,6 +47,12 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSRange)rangeOfRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)range capture:(NSInteger)capture error:(NSError **)error;
 - (NSRange)rangeOfRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range capture:(NSInteger)capture error:(NSError **)error;
 
+#pragma mark - rangesOfRegex:
+
+- (NSArray *)rangesOfRegex:(NSString *)pattern;
+- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)targetRange;
+- (NSArray *)rangesOfRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)targetRange error:(NSError **)error;
+- (NSArray *)rangesOfRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)targetRange error:(NSError **)error;
 
 #pragma mark - stringByMatching:
 
