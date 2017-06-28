@@ -26,8 +26,8 @@ A few caveats:
 1. I have started a Unit Test file that tests the baseline argument-rich methods for expected behavior.
 1. There's a whole set of test cases in the original [RegexKit 0.6.0](https://sourceforge.net/projects/regexkit/files/regexkit/RegexKit_0.6.0/) sources. ~~that I have yet to vet, port, and integrate.~~ (UPDATE: After looking through the RegexKit 0.6 tests, I've decided to take a pass on the vast majority of them. They are for PCRE-consumable regular expressions, which are a distinctly different dialect than the ICU regular expressions.)
 1. I am also taking a pass on most of the RegexKit 0.6 tests because they are:
-    ..* Low-level
-    ..* Have interactions with the long-since deprecated Garbage Collector from 10-ish years ago
-    ..* Have a difference API modality paradigm than the RKL4 APIs
+..* Low-level
+..* Have interactions with the long-since deprecated Garbage Collector from 10-ish years ago
+..* Have a difference API modality paradigm than the RKL4 APIs
 1. @johnezang also included a few test executables in his *RKL4* sources, ~~but those have not been ported yet.~~ are now ported and exist as tests.
 
