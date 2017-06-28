@@ -35,7 +35,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
 
 - (NSRange)stringRange
 {
-    return NSMakeRange(0, [self length]);
+    return NSMakeRange(0, self.length);
 }
 
 @end
