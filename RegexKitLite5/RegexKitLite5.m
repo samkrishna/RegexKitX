@@ -42,6 +42,30 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
 
 @implementation NSString (RegexKitLite5)
 
+#pragma mark - Caching Methods
+
++ (NSString *)cacheKeyForRegex:(NSString *)pattern options:(RKLRegexOptions)options
+{
+    NSString *key = [NSString stringWithFormat:@"%@_%lu", pattern, options];
+    return key;
+}
+
++ (NSRegularExpression *)cachedRegexForPattern:(NSString *)patten options:(RKLRegexOptions)options error:(NSError **)error
+{
+    NSString *regexKey = [NSString cacheKeyForRegex:patten options:options];
+    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+    NSRegularExpression *regex = dictionary[regexKey];
+    
+    if (!regex) {
+        NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
+        regex = [NSRegularExpression regularExpressionWithPattern:patten options:regexOptions error:error];
+        if (!regex) return nil;
+        dictionary[regexKey] = regex;
+    }
+    
+    return regex;
+}
+
 #pragma mark - componentsSeparatedByRegex:
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern
@@ -66,8 +90,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
     }
 
     // Repurposed from https://stackoverflow.com/a/9185677
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     NSArray *matchResults = [regex matchesInString:self options:matchingOptions range:range];
     NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matchResults.count];
     __block NSUInteger pos = 0;
@@ -108,8 +131,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return NO;
     }
 
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     NSUInteger matchCount = [regex numberOfMatchesInString:self options:matchingOptions range:range];
 
     return (matchCount > 0);
@@ -144,8 +166,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return NSMakeRange(NSNotFound, NSIntegerMax);
     }
 
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     
     if ([self isMatchedByRegex:pattern options:options matchingOptions:matchingOptions inRange:range error:error]) {
         NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
@@ -185,8 +206,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return nil;
     }
 
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     __block NSTextCheckingResult *firstMatch = nil;
     
     [regex enumerateMatchesInString:self options:matchingOptions range:range usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
@@ -226,8 +246,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return nil;
     }
     
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     NSMutableString *target = [self mutableCopy];
     
@@ -323,8 +342,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return nil;
     }
 
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     
     if ([self isMatchedByRegex:pattern options:options matchingOptions:matchingOptions inRange:range error:error]) {
         NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
@@ -379,8 +397,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return nil;
     }
     
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     NSTextCheckingResult *firstMatch = matches[0];
     NSMutableArray *captureArray = [NSMutableArray arrayWithCapacity:firstMatch.numberOfRanges];
@@ -426,8 +443,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return nil;
     }
 
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     NSMutableArray *matchCaptures = [NSMutableArray array];
     
@@ -638,8 +654,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return NO;
     }
     
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     
     if (error) {
         return NO;
@@ -691,8 +706,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return NO;
     }
     
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     
     if (error) {
         return NO;
@@ -764,8 +778,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return nil;
     }
     
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     NSMutableString *target = [NSMutableString stringWithString:self];
     BOOL stop = NO;
@@ -831,8 +844,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return -1;
     }
     
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     NSInteger count = 0;
     
@@ -865,8 +877,7 @@ NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectStr
         if (![pattern isRegexValid]) return -1;
     }
     
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     NSInteger count = 0;
     BOOL stop = NO;
