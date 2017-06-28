@@ -49,7 +49,7 @@
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern
 {
-    return [self componentsSeparatedByRegex:pattern options:RKLNoOptions matchingOptions:0 range:NSMakeRange(0, [self length]) error:nil];
+    return [self componentsSeparatedByRegex:pattern options:RKLNoOptions matchingOptions:0 range:[self stringRange] error:nil];
 }
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)range
@@ -92,7 +92,7 @@
 
 - (BOOL)isMatchedByRegex:(NSString *)pattern
 {
-    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:NSMakeRange(0, [self length]) error:nil];
+    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] error:nil];
 }
 
 - (BOOL)isMatchedByRegex:(NSString *)pattern inRange:(NSRange)range
@@ -122,12 +122,12 @@
 
 - (NSRange)rangeOfRegex:(NSString *)pattern
 {
-    return [self rangeOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:NSMakeRange(0, [self length]) capture:0 error:NULL];
+    return [self rangeOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] capture:0 error:NULL];
 }
 
 - (NSRange)rangeOfRegex:(NSString *)pattern capture:(NSInteger)capture
 {
-    return [self rangeOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:NSMakeRange(0, [self length]) capture:capture error:NULL];
+    return [self rangeOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] capture:capture error:NULL];
 }
 
 - (NSRange)rangeOfRegex:(NSString *)pattern inRange:(NSRange)range
@@ -163,12 +163,12 @@
 
 - (NSString *)stringByMatching:(NSString *)pattern
 {
-    return [self stringByMatching:pattern options:RKLNoOptions matchingOptions:0 inRange:NSMakeRange(0, [self length]) capture:0 error:NULL];
+    return [self stringByMatching:pattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] capture:0 error:NULL];
 }
 
 - (NSString *)stringByMatching:(NSString *)pattern capture:(NSInteger)capture
 {
-    return [self stringByMatching:pattern options:RKLNoOptions matchingOptions:0 inRange:NSMakeRange(0, [self length]) capture:capture error:NULL];
+    return [self stringByMatching:pattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] capture:capture error:NULL];
 }
 
 - (NSString *)stringByMatching:(NSString *)pattern inRange:(NSRange)range
