@@ -49,17 +49,17 @@
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern
 {
-    return [self componentsSeparatedByRegex:pattern options:RKLNoOptions matchingOptions:0 range:[self stringRange] error:nil];
+    return [self componentsSeparatedByRegex:pattern options:RKLNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
 }
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)range
 {
-    return [self componentsSeparatedByRegex:pattern options:RKLNoOptions matchingOptions:0 range:range error:nil];
+    return [self componentsSeparatedByRegex:pattern options:RKLNoOptions matchingOptions:0 range:range error:NULL];
 }
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error
 {
-    return [self componentsSeparatedByRegex:pattern options:options matchingOptions:0 range:range error:nil];
+    return [self componentsSeparatedByRegex:pattern options:options matchingOptions:0 range:range error:NULL];
 }
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error
@@ -92,12 +92,12 @@
 
 - (BOOL)isMatchedByRegex:(NSString *)pattern
 {
-    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] error:nil];
+    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL];
 }
 
 - (BOOL)isMatchedByRegex:(NSString *)pattern inRange:(NSRange)range
 {
-    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:range error:nil];
+    return [self isMatchedByRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:range error:NULL];
 }
 
 - (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error
