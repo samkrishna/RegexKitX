@@ -179,7 +179,7 @@
 - (NSArray *)rangesOfRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)targetRange error:(NSError **)error
 {
     if (error == NULL) {
-        if (![pattern isRegexValid]) nil;
+        if (![pattern isRegexValid]) return nil;
     }
 
     NSMutableArray *ranges = [NSMutableArray array];
