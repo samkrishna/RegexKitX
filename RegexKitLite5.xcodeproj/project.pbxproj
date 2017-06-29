@@ -13,12 +13,6 @@
 		6F2B4E8A1EF5BE5C00DB6629 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6F2B4E881EF5BE5C00DB6629 /* LICENSE */; };
 		6F3813711EF5CEFF00E459F6 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F3813701EF5CEFF00E459F6 /* libicucore.tbd */; };
 		6F3813731EF5CF5C00E459F6 /* RegexKitLite5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2B4E811EF5BA6500DB6629 /* RegexKitLite5.m */; };
-		6F3813A11EF5D5E000E459F6 /* RegexKitLite4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F3813981EF5D5E000E459F6 /* RegexKitLite4.framework */; };
-		6F3813A61EF5D5E000E459F6 /* RegexKitLite4Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3813A51EF5D5E000E459F6 /* RegexKitLite4Tests.m */; };
-		6F3813A81EF5D5E000E459F6 /* RegexKitLite4.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F38139A1EF5D5E000E459F6 /* RegexKitLite4.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6F3813B11EF5D62E00E459F6 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F3813AF1EF5D62E00E459F6 /* RegexKitLite.h */; };
-		6F3813B21EF5D62E00E459F6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3813B01EF5D62E00E459F6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6F3813B31EF5D66000E459F6 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F3813701EF5CEFF00E459F6 /* libicucore.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,13 +22,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6F2B4E061EF5B85000DB6629;
 			remoteInfo = RegexKitLite5;
-		};
-		6F3813A21EF5D5E000E459F6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6F2B4DFE1EF5B85000DB6629 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6F3813971EF5D5E000E459F6;
-			remoteInfo = RegexKitLite4;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -49,14 +36,6 @@
 		6F2B4E881EF5BE5C00DB6629 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		6F2B4E891EF5BE5C00DB6629 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6F3813701EF5CEFF00E459F6 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
-		6F3813981EF5D5E000E459F6 /* RegexKitLite4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RegexKitLite4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F38139A1EF5D5E000E459F6 /* RegexKitLite4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegexKitLite4.h; sourceTree = "<group>"; };
-		6F38139B1EF5D5E000E459F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F3813A01EF5D5E000E459F6 /* RegexKitLite4Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegexKitLite4Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F3813A51EF5D5E000E459F6 /* RegexKitLite4Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite4Tests.m; sourceTree = "<group>"; };
-		6F3813A71EF5D5E000E459F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F3813AF1EF5D62E00E459F6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = "../../RegexKitLite-NoWarning/RegexKitLite-4.0/RegexKitLite.h"; sourceTree = "<group>"; };
-		6F3813B01EF5D62E00E459F6 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegexKitLite.m; path = "../../RegexKitLite-NoWarning/RegexKitLite-4.0/RegexKitLite.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,22 +55,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F3813941EF5D5E000E459F6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F3813B31EF5D66000E459F6 /* libicucore.tbd in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F38139D1EF5D5E000E459F6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F3813A11EF5D5E000E459F6 /* RegexKitLite4.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -100,8 +63,6 @@
 			children = (
 				6F2B4E091EF5B85000DB6629 /* RegexKitLite5 */,
 				6F2B4E141EF5B85000DB6629 /* RegexKitLite5Tests */,
-				6F3813991EF5D5E000E459F6 /* RegexKitLite4 */,
-				6F3813A41EF5D5E000E459F6 /* RegexKitLite4Tests */,
 				6F2B4E081EF5B85000DB6629 /* Products */,
 				6F2B4E881EF5BE5C00DB6629 /* LICENSE */,
 				6F2B4E891EF5BE5C00DB6629 /* README.md */,
@@ -114,8 +75,6 @@
 			children = (
 				6F2B4E071EF5B85000DB6629 /* RegexKitLite5.framework */,
 				6F2B4E101EF5B85000DB6629 /* RegexKitLite5Tests.xctest */,
-				6F3813981EF5D5E000E459F6 /* RegexKitLite4.framework */,
-				6F3813A01EF5D5E000E459F6 /* RegexKitLite4Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,26 +106,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6F3813991EF5D5E000E459F6 /* RegexKitLite4 */ = {
-			isa = PBXGroup;
-			children = (
-				6F3813AF1EF5D62E00E459F6 /* RegexKitLite.h */,
-				6F3813B01EF5D62E00E459F6 /* RegexKitLite.m */,
-				6F38139A1EF5D5E000E459F6 /* RegexKitLite4.h */,
-				6F38139B1EF5D5E000E459F6 /* Info.plist */,
-			);
-			path = RegexKitLite4;
-			sourceTree = "<group>";
-		};
-		6F3813A41EF5D5E000E459F6 /* RegexKitLite4Tests */ = {
-			isa = PBXGroup;
-			children = (
-				6F3813A51EF5D5E000E459F6 /* RegexKitLite4Tests.m */,
-				6F3813A71EF5D5E000E459F6 /* Info.plist */,
-			);
-			path = RegexKitLite4Tests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -175,15 +114,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F2B4E821EF5BA6500DB6629 /* RegexKitLite5.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F3813951EF5D5E000E459F6 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F3813A81EF5D5E000E459F6 /* RegexKitLite4.h in Headers */,
-				6F3813B11EF5D62E00E459F6 /* RegexKitLite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,42 +156,6 @@
 			productReference = 6F2B4E101EF5B85000DB6629 /* RegexKitLite5Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		6F3813971EF5D5E000E459F6 /* RegexKitLite4 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6F3813A91EF5D5E000E459F6 /* Build configuration list for PBXNativeTarget "RegexKitLite4" */;
-			buildPhases = (
-				6F3813931EF5D5E000E459F6 /* Sources */,
-				6F3813941EF5D5E000E459F6 /* Frameworks */,
-				6F3813951EF5D5E000E459F6 /* Headers */,
-				6F3813961EF5D5E000E459F6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = RegexKitLite4;
-			productName = RegexKitLite4;
-			productReference = 6F3813981EF5D5E000E459F6 /* RegexKitLite4.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		6F38139F1EF5D5E000E459F6 /* RegexKitLite4Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6F3813AC1EF5D5E000E459F6 /* Build configuration list for PBXNativeTarget "RegexKitLite4Tests" */;
-			buildPhases = (
-				6F38139C1EF5D5E000E459F6 /* Sources */,
-				6F38139D1EF5D5E000E459F6 /* Frameworks */,
-				6F38139E1EF5D5E000E459F6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6F3813A31EF5D5E000E459F6 /* PBXTargetDependency */,
-			);
-			name = RegexKitLite4Tests;
-			productName = RegexKitLite4Tests;
-			productReference = 6F3813A01EF5D5E000E459F6 /* RegexKitLite4Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -276,14 +170,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					6F2B4E0F1EF5B85000DB6629 = {
-						CreatedOnToolsVersion = 8.3.3;
-						ProvisioningStyle = Automatic;
-					};
-					6F3813971EF5D5E000E459F6 = {
-						CreatedOnToolsVersion = 8.3.3;
-						ProvisioningStyle = Automatic;
-					};
-					6F38139F1EF5D5E000E459F6 = {
 						CreatedOnToolsVersion = 8.3.3;
 						ProvisioningStyle = Automatic;
 					};
@@ -303,8 +189,6 @@
 			targets = (
 				6F2B4E061EF5B85000DB6629 /* RegexKitLite5 */,
 				6F2B4E0F1EF5B85000DB6629 /* RegexKitLite5Tests */,
-				6F3813971EF5D5E000E459F6 /* RegexKitLite4 */,
-				6F38139F1EF5D5E000E459F6 /* RegexKitLite4Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -319,20 +203,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		6F2B4E0E1EF5B85000DB6629 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F3813961EF5D5E000E459F6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F38139E1EF5D5E000E459F6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -358,22 +228,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F3813931EF5D5E000E459F6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F3813B21EF5D62E00E459F6 /* RegexKitLite.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F38139C1EF5D5E000E459F6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F3813A61EF5D5E000E459F6 /* RegexKitLite4Tests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -381,11 +235,6 @@
 			isa = PBXTargetDependency;
 			target = 6F2B4E061EF5B85000DB6629 /* RegexKitLite5 */;
 			targetProxy = 6F2B4E121EF5B85000DB6629 /* PBXContainerItemProxy */;
-		};
-		6F3813A31EF5D5E000E459F6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6F3813971EF5D5E000E459F6 /* RegexKitLite4 */;
-			targetProxy = 6F3813A21EF5D5E000E459F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -545,71 +394,6 @@
 			};
 			name = Release;
 		};
-		6F3813AA1EF5D5E000E459F6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-					"RKL4_ACTIVE=1",
-				);
-				INFOPLIST_FILE = RegexKitLite4/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sectormobile.RegexKitLite4;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		6F3813AB1EF5D5E000E459F6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = RegexKitLite4/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sectormobile.RegexKitLite4;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		6F3813AD1EF5D5E000E459F6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = RegexKitLite4Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sectormobile.RegexKitLite4Tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		6F3813AE1EF5D5E000E459F6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = RegexKitLite4Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sectormobile.RegexKitLite4Tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -636,24 +420,6 @@
 			buildConfigurations = (
 				6F2B4E1F1EF5B85000DB6629 /* Debug */,
 				6F2B4E201EF5B85000DB6629 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6F3813A91EF5D5E000E459F6 /* Build configuration list for PBXNativeTarget "RegexKitLite4" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6F3813AA1EF5D5E000E459F6 /* Debug */,
-				6F3813AB1EF5D5E000E459F6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6F3813AC1EF5D5E000E459F6 /* Build configuration list for PBXNativeTarget "RegexKitLite4Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6F3813AD1EF5D5E000E459F6 /* Debug */,
-				6F3813AE1EF5D5E000E459F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
