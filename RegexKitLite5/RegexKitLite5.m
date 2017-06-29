@@ -311,8 +311,7 @@
 
 - (BOOL)isRegexValid
 {
-    NSError *error;
-    return [self isRegexValidWithOptions:RKLNoOptions error:&error];
+    return [self isRegexValidWithOptions:RKLNoOptions error:NULL];
 }
 
 - (BOOL)isRegexValidWithOptions:(RKLRegexOptions)options error:(NSError **)error
