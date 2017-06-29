@@ -223,9 +223,9 @@
 
 - (void)testIsRegexValidWithOptionsError
 {
-//    NSError *error;
+    NSError *error;
     NSString *regexString = @"[a-z"; // Missing the closing ]
-    XCTAssertFalse([regexString isRegexValidWithOptions:RKLNoOptions error:NULL], @"This should have failed!");
+    XCTAssertFalse([regexString isRegexValidWithOptions:RKLNoOptions error:&error], @"This should have failed!");
 }
 
 - (void)testComponentsMatchedByRegexOptionsRangeCaptureError
