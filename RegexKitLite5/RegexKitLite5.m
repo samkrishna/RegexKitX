@@ -324,10 +324,7 @@
     }
     else {
         [NSString cachedRegexForPattern:self options:options error:error];
-        if (*error) {
-            NSLog(@"error = %@", [*error localizedDescription]);
-            return NO;
-        }
+        if (*error) return NO;
     }
 
     return YES;
