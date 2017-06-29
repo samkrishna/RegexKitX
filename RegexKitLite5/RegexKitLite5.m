@@ -298,8 +298,7 @@
         if (![self isRegexValid]) return -1;
     }
 
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self options:regexOptions error:error];
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:self options:options error:error];
     
     if (regex) {
         return regex.numberOfCaptureGroups;
@@ -318,18 +317,14 @@
 
 - (BOOL)isRegexValidWithOptions:(RKLRegexOptions)options error:(NSError **)error
 {
-    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-    
     if (error == NULL) {
         NSError *localError;
-        [NSRegularExpression regularExpressionWithPattern:self options:regexOptions error:&localError];
+        [NSString cachedRegexForPattern:self options:options error:&localError];
         if (localError) return NO;
     }
     else {
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self options:regexOptions error:error];
-
+        [NSString cachedRegexForPattern:self options:options error:error];
         if (*error) {
-            NSLog(@"regex = %@", regex);
             NSLog(@"error = %@", [*error localizedDescription]);
             return NO;
         }
