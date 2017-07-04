@@ -272,7 +272,7 @@
                                                error:&error
                                  withKeysAndCaptures:@"first", 1, @"last", 2, nil];
     XCTAssertNil(nameDictionary, @"This should be nil!");
-    
+    XCTAssertNotNil(error, @"There should be an error here");
 }
 
 - (void)testArrayOfDictionariesByMatchingRegexOptionsRangeErrorWithKeysAndCaptures

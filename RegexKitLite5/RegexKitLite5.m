@@ -515,15 +515,6 @@
     return dictArray;
 }
 
-- (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withFirstKey:(id)firstKey arguments:(va_list)varArgsList
-{
-    NSArray *captureKeyIndexes;
-    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
-    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern options:options matchingOptions:0 range:range error:error withKeys:captureKeys forCaptures:captureKeyIndexes];
-
-    return dictArray;
-}
-
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures
 {
     return [self arrayOfDictionariesByMatchingRegex:pattern options:options matchingOptions:0 range:range error:error withKeys:keys forCaptures:captures];
@@ -603,14 +594,6 @@
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
     NSDictionary *dict = [self dictionaryByMatchingRegex:pattern options:options matchingOptions:0 range:range error:error withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
-    return dict;
-}
-
-- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withFirstKey:(id)firstKey arguments:(va_list)varArgsList
-{
-    NSArray *keyIndexes;
-    NSArray *keys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&keyIndexes];
-    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern options:options matchingOptions:0 range:range error:error withKeys:keys forCaptures:keyIndexes];
     return dict;
 }
 
