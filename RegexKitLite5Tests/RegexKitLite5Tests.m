@@ -263,6 +263,16 @@
     NSString *last = nameDictionary[@"last"];
     XCTAssert([first isEqualToString:@"Joe"], @"This should be \'Joe\'");
     XCTAssert([last isEqualToString:@""], @"This should be an empty string");
+    
+    NSString *badRegex = @"Name:\\s*(\\w*)\\s*(\\w*";
+    NSError *error;
+    nameDictionary = [name dictionaryByMatchingRegex:badRegex
+                                             options:RKLNoOptions
+                                               range:[name stringRange]
+                                               error:&error
+                                 withKeysAndCaptures:@"first", 1, @"last", 2, nil];
+    XCTAssertNil(nameDictionary, @"This should be nil!");
+    
 }
 
 - (void)testArrayOfDictionariesByMatchingRegexOptionsRangeErrorWithKeysAndCaptures
