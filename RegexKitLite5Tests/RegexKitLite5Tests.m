@@ -396,14 +396,18 @@
 {
     XCTAssert([@"123" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
     XCTAssert([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    
+    // ICU likes this regex, but PCRE didn't
+    XCTAssert([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0xffffffff error:NULL], @"Should be invalid");
 
     // ICU fails a number of perfectly good PCRE regexes.
     XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
     XCTAssertFalse([@"\\( ( ( (?>[^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
     XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    
+    // These are bad PCRE regexes
     XCTAssertFalse([@"^(Match)\\s+the\\s+((MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
     XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&xq) )* \\) )" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
-    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
 
     NSString *nilString = nil;
     XCTAssertFalse([nilString isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
