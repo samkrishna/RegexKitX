@@ -397,8 +397,10 @@
     XCTAssert([@"123" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
     XCTAssert([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
     
-    // ICU likes this regex, but PCRE didn't
+    // ICU likes this regex under a weird options combo (that included ignoring all metacharacters)
     XCTAssert([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0xffffffff error:NULL], @"Should be valid");
+    // But didn't when options = 0
+    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
 
     // ICU fails a number of perfectly good PCRE regexes.
     XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
