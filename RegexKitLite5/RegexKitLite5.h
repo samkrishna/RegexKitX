@@ -28,7 +28,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 #pragma mark - componentsSeparatedByRegex:
 
 /**
- Returns an array containing substrings within range of the receiver that have been divided by the regular expression regex using options.
+ Returns an array containing substrings within the receiver that have been divided by the regular expression pattern.
  
  @param pattern An NSString containing a regular expression.
  @return A NSArray object containing the substrings from the receiver that have been divided by regex.
@@ -36,7 +36,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern;
 
 /**
- Returns an array containing substrings within range of the receiver that have been divided by the regular expression regex using options.
+ Returns an array containing substrings within range of the receiver that have been divided by the regular expression pattern.
  
  @param pattern An NSString containing a regular expression.
  @param range The range of the receiver to search.
@@ -45,10 +45,10 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)range;
 
 /**
- Returns an array containing substrings within range of the receiver that have been divided by the regular expression regex using options.
+ Returns an array containing substrings within range of the receiver that have been divided by the regular expression pattern using options.
  
  @param pattern An NSString containing a regular expression.
- @param options A mask of options specified by combining RKLRegexOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
  @param range The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
  @return A NSArray object containing the substrings from the receiver that have been divided by regex.
@@ -56,10 +56,10 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error;
 
 /**
- Returns an array containing substrings within range of the receiver that have been divided by the regular expression regex using options.
+ Returns an array containing substrings within range of the receiver that have been divided by the regular expression pattern using options.
 
  @param pattern An NSString containing a regular expression.
- @param options A mask of options specified by combining RKLRegexOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
  @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
  @param range The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
