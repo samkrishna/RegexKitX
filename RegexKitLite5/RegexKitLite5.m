@@ -650,7 +650,7 @@
         id key = keys[i];
         NSInteger capture = [captures[i] integerValue];
         NSRange captureRange = [self rangeOfRegex:regexPattern options:options matchingOptions:matchingOptions inRange:range capture:capture error:error];
-        if (captureRange.location == NSNotFound && captureRange.length == NSIntegerMax) return nil;
+        if (captureRange.location == NSNotFound && captureRange.length == NSIntegerMax) return @{};
         dict[key] = (captureRange.location != NSNotFound) ? [self substringWithRange:captureRange] : @"";
     }
     
