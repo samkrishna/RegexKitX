@@ -542,12 +542,76 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
 #pragma mark - dictionaryByMatchingRegex:
 
-- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)pattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
-- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)pattern range:(NSRange)range withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
-- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+/**
+ Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of regexPattern in the receiver.
 
-- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
-- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
+ @param regexPattern An NSString containing a regular expression.
+ @param firstKey The first key to add to the new dictionary.
+ @return A NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
+ */
+- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+
+/**
+ Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of regexPattern within range of the receiver using options and matchingOptions.
+
+ @param regexPattern An NSString containing a regular expression.
+ @param range The range of the receiver to search.
+ @param firstKey The first key to add to the new dictionary.
+ @return A NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
+ */
+- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern range:(NSRange)range withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+
+/**
+ Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of regexPattern within range of the receiver using options and matchingOptions.
+
+ @param regexPattern An NSString containing a regular expression.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param range The range of the receiver to search.
+ @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @param firstKey The first key to add to the new dictionary.
+ @return A NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
+ */
+- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+
+/**
+ Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of regexPattern within range of the receiver using options and matchingOptions.
+
+ @param regexPattern An NSString containing a regular expression.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
+ @param range The range of the receiver to search.
+ @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @param firstKey The first key to add to the new dictionary.
+ @return A NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
+ */
+- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+
+/**
+ Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of regexPattern within range of the receiver using options and matchingOptions.
+
+ @param regexPattern An NSString containing a regular expression.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param range The range of the receiver to search.
+ @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @param keys A NSArray object of NSString keys for the dictionaries.
+ @param captures A NSArray object of NSNumber capture group values for the dictionaries.
+ @return A NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
+ */
+- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
+
+/**
+ Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of regexPattern within range of the receiver using options and matchingOptions.
+
+ @param regexPattern An NSString containing a regular expression.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
+ @param range The range of the receiver to search.
+ @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @param keys A NSArray object of NSString keys for the dictionaries.
+ @param captures A NSArray object of NSNumber capture group values for the dictionaries.
+ @return A NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
+ */
+- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
 
 
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
