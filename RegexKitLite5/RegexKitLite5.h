@@ -69,9 +69,44 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
 #pragma mark - isMatchedByRegex:
 
+/**
+ The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+
+ @param pattern An NSString containing a regular expression.
+ @return A BOOL value indicating whether or not the pattern has been matched in the receiver.
+ */
 - (BOOL)isMatchedByRegex:(NSString *)pattern;
+
+/**
+ The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+
+ @param pattern An NSString containing a regular expression.
+ @param range The range of the receiver to search.
+ @return A BOOL value indicating whether or not the pattern has been matched in the receiver.
+ */
 - (BOOL)isMatchedByRegex:(NSString *)pattern inRange:(NSRange)range;
+
+/**
+ The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+
+ @param pattern An NSString containing a regular expression.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param range The range of the receiver to search.
+ @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @return A BOOL value indicating whether or not the pattern has been matched in the receiver.
+ */
 - (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error;
+
+/**
+ The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+
+ @param pattern An NSString containing a regular expression.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
+ @param range The range of the receiver to search.
+ @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @return A BOOL value indicating whether or not the pattern has been matched in the receiver.
+ */
 - (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error;
 
 #pragma mark - rangeOfRegex:
