@@ -112,15 +112,15 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 #pragma mark - rangeOfRegex:
 
 /**
- Returns the range for the first match of regexPattern within range of the receiver.
+ Returns the range for the first match of regexPattern.
 
- @param regexPattern An NSString containing a regular expression.
- @return A NSRange structure giving the location and length of the first match of regexPattern within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regexPattern within range or an error occurs.
+ @param regexPattern A @c NSString containing a regular expression.
+ @return A @c NSRange structure giving the location and length of the first match of regexPattern within range of the receiver. Returns @c {NSNotFound, 0} if the receiver is not matched by @c regexPattern.
  */
 - (NSRange)rangeOfRegex:(NSString *)regexPattern;
 
 /**
- Returns the range for the first match of regexPattern within range of the receiver.
+ Returns the range of capture number @c capture for the first match of @c regexPattern in the receiver.
 
  @param regexPattern An NSString containing a regular expression.
  @param capture The matching range of the capture number from regexPattern to return. Use 0 for the entire range that regexPattern matched.
@@ -129,36 +129,36 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSRange)rangeOfRegex:(NSString *)regexPattern capture:(NSInteger)capture;
 
 /**
- Returns the range for the first match of regexPattern within range of the receiver.
+ Returns the range for the first match of @c regexPattern within @c range of the receiver.
 
  @param regexPattern An NSString containing a regular expression.
  @param range The range of the receiver to search.
- @return A NSRange structure giving the location and length of the first match of regex within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regex within range or an error occurs.
+ @return A @c NSRange structure giving the location and length of capture number @c capture for the first match of @c regexPattern. Returns @c {NSNotFound, 0} if the receiver is not matched by @c regexPattern.
  */
 - (NSRange)rangeOfRegex:(NSString *)regexPattern inRange:(NSRange)range;
 
 /**
- Returns the range of capture number capture for the first match of regex within range of the receiver.
+ Returns the range of capture number @c capture for the first match of @c regexPattern within @c range of the receiver.
 
  @param regexPattern An NSString containing a regular expression.
- @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
  @param range The range of the receiver to search.
- @param capture The matching range of the capture number from regexPattern to return. Use 0 for the entire range that regex matched.
- @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
- @return A NSRange structure giving the location and length of capture number capture for the first match of regex within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regex within range or an error occurs.
+ @param capture The matching range of the capture number from regexPattern to return. Use 0 for the entire range that @c regexPattern matched.
+ @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
+ @return A @c NSRange structure giving the location and length of capture number @c capture for the first match of @c regexPattern within @c range of the receiver. Returns @c {NSNotFound, 0} if the receiver is not matched by @c regexPattern within @c range or an error occurs.
  */
 - (NSRange)rangeOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range capture:(NSInteger)capture error:(NSError **)error;
 
 /**
- Returns the range of capture number capture for the first match of regex within range of the receiver.
+ Returns the range of capture number @c capture for the first match of @c regexPattern within @c range of the receiver.
 
  @param regexPattern An NSString containing a regular expression.
- @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
- @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
+ @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
+ @param matchingOptions The matching options to use. See @c NSMatchingOptions for possible values.
  @param range The range of the receiver to search.
- @param capture The matching range of the capture number from regexPattern to return. Use 0 for the entire range that regex matched.
- @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
- @return A NSRange structure giving the location and length of capture number capture for the first match of regex within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regex within range or an error occurs.
+ @param capture The matching range of the capture number from regexPattern to return. Use 0 for the entire range that @c regexPattern matched.
+ @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
+ @return A @c NSRange structure giving the location and length of capture number @c capture for the first match of @c regexPattern within @c range of the receiver. Returns @c {NSNotFound, 0} if the receiver is not matched by @c regexPattern within @c range or an error occurs.
  */
 - (NSRange)rangeOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range capture:(NSInteger)capture error:(NSError **)error;
 
