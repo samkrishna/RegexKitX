@@ -321,7 +321,19 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
 #pragma mark - isRegexValid
 
+/**
+ Returns a BOOL value that indicates whether the regular expression contained in the receiver.
+ @return Returns a YES if the regex is valid; NO otherwise.
+ */
 - (BOOL)isRegexValid;
+
+/**
+ Returns a BOOL value that indicates whether the regular expression contained in the receiver is valid using options.
+
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param error The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @return Returns a YES if the regex is valid; NO otherwise.
+ */
 - (BOOL)isRegexValidWithOptions:(RKLRegexOptions)options error:(NSError **)error;
 
 #pragma mark - componentsMatchedByRegex:
