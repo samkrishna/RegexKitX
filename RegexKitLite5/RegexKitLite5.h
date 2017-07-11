@@ -627,7 +627,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return Returns YES if there was no error, otherwise returns NO and indirectly returns a NSError object if error is not NULL.
  */
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)regexPattern usingBlock:(void (^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
@@ -645,7 +645,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return Returns YES if there was no error, otherwise returns NO and indirectly returns a NSError object if error is not NULL.
  */
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error enumerationOptions:(NSEnumerationOptions)enumerationOptions usingBlock:(void (^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
@@ -660,7 +660,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return Returns YES if there was no error, otherwise returns NO and indirectly returns a NSError object if error is not NULL.
  */
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern usingBlock:(void (^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
@@ -676,7 +676,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return Returns YES if there was no error, otherwise returns NO and indirectly returns a NSError object if error is not NULL.
  */
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error usingBlock:(void (^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
@@ -693,7 +693,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return Returns YES if there was no error, otherwise returns NO and indirectly returns a NSError object if error is not NULL.
  */
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error usingBlock:(void (^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
@@ -708,7 +708,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return A NSString created from the characters within range of the receiver in which all matches of the regular expression regex using options are replaced with the contents of the NSString returned by block. Returns the characters within range as if substringWithRange: had been sent to the receiver if the substring is not matched by regex.
 
  @return Returns nil if there was an error and indirectly returns a NSError object if error is not NULL.
@@ -727,7 +727,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return A NSString created from the characters within range of the receiver in which all matches of the regular expression regex using options are replaced with the contents of the NSString returned by block. Returns the characters within range as if substringWithRange: had been sent to the receiver if the substring is not matched by regex.
 
  Returns NULL if there was an error and indirectly returns a NSError object if error is not NULL.
@@ -799,7 +799,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return Returns -1 if there was an error and indirectly returns a NSError object if error is not NULL, otherwise returns the number of replacements performed.
  */
 - (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern usingBlock:(NSString *(^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
@@ -815,7 +815,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return Returns -1 if there was an error and indirectly returns a NSError object if error is not NULL, otherwise returns the number of replacements performed.
  */
 - (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
@@ -832,7 +832,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;captureCount The number of strings that regex captured. captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in regex. The size of the array is captureCount. If a capture group did not match anything, it will contain a NSRange equal to {NSNotFound, 0}.
- @param &nbsp;&nbsp;stop A reference to a BOOL value that the block can use to stop the enumeration by setting *stop = YES;, otherwise it should not touch *stop.
+ @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to YES within the block.
  @return Returns -1 if there was an error and indirectly returns a NSError object if error is not NULL, otherwise returns the number of replacements performed.
  */
 - (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
