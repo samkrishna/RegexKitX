@@ -384,10 +384,46 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
 #pragma mark - captureComponentsMatchedByRegex:
 
-- (NSArray *)captureComponentsMatchedByRegex:(NSString *)pattern;
-- (NSArray *)captureComponentsMatchedByRegex:(NSString *)pattern range:(NSRange)range;
-- (NSArray *)captureComponentsMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error;
-- (NSArray *)captureComponentsMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error;
+/**
+ Returns an array containing the substrings matched by each capture group present in regex for the first match of regex within range of the receiver using options.
+
+ @param regexPattern An NSString containing a regular expression.
+ @return A NSArray containing the substrings matched by each capture group present in regex for the first match of regex within range of the receiver using options. Array index 0 represents all of the text matched by regex and subsequent array indexes contain the text matched by their respective capture group.
+ */
+- (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern;
+
+/**
+ Returns an array containing the substrings matched by each capture group present in regex for the first match of regex within range of the receiver using options.
+
+ @param regexPattern An NSString containing a regular expression.
+ @param range The range of the receiver to search.
+ @return A NSArray containing the substrings matched by each capture group present in regex for the first match of regex within range of the receiver using options. Array index 0 represents all of the text matched by regex and subsequent array indexes contain the text matched by their respective capture group.
+ */
+- (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern range:(NSRange)range;
+
+/**
+ Returns an array containing the substrings matched by each capture group present in regex for the first match of regex within range of the receiver using options.
+
+ @param regexPattern An NSString containing a regular expression.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param range The range of the receiver to search.
+ @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @return A NSArray containing the substrings matched by each capture group present in regex for the first match of regex within range of the receiver using options. Array index 0 represents all of the text matched by regex and subsequent array indexes contain the text matched by their respective capture group.
+ */
+- (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error;
+
+
+/**
+ Returns an array containing the substrings matched by each capture group present in regex for the first match of regex within range of the receiver using options.
+
+ @param regexPattern An NSString containing a regular expression.
+ @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
+ @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
+ @param range The range of the receiver to search.
+ @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
+ @return A NSArray containing the substrings matched by each capture group present in regex for the first match of regex within range of the receiver using options. Array index 0 represents all of the text matched by regex and subsequent array indexes contain the text matched by their respective capture group.
+ */
+- (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error;
 
 #pragma mark - arrayOfCaptureComponentsMatchedByRegex:
 
