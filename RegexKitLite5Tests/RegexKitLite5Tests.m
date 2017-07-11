@@ -156,6 +156,19 @@
     XCTAssert([timestamp isEqualToString:@"2014-05-06 17:03:17"], @"We have a problem here!");
 }
 
+- (void)testStringByReplacingOccurrencesOfRegexWithStringOptionsMatchingOptionsRangeError
+{
+    NSString *failedPattern = @"2014-05-06 17:03:17.967 EXECUTION_DINO";
+    NSString *failureControl = @"2014-05-06 17:03:17.967 EXECUTION_DATA";
+    NSRange failureRange = NSMakeRange(0, 38);
+    NSString *failureResult = [self.candidate stringByReplacingOccurrencesOfRegex:failedPattern withString:@"BARNEY RUBBLE" options:RKLNoOptions matchingOptions:0 range:failureRange error:NULL];
+    XCTAssert([failureResult isEqualToString:failureControl]);
+
+    NSString *successPattern = @"2014-05-06 17:03:17.967 EXECUTION_DATA";
+    NSString *successResult = [self.candidate stringByReplacingOccurrencesOfRegex:successPattern withString:@"BARNEY RUBBLE" options:RKLNoOptions matchingOptions:0 range:failureRange error:NULL];
+    XCTAssert([successResult isMatchedByRegex:@"BARNEY RUBBLE"]);
+}
+
 - (void)testStringByReplacingOccurrencesOfRegexOptionsMatchingOptionsInRangeErrorUsingBlock
 {
     NSString *pattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";

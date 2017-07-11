@@ -292,7 +292,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement range:(NSRange)searchRange;
 
 /**
- Returns a string created from the characters within range of the receiver in which all matches of the regular expression regexPattern using options and matchingOptions are replaced with the contents of the replacement string after performing capture group substitutions.
+ Returns a string created from the characters within range of the receiver in which all matches of the regular expression regexPattern using options are replaced with the contents of the replacement string after performing capture group substitutions.
 
  @param regexPattern An NSString containing a regular expression.
  @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.

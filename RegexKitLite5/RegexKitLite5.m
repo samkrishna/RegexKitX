@@ -278,7 +278,6 @@
     return [self stringByReplacingOccurrencesOfRegex:regexPattern withString:replacement options:options matchingOptions:0 range:searchRange error:error];
 }
 
-// TODO: Make sure the return value matches the documentation in case of a failed match
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
 {
     if (error == NULL) {
@@ -289,7 +288,11 @@
     if (error) return nil;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     NSMutableString *target = [self mutableCopy];
-    
+
+    if (![matches count]) {
+        return [self substringWithRange:searchRange];
+    }
+
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
         if (match.range.location != NSNotFound) {
             [target replaceCharactersInRange:match.range withString:replacement];
