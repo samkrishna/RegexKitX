@@ -28,139 +28,139 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 #pragma mark - componentsSeparatedByRegex:
 
 /**
- Returns an array containing substrings within the receiver that have been divided by the regular expression pattern.
+ Returns an array containing substrings within the receiver that have been divided by the regular expression regexPattern.
  
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @return A NSArray object containing the substrings from the receiver that have been divided by regex.
  */
-- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern;
+- (NSArray *)componentsSeparatedByRegex:(NSString *)regexPattern;
 
 /**
- Returns an array containing substrings within range of the receiver that have been divided by the regular expression pattern.
+ Returns an array containing substrings within range of the receiver that have been divided by the regular expression regexPattern.
  
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param range The range of the receiver to search.
  @return A NSArray object containing the substrings from the receiver that have been divided by regex.
  */
-- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)range;
+- (NSArray *)componentsSeparatedByRegex:(NSString *)regexPattern range:(NSRange)range;
 
 /**
- Returns an array containing substrings within range of the receiver that have been divided by the regular expression pattern using options.
+ Returns an array containing substrings within range of the receiver that have been divided by the regular expression regexPattern using options.
  
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
  @param range The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
  @return A NSArray object containing the substrings from the receiver that have been divided by regex.
  */
-- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error;
+- (NSArray *)componentsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error;
 
 /**
- Returns an array containing substrings within range of the receiver that have been divided by the regular expression pattern using options.
+ Returns an array containing substrings within range of the receiver that have been divided by the regular expression regexPattern using options.
 
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
  @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
  @param range The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
  @return A NSArray object containing the substrings from the receiver that have been divided by regex.
  */
-- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error;
+- (NSArray *)componentsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error;
 
 #pragma mark - isMatchedByRegex:
 
 /**
  The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
 
- @param pattern An NSString containing a regular expression.
- @return A BOOL value indicating whether or not the pattern has been matched in the receiver.
+ @param regexPattern An NSString containing a regular expression.
+ @return A BOOL value indicating whether or not the regexPattern has been matched in the receiver.
  */
-- (BOOL)isMatchedByRegex:(NSString *)pattern;
+- (BOOL)isMatchedByRegex:(NSString *)regexPattern;
 
 /**
  The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
 
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param range The range of the receiver to search.
- @return A BOOL value indicating whether or not the pattern has been matched in the receiver.
+ @return A BOOL value indicating whether or not the regexPattern has been matched in the receiver.
  */
-- (BOOL)isMatchedByRegex:(NSString *)pattern inRange:(NSRange)range;
+- (BOOL)isMatchedByRegex:(NSString *)regexPattern inRange:(NSRange)range;
 
 /**
  The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
 
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
  @param range The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
- @return A BOOL value indicating whether or not the pattern has been matched in the receiver.
+ @return A BOOL value indicating whether or not the regexPattern has been matched in the receiver.
  */
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error;
+- (BOOL)isMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error;
 
 /**
  The optional error parameter, if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
 
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
  @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
  @param range The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
- @return A BOOL value indicating whether or not the pattern has been matched in the receiver.
+ @return A BOOL value indicating whether or not the regexPattern has been matched in the receiver.
  */
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error;
+- (BOOL)isMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error;
 
 #pragma mark - rangeOfRegex:
 
 /**
- Returns the range for the first match of pattern within range of the receiver.
+ Returns the range for the first match of regexPattern within range of the receiver.
 
- @param pattern An NSString containing a regular expression.
- @return A NSRange structure giving the location and length of the first match of pattern within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by pattern within range or an error occurs.
+ @param regexPattern An NSString containing a regular expression.
+ @return A NSRange structure giving the location and length of the first match of regexPattern within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regexPattern within range or an error occurs.
  */
-- (NSRange)rangeOfRegex:(NSString *)pattern;
+- (NSRange)rangeOfRegex:(NSString *)regexPattern;
 
 /**
- Returns the range for the first match of pattern within range of the receiver.
+ Returns the range for the first match of regexPattern within range of the receiver.
 
- @param pattern An NSString containing a regular expression.
- @param capture The matching range of the capture number from pattern to return. Use 0 for the entire range that pattern matched.
- @return A NSRange structure giving the location and length of the first match of pattern within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by pattern within range or an error occurs.
+ @param regexPattern An NSString containing a regular expression.
+ @param capture The matching range of the capture number from regexPattern to return. Use 0 for the entire range that regexPattern matched.
+ @return A NSRange structure giving the location and length of the first match of regexPattern within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regexPattern within range or an error occurs.
  */
-- (NSRange)rangeOfRegex:(NSString *)pattern capture:(NSInteger)capture;
+- (NSRange)rangeOfRegex:(NSString *)regexPattern capture:(NSInteger)capture;
 
 /**
- Returns the range for the first match of pattern within range of the receiver.
+ Returns the range for the first match of regexPattern within range of the receiver.
 
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param range The range of the receiver to search.
  @return A NSRange structure giving the location and length of the first match of regex within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regex within range or an error occurs.
  */
-- (NSRange)rangeOfRegex:(NSString *)pattern inRange:(NSRange)range;
+- (NSRange)rangeOfRegex:(NSString *)regexPattern inRange:(NSRange)range;
 
 /**
  Returns the range of capture number capture for the first match of regex within range of the receiver.
 
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
  @param range The range of the receiver to search.
- @param capture The matching range of the capture number from pattern to return. Use 0 for the entire range that regex matched.
+ @param capture The matching range of the capture number from regexPattern to return. Use 0 for the entire range that regex matched.
  @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
  @return A NSRange structure giving the location and length of capture number capture for the first match of regex within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regex within range or an error occurs.
  */
-- (NSRange)rangeOfRegex:(NSString *)pattern options:(RKLRegexOptions)options inRange:(NSRange)range capture:(NSInteger)capture error:(NSError **)error;
+- (NSRange)rangeOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range capture:(NSInteger)capture error:(NSError **)error;
 
 /**
  Returns the range of capture number capture for the first match of regex within range of the receiver.
 
- @param pattern An NSString containing a regular expression.
+ @param regexPattern An NSString containing a regular expression.
  @param options A mask of options specified by combining RKLRegexOptions or NSRegularExpressionOptions flags with the C bitwise OR operator. Either 0 or RKLNoOptions may be used if no options are required.
  @param matchingOptions The matching options to use. See NSMatchingOptions for possible values.
  @param range The range of the receiver to search.
- @param capture The matching range of the capture number from pattern to return. Use 0 for the entire range that regex matched.
+ @param capture The matching range of the capture number from regexPattern to return. Use 0 for the entire range that regex matched.
  @param error An optional parameter that if set and an error occurs, will contain a NSError object that describes the problem. This may be set to NULL if information about any errors is not required.
  @return A NSRange structure giving the location and length of capture number capture for the first match of regex within range of the receiver. Returns {NSNotFound, 0} if the receiver is not matched by regex within range or an error occurs.
  */
-- (NSRange)rangeOfRegex:(NSString *)pattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range capture:(NSInteger)capture error:(NSError **)error;
+- (NSRange)rangeOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range capture:(NSInteger)capture error:(NSError **)error;
 
 #pragma mark - rangesOfRegex:
 
