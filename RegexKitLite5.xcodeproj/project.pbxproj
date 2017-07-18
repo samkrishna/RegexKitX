@@ -289,6 +289,7 @@
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WARNING_CFLAGS = "-Wsemicolon-before-method-body";
 			};
 			name = Debug;
 		};
@@ -335,6 +336,7 @@
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WARNING_CFLAGS = "-Wsemicolon-before-method-body";
 			};
 			name = Release;
 		};

@@ -137,7 +137,7 @@
     return [self isMatchedByRegex:regexPattern options:options matchingOptions:0 inRange:range error:error];
 }
 
-- (BOOL)isMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error;
+- (BOOL)isMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error
 {
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return NO;
@@ -475,7 +475,7 @@
     return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:options range:range error:NULL];
 }
 
-- (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error;
+- (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error
 {
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return nil;
