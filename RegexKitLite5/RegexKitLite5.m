@@ -423,17 +423,17 @@
 
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern
 {
-    return [self captureComponentsMatchedByRegex:regexPattern options:RKLNoOptions range:[self stringRange] error:NULL];
+    return [self captureComponentsMatchedByRegex:regexPattern options:RKLNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
 }
 
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern range:(NSRange)range
 {
-    return [self captureComponentsMatchedByRegex:regexPattern options:RKLNoOptions range:range error:NULL];
+    return [self captureComponentsMatchedByRegex:regexPattern options:RKLNoOptions matchingOptions:0 range:range error:NULL];
 }
 
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error
 {
-    return [self captureComponentsMatchedByRegex:regexPattern options:options range:range error:error];
+    return [self captureComponentsMatchedByRegex:regexPattern options:options matchingOptions:0 range:range error:error];
 }
 
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error
@@ -445,6 +445,7 @@
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (error) return nil;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
+    if (![matches count]) return @[]; // Per the documentation's failed match return case
     NSTextCheckingResult *firstMatch = matches[0];
     NSMutableArray *captureArray = [NSMutableArray arrayWithCapacity:firstMatch.numberOfRanges];
     
@@ -462,17 +463,17 @@
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern
 {
-    return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:RKLNoOptions range:[self stringRange] error:NULL];
+    return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:RKLNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
 }
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern range:(NSRange)range
 {
-    return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:RKLNoOptions range:range error:NULL];
+    return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:RKLNoOptions matchingOptions:0 range:range error:NULL];
 }
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error
 {
-    return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:options range:range error:NULL];
+    return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:options matchingOptions:0 range:range error:NULL];
 }
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error
