@@ -174,7 +174,6 @@
 
 - (NSRange)rangeOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range capture:(NSUInteger)capture error:(NSError **)error
 {
-    NSCParameterAssert(capture >= 0);
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return NSMakeRange(NSNotFound, NSIntegerMax);
     }
@@ -256,7 +255,6 @@
 
 - (NSString *)stringByMatching:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error
 {
-    NSCParameterAssert(capture >= 0);
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return nil;
     }
@@ -389,7 +387,6 @@
 
 - (NSArray *)componentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range capture:(NSUInteger)capture error:(NSError **)error
 {
-    NSCParameterAssert(capture >= 0);
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return nil;
     }
@@ -559,8 +556,6 @@
 
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)range error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures
 {
-    NSCParameterAssert([keys count] == [captures count]);
-    
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return nil;
     }
