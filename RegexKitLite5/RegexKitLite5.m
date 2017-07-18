@@ -180,17 +180,17 @@
     return [self rangesOfRegex:regexPattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL];
 }
 
-- (NSArray *)rangesOfRegex:(NSString *)regexPattern inRange:(NSRange)targetRange
+- (NSArray *)rangesOfRegex:(NSString *)regexPattern inRange:(NSRange)searchRange
 {
-    return [self rangesOfRegex:regexPattern options:RKLNoOptions matchingOptions:0 inRange:targetRange error:NULL];
+    return [self rangesOfRegex:regexPattern options:RKLNoOptions matchingOptions:0 inRange:searchRange error:NULL];
 }
 
-- (NSArray *)rangesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)targetRange error:(NSError **)error
+- (NSArray *)rangesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error
 {
-    return [self rangesOfRegex:regexPattern options:options matchingOptions:0 inRange:targetRange error:error];
+    return [self rangesOfRegex:regexPattern options:options matchingOptions:0 inRange:searchRange error:error];
 }
 
-- (NSArray *)rangesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)targetRange error:(NSError **)error
+- (NSArray *)rangesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error
 {
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return nil;
@@ -200,8 +200,8 @@
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (error) return nil;
 
-    if ([self isMatchedByRegex:regexPattern options:options matchingOptions:matchingOptions inRange:targetRange error:error]) {
-        [regex enumerateMatchesInString:self options:matchingOptions range:targetRange usingBlock:^(NSTextCheckingResult * _Nullable match, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+    if ([self isMatchedByRegex:regexPattern options:options matchingOptions:matchingOptions inRange:searchRange error:error]) {
+        [regex enumerateMatchesInString:self options:matchingOptions range:searchRange usingBlock:^(NSTextCheckingResult * _Nullable match, NSMatchingFlags flags, BOOL * _Nonnull stop) {
             for (NSInteger i = 0; i < match.numberOfRanges; i++) {
                 NSRange matchRange = [match rangeAtIndex:i];
                 [ranges addObject:[NSValue valueWithRange:matchRange]];
@@ -768,6 +768,11 @@
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)regexPattern usingBlock:(NSString *(^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
     return [self stringByReplacingOccurrencesOfRegex:regexPattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL usingBlock:block];
+}
+
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+{
+    return [self stringByReplacingOccurrencesOfRegex:regexPattern options:options matchingOptions:0 inRange:range error:error usingBlock:block];
 }
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
