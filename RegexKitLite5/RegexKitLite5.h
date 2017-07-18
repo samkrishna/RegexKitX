@@ -777,7 +777,6 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @return A @c NSString created from the characters within @c range of the receiver in which all matches of the regular expression @c regexPattern using @c options are replaced with the contents of the @c NSString returned by @c block. Returns the characters within @c range as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c regexPattern.
  */
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
-
 #pragma clang diagnostic pop
 
 @end
