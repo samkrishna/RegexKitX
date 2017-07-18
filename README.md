@@ -7,19 +7,18 @@ Basically, I'm reimplementing the API as a cover for [NSRegularExpression](https
 - How [unwieldy NSRegularExpression naturally is](http://nshipster.com/nsregularexpression/)
 - The false positives that the Clang Static Analyzer flagged in *RKL4*
 - The low-level C code to the ICU regex engine is starting to spit out deprecation warnings on macOS 10.12 Sierra
-    - Right now, this looks like it's limited to the OSSpinLock/Unlock family of locking functions
+    - Right now, this looks like it's limited to the `OSSpinLock/Unlock` family of locking functions
 - The annoyance of having to always remember to **ALWAYS link to the ICU library** on every project
 
-My concern is that no amount of work-arounds or modifications to all the low-level magic will save *RKL4* from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of NSRegularExpression, I'm choosing to do this.
+My concern is that no amount of work-arounds or modifications to all the low-level magic will save *RKL4* from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do this.
 
 A few caveats:
 
-1. This is a naive re-implementation. There's very little that's currently elegant and/or performant about the code.
-1. I have not done **any** performance testing on this, but I am certain this API re-implementation is slower than the low-level magic code that @johnezang originally wrote.
+1. This is a naive re-implementation. There's very little that's currently performant about the code.
 1. `RKLRegexEnumerationOptions` is deprecated.
-1. The `RKLICURegex...Error` keys are deprecated in exchange for the NSRegularExpression instantiation errors.
+1. The `RKLICURegex...Error` keys are deprecated in exchange for the `NSRegularExpression` instantiation errors.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
-1. `NSRegularExpression` and `NSTextCheckingResult` are given to using `NSUInteger` as a return type (especially for capture indexes and capture counts). The various method clusters reflect the new type change.
+1. `NSRegularExpression` and `NSTextCheckingResult` are given to using `NSUInteger` as a return type (especially for capture indexes and capture counts). The various method clusters reflect the type change.
 1. @johnezang chose to go with the Perl implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
 
 ## Tests
@@ -30,5 +29,5 @@ A few caveats:
     - Low-level
     - Have interactions with the long-since deprecated Garbage Collector from 10-ish years ago
     - Have a different API modality paradigm than the RKL4 APIs
-1. @johnezang also included a few test executables in his *RKL4* sources, but those ~~have not been ported yet.~~ are now ported and exist as tests.
+1. @johnezang also included a few test executables in his *RKL4* sources, but those ~~have not been ported yet.~~ are now ported and exist as test cases.
 
