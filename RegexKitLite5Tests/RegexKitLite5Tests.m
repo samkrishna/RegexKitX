@@ -211,20 +211,6 @@
     
     XCTAssert([output isMatchedByRegex:@"selected"], @"The block didn't work!");
     XCTAssert([output isMatchedByRegex:@"marinated"], @"The block didn't work!");
-    
-    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern usingBlock:^NSString *(NSInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-        if ([capturedStrings[0] isMatchedByRegex:@"^pick$"]) {
-            return @"select";
-        }
-        else if ([capturedStrings[0] isMatchedByRegex:@"^pickled$"]) {
-            return @"marinated";
-        }
-        
-        return @"FAIL";
-    }];
-    
-    XCTAssert([output isMatchedByRegex:@"selected"], @"The block didn't work!");
-    XCTAssert([output isMatchedByRegex:@"marinated"], @"The block didn't work!");
     XCTAssertFalse([output isMatchedByRegex:@"FAIL"], @"The block should NOT have inserted \'FAIL\'!!");
 }
 
