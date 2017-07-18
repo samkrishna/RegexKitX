@@ -754,17 +754,8 @@
             
             if (![captures count]) {
                 NSString *targetString;
-                NSRange targetRange;
-                
-                if (idx == 0) {
-                    targetString = [cloneString substringToIndex:subrange.location];
-                    targetRange = [cloneString rangeOfString:targetString];
-                }
-                else {
-                    targetRange = NSMakeRange(remainderRange.location, (subrange.location - remainderRange.location));
-                    targetString = [cloneString substringWithRange:targetRange];
-                }
-
+                NSRange targetRange = (idx == 0) ? NSMakeRange(0, subrange.location) : NSMakeRange(remainderRange.location, (subrange.location - remainderRange.location));
+                targetString = [cloneString substringWithRange:targetRange];
                 [captures addObject:targetString];
                 rangeCaptures[rangeIndex] = targetRange;
                 NSUInteger newLocation = subrange.location + subrange.length;
