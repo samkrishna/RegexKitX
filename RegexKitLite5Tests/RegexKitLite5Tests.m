@@ -333,7 +333,7 @@
         NSString *string = capturedStrings[0];
         NSRange range = capturedRanges[0];
         NSRange rangeCheck = [rangeValueChecks[index] rangeValue];
-        XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges", string);
+        XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", string, NSStringFromRange(range), NSStringFromRange(rangeCheck));
         index++;
     }];
     
