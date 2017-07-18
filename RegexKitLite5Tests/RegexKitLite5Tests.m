@@ -192,7 +192,7 @@
     NSString *pattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
     NSRange entireRange = [self.candidate stringRange];
 
-    NSString *output = [self.candidate stringByReplacingOccurrencesOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:entireRange error:NULL usingBlock:^NSString *(NSInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+    NSString *output = [self.candidate stringByReplacingOccurrencesOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:entireRange error:NULL usingBlock:^NSString *(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
         NSMutableString *replacement = [NSMutableString string];
         NSString *dateRegex = @"^\\d+-\\d+-\\d+$";
         NSString *timeRegex = @"^\\d+:\\d+:\\d+\\.\\d+$";
@@ -216,7 +216,7 @@
                              @"A peck of pickled peppers Peter Piper picked;\n"
                              @"If Peter Piper picked a peck of pickled peppers,\n"
                              @"Where's the peck of pickled peppers Peter Piper picked?";
-    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[newCandidate stringRange] error:NULL usingBlock:^NSString *(NSInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern options:RKLNoOptions matchingOptions:0 inRange:[newCandidate stringRange] error:NULL usingBlock:^NSString *(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
         if ([capturedStrings[0] isMatchedByRegex:@"^pick$"]) {
             return @"select";
         }
@@ -262,7 +262,7 @@
 {
     NSString *pattern = @"\\$((\\d+)(?:\\.(\\d+)|\\.?))";
     NSError *error;
-    NSInteger captureCount = [pattern captureCountWithOptions:RKLNoOptions error:&error];
+    NSUInteger captureCount = [pattern captureCountWithOptions:RKLNoOptions error:&error];
     XCTAssert(captureCount == 3, @"This should be 4!");
 }
 
@@ -316,7 +316,7 @@
 {
     // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
     
-    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:@"(,(\\s*))" usingBlock:^(NSInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:@"(,(\\s*))" usingBlock:^(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
         NSString *firstString = capturedStrings[0];
         NSRange range1 = capturedRanges[0];
         NSRange range2 = capturedRanges[1];
@@ -354,7 +354,7 @@
     NSLog(@"searchString: '%@'", searchString);
     NSLog(@"regexString : '%@'", regexString);
     
-    [searchString enumerateStringsMatchedByRegex:regexString usingBlock:^(NSInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+    [searchString enumerateStringsMatchedByRegex:regexString usingBlock:^(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
         NSString *matchedString = capturedStrings[0];
         NSLog(@"%lu: %lu '%@'", ++line, [matchedString length], matchedString);
         matchCount++;
