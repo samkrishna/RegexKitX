@@ -348,6 +348,9 @@
     // ICU : "", "I", "|", "at", "|", "ice", "", "I", "", "eat", "", "rice" <- Results that RegexKitLite used to produce.
     // PERL:     "I", "|", "at", "|", "ice",     "I",     "eat",     "rice" <- Results that RegexKitLite now produces.
 
+    // Follow-up: I followed the ticket to see what the outcome was. The ICU dev team rejected this ticket and
+    // said it was closed b/c the behavior worked as intended. I'm noting this here for historic purposes.
+
     NSString *testString = @"I|at|ice I eat rice";
     NSString *pattern = @"\\b\\s*";
     NSArray *components = [testString componentsSeparatedByRegex:pattern];
