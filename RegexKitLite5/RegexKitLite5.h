@@ -337,18 +337,18 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 /**
  Returns the number of captures that the regex contains.
 
- @return Returns @c -1 if an error occurs. Otherwise the number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
+ @return Returns @c NSNotFound if an error occurs. Otherwise the number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
  */
-- (NSInteger)captureCount;
+- (NSUInteger)captureCount;
 
 /**
  Returns the number of captures that the regex contains.
 
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
  @param error The optional error parameter, if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return Returns @c -1 if an error occurs. Otherwise the number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
+ @return Returns @c NSNotFound if an error occurs. Otherwise the number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
  */
-- (NSInteger)captureCountWithOptions:(RKLRegexOptions)options error:(NSError **)error;
+- (NSUInteger)captureCountWithOptions:(RKLRegexOptions)options error:(NSError **)error;
 
 #pragma mark - isRegexValid
 
