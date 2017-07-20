@@ -711,7 +711,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
 
 /**
- Enumerates the strings of the receiver that have been divided by the regular expression @c regexPattern within @c range using @c options and executes @c block for each divided string. The enumeration occurrs from serially from left-to-right.
+ Enumerates the strings of the receiver that have been divided by the regular expression @c regexPattern within @c range using @c options and executes @c block for each divided string. The enumeration occurrs serially from left-to-right.
 
  @param regexPattern A @c NSString containing a valid regular expression.
  @param options A mask of options specified by combining RKLRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
@@ -727,7 +727,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
 
 /**
- Enumerates the strings of the receiver that have been divided by the regular expression @c regexPattern within @c range using @c options and and @c matchingOptions and executes @c block for each divided string. The enumeration occurrs from left-to-right.
+ Enumerates the strings of the receiver that have been divided by the regular expression @c regexPattern within @c range using @c options and and @c matchingOptions and executes @c block for each divided string. The enumeration occurrs serially from left-to-right.
 
  @param regexPattern A @c NSString containing a valid regular expression.
  @param options A mask of options specified by combining RKLRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
