@@ -29,5 +29,5 @@ A few caveats:
     - Low-level
     - Have interactions with the long-since deprecated Garbage Collector from 10-ish years ago
     - Have a different API modality paradigm than the RKL4 APIs
-1. @johnezang also included a few test executables in his *RKL4* sources, but those ~~have not been ported yet.~~ are now ported and exist as test cases.
+1. @johnezang also included a few test executables in his *RKL4* sources, which are now ported and exist as test cases.
 
