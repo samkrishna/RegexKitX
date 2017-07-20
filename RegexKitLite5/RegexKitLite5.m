@@ -503,7 +503,7 @@
     va_list varArgsList;
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
-    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
+    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
     NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:regexPattern options:RKLNoOptions matchingOptions:0 range:[self stringRange] error:NULL withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
     
@@ -515,7 +515,7 @@
     va_list varArgsList;
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
-    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
+    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
     NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:regexPattern options:RKLNoOptions matchingOptions:0 range:range error:NULL withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
     
@@ -527,7 +527,7 @@
     va_list varArgsList;
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
-    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
+    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
     NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:regexPattern options:options matchingOptions:0 range:range error:error withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
     
@@ -539,7 +539,7 @@
     va_list varArgsList;
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
-    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
+    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
     NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:regexPattern options:options matchingOptions:0 range:range error:error withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
 
@@ -574,7 +574,7 @@
 
 #pragma mark - dictionaryByMatchingRegex:
 
-- (NSArray *)_keysForVarArgsList:(va_list)varArgsList withFirstKey:(id)firstKey andIndexes:(NSArray **)captureIndexes
+- (NSArray *)_keysForVarArgsList:(va_list)varArgsList withFirstKey:(id)firstKey indexes:(NSArray **)captureIndexes
 {
     NSMutableArray *captureKeys = [NSMutableArray arrayWithCapacity:64];
     NSMutableArray *captureKeyIndexes = [NSMutableArray arrayWithCapacity:64];
@@ -600,7 +600,7 @@
     va_list varArgsList;
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
-    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
+    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
     NSDictionary *dict = [self dictionaryByMatchingRegex:regexPattern options:RKLNoOptions matchingOptions:0 range:[self stringRange] error:NULL withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
     return dict;
@@ -611,7 +611,7 @@
     va_list varArgsList;
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
-    NSArray *keys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
+    NSArray *keys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
     NSDictionary *dict = [self dictionaryByMatchingRegex:regexPattern options:RKLNoOptions matchingOptions:0 range:range error:NULL withKeys:keys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
     return dict;
@@ -622,7 +622,7 @@
     va_list varArgsList;
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
-    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
+    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
     NSDictionary *dict = [self dictionaryByMatchingRegex:regexPattern options:options matchingOptions:0 range:range error:error withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
     return dict;
@@ -633,7 +633,7 @@
     va_list varArgsList;
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
-    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey andIndexes:&captureKeyIndexes];
+    NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
     NSDictionary *dict = [self dictionaryByMatchingRegex:regexPattern options:options matchingOptions:matchingOptions range:range error:error withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
     return dict;
