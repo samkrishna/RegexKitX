@@ -14,11 +14,10 @@ My concern is that no amount of work-arounds or modifications to all the low-lev
 
 A few caveats:
 
-1. This is a naive re-implementation. There's very little that's currently performant about the code.
 1. `RKLRegexEnumerationOptions` is deprecated.
 1. The `RKLICURegex...Error` keys are deprecated in exchange for the `NSRegularExpression` instantiation errors.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
-1. `NSRegularExpression` and `NSTextCheckingResult` are given to using `NSUInteger` as a return type (especially for capture indexes and capture counts). The various method clusters reflect the type change.
+1. `NSRegularExpression` and `NSTextCheckingResult` are given to using `NSUInteger` as a return type (especially for capture indexes and capture counts). The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on.
 1. @johnezang chose to go with the Perl implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
 
 ## Tests
@@ -31,3 +30,4 @@ A few caveats:
     - Have a different API modality paradigm than the RKL4 APIs
 1. @johnezang also included a few test executables in his *RKL4* sources, which are now ported and exist as test cases.
 
+Additional test cases and pull requests are welcome.
