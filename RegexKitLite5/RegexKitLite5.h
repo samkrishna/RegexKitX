@@ -807,9 +807,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a valid regular expression.
  @param replacement The string to use as the replacement text for matches by @c regexPattern. See ICU Replacement Text Syntax for more information.
- @return Returns @c -1 if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
+ @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
  */
-- (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement;
 
 /**
  Replaces all occurrences of the regular expression @c regexPattern using @c options and @c matchingOptions within @c searchRange with the contents of @c replacement string after performing capture group substitutions, returning the number of replacements made.
@@ -817,9 +817,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a valid regular expression.
  @param replacement The string to use as the replacement text for matches by @c regexPattern. See ICU Replacement Text Syntax for more information.
  @param searchRange The range of the receiver to search.
- @return Returns @c -1 if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
+ @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
  */
-- (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement range:(NSRange)searchRange;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement range:(NSRange)searchRange;
 
 /**
  Replaces all occurrences of the regular expression @c regexPattern using @c options and @c matchingOptions within @c searchRange with the contents of @c replacement string after performing capture group substitutions, returning the number of replacements made.
@@ -829,9 +829,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param options A mask of options specified by combining RKLRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return Returns @c -1 if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
+ @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
  */
-- (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
 
 /**
  Replaces all occurrences of the regular expression @c regexPattern using @c options and @c matchingOptions within @c searchRange with the contents of @c replacement string after performing capture group substitutions, returning the number of replacements made.
@@ -842,9 +842,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param matchingOptions A mask of options specified by combining NSMatchingOptions flags with the C bitwise @c OR operator. @c 0 may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return Returns @c -1 if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
+ @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
  */
-- (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
 
 #pragma mark - replaceOccurrencesOfRegex:usingBlock:
 
@@ -860,9 +860,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
- @return Returns @c -1 if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
+ @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
  */
-- (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c regexPattern within @c range using @c options and executes @c block for each match found. Replaces the characters that were matched with the contents of the string returned by @c block, returning the number of replacements made.
@@ -876,9 +876,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
- @return Returns @c -1 if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
+ @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
  */
-- (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c regexPattern within @c range using @c options and @c matchingOptions and executes @c block for each match found. Replaces the characters that were matched with the contents of the string returned by @c block, returning the number of replacements made.
@@ -893,9 +893,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param &nbsp;&nbsp;capturedStrings An array containing the substrings matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
- @return Returns @c -1 if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
+ @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if error is not @c NULL, otherwise returns the number of replacements performed.
  */
-- (NSInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
 #pragma clang diagnostic pop
 
 @end
