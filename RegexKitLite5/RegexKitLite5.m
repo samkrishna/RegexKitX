@@ -117,7 +117,7 @@
         [returnArray addObject:[self substringFromIndex:pos]];
     }
     
-    return returnArray;
+    return [returnArray copy];
 }
 
 #pragma mark - isMatchedByRegex:
@@ -708,7 +708,7 @@
         *stop = blockStop;
     }];
 
-    return YES;
+    return ([matches count]) ? YES : NO;
 }
 
 #pragma mark - enumerateStringsSeparatedByRegex:usingBlock:
@@ -766,7 +766,7 @@
         *stop = blockStop;
     }];
 
-    return YES;
+    return ([matches count]) ? YES : NO;
 }
 
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlock:
