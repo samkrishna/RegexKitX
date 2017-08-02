@@ -41,13 +41,21 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
+    /** No regular expression options specified. */
     RKLNoOptions                = 0,
+    /** Match letters in the pattern independent of case. */
     RKLCaseless                 = NSRegularExpressionCaseInsensitive,
+    /** Ignore whitespace and #-prefixed comments in the pattern. */
     RKLComments                 = NSRegularExpressionAllowCommentsAndWhitespace,
+    /** Treat the entire pattern as a literal string. */
     RKLIgnoreMetacharacters     = NSRegularExpressionIgnoreMetacharacters,
+    /** Allow . to match any character, including line separators. */
     RKLDotAll                   = NSRegularExpressionDotMatchesLineSeparators,
+    /** Allow ^ and $ to match the start and end of lines. */
     RKLMultiline                = NSRegularExpressionAnchorsMatchLines,
+    /** Treat only \n as a line separator (otherwise, all standard line separators are used). */
     RKLUseUnixLineSeparators    = NSRegularExpressionUseUnixLineSeparators,
+    /** Use Unicode TR#29 to specify word boundaries (otherwise, traditional regular expression word boundaries are used). */
     RKLUnicodeWordBoundaries    = NSRegularExpressionUseUnicodeWordBoundaries
 };
 
