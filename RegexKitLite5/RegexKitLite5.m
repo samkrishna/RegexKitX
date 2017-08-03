@@ -119,10 +119,10 @@
     NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matchResults.count];
     __block NSUInteger pos = 0;
 
-    [regex enumerateMatchesInString:self options:matchingOptions range:range usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        NSRange substrRange = NSMakeRange(pos, [result range].location - pos);
-        [returnArray addObject:[self substringWithRange:substrRange]];
-        pos = [result range].location + [result range].length;
+    [regex enumerateMatchesInString:self options:matchingOptions range:range usingBlock:^(NSTextCheckingResult * _Nullable match, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+        NSRange subrange = NSMakeRange(pos, match.range.location - pos);
+        [returnArray addObject:[self substringWithRange:subrange]];
+        pos = match.range.location + match.range.length;
     }];
     
     if (pos < range.length) {
