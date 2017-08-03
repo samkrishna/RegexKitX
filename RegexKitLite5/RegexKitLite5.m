@@ -49,6 +49,18 @@
     return NSMakeRange(0, self.length);
 }
 
+- (NSRange)rangeFromLocation:(NSUInteger)location
+{
+    NSRange fullRange = [self stringRange];
+    NSUInteger deltaLength = fullRange.length - location;
+    return NSMakeRange(location, deltaLength);
+}
+
+- (NSRange)rangeToLocation:(NSUInteger)location
+{
+    return NSMakeRange(0, location);
+}
+
 @end
 
 @implementation NSString (RegexKitLite5)
@@ -680,7 +692,7 @@
     return [self enumerateStringsMatchedByRegex:regexPattern options:options matchingOptions:0 inRange:range error:NULL enumerationOptions:0 usingBlock:block];
 }
 
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error enumerationOptions:(NSEnumerationOptions)enumerationOptions usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error enumerationOptions:(NSEnumerationOptions)enumOpts usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return NO;
@@ -691,7 +703,7 @@
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     __block BOOL blockStop = NO;
     
-    [matches enumerateObjectsWithOptions:enumerationOptions usingBlock:^(NSTextCheckingResult *match, NSUInteger idx, BOOL * _Nonnull stop) {
+    [matches enumerateObjectsWithOptions:enumOpts usingBlock:^(NSTextCheckingResult *match, NSUInteger idx, BOOL * _Nonnull stop) {
         NSUInteger captureCount = match.numberOfRanges;
         NSMutableArray *captures = [NSMutableArray array];
         NSRange rangeCaptures[captureCount];
@@ -715,15 +727,20 @@
 
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
-    return [self enumerateStringsSeparatedByRegex:regexPattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL usingBlock:block];
+    return [self enumerateStringsSeparatedByRegex:regexPattern options:RKLNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL enumerationOptions:0 usingBlock:block];
 }
 
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)range error:(NSError **)error usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
-    return [self enumerateStringsSeparatedByRegex:regexPattern options:options matchingOptions:0 inRange:range error:error usingBlock:block];
+    return [self enumerateStringsSeparatedByRegex:regexPattern options:options matchingOptions:0 inRange:range error:error enumerationOptions:0 usingBlock:block];
 }
 
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+{
+    return [self enumerateStringsSeparatedByRegex:regexPattern options:options matchingOptions:matchingOptions inRange:range error:error enumerationOptions:0 usingBlock:block];
+}
+
+- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error enumerationOptions:(NSEnumerationOptions)enumOpts usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
     if (error == NULL) {
         if (![regexPattern isRegexValid]) return NO;
@@ -731,42 +748,55 @@
 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (error) return NO;
-    NSString *cloneString = [NSString stringWithString:self];
+    NSArray *strings = [self componentsSeparatedByRegex:regexPattern options:options matchingOptions:matchingOptions range:range error:error];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
+    __block NSRange remainderRange = [self stringRange];
     __block BOOL blockStop = NO;
-    __block NSRange remainderRange;
 
-    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *match, NSUInteger idx, BOOL * _Nonnull stop) {
+    if (![strings count]) return NO;
+
+    if (enumOpts == NSEnumerationReverse) {
+        NSString *lastString = [strings lastObject];
+        NSRange lastRange = [self rangeOfString:lastString options:NSBackwardsSearch range:remainderRange];
+        NSRange rangeCaptures[1] = { lastRange };
+        remainderRange = [self rangeToLocation:lastRange.location];
+        block(1, @[ lastString ], rangeCaptures, &blockStop);
+        if (blockStop == YES) return YES;
+    }
+
+    [matches enumerateObjectsWithOptions:enumOpts usingBlock:^(NSTextCheckingResult *match, NSUInteger idx, BOOL * _Nonnull stop) {
         NSUInteger captureCount = match.numberOfRanges;
         NSMutableArray *captures = [NSMutableArray array];
-        NSRange rangeCaptures[captureCount];
+        NSRange rangeCaptures[captureCount + 1];
+
+        NSString *topString = strings[idx];
+        [captures addObject:topString];
+        NSUInteger searchOptions = (enumOpts == 0) ? 0 : NSBackwardsSearch;
+        NSRange topStringRange = [self rangeOfString:topString options:searchOptions range:remainderRange];
+        rangeCaptures[0] = topStringRange;
 
         for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
             NSRange subrange = [match rangeAtIndex:rangeIndex];
-
-            if (![captures count]) {
-                NSString *targetString;
-                NSRange targetRange = (idx == 0) ? NSMakeRange(0, subrange.location) : NSMakeRange(remainderRange.location, (subrange.location - remainderRange.location));
-                targetString = [cloneString substringWithRange:targetRange];
-                [captures addObject:targetString];
-                rangeCaptures[rangeIndex] = targetRange;
-                NSUInteger newLocation = subrange.location + subrange.length;
-                NSString *remainderString = [cloneString substringFromIndex:newLocation];
-                remainderRange = [cloneString rangeOfString:remainderString];
-            }
-            else {
-                rangeCaptures[rangeIndex] = subrange;
-                NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
-                [captures addObject:substring];
-            }
+            rangeCaptures[rangeIndex + 1] = subrange;
+            NSString *substring = [self substringWithRange:subrange];
+            [captures addObject:substring];
         }
 
-        rangeCaptures[captureCount] = NSMakeRange(NSNotFound, NSIntegerMax);
-        block(captureCount, [captures copy], rangeCaptures, &blockStop);
-        *stop = blockStop;
+        remainderRange = rangeCaptures[captureCount];
+        remainderRange = (enumOpts == 0) ? [self rangeFromLocation:remainderRange.location] : [self rangeToLocation:remainderRange.location];
+        rangeCaptures[captureCount + 1] = NSMakeRange(NSNotFound, NSIntegerMax);
+        block([captures count], [captures copy], rangeCaptures, &blockStop);
+        if (blockStop == YES) *stop = YES;
     }];
 
-    return ([matches count]) ? YES : NO;
+    if (enumOpts == 0 && blockStop == NO) {
+        NSString *lastString = [strings lastObject];
+        NSRange lastRange = [self rangeOfString:lastString options:NSBackwardsSearch range:remainderRange];
+        NSRange rangeCaptures[1] = { lastRange };
+        block(1, @[ lastString ], rangeCaptures, &blockStop);
+    }
+
+    return ([strings count]) ? YES : NO;
 }
 
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlock:
