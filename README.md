@@ -17,7 +17,8 @@ A few caveats:
 1. `RKLRegexEnumerationOptions` is deprecated.
 1. The `RKLICURegex...Error` keys are deprecated in exchange for the `NSRegularExpression` instantiation errors.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
-1. `NSRegularExpression` and `NSTextCheckingResult` are given to using `NSUInteger` as a return type (especially for capture indexes and capture counts). The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on.
+1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration.
+1. `NSRegularExpression` and `NSTextCheckingResult` are given to using `NSUInteger` as a return type (especially for capture indexes and capture counts). The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on. I have replaced the `-1` error return code with `NSNotFound` in case of failure.
 1. @johnezang chose to go with the Perl implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
 
 ## Tests
