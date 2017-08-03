@@ -785,7 +785,7 @@
         remainderRange = rangeCaptures[captureCount];
         remainderRange = (enumOpts == 0) ? [self rangeFromLocation:remainderRange.location] : [self rangeToLocation:remainderRange.location];
         rangeCaptures[captureCount + 1] = NSMakeRange(NSNotFound, NSIntegerMax);
-        block([captures count], [captures copy], rangeCaptures, &blockStop);
+        block(captureCount, [captures copy], rangeCaptures, &blockStop);
         if (blockStop == YES) *stop = YES;
     }];
 
