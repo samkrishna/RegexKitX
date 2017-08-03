@@ -735,11 +735,6 @@
     return [self enumerateStringsSeparatedByRegex:regexPattern options:options matchingOptions:0 inRange:range error:error enumerationOptions:0 usingBlock:block];
 }
 
-- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
-{
-    return [self enumerateStringsSeparatedByRegex:regexPattern options:options matchingOptions:matchingOptions inRange:range error:error enumerationOptions:0 usingBlock:block];
-}
-
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range error:(NSError **)error enumerationOptions:(NSEnumerationOptions)enumOpts usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
     if (error == NULL) {
