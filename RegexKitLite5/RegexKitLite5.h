@@ -426,7 +426,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 #pragma mark - captureComponentsMatchedByRegex:
 
 /**
- Returns an array containing the substrings matched by each capture group present in regexPattern for the first match of regexPattern within @c range of the receiver using @c options.
+ Returns an array containing the substrings matched by each capture group present in @c regexPattern for the first match of @c regexPattern.
 
  @param regexPattern A @c NSString containing a regular expression.
  @return A @c NSArray containing the substrings matched by each capture group present in regexPattern for the first match of regexPattern within @c range of the receiver using @c options. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
@@ -434,7 +434,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern;
 
 /**
- Returns an array containing the substrings matched by each capture group present in regexPattern for the first match of regexPattern within @c range of the receiver using @c options.
+ Returns an array containing the substrings matched by each capture group present in @c regexPattern for the first match of @c regexPattern within @c range of the receiver.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param range The range of the receiver to search.
@@ -443,7 +443,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern range:(NSRange)range;
 
 /**
- Returns an array containing the substrings matched by each capture group present in regexPattern for the first match of regexPattern within @c range of the receiver using @c options.
+ Returns an array containing the substrings matched by each capture group present in @c regexPattern for the first match of @c regexPattern within @c range of the receiver using @c options.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
@@ -455,7 +455,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
 
 /**
- Returns an array containing the substrings matched by each capture group present in regexPattern for the first match of regexPattern within @c range of the receiver using @c options.
+ Returns an array containing the substrings matched by each capture group present in @c regexPattern for the first match of @c regexPattern within @c range of the receiver using @c options and @c matchingOptions.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
@@ -469,7 +469,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 #pragma mark - arrayOfCaptureComponentsMatchedByRegex:
 
 /**
- Returns an array containing all the matches from the receiver that were matched by the regular expression @c regexPattern within @c range using @c options. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
+ Returns an array containing all the matches from the receiver that were matched by the regular expression @c regexPattern. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
 
  @param regexPattern A @c NSString containing a regular expression.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a NSArray which contains all the capture groups present in @c regexPattern. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
@@ -477,7 +477,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern;
 
 /**
- Returns an array containing all the matches from the receiver that were matched by the regular expression @c regexPattern within @c range using @c options. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
+ Returns an array containing all the matches from the receiver that were matched by the regular expression @c regexPattern within @c range. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param range The range of the receiver to search.
@@ -497,7 +497,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error;
 
 /**
- Returns an array containing all the matches from the receiver that were matched by the regular expression @c regexPattern within @c range using @c options. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
+ Returns an array containing all the matches from the receiver that were matched by the regular expression @c regexPattern within @c range using @c options and @c matchingOptions. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
@@ -511,7 +511,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 #pragma mark - arrayOfDictionariesByMatchingRegex:
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range using @c options. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param firstKey The first key to add to the new dictionary.
@@ -520,7 +520,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range using @c options. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param range The range of the receiver to search.
@@ -530,7 +530,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern range:(NSRange)range withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range using @c options. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
@@ -542,7 +542,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range using @c options. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range using @c options and @c matchingOptions. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
@@ -568,7 +568,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)range error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range using @c options. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c regexPattern within @c range using @c options and @c matchingOptions. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
 
  @param regexPattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
