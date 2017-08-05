@@ -465,7 +465,6 @@
 }
 
 #pragma mark - arrayOfCaptureComponentsMatchedByRegex:
-// Eventually use this: https://gist.github.com/kamiro/3902122
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern
 {
@@ -502,7 +501,7 @@
             [captureArray addObject:matchString];
         }
         
-        [matchCaptures addObject:captureArray];
+        [matchCaptures addObject:[captureArray copy]];
     }
     
     return [matchCaptures copy];
