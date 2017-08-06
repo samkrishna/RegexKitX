@@ -772,7 +772,7 @@
         for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
             NSRange subrange = [match rangeAtIndex:rangeIndex];
             rangeCaptures[rangeIndex + 1] = subrange;
-            NSString *substring = [self substringWithRange:subrange];
+            NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
             [captures addObject:substring];
         }
 
