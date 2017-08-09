@@ -781,7 +781,7 @@
         if (blockStop == YES) *stop = YES;
     }];
 
-    return ([strings count]) ? YES : NO;
+    return YES;
 }
 
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlock:
