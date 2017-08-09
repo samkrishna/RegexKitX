@@ -315,7 +315,7 @@
 - (void)testEnumerateStringsSeparatedByRegex
 {
     // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
-    NSString *regexPattern = @",(\\s*)";
+    NSString *regexPattern = @",(\\s+)";
     NSArray *rangeValueChecks = @[ [NSValue valueWithRange:NSMakeRange(0, 91)],
                                    [NSValue valueWithRange:NSMakeRange(93, 30)],
                                    [NSValue valueWithRange:NSMakeRange(125, 23)],
