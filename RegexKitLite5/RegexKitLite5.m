@@ -743,52 +743,43 @@
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (error) return NO;
     NSArray *strings = [self componentsSeparatedByRegex:regexPattern options:options matchingOptions:matchingOptions range:range error:error];
+    if (![strings count]) return NO;
+    NSUInteger lastStringIndex = [strings indexOfObject:[strings lastObject]];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     __block NSRange remainderRange = [self stringRange];
     __block BOOL blockStop = NO;
 
-    if (![strings count]) return NO;
+    [strings enumerateObjectsWithOptions:enumOpts usingBlock:^(NSString *topString, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSRange topStringRange = [self rangeOfString:topString options:NSBackwardsSearch range:remainderRange];
+        NSTextCheckingResult *match = (idx < lastStringIndex) ? matches[idx] : nil;
 
-    if (enumOpts == NSEnumerationReverse) {
-        NSString *lastString = [strings lastObject];
-        NSRange lastRange = [self rangeOfString:lastString options:NSBackwardsSearch range:remainderRange];
-        NSRange rangeCaptures[1] = { lastRange };
-        remainderRange = [self rangeToLocation:lastRange.location];
-        block(1, @[ lastString ], rangeCaptures, &blockStop);
-        if (blockStop == YES) return YES;
-    }
+        if (match) {
+            NSUInteger captureCount = match.numberOfRanges;
+            NSMutableArray *captures = [NSMutableArray array];
+            NSRange rangeCaptures[captureCount + 1];
+            rangeCaptures[0] = topStringRange;
+            [captures addObject:topString];
 
-    [matches enumerateObjectsWithOptions:enumOpts usingBlock:^(NSTextCheckingResult *match, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSUInteger captureCount = match.numberOfRanges;
-        NSMutableArray *captures = [NSMutableArray array];
-        NSRange rangeCaptures[captureCount + 1];
+            for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
+                NSRange subrange = [match rangeAtIndex:rangeIndex];
+                rangeCaptures[rangeIndex + 1] = subrange;
+                NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
+                [captures addObject:substring];
+            }
 
-        NSString *topString = strings[idx];
-        [captures addObject:topString];
-        NSUInteger searchOptions = (enumOpts == 0) ? 0 : NSBackwardsSearch;
-        NSRange topStringRange = [self rangeOfString:topString options:searchOptions range:remainderRange];
-        rangeCaptures[0] = topStringRange;
-
-        for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
-            NSRange subrange = [match rangeAtIndex:rangeIndex];
-            rangeCaptures[rangeIndex + 1] = subrange;
-            NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
-            [captures addObject:substring];
+            remainderRange = rangeCaptures[captureCount];
+            remainderRange = (enumOpts == 0) ? [self rangeFromLocation:remainderRange.location] : [self rangeToLocation:remainderRange.location];
+            rangeCaptures[captureCount + 1] = NSMakeRange(NSNotFound, NSIntegerMax);
+            block(captureCount, [captures copy], rangeCaptures, &blockStop);
+        }
+        else {
+            NSRange lastRange = [self rangeOfString:topString options:NSBackwardsSearch range:remainderRange];
+            NSRange rangeCaptures[1] = { lastRange };
+            block(1, @[ topString ], rangeCaptures, &blockStop);
         }
 
-        remainderRange = rangeCaptures[captureCount];
-        remainderRange = (enumOpts == 0) ? [self rangeFromLocation:remainderRange.location] : [self rangeToLocation:remainderRange.location];
-        rangeCaptures[captureCount + 1] = NSMakeRange(NSNotFound, NSIntegerMax);
-        block(captureCount, [captures copy], rangeCaptures, &blockStop);
         if (blockStop == YES) *stop = YES;
     }];
-
-    if (enumOpts == 0 && blockStop == NO) {
-        NSString *lastString = [strings lastObject];
-        NSRange lastRange = [self rangeOfString:lastString options:NSBackwardsSearch range:remainderRange];
-        NSRange rangeCaptures[1] = { lastRange };
-        block(1, @[ lastString ], rangeCaptures, &blockStop);
-    }
 
     return ([strings count]) ? YES : NO;
 }
