@@ -115,16 +115,16 @@
     // Repurposed from https://stackoverflow.com/a/9185677
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (error) return nil;
-    NSArray *matchResults = [regex matchesInString:self options:matchingOptions range:range];
-    NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matchResults.count];
+    NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
+    NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matches.count];
     __block NSUInteger pos = 0;
 
-    [regex enumerateMatchesInString:self options:matchingOptions range:range usingBlock:^(NSTextCheckingResult * _Nullable match, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+    for (NSTextCheckingResult *match in matches) {
         NSRange subrange = NSMakeRange(pos, match.range.location - pos);
         [returnArray addObject:[self substringWithRange:subrange]];
         pos = match.range.location + match.range.length;
-    }];
-    
+    }
+
     if (pos < range.length) {
         [returnArray addObject:[self substringFromIndex:pos]];
     }
@@ -228,12 +228,12 @@
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     if (![matches count]) return @[];
 
-    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *  _Nonnull match, NSUInteger idx, BOOL * _Nonnull stop) {
+    for (NSTextCheckingResult *match in matches) {
         for (NSUInteger i = 0; i < match.numberOfRanges; i++) {
             NSRange matchRange = [match rangeAtIndex:i];
             [ranges addObject:[NSValue valueWithRange:matchRange]];
         }
-    }];
+    }
 
     return [ranges copy];
 }
