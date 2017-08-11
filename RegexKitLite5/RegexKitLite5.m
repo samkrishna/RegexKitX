@@ -41,6 +41,8 @@
 #import "RegexKitLite5.h"
 
 #define RKL_EXPECTED(cond, expect)       __builtin_expect((long)(cond), (expect))
+static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
+static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = NSUIntegerMax});
 
 @implementation NSString (EntireRange)
 
@@ -187,14 +189,14 @@
 - (NSRange)rangeOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)range capture:(NSUInteger)capture error:(NSError **)error
 {
     if (error == NULL) {
-        if (![regexPattern isRegexValid]) return NSMakeRange(NSNotFound, NSIntegerMax);
+        if (![regexPattern isRegexValid]) return NSNotFoundRange;
     }
 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
-    if (error) return NSMakeRange(NSNotFound, NSIntegerMax);
+    if (error) return NSNotFoundRange;
 
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
-    if (![matches count]) return NSMakeRange(NSNotFound, 0);
+    if (![matches count]) return NSNotFoundRange;
     NSTextCheckingResult *firstMatch = matches[0];
     return [firstMatch rangeAtIndex:capture];
 }
@@ -705,7 +707,7 @@
             [captures addObject:substring];
         }
         
-        rangeCaptures[captureCount] = NSMakeRange(NSNotFound, NSIntegerMax);
+        rangeCaptures[captureCount] = NSTerminationRange;
         block(captureCount, [captures copy], rangeCaptures, &blockStop);
         *stop = blockStop;
     }];
@@ -760,7 +762,7 @@
 
             remainderRange = rangeCaptures[captureCount];
             remainderRange = (enumOpts == 0) ? [self rangeFromLocation:remainderRange.location] : [self rangeToLocation:remainderRange.location];
-            rangeCaptures[captureCount + 1] = NSMakeRange(NSNotFound, NSIntegerMax);
+            rangeCaptures[captureCount + 1] = NSTerminationRange;
             block(captureCount, [captures copy], rangeCaptures, &blockStop);
         }
         else {
@@ -816,7 +818,7 @@
             [captures addObject:substring];
         }
         
-        rangeCaptures[captureCount] = NSMakeRange(NSNotFound, NSIntegerMax);
+        rangeCaptures[captureCount] = NSTerminationRange;
         NSString *replacement = block(captureCount, [captures copy], rangeCaptures, &stop);
         [target replaceCharactersInRange:match.range withString:replacement];
         if (stop == YES) break;
@@ -907,7 +909,7 @@
             [captures addObject:substring];
         }
         
-        rangeCaptures[captureCount] = NSMakeRange(NSNotFound, NSIntegerMax);
+        rangeCaptures[captureCount] = NSTerminationRange;
         NSString *replacement = block(captureCount, [captures copy], rangeCaptures, &stop);
         [self replaceCharactersInRange:match.range withString:replacement];
         count++;
