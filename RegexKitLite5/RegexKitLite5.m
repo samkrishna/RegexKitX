@@ -53,8 +53,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 - (NSRange)rangeFromLocation:(NSUInteger)location
 {
-    NSRange fullRange = [self stringRange];
-    NSUInteger deltaLength = fullRange.length - location;
+    NSUInteger deltaLength = self.length - location;
     return NSMakeRange(location, deltaLength);
 }
 
