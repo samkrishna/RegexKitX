@@ -41,6 +41,7 @@
 #import "RegexKitLite5.h"
 
 #define RKL_EXPECTED(cond, expect)       __builtin_expect((long)(cond), (expect))
+
 static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
 static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = NSUIntegerMax});
 
@@ -117,6 +118,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (error) return nil;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
+    if (![matches count]) return @[ self ];
     NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matches.count];
     __block NSUInteger pos = 0;
 
@@ -193,10 +195,10 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (error) return NSNotFoundRange;
-
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:range];
     if (![matches count]) return NSNotFoundRange;
     NSTextCheckingResult *firstMatch = matches[0];
+
     return [firstMatch rangeAtIndex:capture];
 }
 
@@ -565,12 +567,14 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
     NSMutableArray *arrayOfDicts = [NSMutableArray array];
     
-    [self enumerateStringsMatchedByRegex:regexPattern options:options matchingOptions:matchingOptions inRange:range error:error enumerationOptions:0 usingBlock:^(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+    BOOL result = [self enumerateStringsMatchedByRegex:regexPattern options:options matchingOptions:matchingOptions inRange:range error:error enumerationOptions:0 usingBlock:^(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
         NSString *mainString = capturedStrings[0];
         NSDictionary *dict = [mainString dictionaryByMatchingRegex:regexPattern options:options matchingOptions:matchingOptions range:[mainString stringRange] error:error withKeys:keys forCaptures:captures];
         [arrayOfDicts addObject:dict];
     }];
-    
+
+    if (!result) return @[];
+
     return [arrayOfDicts copy];
 }
 
@@ -766,7 +770,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
         }
         else {
             NSRange lastRange = [self rangeOfString:topString options:NSBackwardsSearch range:remainderRange];
-            NSRange rangeCaptures[1] = { lastRange };
+            NSRange rangeCaptures[2] = { lastRange, NSTerminationRange };
             block(1, @[ topString ], rangeCaptures, &blockStop);
         }
 

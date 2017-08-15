@@ -263,7 +263,7 @@
     NSString *pattern = @"\\$((\\d+)(?:\\.(\\d+)|\\.?))";
     NSError *error;
     NSUInteger captureCount = [pattern captureCountWithOptions:RKLNoOptions error:&error];
-    XCTAssert(captureCount == 3, @"This should be 4!");
+    XCTAssert(captureCount == 3, @"This should be 3!");
 }
 
 - (void)testDictionaryByMatchingRegexOptionsRangeErrorWithKeysAndCaptures
