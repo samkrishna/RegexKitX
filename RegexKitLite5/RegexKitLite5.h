@@ -40,9 +40,7 @@
 
 #import <Foundation/Foundation.h>
 
-/**
- The constants that define the regular expression options.
- */
+/** The constants that define the regular expression options. */
 typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
     /** No regular expression options specified. */
     RKLNoOptions                = 0,
