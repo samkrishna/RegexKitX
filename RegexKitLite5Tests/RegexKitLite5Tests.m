@@ -234,15 +234,34 @@
 
 - (void)testIsRegexValid
 {
-    NSString *regexString = @"[a-z"; // Missing the closing ]
+    NSString *regexString = @"[a-z";
     XCTAssertFalse([regexString isRegexValid], @"This should have failed!");
 }
 
 - (void)testIsRegexValidWithOptionsError
 {
     NSError *error;
-    NSString *regexString = @"[a-z"; // Missing the closing ]
+    NSString *regexString = @"[a-z";
     XCTAssertFalse([regexString isRegexValidWithOptions:RKLNoOptions error:&error], @"This should have failed!");
+}
+
+- (void)testArrayOfCaptureComponentsMatchedByRegexOptionsMatchingOptionsRangeError
+{
+    NSString *list      = @"$10.23, $1024.42, $3099";
+    NSArray *listItems = [list arrayOfCaptureComponentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" options:RKLNoOptions matchingOptions:0 range:[list stringRange] error:NULL];
+    XCTAssert([listItems count] == 3, @"There should be 3 elements here!");
+
+    NSArray *list0 = listItems[0];
+    BOOL result0 = [list0 isEqualToArray:@[ @"$10.23", @"10.23", @"10", @"23" ]];
+    XCTAssert(result0, @"These should be equivalent!");
+
+    NSArray *list1 = listItems[1];
+    BOOL result1 = [list1 isEqualToArray:@[ @"$1024.42", @"1024.42", @"1024", @"42" ]];
+    XCTAssert(result1, @"These should be equivalent!");
+
+    NSArray *list2 = listItems[2];
+    BOOL result2 = [list2 isEqualToArray:@[ @"$3099", @"3099", @"3099", @"" ]];
+    XCTAssert(result2, @"These should be equivalent!");
 }
 
 - (void)testComponentsMatchedByRegexOptionsRangeCaptureError
@@ -292,13 +311,14 @@
     XCTAssertNotNil(error, @"There should be an error here");
 }
 
-- (void)testArrayOfDictionariesByMatchingRegexOptionsRangeErrorWithKeysAndCaptures
+- (void)testArrayOfDictionariesByMatchingRegexOptionsMatchingOptionsRangeErrorWithKeysAndCaptures
 {
     NSString *name = @"Name: Bob\n"
                      @"Name: John Smith";
     NSString *regex = @"(?m)^Name:\\s*(\\w*)\\s*(\\w*)$";
     NSArray  *nameArray = [name arrayOfDictionariesByMatchingRegex:regex
                                                            options:RKLNoOptions
+                                                   matchingOptions:0
                                                              range:[name stringRange]
                                                              error:NULL
                                                withKeysAndCaptures:@"first", 1, @"last", 2, NULL];
