@@ -12,6 +12,8 @@ Basically, I'm reimplementing the API as a cover for [NSRegularExpression](https
 
 My concern is that no amount of work-arounds or modifications to all the low-level magic will save *RKL4* from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do this.
 
+I've also added documentation that is option-click-able for all the RKL5 category methods.
+
 A few caveats:
 
 1. `RKLRegexEnumerationOptions` is deprecated.
