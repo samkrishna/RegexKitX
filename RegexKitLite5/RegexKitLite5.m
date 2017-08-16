@@ -45,22 +45,22 @@
 static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
 static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = NSUIntegerMax});
 
-@implementation NSString (EntireRange)
+@implementation NSString (RangeMechanics)
 
 - (NSRange)stringRange
 {
-    return NSMakeRange(0, self.length);
+    return ((NSRange){.location = 0UL, .length = self.length});
 }
 
 - (NSRange)rangeFromLocation:(NSUInteger)location
 {
     NSUInteger deltaLength = self.length - location;
-    return NSMakeRange(location, deltaLength);
+    return ((NSRange){.location = location, .length = deltaLength});
 }
 
 - (NSRange)rangeToLocation:(NSUInteger)location
 {
-    return NSMakeRange(0, location);
+    return ((NSRange){.location = 0UL, .length = location});
 }
 
 @end
