@@ -14,14 +14,15 @@ My concern is that no amount of work-arounds or modifications to all the low-lev
 
 I've also added documentation that is option-click-able for all the RKL5 category methods.
 
-A few caveats:
+## A few caveats:
 
+1. Any RKL4-based PCRE-like regex nuances that differ from ICU-compatible regexes is fully deprecated. This codebase is 100%-pure ICU regex syntax. For the vast majority of regexes, there should be no issues. **HOWEVER**, if you need PCRE-like functionality in your particular regex, you'll need to rewrite the regex to be ICU-compliant.
+1. @johnezang chose to go with the Perl implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
 1. `RKLRegexEnumerationOptions` is deprecated.
 1. The `RKLICURegex...Error` keys are deprecated in exchange for the `NSRegularExpression` instantiation errors.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
-1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration.
-1. `NSRegularExpression` and `NSTextCheckingResult` are given to using `NSUInteger` as a return type (especially for capture indexes and capture counts). The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on. I have replaced the `-1` error return code with `NSNotFound` in case of failure.
-1. @johnezang chose to go with the Perl implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
+1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration. As usual, `NSEnumerationConcurrent` behavior is undefined.
+1. `NSRegularExpression` and `NSTextCheckingResult` use `NSUInteger` as a return type (especially for capture indexes and capture counts) and RKL5 follows that convention. The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on. I have replaced the `-1` error return code with `NSNotFound` in case of failure.
 
 ## Tests
 
