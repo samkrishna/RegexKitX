@@ -544,7 +544,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:regexPattern options:options matchingOptions:0 range:searchRange error:error withKeys:captureKeys forCaptures:captureKeyIndexes];
+    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:regexPattern options:options matchingOptions:matchingOptions range:searchRange error:error withKeys:captureKeys forCaptures:captureKeyIndexes];
     va_end(varArgsList);
 
     return dictArray;
@@ -763,7 +763,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
             remainderRange = rangeCaptures[captureCount];
             remainderRange = (enumOpts == 0) ? [self rangeFromLocation:remainderRange.location] : [self rangeToLocation:remainderRange.location];
             rangeCaptures[captureCount + 1] = NSTerminationRange;
-            block(captureCount, [captures copy], rangeCaptures, &blockStop);
+            block(captureCount + 1, [captures copy], rangeCaptures, &blockStop);
         }
         else {
             NSRange lastRange = [self rangeOfString:topString options:NSBackwardsSearch range:remainderRange];
