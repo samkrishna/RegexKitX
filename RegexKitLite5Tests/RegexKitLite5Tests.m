@@ -451,7 +451,6 @@
 
 #pragma mark - Ported RegexKit 0.6 Test Cases
 
-// From core.m
 - (void)testRegexString
 {
     NSString *pattern123 = [NSString stringWithFormat:@"123"];
