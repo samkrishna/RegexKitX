@@ -97,6 +97,10 @@
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
     XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKLCaseless inRange:[self.candidate stringRange] error:nil], @"Case-insensitive match has failed!");
     XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKLNoOptions matchingOptions:0 inRange:[self.candidate stringRange] error:&error], @"Case-sensitive match has failed! Error: %@", error);
+
+    NSString *failureCase1 = @"Orthogonal2";
+    BOOL failureResult1 = [failureCase1 isMatchedByRegex:@"Orthogonal" options:RKLCaseless inRange:[failureCase1 stringRange] error:&error];
+    XCTAssert(failureResult1, @"This should have matched");
 }
 
 #pragma mark - componentsSeparatedByRegex:
