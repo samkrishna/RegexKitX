@@ -6,7 +6,7 @@ Basically, I'm reimplementing the API as a cover for [NSRegularExpression](https
 
 - How [unwieldy NSRegularExpression naturally is](http://nshipster.com/nsregularexpression/)
 - The false positives that the Clang Static Analyzer flagged in *RKL4*
-- The low-level C code to the ICU regex engine is starting to spit out deprecation warnings on macOS 10.12 Sierra
+- The low-level C code to the [ICU](http://site.icu-project.org/) regex engine is starting to spit out deprecation warnings on macOS 10.12 Sierra
     - Right now, this looks like it's limited to the `OSSpinLock/Unlock` family of locking functions
 - The annoyance of having to always remember to **ALWAYS link to the ICU library** on every project
 
@@ -16,8 +16,8 @@ I've also added documentation that is option-click-able for all the RKL5 categor
 
 ## A few caveats:
 
-1. Any RKL4-based PCRE-like regex nuances that differ from ICU-compatible regexes is fully deprecated. This codebase is 100%-pure ICU regex syntax. For the vast majority of regexes, there should be no issues. **HOWEVER**, if you need PCRE-like functionality in your particular regex, you'll need to rewrite the regex to be ICU-compliant.
-1. @johnezang chose to go with the Perl implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
+1. Any RKL4-based PCRE-like regex nuances that differ from ICU-compatible regexes is fully deprecated because of the conversion to `NSRegularExpression`. This codebase is 100%-pure ICU regex syntax. For the vast majority of regexes, there should be no issues. **HOWEVER**, if your regex relied on non-ICU nuances that worked in *RKL4* for your particular regex, you'll need to rewrite the regex to be ICU-compliant.
+    1. @johnezang chose to go with the Perl-compatible implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. As of right now, the code is following the ICU convention of placing empty string as the starting and ending 'boundaries' of a match. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
 1. `RKLRegexEnumerationOptions` is deprecated.
 1. The `RKLICURegex...Error` keys are deprecated in exchange for the `NSRegularExpression` instantiation errors.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
