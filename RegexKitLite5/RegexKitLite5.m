@@ -256,12 +256,15 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return nil;
     __block NSTextCheckingResult *firstMatch = nil;
-    
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
     [regex enumerateMatchesInString:self options:matchingOptions range:searchRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
         firstMatch = result;
         *stop = YES;
     }];
-    
+#pragma clang diagnostic pop
+
     if (firstMatch) {
         NSString *result = [self substringWithRange:[firstMatch rangeAtIndex:capture]];
         return result;
@@ -522,12 +525,15 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return nil;
     NSMutableArray *arrayOfDicts = [NSMutableArray array];
-    
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
     BOOL result = [self enumerateStringsMatchedByRegex:regexPattern options:options matchingOptions:matchingOptions inRange:searchRange error:error enumerationOptions:0 usingBlock:^(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
         NSString *mainString = capturedStrings[0];
         NSDictionary *dict = [mainString dictionaryByMatchingRegex:regexPattern options:options matchingOptions:matchingOptions range:[mainString stringRange] error:error withKeys:keys forCaptures:captures];
         [arrayOfDicts addObject:dict];
     }];
+#pragma clang diagnostic pop
 
     if (!result) return @[];
 
@@ -643,6 +649,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     if (![matches count]) return NO;
     __block BOOL blockStop = NO;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
     [matches enumerateObjectsWithOptions:enumOpts usingBlock:^(NSTextCheckingResult *match, NSUInteger idx, BOOL * _Nonnull stop) {
         NSUInteger captureCount = match.numberOfRanges;
         NSMutableArray *captures = [NSMutableArray array];
@@ -659,7 +667,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
         block(captureCount, [captures copy], rangeCaptures, &blockStop);
         *stop = blockStop;
     }];
-
+#pragma clang diagnostic pop
+    
     return ([matches count]) ? YES : NO;
 }
 
