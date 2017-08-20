@@ -12,17 +12,17 @@ Basically, I'm reimplementing the API as a cover for [NSRegularExpression](https
 
 My concern is that no amount of work-arounds or modifications to all the low-level magic will save *RKL4* from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do this.
 
-I've also added documentation that is option-click-able for all the RKL5 category methods.
+I've also added documentation that is option-click-able for all the *RKL5* category methods.
 
 ## A few caveats:
 
-1. Any RKL4-based PCRE-like regex nuances that differ from ICU-compatible regexes is fully deprecated because of the conversion to `NSRegularExpression`. This codebase is 100%-pure ICU regex syntax. For the vast majority of regexes, there should be no issues. **HOWEVER**, if your regex relied on non-ICU nuances that worked in RKL4, you'll likely need to modify the regex to be ICU-compliant and/or update your code.
+1. Any *RKL4*-based PCRE-like regex nuances that differ from ICU-compatible regexes is fully deprecated because of the conversion to `NSRegularExpression`. This codebase is 100%-pure ICU regex syntax. For the vast majority of regexes, there should be no issues. **HOWEVER**, if your regex relied on non-ICU nuances that worked in *RKL4*, you'll likely need to modify the regex to be ICU-compliant and/or update your code.
     1. For example, @johnezang chose to go with the Perl-compatible implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. *RKL5* follows the ICU convention of placing empty string as the starting and ending 'boundaries' of a match when using the `\b` metacharacter. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
 1. `RKLRegexEnumerationOptions` is deprecated.
 1. The `RKLICURegex...Error` keys are deprecated in exchange for the `NSRegularExpression` instantiation errors.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
 1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration. As usual, `NSEnumerationConcurrent` behavior is undefined.
-1. `NSRegularExpression` and `NSTextCheckingResult` use `NSUInteger` as a return type (especially for capture indexes and capture counts) and RKL5 follows that convention. The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on. I have replaced the `-1` error return code with `NSNotFound` in case of failure.
+1. `NSRegularExpression` and `NSTextCheckingResult` use `NSUInteger` as a return type (especially for capture indexes and capture counts) and *RKL5* follows that convention. The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on. I have replaced the `-1` error return code with `NSNotFound` in case of failure.
 
 ## Tests
 
@@ -31,7 +31,7 @@ I've also added documentation that is option-click-able for all the RKL5 categor
 1. I am also taking a pass on most of the RegexKit 0.6 tests because they are:
     - Low-level
     - Have interactions with the long-since deprecated Garbage Collector from 10-ish years ago
-    - Have a different API modality paradigm than the RKL4 APIs
+    - Have a different API modality paradigm than the *RKL4* APIs
 1. @johnezang also included a few test executables in his *RKL4* sources, which are now ported and exist as test cases.
 
 Additional test cases and pull requests are welcome.
