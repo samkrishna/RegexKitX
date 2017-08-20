@@ -105,7 +105,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error
 {
-    return [self componentsSeparatedByRegex:regexPattern options:options matchingOptions:0 range:searchRange error:NULL];
+    return [self componentsSeparatedByRegex:regexPattern options:options matchingOptions:0 range:searchRange error:error];
 }
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
@@ -436,7 +436,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error
 {
-    return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:options matchingOptions:0 range:searchRange error:NULL];
+    return [self arrayOfCaptureComponentsMatchedByRegex:regexPattern options:options matchingOptions:0 range:searchRange error:error];
 }
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
@@ -632,7 +632,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
 {
-    return [self enumerateStringsMatchedByRegex:regexPattern options:options matchingOptions:0 inRange:searchRange error:NULL enumerationOptions:0 usingBlock:block];
+    return [self enumerateStringsMatchedByRegex:regexPattern options:options matchingOptions:0 inRange:searchRange error:error enumerationOptions:0 usingBlock:block];
 }
 
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error enumerationOptions:(NSEnumerationOptions)enumOpts usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
