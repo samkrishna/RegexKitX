@@ -517,7 +517,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     return [self arrayOfDictionariesByMatchingRegex:regexPattern options:options matchingOptions:0 range:searchRange error:error withKeys:keys forCaptures:captures];
 }
 
-- (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures
+- (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError * __autoreleasing *)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return nil;
