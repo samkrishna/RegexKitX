@@ -150,10 +150,6 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 - (BOOL)isMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error
 {
-    if (error == NULL) {
-        if (![regexPattern isRegexValid]) return NO;
-    }
-
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return NO;
     NSUInteger matchCount = [regex numberOfMatchesInString:self options:matchingOptions range:searchRange];
@@ -332,15 +328,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 - (BOOL)isRegexValidWithOptions:(RKLRegexOptions)options error:(NSError **)error
 {
-    if (error == NULL) {
-        NSError *localError;
-        NSRegularExpression *regex = [NSString cachedRegexForPattern:self options:options error:&localError];
-        if (!regex) return NO;
-    }
-    else {
-        NSRegularExpression *regex = [NSString cachedRegexForPattern:self options:options error:error];
-        if (!regex) return NO;
-    }
+    NSRegularExpression *regex = [NSString cachedRegexForPattern:self options:options error:error];
+    if (!regex) return NO;
 
     return YES;
 }
@@ -668,7 +657,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
         *stop = blockStop;
     }];
 #pragma clang diagnostic pop
-    
+
     return ([matches count]) ? YES : NO;
 }
 
