@@ -678,7 +678,6 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return NO;
     NSArray *strings = [self componentsSeparatedByRegex:regexPattern options:options matchingOptions:matchingOptions range:searchRange error:error];
-    if (![strings count]) return NO;
     NSUInteger lastStringIndex = [strings indexOfObject:[strings lastObject]];
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     __block NSRange remainderRange = [self stringRange];
