@@ -236,17 +236,13 @@
     XCTAssertFalse([output isMatchedByRegex:@"FAIL"], @"The block should NOT have inserted \'FAIL\'!!");
 }
 
-- (void)testIsRegexValid
-{
-    NSString *regexString = @"[a-z";
-    XCTAssertFalse([regexString isRegexValid], @"This should have failed!");
-}
-
 - (void)testIsRegexValidWithOptionsError
 {
     NSError *error;
     NSString *regexString = @"[a-z";
     XCTAssertFalse([regexString isRegexValidWithOptions:RKLNoOptions error:&error], @"This should have failed!");
+    XCTAssert(error.code == 2048, @"The error code should be 2048");
+    XCTAssert(error.domain == NSCocoaErrorDomain, @"This should be an NSCocoaErrorDomain");
 }
 
 - (void)testArrayOfCaptureComponentsMatchedByRegexOptionsMatchingOptionsRangeError
