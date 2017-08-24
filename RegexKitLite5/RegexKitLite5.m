@@ -513,20 +513,20 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return nil;
-    NSMutableArray *arrayOfDicts = [NSMutableArray array];
+    NSMutableArray *dictArray = [NSMutableArray array];
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
     BOOL result = [self enumerateStringsMatchedByRegex:regexPattern options:options matchingOptions:matchingOptions inRange:searchRange error:error enumerationOptions:0 usingBlock:^(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
         NSString *mainString = capturedStrings[0];
         NSDictionary *dict = [mainString dictionaryByMatchingRegex:regexPattern options:options matchingOptions:matchingOptions range:[mainString stringRange] error:error withKeys:keys forCaptures:captures];
-        [arrayOfDicts addObject:dict];
+        [dictArray addObject:dict];
     }];
 #pragma clang diagnostic pop
 
     if (!result) return @[];
 
-    return [arrayOfDicts copy];
+    return [dictArray copy];
 }
 
 #pragma mark - dictionaryByMatchingRegex:
