@@ -96,6 +96,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
  @return A @c NSArray object containing the substrings from the receiver that have been divided by @c regexPattern.
+ @return Returns @c nil if @c regexPattern is invalid.
  */
 - (NSArray *)componentsSeparatedByRegex:(NSString *)regexPattern range:(NSRange)searchRange;
 
@@ -131,6 +132,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a regular expression.
  @return A @c BOOL value indicating whether or not the regexPattern has been matched in the receiver.
+ @return Will return @c NO if @c regexPattern is invalid.
  */
 - (BOOL)isMatchedByRegex:(NSString *)regexPattern;
 
@@ -140,6 +142,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
  @return A @c BOOL value indicating whether or not the regexPattern has been matched in the receiver.
+ @return Will return @c NO if @c regexPattern is invalid.
  */
 - (BOOL)isMatchedByRegex:(NSString *)regexPattern inRange:(NSRange)searchRange;
 
@@ -175,6 +178,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a regular expression.
  @return A @c NSRange structure giving the location and length of the first match of @c regexPattern within @c searchRange of the receiver. Returns @c {NSNotFound, 0} if the receiver is not matched by @c regexPattern.
+ @return Returns @c {NSNotFound, 0} if an error occurs.
  */
 - (NSRange)rangeOfRegex:(NSString *)regexPattern;
 
@@ -184,6 +188,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a regular expression.
  @param capture The matching range of the capture number from @c regexPattern to return. Use @c 0 for the entire range that @c regexPattern matched.
  @return A @c NSRange structure giving the location and length of the first match of @c regexPattern within @c searchRange of the receiver. Returns @c {NSNotFound, 0} if the receiver is not matched by @c regexPattern within @c searchRange or an error occurs.
+ @return Returns @c {NSNotFound, 0} if an error occurs.
  */
 - (NSRange)rangeOfRegex:(NSString *)regexPattern capture:(NSUInteger)capture;
 
@@ -193,6 +198,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
  @return A @c NSRange structure giving the location and length of capture number @c capture for the first match of @c regexPattern. Returns @c {NSNotFound, 0} if the receiver is not matched by @c regexPattern.
+ @return Returns @c {NSNotFound, 0} if an error occurs.
  */
 - (NSRange)rangeOfRegex:(NSString *)regexPattern inRange:(NSRange)searchRange;
 
@@ -230,6 +236,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a regular expression.
  @return A @c NSArray of @c NSValue-wrapped NSRanges of all captures matched by @c regexPattern.
+ @return Will return @c nil if @c regexPattern is invalid.
  */
 - (NSArray *)rangesOfRegex:(NSString *)regexPattern;
 
@@ -239,6 +246,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
  @return A @c NSArray of @c NSValue-wrapped @c NSRanges of all captures matched by @c regexPattern in @c searchRange.
+ @return Will return @c nil if @c regexPattern is invalid.
  */
 - (NSArray *)rangesOfRegex:(NSString *)regexPattern inRange:(NSRange)searchRange;
 
@@ -249,8 +257,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c NSArray of @c NSValue-wrapped @c NSRanges of all captures matched by @c regexPattern in @c searchRange.
- @return Returns an empty array if there are no matches in the receiver for @c searchRange. Will return @c nil if @c regexPattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return A @c NSArray of @c NSValue-wrapped @c NSRanges of all captures matched by @c regexPattern in @c searchRange. Returns an empty array if there are no matches in the receiver for @c searchRange.
+ @return Will return @c nil if @c regexPattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)rangesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error;
 
@@ -262,8 +270,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param matchingOptions The matching options to use. See @c NSMatchingOptions for possible values.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c NSArray of NSValue-wrapped NSRanges of all captures matched by @c regexPattern in @c searchRange. 
- @return Returns an empty array if there are no matches in the receiver for @c searchRange. Will return @c nil if @c regexPattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return A @c NSArray of NSValue-wrapped NSRanges of all captures matched by @c regexPattern in @c searchRange. Returns an empty array if there are no matches in the receiver for @c searchRange.
+ @return Will return @c nil if @c regexPattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)rangesOfRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error;
 
@@ -273,7 +281,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  Returns a string created from the characters of the receiver that are in the range of the first match of @c regexPattern.
 
  @param regexPattern A @c NSString containing a regular expression.
- @return A @c NSString containing the substring of the receiver matched by @c regexPattern. Returns @c nil if the receiver is not matched by @c regexPattern or an error occurs.
+ @return A @c NSString containing the substring of the receiver matched by @c regexPattern.
+ @return Returns @c nil if the receiver is not matched by @c regexPattern or an error occurs.
  */
 - (NSString *)stringByMatching:(NSString *)regexPattern;
 
@@ -282,7 +291,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a regular expression.
  @param capture The string matched by capture from @c regexPattern to return. Use @c 0 for the entire string that @c regexPattern matched.
- @return A @c NSString containing the substring of the receiver matched by capture number capture of @c regexPattern. Returns @c nil if the receiver is not matched by @c regexPattern or an error occurs.
+ @return A @c NSString containing the substring of the receiver matched by capture number capture of @c regexPattern.
+ @return Returns @c nil if the receiver is not matched by @c regexPattern or an error occurs.
  */
 - (NSString *)stringByMatching:(NSString *)regexPattern capture:(NSUInteger)capture;
 
@@ -291,7 +301,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @return A @c NSString containing the substring of the receiver matched by capture number capture of @c regexPattern within the searchRange of the receiver. Returns @c nil if the receiver is not matched by @c regexPattern or an error occurs.
+ @return A @c NSString containing the substring of the receiver matched by capture number capture of @c regexPattern within the searchRange of the receiver.
+ @return Returns @c nil if the receiver is not matched by @c regexPattern or an error occurs.
  */
 - (NSString *)stringByMatching:(NSString *)regexPattern inRange:(NSRange)searchRange;
 
@@ -328,7 +339,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c regexPattern using @c options and @c matchingOptions are replaced with the contents of the @c replacement string after performing capture group substitutions.
 
  @param regexPattern A @c NSString containing a regular expression.
- @return A @c NSString created from the characters of the receiver in which all matches of the regular expression @c regexPattern are replaced with the contents of the @c replacement string after performing capture group substitutions. If the receiver is not matched by @c regexPattern then the string that is returned is a copy of the receiver as if @c stringWithString: had been sent to it.
+ @return A @c NSString created from the characters of the receiver in which all matches of the regular expression @c regexPattern are replaced with the contents of the @c replacement string after performing capture group substitutions.
+ @return If the receiver is not matched by @c regexPattern then the string that is returned is a copy of the receiver as if @c stringWithString: had been sent to it.
+ @return Will return @c nil if an error occurs.
  */
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement;
 
@@ -337,7 +350,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c regexPattern are replaced with the contents of the @c replacement string after performing capture group substitutions. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c regexPattern.
+ @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c regexPattern are replaced with the contents of the @c replacement string after performing capture group substitutions.
+ @return Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c regexPattern.
+ @return Will return @c nil if an error occurs.
  */
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement range:(NSRange)searchRange;
 
@@ -372,7 +387,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 /**
  Returns the number of captures that the regex contains.
 
- @return Returns @c NSNotFound if an error occurs. Otherwise the number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
+ @return The number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
+ @return Returns @c NSNotFound if an error occurs.
  */
 - (NSUInteger)captureCount;
 
@@ -381,8 +397,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param options A mask of options specified by combining @c RKLRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
  @param error The optional error parameter, if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return Returns @c NSNotFound if an error occurs. Otherwise the number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
- @return Will indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return The number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
+ @return Returns @c NSNotFound if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSUInteger)captureCountWithOptions:(RKLRegexOptions)options error:(NSError **)error;
 
@@ -414,6 +430,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param capture The string matched by capture from @c regexPattern to return. Use @c 0 for the entire string that @c regexPattern matched.
  @return A @c NSArray object containing all the substrings for capture group capture from the receiver that were matched by @c regexPattern.
  @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs.
  */
 - (NSArray *)componentsMatchedByRegex:(NSString *)regexPattern capture:(NSUInteger)capture;
 
@@ -423,6 +440,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a regular expression.
  @return A @c NSArray object containing all the substrings from the receiver that were matched by @c regexPattern within @c searchRange.
  @return Returns an empty array if @c regexPattern fails to match in @c searchRange.
+ @return Will return @c nil if an error occurs.
  */
 - (NSArray *)componentsMatchedByRegex:(NSString *)regexPattern range:(NSRange)searchRange;
 
@@ -435,7 +453,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param capture The string matched by capture from @c regexPattern to return. Use @c 0 for the entire string that @c regexPattern matched.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray object containing all the substrings from the receiver that were matched by capture number capture from @c regexPattern within @c searchRange using @c options and @c matchingOptions. Will return an empty array if @c regexPattern fails to match in @c searchRange.
- @return Returns an empty array if @c regexPattern fails to match in @c searchRange. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match in @c searchRange.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)componentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error;
 
@@ -449,7 +468,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param capture The string matched by capture from @c regexPattern to return. Use @c 0 for the entire string that @c regexPattern matched.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray object containing all the substrings from the receiver that were matched by capture number capture from @c regexPattern within @c searchRange using @c options and @c matchingOptions.
- @return Returns an empty array if @c regexPattern fails to match in @range. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match in @c searchRange.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)componentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error;
 
@@ -459,8 +479,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  Returns an array containing the substrings matched by each capture group present in @c regexPattern for the first match of @c regexPattern.
 
  @param regexPattern A @c NSString containing a regular expression.
- @return A @c NSArray containing the substrings matched by each capture group present in regexPattern for the first match of @c regexPattern within @c searchRange of the receiver using @c options. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group. 
+ @return A @c NSArray containing the substrings matched by each capture group present in regexPattern for the first match of @c regexPattern. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
  @return Will return an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs.
  */
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern;
 
@@ -469,8 +490,9 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @return A @c NSArray containing the substrings matched by each capture group present in regexPattern for the first match of @c regexPattern within @c searchRange of the receiver using @c options. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
+ @return A @c NSArray containing the substrings matched by each capture group present in regexPattern for the first match of @c regexPattern within @c searchRange of the receiver. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
  @return Returns an empty array if @c regexPattern fails to match in @c searchRange.
+ @return Will return @c nil if an error occurs.
  */
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern range:(NSRange)searchRange;
 
@@ -482,7 +504,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray containing the substrings matched by each capture group present in regexPattern for the first match of @c regexPattern within @c searchRange of the receiver using @c options. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
- @return Returns an empty array if @c regexPattern fails to match in @c searchRange. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match in @c searchRange.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
 
@@ -495,7 +518,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray containing the substrings matched by each capture group present in regexPattern for the first match of @c regexPattern within @c searchRange of the receiver using @c options. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
- @return Returns an empty array if @c regexPattern fails to match in @c searchRange. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match in @c searchRange.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
 
@@ -506,6 +530,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
 
  @param regexPattern A @c NSString containing a regular expression.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSArray which contains all the capture groups present in @c regexPattern. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group. Will return an empty array if @c regexPattern fails to match.
+ @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs.
  */
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern;
 
@@ -515,6 +541,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSArray which contains all the capture groups present in @c regexPattern. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group. Will return an empty array if @c regexPattern fails to match in @c searchRange.
+ @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs.
  */
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern range:(NSRange)searchRange;
 
@@ -526,7 +554,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSArray which contains all the capture groups present in @c regexPattern. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
- @return Returns an empty array if @c regexPattern fails to match. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
 
@@ -539,7 +568,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSArray which contains all the capture groups present in @c regexPattern. Array index @c 0 represents all of the text matched by @c regexPattern and subsequent array indexes contain the text matched by their respective capture group.
- @return Returns an empty array if @c regexPattern fails to match. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
 
@@ -552,6 +582,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param firstKey The first key to add to the new dictionary.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures. 
  @return Will return an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs.
  */
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -563,6 +594,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param firstKey The first key to add to the new dictionary.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures.
  @return Will return an empty array if @c regexPattern fails to match in @c searchRange.
+ @return Will return @c nil if an error occurs.
  */
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern range:(NSRange)searchRange withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -575,7 +607,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @param firstKey The first key to add to the new dictionary.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures.
- @return Returns an empty array if @c regexPattern fails to match. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -589,7 +622,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @param firstKey The first key to add to the new dictionary.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures.
- @return Returns an empty array if @c regexPattern fails to match. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -603,7 +637,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param keys A @c NSArray object of NSString keys for the dictionaries.
  @param captures A @c NSArray object of NSNumber capture group values for the dictionaries.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures
- @return Returns an empty array if @c regexPattern fails to match. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
 
@@ -618,7 +653,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param keys A @c NSArray object of NSString keys for the dictionaries.
  @param captures A @c NSArray object of NSNumber capture group values for the dictionaries.
  @return A @c NSArray object containing all the matches from the receiver by @c regexPattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures. 
- @return Returns an empty array if @c regexPattern fails to match. Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty array if @c regexPattern fails to match.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray *)arrayOfDictionariesByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
 
@@ -630,6 +666,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a regular expression.
  @param firstKey The first key to add to the new dictionary.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
+ @return Will return @c nil if an error occurs.
  */
 - (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -640,6 +677,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param searchRange The range of the receiver to search.
  @param firstKey The first key to add to the new dictionary.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
+ @return Will return @c nil if an error occurs.
  */
 - (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern range:(NSRange)searchRange withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -652,7 +690,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @param firstKey The first key to add to the new dictionary.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
- @return Returns an empty dictionary if @c regexPattern fails to match withing @c searchRange and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty dictionary if @c regexPattern fails to match withing @c searchRange.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -666,7 +705,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @param firstKey The first key to add to the new dictionary.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
- @return Returns an empty dictionary if @c regexPattern fails to match withing @c searchRange and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty dictionary if @c regexPattern fails to match withing @c searchRange.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -680,7 +720,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param keys A @c NSArray object of NSString keys for the dictionary.
  @param captures A @c NSArray object of NSNumber capture group values for the dictionary.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
- @return Returns an empty dictionary if @c regexPattern fails to match withing @c searchRange and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty dictionary if @c regexPattern fails to match withing @c searchRange.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options range:(NSRange)searchRange error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
 
@@ -695,7 +736,8 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param keys A @c NSArray object of NSString keys for the dictionary.
  @param captures A @c NSArray object of NSNumber capture group values for the dictionary.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures. 
- @return Returns an empty dictionary if @c regexPattern fails to match withing @c searchRange and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns an empty dictionary if @c regexPattern fails to match withing @c searchRange.
+ @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSDictionary *)dictionaryByMatchingRegex:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error withKeys:(NSArray *)keys forCaptures:(NSArray *)captures;
 
@@ -805,7 +847,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  Enumerates the matches in the receiver by the regular expression @c regexPattern and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
 
  @param regexPattern A @c NSString containing a valid regular expression.
- @param block The block that is executed for each match of @c regexPattern in the receiver. The block takes four arguments:
+ @param block The block that is executed for each match of @c regexPattern in the receiver. The block returns a @c NSString and takes four arguments:
  @param &nbsp;&nbsp;captureCount The number of strings that @c regexPattern captured. @c captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}. The termination range at @c capturedRanges[captureCount] is @c {NSNotFound, NSUIntegerMax}.
@@ -822,7 +864,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param options A mask of options specified by combining RKLRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param block The block that is executed for each match of @c regexPattern in the receiver. The block takes four arguments:
+ @param block The block that is executed for each match of @c regexPattern in the receiver. The block returns a @c NSString and takes four arguments:
  @param &nbsp;&nbsp;captureCount The number of strings that @c regexPattern captured. @c captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}. The termination range at @c capturedRanges[captureCount] is @c {NSNotFound, NSUIntegerMax}.
@@ -865,7 +907,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param regexPattern A @c NSString containing a valid regular expression.
  @param replacement The string to use as the replacement text for matches by @c regexPattern. See ICU Replacement Text Syntax for more information.
  @return Returns number of successful substitutions of the matched @c regexPattern.
- @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL, otherwise returns the number of replacements performed.
+ @return Returns @c NSNotFound if there was an error.
  */
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement;
 
@@ -876,7 +918,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param replacement The string to use as the replacement text for matches by @c regexPattern. See ICU Replacement Text Syntax for more information.
  @param searchRange The range of the receiver to search.
  @return Returns number of successful substitutions of the matched @c regexPattern.
- @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
+ @return Returns @c NSNotFound if there was an error.
  */
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)regexPattern withString:(NSString *)replacement range:(NSRange)searchRange;
 
@@ -916,7 +958,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  Enumerates the matches in the receiver by the regular expression @c regexPattern and executes @c block for each match found. Replaces the characters that were matched with the contents of the string returned by @c block, returning the number of replacements made.
 
  @param regexPattern A @c NSString containing a valid regular expression.
- @param block The block that is executed for each match of @c regexPattern in the receiver. The block takes four arguments:
+ @param block The block that is executed for each match of @c regexPattern in the receiver. The block returns a @c NSString and takes four arguments:
  @param &nbsp;&nbsp;captureCount The number of strings that @c regexPattern captured. @c captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}. The termination range at @c capturedRanges[captureCount] is @c {NSNotFound, NSUIntegerMax}.
@@ -933,7 +975,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param options A mask of options specified by combining RKLRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKLNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param block The block that is executed for each match of @c regexPattern in the receiver. The block takes four arguments:
+ @param block The block that is executed for each match of @c regexPattern in the receiver. The block returns a @c NSString and takes four arguments:
  @param &nbsp;&nbsp;captureCount The number of strings that @c regexPattern captured. @c captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}. The termination range at @c capturedRanges[captureCount] is @c {NSNotFound, NSUIntegerMax}.
@@ -951,7 +993,7 @@ typedef NS_OPTIONS(NSUInteger, RKLRegexOptions) {
  @param matchingOptions A mask of options specified by combining NSMatchingOptions flags with the C bitwise @c OR operator. @c 0 may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param block The block that is executed for each match of @c regexPattern in the receiver. The block takes four arguments:
+ @param block The block that is executed for each match of @c regexPattern in the receiver. The block returns a @c NSString and takes four arguments:
  @param &nbsp;&nbsp;captureCount The number of strings that @c regexPattern captured. @c captureCount is always at least 1.
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c regexPattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}. The termination range at @c capturedRanges[captureCount] is @c {NSNotFound, NSUIntegerMax}.
