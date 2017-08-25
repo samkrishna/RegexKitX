@@ -116,7 +116,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     if (![matches count]) return @[ self ];
     NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matches.count];
-    __block NSUInteger pos = 0;
+    NSUInteger pos = 0;
 
     for (NSTextCheckingResult *match in matches) {
         NSRange subrange = NSMakeRange(pos, match.range.location - pos);
