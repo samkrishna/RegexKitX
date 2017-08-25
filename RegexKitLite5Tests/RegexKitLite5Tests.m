@@ -25,7 +25,6 @@
 //
 
 #import "RegexKitLite5.h"
-
 #import <XCTest/XCTest.h>
 
 @interface RegexKitLite5Tests : XCTestCase
@@ -126,40 +125,40 @@
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = [self.candidate stringRange];
     NSRange captureRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:0 error:NULL];
-    XCTAssert(captureRange.location == 0, @"We have a problem here!");
-    XCTAssert(captureRange.length == 19, @"We have a problem here!");
+    XCTAssert(captureRange.location == 0);
+    XCTAssert(captureRange.length == 19);
     
     NSRange dateRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:1 error:NULL];
-    XCTAssert(dateRange.location == 0, @"We have a problem here!");
-    XCTAssert(dateRange.length == 10, @"We have a problem here!");
+    XCTAssert(dateRange.location == 0);
+    XCTAssert(dateRange.length == 10);
 
     NSRange yearRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:2 error:NULL];
-    XCTAssert(yearRange.location == 0, @"We have a problem here!");
-    XCTAssert(yearRange.length == 4, @"We have a problem here!");
+    XCTAssert(yearRange.location == 0);
+    XCTAssert(yearRange.length == 4);
 
     NSRange monthRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:3 error:NULL];
-    XCTAssert(monthRange.location == 5, @"We have a problem here!");
-    XCTAssert(monthRange.length == 2, @"We have a problem here!");
+    XCTAssert(monthRange.location == 5);
+    XCTAssert(monthRange.length == 2);
 
     NSRange dayRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:4 error:NULL];
-    XCTAssert(dayRange.location == 8, @"We have a problem here!");
-    XCTAssert(dayRange.length == 2, @"We have a problem here!");
+    XCTAssert(dayRange.location == 8);
+    XCTAssert(dayRange.length == 2);
 
     NSRange timeRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:5 error:NULL];
-    XCTAssert(timeRange.location == 11, @"We have a problem here!");
-    XCTAssert(timeRange.length == 8, @"We have a problem here!");
+    XCTAssert(timeRange.location == 11);
+    XCTAssert(timeRange.length == 8);
 
     NSRange hourRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:6 error:NULL];
-    XCTAssert(hourRange.location == 11, @"We have a problem here!");
-    XCTAssert(hourRange.length == 2, @"We have a problem here!");
+    XCTAssert(hourRange.location == 11);
+    XCTAssert(hourRange.length == 2);
 
     NSRange minuteRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:7 error:NULL];
-    XCTAssert(minuteRange.location == 14, @"We have a problem here!");
-    XCTAssert(minuteRange.length == 2, @"We have a problem here!");
+    XCTAssert(minuteRange.location == 14);
+    XCTAssert(minuteRange.length == 2);
 
     NSRange secondRange = [self.candidate rangeOfRegex:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:8 error:NULL];
-    XCTAssert(secondRange.location == 17, @"We have a problem here!");
-    XCTAssert(secondRange.length == 2, @"We have a problem here!");
+    XCTAssert(secondRange.location == 17);
+    XCTAssert(secondRange.length == 2);
 }
 
 - (void)testFailedRangeOfRegex
@@ -175,7 +174,7 @@
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = [self.candidate stringRange];
     NSString *timestamp = [self.candidate stringByMatching:regex options:RKLNoOptions matchingOptions:0 inRange:entireRange capture:0 error:NULL];
-    XCTAssert([timestamp isEqualToString:@"2014-05-06 17:03:17"], @"We have a problem here!");
+    XCTAssert([timestamp isEqualToString:@"2014-05-06 17:03:17"]);
 }
 
 - (void)testStringByReplacingOccurrencesOfRegexWithStringOptionsMatchingOptionsRangeError
@@ -213,7 +212,7 @@
         return [replacement copy];
     }];
     
-    XCTAssert([output isMatchedByRegex:@"cray cray!"], @"We have a problem here!");
+    XCTAssert([output isMatchedByRegex:@"cray cray!"]);
     
     pattern = @"pick(led)?";
     NSString *newCandidate = @"Peter Piper picked a peck of pickled peppers;\n"
@@ -240,28 +239,28 @@
 {
     NSError *error;
     NSString *regexString = @"[a-z";
-    XCTAssertFalse([regexString isRegexValidWithOptions:RKLNoOptions error:&error], @"This should have failed!");
-    XCTAssert(error.code == 2048, @"The error code should be 2048");
-    XCTAssert(error.domain == NSCocoaErrorDomain, @"This should be an NSCocoaErrorDomain");
+    XCTAssertFalse([regexString isRegexValidWithOptions:RKLNoOptions error:&error]);
+    XCTAssert(error.code == 2048);
+    XCTAssert(error.domain == NSCocoaErrorDomain);
 }
 
 - (void)testArrayOfCaptureComponentsMatchedByRegexOptionsMatchingOptionsRangeError
 {
     NSString *list      = @"$10.23, $1024.42, $3099";
     NSArray *listItems = [list arrayOfCaptureComponentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" options:RKLNoOptions matchingOptions:0 range:[list stringRange] error:NULL];
-    XCTAssert([listItems count] == 3, @"There should be 3 elements here!");
+    XCTAssert([listItems count] == 3);
 
     NSArray *list0 = listItems[0];
     BOOL result0 = [list0 isEqualToArray:@[ @"$10.23", @"10.23", @"10", @"23" ]];
-    XCTAssert(result0, @"These should be equivalent!");
+    XCTAssert(result0);
 
     NSArray *list1 = listItems[1];
     BOOL result1 = [list1 isEqualToArray:@[ @"$1024.42", @"1024.42", @"1024", @"42" ]];
-    XCTAssert(result1, @"These should be equivalent!");
+    XCTAssert(result1);
 
     NSArray *list2 = listItems[2];
     BOOL result2 = [list2 isEqualToArray:@[ @"$3099", @"3099", @"3099", @"" ]];
-    XCTAssert(result2, @"These should be equivalent!");
+    XCTAssert(result2);
 }
 
 - (void)testComponentsMatchedByRegexOptionsRangeCaptureError
@@ -270,11 +269,10 @@
     NSRange listRange = [list stringRange];
     NSArray *listItems = [list componentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" options:RKLNoOptions range:listRange capture:3L error:NULL];
     
-    // listItems == [NSArray arrayWithObjects:@"23", @"42", @"", NULL];
     NSString *component1 = listItems[0];
     NSString *component2 = listItems[1];
-    XCTAssert([component1 isEqualToString:@"23"], @"This should match!");
-    XCTAssert([component2 isEqualToString:@"42"], @"This should match!");
+    XCTAssert([component1 isEqualToString:@"23"]);
+    XCTAssert([component2 isEqualToString:@"42"]);
 }
 
 - (void)testCaptureCountWithOptionsError
@@ -282,7 +280,7 @@
     NSString *pattern = @"\\$((\\d+)(?:\\.(\\d+)|\\.?))";
     NSError *error;
     NSUInteger captureCount = [pattern captureCountWithOptions:RKLNoOptions error:&error];
-    XCTAssert(captureCount == 3, @"This should be 3!");
+    XCTAssert(captureCount == 3);
 }
 
 - (void)testDictionaryByMatchingRegexOptionsRangeErrorWithKeysAndCaptures
@@ -422,7 +420,7 @@
         matchCount++;
     }];
     
-    XCTAssert(matchCount == 4, @"There should have been 4 matches!");
+    XCTAssert(matchCount == 4);
 }
 
 - (void)testForInExample
@@ -440,7 +438,7 @@
         matchCount++;
     }
     
-    XCTAssert(matchCount == 4, @"There should have been 4 matches!");
+    XCTAssert(matchCount == 4);
 }
 
 - (void)testLinkExample
@@ -498,7 +496,7 @@
     NSString *copyrightString = [self.unicodeStringsArray objectAtIndex:3];
     NSRange rangeOf2007 = [copyrightString rangeOfRegex:@"2007"];
     NSRange foundationRange = [copyrightString rangeOfString:@"2007"];
-    XCTAssertTrue(NSEqualRanges(foundationRange, rangeOf2007), @"This should be true");
+    XCTAssertTrue(NSEqualRanges(foundationRange, rangeOf2007));
     
     NSArray *regexRanges = [copyrightString rangesOfRegex:@"^(\\w+)\\s+(\\p{Any}+)\\s+(2007)$"];
     XCTAssertTrue((NSEqualRanges([regexRanges[0] rangeValue], NSMakeRange(0, 16))), @"%@", regexRanges[0]);
