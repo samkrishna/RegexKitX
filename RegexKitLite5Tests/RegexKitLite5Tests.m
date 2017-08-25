@@ -289,16 +289,16 @@
 {
     NSString *name = @"Name: Joe";
     NSString *regex = @"Name:\\s*(\\w*)\\s*(\\w*)";
+    NSString *firstKey = @"first";
+    NSString *lastKey = @"last";
     NSDictionary *nameDictionary = [name dictionaryByMatchingRegex:regex
                                                            options:RKLNoOptions
                                                              range:[name stringRange]
                                                              error:NULL
-                                               withKeysAndCaptures:@"first", 1, @"last", 2, nil];
+                                               withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
 
-    NSString *first = nameDictionary[@"first"];
-    NSString *last = nameDictionary[@"last"];
-    XCTAssert([first isEqualToString:@"Joe"], @"This should be \'Joe\'");
-    XCTAssert([last isEqualToString:@""], @"This should be an empty string");
+    XCTAssert([nameDictionary[firstKey] isEqualToString:@"Joe"]);
+    XCTAssert([nameDictionary[lastKey] isEqualToString:@""]);
     
     NSString *badRegex = @"Name:\\s*(\\w*)\\s*(\\w*";
     NSError *error;
@@ -306,9 +306,9 @@
                                              options:RKLNoOptions
                                                range:[name stringRange]
                                                error:&error
-                                 withKeysAndCaptures:@"first", 1, @"last", 2, nil];
-    XCTAssertNil(nameDictionary, @"This should be nil!");
-    XCTAssertNotNil(error, @"There should be an error here");
+                                 withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
+    XCTAssertNil(nameDictionary);
+    XCTAssertNotNil(error);
 }
 
 - (void)testArrayOfDictionariesByMatchingRegexOptionsMatchingOptionsRangeErrorWithKeysAndCaptures
@@ -316,20 +316,31 @@
     NSString *name = @"Name: Bob\n"
                      @"Name: John Smith";
     NSString *regex = @"(?m)^Name:\\s*(\\w*)\\s*(\\w*)$";
+    NSString *firstKey = @"first";
+    NSString *lastKey = @"last";
     NSArray  *nameArray = [name arrayOfDictionariesByMatchingRegex:regex
                                                            options:RKLNoOptions
                                                    matchingOptions:0
                                                              range:[name stringRange]
                                                              error:NULL
-                                               withKeysAndCaptures:@"first", 1, @"last", 2, NULL];
+                                               withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
 
     NSDictionary *name1 = nameArray[0];
-    XCTAssert([name1[@"first"] isEqualToString:@"Bob"], @"This should be \'Bob\'");
-    XCTAssert([name1[@"last"] isEqualToString:@""], @"This should be an empty string");
+    XCTAssert([name1[firstKey] isEqualToString:@"Bob"]);
+    XCTAssert([name1[lastKey] isEqualToString:@""]);
 
     NSDictionary *name2 = nameArray[1];
-    XCTAssert([name2[@"first"] isEqualToString:@"John"], @"This should be \'John\'");
-    XCTAssert([name2[@"last"] isEqualToString:@"Smith"], @"This should be \'Smith\'");    
+    XCTAssert([name2[firstKey] isEqualToString:@"John"]);
+    XCTAssert([name2[lastKey] isEqualToString:@"Smith"]);
+
+    NSArray *failureResult = [self.candidate arrayOfDictionariesByMatchingRegex:regex
+                                                                        options:RKLNoOptions
+                                                                matchingOptions:0
+                                                                          range:[self.candidate stringRange]
+                                                                          error:NULL
+                                                            withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
+    XCTAssertNotNil(failureResult);
+    XCTAssert([failureResult count] == 0);
 }
 
 - (void)testEnumerateStringsSeparatedByRegex
