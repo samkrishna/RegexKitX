@@ -13,7 +13,7 @@
 		6F2B4E8A1EF5BE5C00DB6629 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6F2B4E881EF5BE5C00DB6629 /* LICENSE */; };
 		6F3813731EF5CF5C00E459F6 /* RegexKitLite5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2B4E811EF5BA6500DB6629 /* RegexKitLite5.m */; };
 		6F9CEEB21F5336BC003BAC04 /* SwiftRegexKitLite5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9CEEA91F5336BB003BAC04 /* SwiftRegexKitLite5.framework */; };
-		6F9CEEB71F5336BC003BAC04 /* SwiftRegexKitLite5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CEEB61F5336BC003BAC04 /* SwiftRegexKitLite5Tests.swift */; };
+		6F9CEEB71F5336BC003BAC04 /* RegexKitLite5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CEEB61F5336BC003BAC04 /* RegexKitLite5Tests.swift */; };
 		6F9CEEB91F5336BC003BAC04 /* SwiftRegexKitLite5.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F9CEEAB1F5336BB003BAC04 /* SwiftRegexKitLite5.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F9CEEC01F5336D8003BAC04 /* RegexKitLite5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CEEA01F53345B003BAC04 /* RegexKitLite5.swift */; };
 /* End PBXBuildFile section */
@@ -50,7 +50,7 @@
 		6F9CEEAB1F5336BB003BAC04 /* SwiftRegexKitLite5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftRegexKitLite5.h; sourceTree = "<group>"; };
 		6F9CEEAC1F5336BB003BAC04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F9CEEB11F5336BB003BAC04 /* SwiftRegexKitLite5Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftRegexKitLite5Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F9CEEB61F5336BC003BAC04 /* SwiftRegexKitLite5Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftRegexKitLite5Tests.swift; sourceTree = "<group>"; };
+		6F9CEEB61F5336BC003BAC04 /* RegexKitLite5Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexKitLite5Tests.swift; sourceTree = "<group>"; };
 		6F9CEEB81F5336BC003BAC04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,7 +152,7 @@
 		6F9CEEB51F5336BC003BAC04 /* SwiftRegexKitLite5Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6F9CEEB61F5336BC003BAC04 /* SwiftRegexKitLite5Tests.swift */,
+				6F9CEEB61F5336BC003BAC04 /* RegexKitLite5Tests.swift */,
 				6F9CEEB81F5336BC003BAC04 /* Info.plist */,
 			);
 			path = SwiftRegexKitLite5Tests;
@@ -365,7 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F9CEEB71F5336BC003BAC04 /* SwiftRegexKitLite5Tests.swift in Sources */,
+				6F9CEEB71F5336BC003BAC04 /* RegexKitLite5Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
