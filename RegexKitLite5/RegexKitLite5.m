@@ -183,9 +183,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return NSNotFoundRange;
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
-    if (![matches count]) return NSNotFoundRange;
-    NSTextCheckingResult *firstMatch = matches[0];
+    NSTextCheckingResult *firstMatch = [regex firstMatchInString:self options:matchingOptions range:searchRange];
+    if (!firstMatch) return NSNotFoundRange;
 
     return [firstMatch rangeAtIndex:capture];
 }
@@ -251,22 +250,11 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return nil;
-    __block NSTextCheckingResult *firstMatch = nil;
+    NSTextCheckingResult *firstMatch = [regex firstMatchInString:self options:matchingOptions range:searchRange];
+    if (!firstMatch) return nil;
+    NSString *result = [self substringWithRange:[firstMatch rangeAtIndex:capture]];
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-parameter"
-    [regex enumerateMatchesInString:self options:matchingOptions range:searchRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        firstMatch = result;
-        *stop = YES;
-    }];
-#pragma clang diagnostic pop
-
-    if (firstMatch) {
-        NSString *result = [self substringWithRange:[firstMatch rangeAtIndex:capture]];
-        return result;
-    }
-    
-    return nil;
+    return result;
 }
 
 #pragma mark - stringByReplacincOccurrencesOfRegex:withString:
@@ -400,9 +388,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return nil;
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
-    if (![matches count]) return @[];
-    NSTextCheckingResult *firstMatch = matches[0];
+    NSTextCheckingResult *firstMatch = [regex firstMatchInString:self options:matchingOptions range:searchRange];
+    if (!firstMatch) return @[];
     NSMutableArray *captureArray = [NSMutableArray arrayWithCapacity:firstMatch.numberOfRanges];
     
     for (NSUInteger i = 0; i < firstMatch.numberOfRanges; i++) {
