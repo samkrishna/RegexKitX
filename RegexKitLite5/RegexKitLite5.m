@@ -152,9 +152,9 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return NO;
-    NSUInteger matchCount = [regex numberOfMatchesInString:self options:matchingOptions range:searchRange];
+    NSTextCheckingResult *firstMatch = [regex firstMatchInString:self options:matchingOptions range:searchRange];
 
-    return (matchCount > 0);
+    return (firstMatch) ? YES : NO;
 }
 
 #pragma mark - rangeOfRegex:
