@@ -14,9 +14,9 @@ public extension String {
     }
 
     func isMatchedBy(regexPattern: String,
+                     range: NSRange? = nil,
                      options: NSRegularExpression.Options = [NSRegularExpression.Options(rawValue: 0)],
-                     matchingOptions: NSRegularExpression.MatchingOptions = [NSRegularExpression.MatchingOptions(rawValue: 0)],
-                     range: NSRange? = nil)
+                     matchingOptions: NSRegularExpression.MatchingOptions = [NSRegularExpression.MatchingOptions(rawValue: 0)])
         throws -> Bool {
             let regex = try NSRegularExpression(pattern: regexPattern, options: options)
             let matchCount = regex.numberOfMatches(in: self, options: matchingOptions, range: range ?? stringRange)

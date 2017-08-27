@@ -21,11 +21,11 @@ class SwiftRegexKitLite5Tests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testIsMatchedByRegexRangeOptionsMatchingOptions() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         let testString = String("a test")
         let result = try! testString.isMatchedBy(regexPattern: "\\s+")
-        XCTAssert(result == true)
+        XCTAssert(result)
     }
 }
