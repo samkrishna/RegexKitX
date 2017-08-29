@@ -71,4 +71,16 @@ public extension String {
             let match = regex.firstMatch(in: self, options: matchingOptions, range: range ?? stringRange)
             return (match != nil)
     }
+
+    func rangeOf(regexPattern: String,
+                 inRange: NSRange? = nil,
+                 capture: Int = 0,
+                 options: RKLRegexOptions = [],
+                 matchingOptions: NSRegularExpression.MatchingOptions = [])
+        throws -> NSRange {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            let match = regex.firstMatch(in: self, options: matchingOptions, range: inRange ?? stringRange)
+            return match?.range(at: capture) ?? NSMakeRange(NSNotFound, 0)
+    }
 }

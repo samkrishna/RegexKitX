@@ -50,4 +50,47 @@ class RegexKitLite5Tests: XCTestCase {
         XCTAssertTrue(candidate =~ regex)
         XCTAssertTrue(regex ~= candidate)
     }
+
+    func testRangeOfRegexInRangeCapture() {
+        let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))"
+        let captureRange = try! candidate.rangeOf(regexPattern: regex)
+        XCTAssert(captureRange.location == 0);
+        XCTAssert(captureRange.length == 19);
+
+        let dateRange = try! candidate.rangeOf(regexPattern: regex, capture: 1)
+        XCTAssert(dateRange.location == 0);
+        XCTAssert(dateRange.length == 10);
+
+        let yearRange = try! candidate.rangeOf(regexPattern: regex, capture: 2)
+        XCTAssert(yearRange.location == 0);
+        XCTAssert(yearRange.length == 4);
+
+        let monthRange = try! candidate.rangeOf(regexPattern: regex, capture: 3)
+        XCTAssert(monthRange.location == 5);
+        XCTAssert(monthRange.length == 2);
+
+        let dayRange = try! candidate.rangeOf(regexPattern: regex, capture: 4)
+        XCTAssert(dayRange.location == 8);
+        XCTAssert(dayRange.length == 2);
+
+        let timeRange = try! candidate.rangeOf(regexPattern: regex, capture: 5)
+        XCTAssert(timeRange.location == 11);
+        XCTAssert(timeRange.length == 8);
+
+        let hourRange = try! candidate.rangeOf(regexPattern: regex, capture: 6)
+        XCTAssert(hourRange.location == 11);
+        XCTAssert(hourRange.length == 2);
+
+        let minuteRange = try! candidate.rangeOf(regexPattern: regex, capture: 7)
+        XCTAssert(minuteRange.location == 14);
+        XCTAssert(minuteRange.length == 2);
+
+        let secondRange = try! candidate.rangeOf(regexPattern: regex, capture: 8)
+        XCTAssert(secondRange.location == 17);
+        XCTAssert(secondRange.length == 2);
+
+        let failRange = try! candidate.rangeOf(regexPattern: "blah")
+        XCTAssert(failRange.location == NSNotFound)
+        XCTAssert(failRange.length == 0)
+    }
 }
