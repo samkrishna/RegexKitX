@@ -35,14 +35,14 @@ public struct RKLRegexOptions: OptionSet {
         self.rawValue = rawValue
     }
 
-    static let RKLNoOptions             = RKLRegexOptions(rawValue: 0)
-    static let RKLCaseless              = RKLRegexOptions(rawValue: 1 << 0)
-    static let RKLComments              = RKLRegexOptions(rawValue: 1 << 1)
-    static let RKLIgnoreMetacharacters  = RKLRegexOptions(rawValue: 1 << 2)
-    static let RKLDotAll                = RKLRegexOptions(rawValue: 1 << 3)
-    static let RKLMultiline             = RKLRegexOptions(rawValue: 1 << 4)
-    static let RKLUseUnixLineSeparators = RKLRegexOptions(rawValue: 1 << 5)
-    static let RKLUnicodeWordBoundaries = RKLRegexOptions(rawValue: 1 << 6)
+    public static let RKLNoOptions             = RKLRegexOptions(rawValue: 0)
+    public static let RKLCaseless              = RKLRegexOptions(rawValue: 1 << 0)
+    public static let RKLComments              = RKLRegexOptions(rawValue: 1 << 1)
+    public static let RKLIgnoreMetacharacters  = RKLRegexOptions(rawValue: 1 << 2)
+    public static let RKLDotAll                = RKLRegexOptions(rawValue: 1 << 3)
+    public static let RKLMultiline             = RKLRegexOptions(rawValue: 1 << 4)
+    public static let RKLUseUnixLineSeparators = RKLRegexOptions(rawValue: 1 << 5)
+    public static let RKLUnicodeWordBoundaries = RKLRegexOptions(rawValue: 1 << 6)
 
     fileprivate func coerceToNSRegularExpressionOptions() -> NSRegularExpression.Options {
         var options = NSRegularExpression.Options()
@@ -65,8 +65,8 @@ public extension String {
 
     func isMatchedBy(regexPattern: String,
                      range: NSRange? = nil,
-                     options: RKLRegexOptions = RKLRegexOptions(rawValue: 0),
-                     matchingOptions: NSRegularExpression.MatchingOptions = [NSRegularExpression.MatchingOptions(rawValue: 0)])
+                     options: RKLRegexOptions = .RKLNoOptions,
+                     matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> Bool {
             let nsregexopts = options.coerceToNSRegularExpressionOptions()
             let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
