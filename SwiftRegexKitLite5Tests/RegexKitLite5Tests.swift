@@ -23,10 +23,26 @@ class RegexKitLite5Tests: XCTestCase {
     }
     
     func testIsMatchedByRegexRangeOptionsMatchingOptions() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        let testString = String("a test")
-        let result = try! testString.isMatchedBy(regexPattern: "\\s+")
+        let regex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
+        let result = try! candidate.isMatchedBy(regexPattern: regex)
         XCTAssert(result)
     }
+
+    func testIsMatchedByRegexRange() {
+        let regex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
+        let resultWithFullRange = try! candidate.isMatchedBy(regexPattern: regex, range: candidate.stringRange)
+        XCTAssertTrue(resultWithFullRange)
+        let resultWithHalfRange = try! candidate.isMatchedBy(regexPattern: regex, range: NSMakeRange(0, (candidate.utf16.count / 2)))
+        XCTAssertFalse(resultWithHalfRange)
+    }
+
+    func testIsMatchedByRegexOptionsRange() {
+        let regex = "(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
+        let result = try! candidate.isMatchedBy(regexPattern: regex, range: candidate.stringRange, options: .RKLCaseless)
+        XCTAssertTrue(result)
+
+        let failResult = try! candidate.isMatchedBy(regexPattern: regex, range: candidate.stringRange, options: [.RKLCaseless, .RKLIgnoreMetacharacters ])
+        XCTAssertFalse(failResult)
+    }
+
 }
