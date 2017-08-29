@@ -89,17 +89,17 @@
     XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKLNoOptions inRange:[self.candidate stringRange] error:nil]);
 }
 
-- (void)testIsMatchedByRegexRegexOptionsMatchingOptionsRangeError
+- (void)testIsMatchedByRegexOptionsMatchingOptionsRangeError
 {
     // NOTE: Not Comprehensive Yet
     NSError *error;
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKLCaseless inRange:[self.candidate stringRange] error:nil], @"Case-insensitive match has failed!");
+    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKLCaseless inRange:[self.candidate stringRange] error:nil]);
     XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKLNoOptions matchingOptions:0 inRange:[self.candidate stringRange] error:&error], @"Case-sensitive match has succeeded when it shouldn't have! Error: %@", error);
 
     NSString *failureCase1 = @"Orthogonal2";
     BOOL failureResult1 = [failureCase1 isMatchedByRegex:@"Orthogonal" options:RKLCaseless inRange:[failureCase1 stringRange] error:&error];
-    XCTAssert(failureResult1, @"This should have matched");
+    XCTAssert(failureResult1);
 }
 
 #pragma mark - componentsSeparatedByRegex:
