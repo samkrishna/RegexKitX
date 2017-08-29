@@ -35,7 +35,6 @@ public struct RKLRegexOptions: OptionSet {
         self.rawValue = rawValue
     }
 
-    public static let RKLNoOptions             = RKLRegexOptions(rawValue: 0)
     public static let RKLCaseless              = RKLRegexOptions(rawValue: 1 << 0)
     public static let RKLComments              = RKLRegexOptions(rawValue: 1 << 1)
     public static let RKLIgnoreMetacharacters  = RKLRegexOptions(rawValue: 1 << 2)
@@ -46,7 +45,6 @@ public struct RKLRegexOptions: OptionSet {
 
     fileprivate func coerceToNSRegularExpressionOptions() -> NSRegularExpression.Options {
         var options = NSRegularExpression.Options()
-        if contains(.RKLNoOptions) { options.insert(NSRegularExpression.Options(rawValue: 0)) }
         if contains(.RKLCaseless) { options.insert(.caseInsensitive) }
         if contains(.RKLComments) { options.insert(.allowCommentsAndWhitespace) }
         if contains(.RKLIgnoreMetacharacters) { options.insert(.ignoreMetacharacters) }
@@ -65,7 +63,7 @@ public extension String {
 
     func isMatchedBy(regexPattern: String,
                      range: NSRange? = nil,
-                     options: RKLRegexOptions = .RKLNoOptions,
+                     options: RKLRegexOptions = [],
                      matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> Bool {
             let nsregexopts = options.coerceToNSRegularExpressionOptions()
