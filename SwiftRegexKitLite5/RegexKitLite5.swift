@@ -8,6 +8,26 @@
 
 import Foundation
 
+infix operator =~
+
+public func =~ (string: String, regex: String) -> Bool {
+    do {
+        let result = try string.isMatchedBy(regexPattern: regex)
+        return result
+    } catch {
+        return false
+    }
+}
+
+public func ~= (regex: String, string: String) -> Bool {
+    do {
+        let result = try string.isMatchedBy(regexPattern: regex)
+        return result
+    } catch {
+        return false
+    }
+}
+
 public struct RKLRegexOptions: OptionSet {
     public let rawValue: Int
 

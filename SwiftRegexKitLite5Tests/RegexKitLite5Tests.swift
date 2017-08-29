@@ -45,4 +45,9 @@ class RegexKitLite5Tests: XCTestCase {
         XCTAssertFalse(failResult)
     }
 
+    func testCustomOperators() {
+        let regex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
+        XCTAssertTrue(candidate =~ regex)
+        XCTAssertTrue(regex ~= candidate)
+    }
 }
