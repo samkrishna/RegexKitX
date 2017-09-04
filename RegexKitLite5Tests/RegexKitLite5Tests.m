@@ -382,7 +382,7 @@
     XCTAssert(result);
 }
 
-- (void)testICUtoPerlOperationalFix
+- (void)testLegacyICUtoPerlOperationalFix
 {
     // This is from the RKL4 sources:
     

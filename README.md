@@ -1,23 +1,34 @@
 # RegexKitLite5
 
+Use the pattern-matching Force.
+
+## Swift
+
+This is a Swift 4 implementation inspired by the *RKL4* API. It is:
+
+- Yet another cover for `NSRegularExpression` and `NSTextCheckingResult`.
+- 100% pure ICU regex syntax
+
+## Objective-C
+
 This is a API port of the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) NSString category that John Engelhart (@johnezang) shipped back on [2010-04-18](http://regexkit.sourceforge.net/RegexKitLite/index.html#ReleaseInformation_40). ("*RKL4*")
 
 Basically, I'm reimplementing the API as a cover for [NSRegularExpression](https://developer.apple.com/documentation/foundation/nsregularexpression) and [NSTextCheckingResult](https://developer.apple.com/documentation/foundation/nstextcheckingresult). I am doing this for several reasons:
 
 - How [unwieldy NSRegularExpression naturally is](http://nshipster.com/nsregularexpression/)
 - The false positives that the Clang Static Analyzer flagged in *RKL4*
-- The low-level C code to the [ICU](http://site.icu-project.org/) regex engine is starting to spit out deprecation warnings on macOS 10.12 Sierra
+- The low-level *RKL4* C code accessing the [ICU](http://site.icu-project.org/) regex engine is starting to spit out deprecation warnings on macOS 10.12 Sierra
     - Right now, this looks like it's limited to the `OSSpinLock/Unlock` family of locking functions
 - The annoyance of having to always remember to **ALWAYS link to the ICU library** on every project
 
-My concern is that no amount of work-arounds or modifications to all the low-level magic will save *RKL4* from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do this.
+My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do this.
 
 I've also added documentation that is option-click-able for all the *RKL5* category methods.
 
 ## A few caveats:
 
-1. Any *RKL4*-based PCRE-like regex nuances that differ from ICU-compatible regexes is fully deprecated because of the conversion to `NSRegularExpression`. This codebase is 100%-pure ICU regex syntax. For the vast majority of regexes, there should be no issues. **HOWEVER**, if your regex relied on non-ICU nuances that worked in *RKL4*, you'll likely need to modify the regex to be ICU-compliant and/or update your code.
-    - For example, @johnezang chose to go with the Perl-compatible implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. *RKL5* follows the ICU convention of placing empty string as the starting and ending 'boundaries' of a match when using the `\b` metacharacter. You can see the not-exactly failed test case at `-testICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
+1. Any *RKL4*-based PCRE-like regex nuances that differ from ICU-compatible regexes are fully deprecated because of the conversion to `NSRegularExpression`. This codebase is 100%-pure ICU regex syntax. For the vast majority of regexes, there should be no issues. **HOWEVER**, if your regex relied on non-ICU nuances that worked in *RKL4*, you'll likely need to modify the regex to be ICU-compliant and/or update your code.
+    - For example, @johnezang chose to go with the Perl-compatible implementation rather than the ICU implemenation when separating strings using the word boundary `\b` metacharacter in a regex. *RKL5* follows the ICU convention of placing empty string as the starting and ending 'boundaries' of a match when using the `\b` metacharacter. You can see the not-exactly failed test case at `-testLegacyICUtoPerlOperationalFix` in RegexKitLite5Tests.m.
 1. `RKLRegexEnumerationOptions` is deprecated.
 1. The `RKLICURegex...Error` keys are deprecated in exchange for the `NSRegularExpression` instantiation errors.
 1. I'm exposing the `NSMatchingOptions` options flag set as an explicit argument set on the most argument-rich API call in each "method cluster". However, I'm not forcing anyone to call that API.
