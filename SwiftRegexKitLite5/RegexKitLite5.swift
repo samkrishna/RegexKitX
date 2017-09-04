@@ -56,6 +56,11 @@ public struct RKLRegexOptions: OptionSet {
     }
 }
 
+enum DictionaryError: Error {
+    case tooManyKeysAndCaptures
+    case unpairedKeysAndCaptures
+}
+
 extension NSRange {
     func indexingRange(for string: String) -> Range<String.Index>? {
         guard location != NSNotFound else { return nil }
