@@ -90,6 +90,12 @@ public extension String {
         return NSRange(location: 0, length: utf16.count)
     }
 
+    static func cacheKeyFor(_ regexPattern: String, options: RKLRegexOptions)
+        -> String {
+            let key = String("\(regexPattern)_\(options.rawValue)")
+            return key
+    }
+
     struct CustomRange {
         static let NSNotFoundRange = NSRange(location: NSNotFound, length: 0)
         static let NSTerminationRange = NSRange(location: NSNotFound, length: LONG_MAX)
