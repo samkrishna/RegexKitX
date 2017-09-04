@@ -269,10 +269,9 @@
     NSRange listRange = [list stringRange];
     NSArray *listItems = [list componentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" options:RKLNoOptions range:listRange capture:3L error:NULL];
     
-    NSString *component1 = listItems[0];
-    NSString *component2 = listItems[1];
-    XCTAssert([component1 isEqualToString:@"23"]);
-    XCTAssert([component2 isEqualToString:@"42"]);
+    XCTAssert([listItems[0] isEqualToString:@"23"]);
+    XCTAssert([listItems[1] isEqualToString:@"42"]);
+    XCTAssert([listItems[2] isEqualToString:@""]);
 }
 
 - (void)testCaptureCountWithOptionsError
@@ -404,7 +403,7 @@
 
 #pragma mark - Ported RKL4 Demos/Tests
 
-- (void)testOriginalEnumeratorExample
+- (void)testEnumerateStringsMatchedByRegexUsingBlock
 {
     NSString *searchString = @"one\ntwo\n\nfour\n";
     NSString *regexString = @"(?m)^.*$";
