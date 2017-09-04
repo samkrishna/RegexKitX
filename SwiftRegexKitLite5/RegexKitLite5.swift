@@ -180,8 +180,149 @@ public extension String {
 
             return captures
     }
+
+    func captureComponentsMatchedBy(_ regexPattern: String,
+                                    searchRange: NSRange? = nil,
+                                    options: RKLRegexOptions = [],
+                                    matchingOptions: NSRegularExpression.MatchingOptions = [])
+        throws -> [String] {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            guard let match = regex.firstMatch(in: self, options: matchingOptions, range: searchRange ?? stringRange) else { return [] }
+
+            let captures = match.ranges.map({
+                ($0.location != NSNotFound) ? (self as NSString).substring(with: $0) : ""
             })
 
             return captures
+    }
+
+    func arrayOfCaptureComponentsMatchedBy(_ regexPattern: String,
+                                           searchRange: NSRange? = nil,
+                                           options: RKLRegexOptions = [],
+                                           matchingOptions: NSRegularExpression.MatchingOptions = [])
+        throws -> [[String]] {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
+            if matches.isEmpty { return [] }
+
+            let arrayOfCaptures: [[String]] = matches.map({
+                $0.ranges.map({ ($0.location != NSNotFound) ? (self as NSString).substring(with: $0) : "" })
+            })
+
+            return arrayOfCaptures
+    }
+
+    func dictionaryByMatching(_ regexPattern: String,
+                              searchRange: NSRange? = nil,
+                              options: RKLRegexOptions = [],
+                              matchingOptions: NSRegularExpression.MatchingOptions = [],
+                              keysAndCapturePairs: [(key: String, capture: Int)])
+        throws -> Dictionary<String, String> {
+            var results = [String: String]()
+            for pair in keysAndCapturePairs {
+                let captureRange = try rangeOf(regexPattern,
+                                               searchRange: searchRange,
+                                               capture: pair.capture,
+                                               options: options,
+                                               matchingOptions: matchingOptions)
+                results[pair.key] = (captureRange.length > 0) ? (self as NSString).substring(with: captureRange) : ""
+            }
+
+            return results
+    }
+
+
+    func dictionaryByMatching(_ regexPattern: String,
+                              searchRange: NSRange? = nil,
+                              options: RKLRegexOptions = [],
+                              matchingOptions: NSRegularExpression.MatchingOptions = [],
+                              keysAndCaptures: Any...)
+        throws -> Dictionary<String, String> {
+            assert(keysAndCaptures.count > 0)
+            if keysAndCaptures.count > 64 { throw DictionaryError.tooManyKeysAndCaptures }
+            if (keysAndCaptures.count % 2) > 0 { throw DictionaryError.unpairedKeysAndCaptures }
+
+            let pairs = stride(from: 0, to: keysAndCaptures.count, by: 2).map {
+                (key: keysAndCaptures[$0] as! String, capture: keysAndCaptures[$0.advanced(by: 1)] as! Int)
+            }
+
+            let dict = try dictionaryByMatching(regexPattern, searchRange: searchRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
+            return dict
+    }
+
+    func arrayOfDictionariesByMatching(_ regexPattern: String,
+                                       searchRange: NSRange? = nil,
+                                       options: RKLRegexOptions = [],
+                                       matchingOptions: NSRegularExpression.MatchingOptions = [],
+                                       keysAndCaptures: Any...)
+        throws -> [Dictionary<String, String>] {
+            assert(keysAndCaptures.count > 0)
+            if keysAndCaptures.count > 64 { throw DictionaryError.tooManyKeysAndCaptures }
+            if (keysAndCaptures.count % 2) > 0 { throw DictionaryError.unpairedKeysAndCaptures }
+
+            let pairs = stride(from: 0, to: keysAndCaptures.count, by: 2).map {
+                (key: keysAndCaptures[$0] as! String, capture: keysAndCaptures[$0.advanced(by: 1)] as! Int)
+            }
+
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
+            if matches.isEmpty { return [] }
+
+            let dictArray: [Dictionary<String, String>] = try matches.map {
+                let range = $0.range(at: 0)
+                let subtring = (self as NSString).substring(with: range)
+                let dict = try subtring.dictionaryByMatching(regexPattern, searchRange: subtring.stringRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
+                return dict
+            }
+
+            return dictArray
+    }
+
+    func enumerateStringsMatchedBy(_ regexPattern: String,
+                                   searchRange: NSRange? = nil,
+                                   options: RKLRegexOptions = [],
+                                   matchingOptions: NSRegularExpression.MatchingOptions = [],
+                                   _ block: (_ strings: [String], _ ranges: [NSRange]) -> Void)
+        throws -> Bool {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
+            if matches.isEmpty { return false }
+
+            for match in matches {
+                let substrings = match.ranges.map({ ($0.location != NSNotFound) ? (self as NSString).substring(with: $0) : "" })
+                block(substrings, match.ranges)
+            }
+
+            return true
+    }
+
+    func componentsSeparatedBy(_ regexPattern: String,
+                               searchRange: NSRange? = nil,
+                               options: RKLRegexOptions = [],
+                               matchingOptions: NSRegularExpression.MatchingOptions = [])
+        throws -> [String] {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            let range = searchRange ?? stringRange
+            let matches = regex.matches(in: self, options: matchingOptions, range: range)
+            if matches.isEmpty { return [ self ] }
+            var pos: Int = 0
+
+            var substrings: [String] = matches.map {
+                let subrange = NSMakeRange(pos, $0.range.location - pos)
+                pos = $0.range.location + $0.range.length
+                return (self as NSString).substring(with: subrange)
+            }
+
+            if pos < range.length {
+                let finalSubstring = String(characters.suffix(range.length - pos))
+                substrings.append(finalSubstring)
+            }
+
+            return substrings
     }
 }
