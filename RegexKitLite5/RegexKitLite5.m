@@ -652,14 +652,17 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
     if (!regex) return NO;
-    NSArray *strings = [self componentsSeparatedByRegex:regexPattern options:options matchingOptions:matchingOptions range:searchRange error:error];
+    NSString *target = [self substringWithRange:searchRange];
+    NSRange targetRange = [target stringRange];
+    NSArray *strings = [target componentsSeparatedByRegex:regexPattern options:options matchingOptions:matchingOptions range:targetRange error:error];
+    if ([strings isEqualToArray:@[ target ]]) return NO;
     NSUInteger lastStringIndex = [strings indexOfObject:[strings lastObject]];
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
-    __block NSRange remainderRange = [self stringRange];
+    NSArray *matches = [regex matchesInString:target options:matchingOptions range:searchRange];
+    __block NSRange remainderRange = targetRange;
     __block BOOL blockStop = NO;
 
     [strings enumerateObjectsWithOptions:enumOpts usingBlock:^(NSString *topString, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSRange topStringRange = [self rangeOfString:topString options:NSBackwardsSearch range:remainderRange];
+        NSRange topStringRange = [target rangeOfString:topString options:NSBackwardsSearch range:remainderRange];
         NSTextCheckingResult *match = (idx < lastStringIndex) ? matches[idx] : nil;
 
         if (match) {
@@ -672,17 +675,17 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
             for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
                 NSRange subrange = [match rangeAtIndex:rangeIndex];
                 rangeCaptures[rangeIndex + 1] = subrange;
-                NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
+                NSString *substring = (subrange.location != NSNotFound) ? [target substringWithRange:subrange] : @"";
                 [captures addObject:substring];
             }
 
             remainderRange = rangeCaptures[captureCount];
-            remainderRange = (enumOpts == 0) ? [self rangeFromLocation:remainderRange.location] : [self rangeToLocation:remainderRange.location];
+            remainderRange = (enumOpts == 0) ? [target rangeFromLocation:remainderRange.location] : [target rangeToLocation:remainderRange.location];
             rangeCaptures[captureCount + 1] = NSTerminationRange;
             block(captureCount + 1, [captures copy], rangeCaptures, &blockStop);
         }
         else {
-            NSRange lastRange = [self rangeOfString:topString options:NSBackwardsSearch range:remainderRange];
+            NSRange lastRange = [target rangeOfString:topString options:NSBackwardsSearch range:remainderRange];
             NSRange rangeCaptures[2] = { lastRange, NSTerminationRange };
             block(1, @[ topString ], rangeCaptures, &blockStop);
         }
