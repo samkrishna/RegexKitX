@@ -143,10 +143,8 @@ public extension String {
             var target = String(self)
 
             for match in matches.reversed() {
-                if match.range.location != NSNotFound {
-                    let range = match.range.range(for: self)
-                    target.replaceSubrange(range!, with: replacement)
-                }
+                let range = match.range.indexingRange(for: self)
+                target.replaceSubrange(range!, with: replacement)
             }
 
             return target
