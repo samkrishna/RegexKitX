@@ -90,6 +90,12 @@ public extension String {
         return NSRange(location: 0, length: utf16.count)
     }
 
+    func rangeFromLocation(location: Int)
+        -> NSRange {
+        let deltaLength = (self as NSString).length - location
+        return NSRange(location: location, length: deltaLength)
+    }
+
     static func cacheKeyFor(_ regexPattern: String, options: RKLRegexOptions)
         -> String {
             let key = String("\(regexPattern)_\(options.rawValue)")
@@ -330,5 +336,44 @@ public extension String {
             }
 
             return substrings
+    }
+
+    func enumerateStringsSeparatedBy(_ regexPattern: String,
+                                     searchRange: NSRange? = nil,
+                                     options: RKLRegexOptions = [],
+                                     matchingOptions: NSRegularExpression.MatchingOptions = [],
+                                     _ block: (_ strings: [String], _ ranges: [NSRange]) -> Void)
+        throws -> Bool {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            let target = (self as NSString).substring(with: searchRange ?? stringRange)
+            let targetRange = target.stringRange
+            let matches = regex.matches(in: target, options: matchingOptions, range: targetRange)
+            if matches.isEmpty return false
+            let strings = try target.componentsSeparatedBy(regexPattern, searchRange: targetRange, options: options, matchingOptions: matchingOptions)
+            let lastStringIndex = strings.endIndex - 1
+            var remainderRange = targetRange
+
+            for (index, topString) in strings.enumerated() {
+                let topStringRange = (target as NSString).range(of: topString, options: .backwards, range: remainderRange)
+                let match = (index < lastStringIndex) ? matches[index] : nil
+                var rangeCaptures = Array([topStringRange])
+
+                if match != nil {
+                    rangeCaptures.append(contentsOf: match!.ranges)
+                    let substrings = rangeCaptures.map {
+                        $0.location != NSNotFound ? (target as NSString).substring(with: $0) : ""
+                    }
+
+                    remainderRange = target.rangeFromLocation(location: rangeCaptures.last!.location)
+                    block(substrings, rangeCaptures)
+                }
+                else {
+                    let lastRange = (target as NSString).range(of: topString, options: .backwards, range: remainderRange)
+                    block( [ topString ], [ lastRange ])
+                }
+            }
+
+            return true
     }
 }
