@@ -177,9 +177,11 @@ public extension String {
             let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
             if matches.isEmpty { return [] }
             let captures: [String] = matches.map({
-                let matchRange = $0.range(at: capture)
-                let matchString = matchRange.location != NSNotFound ? (self as NSString).substring(with: matchRange) : ""
-                return matchString
+                $0.range(at: capture).location != NSNotFound ? (self as NSString).substring(with: $0.range(at: capture)) : ""
+            })
+
+            return captures
+    }
             })
 
             return captures
