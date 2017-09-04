@@ -71,6 +71,20 @@ extension NSRange {
         return fromIndex ..< toIndex
     }
 }
+
+public extension NSTextCheckingResult {
+    var ranges: [NSRange] {
+        var _ranges = [NSRange]()
+
+        for i in 0...(self.numberOfRanges - 1) {
+            let captureRange = self.range(at: i)
+            _ranges.append(captureRange)
+        }
+
+        return _ranges
+    }
+}
+
 public extension String {
     var stringRange: NSRange {
         return NSRange(location: 0, length: utf16.count)
