@@ -220,11 +220,11 @@ public extension String {
             return arrayOfCaptures
     }
 
-    func dictionaryByMatching(_ regexPattern: String,
-                              searchRange: NSRange? = nil,
-                              options: RKLRegexOptions = [],
-                              matchingOptions: NSRegularExpression.MatchingOptions = [],
-                              keysAndCapturePairs: [(key: String, capture: Int)])
+    fileprivate func dictionaryByMatching(_ regexPattern: String,
+                                          searchRange: NSRange? = nil,
+                                          options: RKLRegexOptions = [],
+                                          matchingOptions: NSRegularExpression.MatchingOptions = [],
+                                          keysAndCapturePairs: [(key: String, capture: Int)])
         throws -> Dictionary<String, String> {
             var results = [String: String]()
             for pair in keysAndCapturePairs {
