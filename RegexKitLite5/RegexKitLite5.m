@@ -248,11 +248,9 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 - (NSString *)stringByMatching:(NSString *)regexPattern options:(RKLRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error
 {
-    NSRegularExpression *regex = [NSString cachedRegexForPattern:regexPattern options:options error:error];
-    if (!regex) return nil;
-    NSTextCheckingResult *firstMatch = [regex firstMatchInString:self options:matchingOptions range:searchRange];
-    if (!firstMatch) return nil;
-    NSString *result = [self substringWithRange:[firstMatch rangeAtIndex:capture]];
+    NSRange range = [self rangeOfRegex:regexPattern options:options matchingOptions:matchingOptions inRange:searchRange capture:capture error:error];
+    if (NSEqualRanges(range, NSNotFoundRange)) return nil;
+    NSString *result = [self substringWithRange:range];
 
     return result;
 }
@@ -283,9 +281,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSMutableString *target = [self mutableCopy];
 
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        if (match.range.location != NSNotFound) {
-            [target replaceCharactersInRange:match.range withString:replacement];
-        }
+        [target replaceCharactersInRange:match.range withString:replacement];
     }
     
     return [target copy];
@@ -350,21 +346,15 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     if (!regex) return nil;
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     if (![matches count]) return @[];
-    NSMutableArray *finalCaptures = [NSMutableArray array];
+    NSMutableArray *captures = [NSMutableArray array];
 
     for (NSTextCheckingResult *match in matches) {
-        NSMutableArray *captureArray = [NSMutableArray arrayWithCapacity:match.numberOfRanges];
-
-        for (NSUInteger i = 0; i < match.numberOfRanges; i++) {
-            NSRange matchRange = [match rangeAtIndex:i];
-            NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : @"";
-            [captureArray addObject:matchString];
-        }
-
-        [finalCaptures addObject:captureArray[capture]];
+        NSRange matchRange = [match rangeAtIndex:capture];
+        NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : @"";
+        [captures addObject:matchString];
     }
 
-    return [finalCaptures copy];
+    return [captures copy];
 }
 
 #pragma mark - captureComponentsMatchedByRegex:
@@ -643,7 +633,7 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     }];
 #pragma clang diagnostic pop
 
-    return ([matches count]) ? YES : NO;
+    return YES;
 }
 
 #pragma mark - enumerateStringsSeparatedByRegex:usingBlock:
@@ -779,10 +769,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSUInteger count = 0;
     
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        if (match.range.location != NSNotFound) {
-            [self replaceCharactersInRange:match.range withString:replacement];
-            count++;
-        }
+        [self replaceCharactersInRange:match.range withString:replacement];
+        count++;
     }
     
     return count;
