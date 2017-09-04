@@ -654,10 +654,10 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     if (!regex) return NO;
     NSString *target = [self substringWithRange:searchRange];
     NSRange targetRange = [target stringRange];
+    NSArray *matches = [regex matchesInString:target options:matchingOptions range:targetRange];
+    if (![matches count]) return NO;
     NSArray *strings = [target componentsSeparatedByRegex:regexPattern options:options matchingOptions:matchingOptions range:targetRange error:error];
-    if ([strings isEqualToArray:@[ target ]]) return NO;
     NSUInteger lastStringIndex = [strings indexOfObject:[strings lastObject]];
-    NSArray *matches = [regex matchesInString:target options:matchingOptions range:searchRange];
     __block NSRange remainderRange = targetRange;
     __block BOOL blockStop = NO;
 
