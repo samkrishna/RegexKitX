@@ -28,18 +28,6 @@ public func ~= (regex: String, string: String) -> Bool {
     }
 }
 
-extension NSRange {
-    func range(for string: String) -> Range<String.Index>? {
-        guard location != NSNotFound else { return nil }
-        guard let fromUTFIndex = string.utf16.index(string.utf16.startIndex, offsetBy: location, limitedBy: string.utf16.endIndex) else { return nil }
-        guard let toUTFIndex = string.utf16.index(fromUTFIndex, offsetBy: length, limitedBy: string.utf16.endIndex) else { return nil }
-        guard let fromIndex = String.Index(fromUTFIndex, within: string) else { return nil }
-        guard let toIndex = String.Index(toUTFIndex, within: string) else { return nil }
-
-        return fromIndex ..< toIndex
-    }
-}
-
 public struct RKLRegexOptions: OptionSet {
     public let rawValue: Int
 
@@ -68,6 +56,16 @@ public struct RKLRegexOptions: OptionSet {
     }
 }
 
+extension NSRange {
+    func indexingRange(for string: String) -> Range<String.Index>? {
+        guard location != NSNotFound else { return nil }
+        guard let fromUTFIndex = string.utf16.index(string.utf16.startIndex, offsetBy: location, limitedBy: string.utf16.endIndex) else { return nil }
+        guard let toUTFIndex = string.utf16.index(fromUTFIndex, offsetBy: length, limitedBy: string.utf16.endIndex) else { return nil }
+        guard let fromIndex = String.Index(fromUTFIndex, within: string) else { return nil }
+        guard let toIndex = String.Index(toUTFIndex, within: string) else { return nil }
+        return fromIndex ..< toIndex
+    }
+}
 public extension String {
     var stringRange: NSRange {
         return NSRange(location: 0, length: utf16.count)
