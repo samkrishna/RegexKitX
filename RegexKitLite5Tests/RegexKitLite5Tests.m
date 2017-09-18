@@ -401,6 +401,31 @@
     XCTAssert([[components lastObject] isEqualToString:@"rice"], @"This should actually be \'rice\'");
 }
 
+#pragma mark - NSMutableString tests
+
+- (void)testReplaceOccurrencesOfRegexWithString
+{
+    NSMutableString *mutableCandidate = [NSMutableString stringWithString:self.candidate];
+    NSUInteger count = [mutableCandidate replaceOccurrencesOfRegex:@", " withString:@" barney "];
+
+    XCTAssert([mutableCandidate isMatchedByRegex:@" barney "]);
+    XCTAssertFalse([mutableCandidate isMatchedByRegex:@", "]);
+    XCTAssert(count == 11);
+}
+
+- (void)testReplaceOccurrencesOfRegexUsingBlock
+{
+    NSMutableString *mutableCandidate = [NSMutableString stringWithString:self.candidate];
+    NSUInteger count = [mutableCandidate replaceOccurrencesOfRegex:@", " usingBlock:^NSString *(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        *stop = YES;
+        return @" barney ";
+    }];
+
+    XCTAssert(count == 1);
+    XCTAssert([mutableCandidate isMatchedByRegex:@" barney "]);
+    XCTAssert([mutableCandidate isMatchedByRegex:@", "]);
+}
+
 #pragma mark - Ported RKL4 Demos/Tests
 
 - (void)testEnumerateStringsMatchedByRegexUsingBlock
