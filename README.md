@@ -4,7 +4,7 @@ Use the pattern-matching Force.
 
 ## Swift
 
-This is a Swift 4 implementation inspired by the *RKL4* API. It is:
+This is a Swift 4 implementation inspired by the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) API. It is:
 
 - Yet another cover for `NSRegularExpression` and `NSTextCheckingResult`.
 - 100% pure ICU regex syntax
