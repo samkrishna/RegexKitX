@@ -246,6 +246,11 @@ class RegexKitLite5Tests: XCTestCase {
         XCTAssert(matched)
     }
 
+    func testIsRegexValid() {
+        let regexString = "[a-z"
+        XCTAssertThrowsError(try regexString.isRegexValid())
+    }
+
     func testStringByReplacingOccurrencesOfRegexUsingClosure() {
         let pattern = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
 
