@@ -1,10 +1,6 @@
 //
 //  RegexKitXTests.swift
 //  SwiftRegexKitXTests
-//
-//  Created by Sam Krishna on 8/27/17.
-//  Copyright © 2017 Sam Krishna. All rights reserved.
-//
 
 import XCTest
 @testable import SwiftRegexKitX
