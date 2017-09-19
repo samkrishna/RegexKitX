@@ -22,26 +22,26 @@ class RegexKitXTests: XCTestCase {
         super.tearDown()
     }
     
-    func testIsMatchedByRegex() {
+    func testMatchesRegex() {
         let regex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
-        let result = try! candidate.isMatchedBy(regex)
+        let result = try! candidate.matches(regex)
         XCTAssert(result)
     }
 
-    func testIsMatchedByRegexSearchRange() {
+    func testMatchesRegexInSearchRange() {
         let regex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
-        let resultWithFullRange = try! candidate.isMatchedBy(regex, searchRange: candidate.stringRange)
+        let resultWithFullRange = try! candidate.matches(regex, in: candidate.stringRange)
         XCTAssertTrue(resultWithFullRange)
-        let resultWithHalfRange = try! candidate.isMatchedBy(regex, searchRange: NSMakeRange(0, (candidate.utf16.count / 2)))
+        let resultWithHalfRange = try! candidate.matches(regex, in: NSMakeRange(0, (candidate.utf16.count / 2)))
         XCTAssertFalse(resultWithHalfRange)
     }
 
-    func testIsMatchedByRegexOptions() {
+    func testMatchesRegexOptions() {
         let regex = "(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
-        let result = try! candidate.isMatchedBy(regex, options: .RKXCaseless)
+        let result = try! candidate.matches(regex, options: .RKXCaseless)
         XCTAssertTrue(result)
 
-        let failResult = try! candidate.isMatchedBy(regex, options: [.RKXCaseless, .RKXIgnoreMetacharacters ])
+        let failResult = try! candidate.matches(regex, options: [.RKXCaseless, .RKXIgnoreMetacharacters ])
         XCTAssertFalse(failResult)
     }
 
@@ -260,10 +260,10 @@ class RegexKitXTests: XCTestCase {
             let timeRegex = "^\\d+:\\d+:\\d+\\.\\d+$"
 
             for capture in capturedStrings {
-                if try! capture.isMatchedBy(dateRegex) {
+                if try! capture.matches(dateRegex) {
                     replacement.append("cray ")
                 }
-                else if try! capture.isMatchedBy(timeRegex) {
+                else if try! capture.matches(timeRegex) {
                     replacement.append("cray!")
                 }
             }

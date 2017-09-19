@@ -12,7 +12,7 @@ infix operator =~
 
 public func =~ (string: String, regex: String) -> Bool {
     do {
-        let result = try string.isMatchedBy(regex)
+        let result = try string.matches(regex)
         return result
     } catch {
         return false
@@ -21,7 +21,7 @@ public func =~ (string: String, regex: String) -> Bool {
 
 public func ~= (regex: String, string: String) -> Bool {
     do {
-        let result = try string.isMatchedBy(regex)
+        let result = try string.matches(regex)
         return result
     } catch {
         return false
