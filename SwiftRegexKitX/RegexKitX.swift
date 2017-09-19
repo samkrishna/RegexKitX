@@ -93,66 +93,66 @@ public extension String {
         return Range(range, in: self)
     }
 
-    fileprivate static func cacheKeyFor(_ regexPattern: String, options: RKXRegexOptions)
+    fileprivate static func cacheKeyFor(_ pattern: String, options: RKXRegexOptions)
         -> String {
-            let key = String("\(regexPattern)_\(options.rawValue)")
+            let key = String("\(pattern)_\(options.rawValue)")
             return key
     }
 
-    fileprivate static func cachedRegexFor(_ regexPattern: String, options: RKXRegexOptions)
+    fileprivate static func cachedRegexFor(_ pattern: String, options: RKXRegexOptions)
         throws -> NSRegularExpression {
-            let key = cacheKeyFor(regexPattern, options: options)
+            let key = cacheKeyFor(pattern, options: options)
             var regex = Thread.current.threadDictionary[key] as? NSRegularExpression
 
             if regex == nil {
                 let nsregexopts = options.coerceToNSRegularExpressionOptions()
-                regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+                regex = try NSRegularExpression(pattern: pattern, options: nsregexopts)
                 Thread.current.threadDictionary[key] = regex
             }
 
             return regex!
     }
 
-    func isMatchedBy(_ regexPattern: String,
-                     searchRange: NSRange? = nil,
-                     options: RKXRegexOptions = [],
-                     matchingOptions: NSRegularExpression.MatchingOptions = [])
+    func matches(_ pattern: String,
+                 in searchRange: NSRange? = nil,
+                 options: RKXRegexOptions = [],
+                 matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> Bool {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let match = regex.firstMatch(in: self, options: matchingOptions, range: searchRange ?? stringRange)
             return match != nil
     }
 
-    func rangeOf(_ regexPattern: String,
-                 searchRange: NSRange? = nil,
+    func rangeOf(_ pattern: String,
+                 in searchRange: NSRange? = nil,
                  capture: Int = 0,
                  options: RKXRegexOptions = [],
                  matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> NSRange {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let match = regex.firstMatch(in: self, options: matchingOptions, range: searchRange ?? stringRange)
             return match?.range(at: capture) ?? RKX.NSNotFoundRange
     }
 
-    func stringByMatching(_ regexPattern: String,
-                          searchRange: NSRange? = nil,
+    func stringByMatching(_ pattern: String,
+                          in searchRange: NSRange? = nil,
                           capture: Int = 0,
                           options: RKXRegexOptions = [],
                           matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> String? {
-            let range = try rangeOf(regexPattern, searchRange: searchRange, capture: capture, options: options, matchingOptions: matchingOptions)
+            let range = try rangeOf(pattern, in: searchRange, capture: capture, options: options, matchingOptions: matchingOptions)
             if NSEqualRanges(range, RKX.NSNotFoundRange) { return nil }
             let substring = (self as NSString).substring(with: range)
             return substring
     }
 
-    func stringByReplacingOccurrencesOf(_ regexPattern: String,
+    func stringByReplacingOccurrencesOf(_ pattern: String,
                                         replacement: String,
-                                        searchRange: NSRange? = nil,
+                                        in searchRange: NSRange? = nil,
                                         options: RKXRegexOptions = [],
                                         matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> String {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
             if matches.isEmpty { return (self as NSString).substring(with: searchRange ?? stringRange) }
             var target = String(self)
@@ -182,13 +182,13 @@ public extension String {
             return true
     }
 
-    func componentsMatchedBy(_ regexPattern: String,
-                             searchRange: NSRange? = nil,
+    func componentsMatchedBy(_ pattern: String,
+                             in searchRange: NSRange? = nil,
                              capture: Int = 0,
                              options: RKXRegexOptions = [],
                              matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> [String] {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
             if matches.isEmpty { return [] }
             let captures: [String] = matches.map({
@@ -198,12 +198,12 @@ public extension String {
             return captures
     }
 
-    func captureComponentsMatchedBy(_ regexPattern: String,
-                                    searchRange: NSRange? = nil,
+    func captureComponentsMatchedBy(_ pattern: String,
+                                    in searchRange: NSRange? = nil,
                                     options: RKXRegexOptions = [],
                                     matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> [String] {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             guard let match = regex.firstMatch(in: self, options: matchingOptions, range: searchRange ?? stringRange) else { return [] }
 
             let captures = match.captureRanges.map({
@@ -213,12 +213,12 @@ public extension String {
             return captures
     }
 
-    func arrayOfCaptureComponentsMatchedBy(_ regexPattern: String,
-                                           searchRange: NSRange? = nil,
+    func arrayOfCaptureComponentsMatchedBy(_ pattern: String,
+                                           in searchRange: NSRange? = nil,
                                            options: RKXRegexOptions = [],
                                            matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> [[String]] {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
             if matches.isEmpty { return [] }
 
@@ -231,16 +231,16 @@ public extension String {
             return arrayOfCaptures
     }
 
-    fileprivate func _dictionaryByMatching(_ regexPattern: String,
-                                           searchRange: NSRange? = nil,
+    fileprivate func _dictionaryByMatching(_ pattern: String,
+                                           in searchRange: NSRange? = nil,
                                            options: RKXRegexOptions = [],
                                            matchingOptions: NSRegularExpression.MatchingOptions = [],
                                            keysAndCapturePairs: [(key: String, capture: Int)])
         throws -> Dictionary<String, String> {
             var results = [String: String]()
             try keysAndCapturePairs.forEach { pair in
-                let captureRange = try rangeOf(regexPattern,
-                                               searchRange: searchRange,
+                let captureRange = try rangeOf(pattern,
+                                               in: searchRange,
                                                capture: pair.capture,
                                                options: options,
                                                matchingOptions: matchingOptions)
@@ -251,8 +251,8 @@ public extension String {
     }
 
 
-    func dictionaryByMatching(_ regexPattern: String,
-                              searchRange: NSRange? = nil,
+    func dictionaryByMatching(_ pattern: String,
+                              in searchRange: NSRange? = nil,
                               options: RKXRegexOptions = [],
                               matchingOptions: NSRegularExpression.MatchingOptions = [],
                               keysAndCaptures: Any...)
@@ -265,12 +265,12 @@ public extension String {
                 (key: keysAndCaptures[$0] as! String, capture: keysAndCaptures[$0.advanced(by: 1)] as! Int)
             }
 
-            let dict = try _dictionaryByMatching(regexPattern, searchRange: searchRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
+            let dict = try _dictionaryByMatching(pattern, in: searchRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
             return dict
     }
 
-    func arrayOfDictionariesByMatching(_ regexPattern: String,
-                                       searchRange: NSRange? = nil,
+    func arrayOfDictionariesByMatching(_ pattern: String,
+                                       in searchRange: NSRange? = nil,
                                        options: RKXRegexOptions = [],
                                        matchingOptions: NSRegularExpression.MatchingOptions = [],
                                        keysAndCaptures: Any...)
@@ -283,27 +283,27 @@ public extension String {
                 (key: keysAndCaptures[$0] as! String, capture: keysAndCaptures[$0.advanced(by: 1)] as! Int)
             }
 
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
             if matches.isEmpty { return [] }
 
             let dictArray: [Dictionary<String, String>] = try matches.map {
                 let range = $0.range(at: 0)
                 let subtring = (self as NSString).substring(with: range)
-                let dict = try subtring._dictionaryByMatching(regexPattern, searchRange: subtring.stringRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
+                let dict = try subtring._dictionaryByMatching(pattern, in: subtring.stringRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
                 return dict
             }
 
             return dictArray
     }
 
-    func enumerateStringsMatchedBy(_ regexPattern: String,
-                                   searchRange: NSRange? = nil,
+    func enumerateStringsMatchedBy(_ pattern: String,
+                                   in searchRange: NSRange? = nil,
                                    options: RKXRegexOptions = [],
                                    matchingOptions: NSRegularExpression.MatchingOptions = [],
                                    _ closure: (_ strings: [String], _ ranges: [NSRange]) -> Void)
         throws -> Bool {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let matches = regex.matches(in: self, options: matchingOptions, range: searchRange ?? stringRange)
             if matches.isEmpty { return false }
 
@@ -315,12 +315,12 @@ public extension String {
             return true
     }
 
-    func componentsSeparatedBy(_ regexPattern: String,
-                               searchRange: NSRange? = nil,
+    func componentsSeparatedBy(_ pattern: String,
+                               in searchRange: NSRange? = nil,
                                options: RKXRegexOptions = [],
                                matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> [String] {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let range = searchRange ?? stringRange
             let matches = regex.matches(in: self, options: matchingOptions, range: range)
             if matches.isEmpty { return [ self ] }
@@ -340,18 +340,18 @@ public extension String {
             return substrings
     }
 
-    func enumerateStringsSeparatedBy(_ regexPattern: String,
-                                     searchRange: NSRange? = nil,
+    func enumerateStringsSeparatedBy(_ pattern: String,
+                                     in searchRange: NSRange? = nil,
                                      options: RKXRegexOptions = [],
                                      matchingOptions: NSRegularExpression.MatchingOptions = [],
                                      _ closure: (_ strings: [String], _ ranges: [NSRange]) -> Void)
         throws -> Bool {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let target = (self as NSString).substring(with: searchRange ?? stringRange)
             let targetRange = target.stringRange
             let matches = regex.matches(in: target, options: matchingOptions, range: targetRange)
             if matches.isEmpty { return false }
-            let strings = try target.componentsSeparatedBy(regexPattern, searchRange: targetRange, options: options, matchingOptions: matchingOptions)
+            let strings = try target.componentsSeparatedBy(pattern, in: targetRange, options: options, matchingOptions: matchingOptions)
             var remainderRange = targetRange
 
             for (index, string0) in strings.enumerated() {
@@ -377,13 +377,13 @@ public extension String {
             return true
     }
 
-    func stringByReplacingOccurencesOf(_ regexPattern: String,
-                                       searchRange: NSRange? = nil,
+    func stringByReplacingOccurencesOf(_ pattern: String,
+                                       in searchRange: NSRange? = nil,
                                        options: RKXRegexOptions = [],
                                        matchingOptions: NSRegularExpression.MatchingOptions = [],
                                        _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
         throws -> String {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             var target = (self as NSString).substring(with: searchRange ?? stringRange)
             let targetRange = (target as String).stringRange
             let matches = regex.matches(in: (target as String), options: matchingOptions, range: targetRange)
@@ -399,13 +399,13 @@ public extension String {
             return target as String
     }
 
-    mutating func replaceOccurrencesOf(_ regexPattern: String,
+    mutating func replaceOccurrencesOf(_ pattern: String,
                                        replacement: String,
-                                       searchRange: NSRange? = nil,
+                                       in searchRange: NSRange? = nil,
                                        options: RKXRegexOptions = [],
                                        matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> Int {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let matches = regex.matches(in: (self as String), options: matchingOptions, range: searchRange ?? stringRange)
             if matches.isEmpty { return NSNotFound }
             var count = 0
@@ -419,13 +419,13 @@ public extension String {
             return count
     }
 
-    mutating func replaceOccurrencesOf(_ regexPattern: String,
-                                       searchRange: NSRange? = nil,
+    mutating func replaceOccurrencesOf(_ pattern: String,
+                                       in searchRange: NSRange? = nil,
                                        options: RKXRegexOptions = [],
                                        matchingOptions: NSRegularExpression.MatchingOptions = [],
                                        _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
         throws -> Int {
-            let regex = try String.cachedRegexFor(regexPattern, options: options)
+            let regex = try String.cachedRegexFor(pattern, options: options)
             let matches = regex.matches(in: (self as String), options: matchingOptions, range: searchRange ?? stringRange)
             if matches.isEmpty { return NSNotFound }
             var count = 0

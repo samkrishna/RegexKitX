@@ -108,12 +108,12 @@ class RegexKitXTests: XCTestCase {
         let failedPattern = "2014-05-06 17:03:17.967 EXECUTION_DINO"
         let failureControl = "2014-05-06 17:03:17.967 EXECUTION_DATA"
         let failureRange = NSMakeRange(0, 38);
-        let failureResult = try! candidate.stringByReplacingOccurrencesOf(failedPattern, replacement: "BARNEY RUBBLE", searchRange: failureRange)
+        let failureResult = try! candidate.stringByReplacingOccurrencesOf(failedPattern, replacement: "BARNEY RUBBLE", in: failureRange)
         XCTAssert(failureResult == failureControl)
 
         let successPattern = "2014-05-06 17:03:17.967 EXECUTION_DATA"
-        let successResult = try! candidate.stringByReplacingOccurrencesOf(successPattern, replacement: "BARNEY RUBBLE", searchRange: failureRange)
-        XCTAssert(try! successResult.isMatchedBy("BARNEY RUBBLE"))
+        let successResult = try! candidate.stringByReplacingOccurrencesOf(successPattern, replacement: "BARNEY RUBBLE", in: failureRange)
+        XCTAssert(try! successResult.matches("BARNEY RUBBLE"))
     }
 
     func testComponentsMatchedByRegex() {
