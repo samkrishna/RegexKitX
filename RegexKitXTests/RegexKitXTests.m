@@ -44,39 +44,39 @@
     [super tearDown];
 }
 
-#pragma mark - isMatchedByRegex:
+#pragma mark - matchesRegex:
 
-- (void)testIsMatchedByRegex
+- (void)testMatchesRegex
 {
     NSString *regex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex], @"Match has failed!");
+    XCTAssertTrue([self.candidate matchesRegex:regex], @"Match has failed!");
 }
 
-- (void)testIsMatchedByRegexRange
+- (void)testMatchesRegexRange
 {
     NSString *regex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex inRange:[self.candidate stringRange]]);
-    XCTAssertFalse([self.candidate isMatchedByRegex:regex inRange:NSMakeRange(0, (self.candidate.length / 2))]);
+    XCTAssertTrue([self.candidate matchesRegex:regex inRange:[self.candidate stringRange]]);
+    XCTAssertFalse([self.candidate matchesRegex:regex inRange:NSMakeRange(0, (self.candidate.length / 2))]);
 }
 
-- (void)testIsMatchedByRegexOptionsRangeError
+- (void)testMatchesRegexOptionsRangeError
 {
     // NOTE: Not Comprehensive Yet
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKXCaseless inRange:[self.candidate stringRange] error:nil]);
-    XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKXNoOptions inRange:[self.candidate stringRange] error:nil]);
+    XCTAssertTrue([self.candidate matchesRegex:regex options:RKXCaseless inRange:[self.candidate stringRange] error:nil]);
+    XCTAssertFalse([self.candidate matchesRegex:regex options:RKXNoOptions inRange:[self.candidate stringRange] error:nil]);
 }
 
-- (void)testIsMatchedByRegexOptionsMatchingOptionsRangeError
+- (void)testMatchesRegexOptionsMatchingOptionsRangeError
 {
     // NOTE: Not Comprehensive Yet
     NSError *error;
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKXCaseless inRange:[self.candidate stringRange] error:nil]);
-    XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKXNoOptions matchingOptions:0 inRange:[self.candidate stringRange] error:&error], @"Case-sensitive match has succeeded when it shouldn't have! Error: %@", error);
+    XCTAssertTrue([self.candidate matchesRegex:regex options:RKXCaseless inRange:[self.candidate stringRange] error:nil]);
+    XCTAssertFalse([self.candidate matchesRegex:regex options:RKXNoOptions matchingOptions:0 inRange:[self.candidate stringRange] error:&error], @"Case-sensitive match has succeeded when it shouldn't have! Error: %@", error);
 
     NSString *failureCase1 = @"Orthogonal2";
-    BOOL failureResult1 = [failureCase1 isMatchedByRegex:@"Orthogonal" options:RKXCaseless inRange:[failureCase1 stringRange] error:&error];
+    BOOL failureResult1 = [failureCase1 matchesRegex:@"Orthogonal" options:RKXCaseless inRange:[failureCase1 stringRange] error:&error];
     XCTAssert(failureResult1);
 }
 
@@ -89,7 +89,7 @@
     XCTAssert([captures count] == 12);
     
     for (NSString *substring in captures) {
-        BOOL result = [substring isMatchedByRegex:@", "];
+        BOOL result = [substring matchesRegex:@", "];
         XCTAssertFalse(result, @"There should be no separators in this substring! (%@)", substring);
     }
 }
@@ -179,10 +179,10 @@
         NSString *timeRegex = @"^\\d+:\\d+:\\d+\\.\\d+$";
         
         for (NSString *capture in capturedStrings) {
-            if ([capture isMatchedByRegex:dateRegex]) {
+            if ([capture matchesRegex:dateRegex]) {
                 [replacement appendString:@"cray "];
             }
-            else if ([capture isMatchedByRegex:timeRegex]) {
+            else if ([capture matchesRegex:timeRegex]) {
                 [replacement appendString:@"cray!"];
             }
         }
@@ -190,7 +190,7 @@
         return [replacement copy];
     }];
     
-    XCTAssert([output isMatchedByRegex:@"cray cray!"]);
+    XCTAssert([output matchesRegex:@"cray cray!"]);
     
     pattern = @"pick(led)?";
     NSString *newCandidate = @"Peter Piper picked a peck of pickled peppers;\n"
@@ -198,19 +198,19 @@
                              @"If Peter Piper picked a peck of pickled peppers,\n"
                              @"Where's the peck of pickled peppers Peter Piper picked?";
     output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:[newCandidate stringRange] error:NULL usingBlock:^NSString *(NSUInteger captureCount, NSArray *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-        if ([capturedStrings[0] isMatchedByRegex:@"^pick$"]) {
+        if ([capturedStrings[0] matchesRegex:@"^pick$"]) {
             return @"select";
         }
-        else if ([capturedStrings[0] isMatchedByRegex:@"^pickled$"]) {
+        else if ([capturedStrings[0] matchesRegex:@"^pickled$"]) {
             return @"marinated";
         }
         
         return @"FAIL";
     }];
     
-    XCTAssert([output isMatchedByRegex:@"selected"], @"The block didn't work!");
-    XCTAssert([output isMatchedByRegex:@"marinated"], @"The block didn't work!");
-    XCTAssertFalse([output isMatchedByRegex:@"FAIL"], @"The block should NOT have inserted \'FAIL\'!!");
+    XCTAssert([output matchesRegex:@"selected"], @"The block didn't work!");
+    XCTAssert([output matchesRegex:@"marinated"], @"The block didn't work!");
+    XCTAssertFalse([output matchesRegex:@"FAIL"], @"The block should NOT have inserted \'FAIL\'!!");
 }
 
 - (void)testIsRegexValidWithOptionsError
@@ -386,8 +386,8 @@
     NSMutableString *mutableCandidate = [NSMutableString stringWithString:self.candidate];
     NSUInteger count = [mutableCandidate replaceOccurrencesOfRegex:@", " withString:@" barney "];
 
-    XCTAssert([mutableCandidate isMatchedByRegex:@" barney "]);
-    XCTAssertFalse([mutableCandidate isMatchedByRegex:@", "]);
+    XCTAssert([mutableCandidate matchesRegex:@" barney "]);
+    XCTAssertFalse([mutableCandidate matchesRegex:@", "]);
     XCTAssert(count == 11);
 }
 
@@ -400,8 +400,8 @@
     }];
 
     XCTAssert(count == 1);
-    XCTAssert([mutableCandidate isMatchedByRegex:@" barney "]);
-    XCTAssert([mutableCandidate isMatchedByRegex:@", "]);
+    XCTAssert([mutableCandidate matchesRegex:@" barney "]);
+    XCTAssert([mutableCandidate matchesRegex:@", "]);
 }
 
 #pragma mark - Ported RKX4 Demos/Tests

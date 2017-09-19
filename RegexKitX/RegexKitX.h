@@ -116,7 +116,7 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
  */
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
 
-#pragma mark - isMatchedByRegex:
+#pragma mark - matchesRegex:
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern.
@@ -125,7 +125,7 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
  */
-- (BOOL)isMatchedByRegex:(NSString *)pattern;
+- (BOOL)matchesRegex:(NSString *)pattern;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange.
@@ -135,7 +135,7 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
  */
-- (BOOL)isMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange;
+- (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options.
@@ -147,7 +147,7 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
  @return A @c BOOL value indicating whether or not the @c pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error;
+- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options and @c matchingOptions.
@@ -160,7 +160,7 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error;
+- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error;
 
 #pragma mark - rangeOfRegex:
 

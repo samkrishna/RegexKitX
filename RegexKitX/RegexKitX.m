@@ -122,24 +122,24 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     return [returnArray copy];
 }
 
-#pragma mark - isMatchedByRegex:
+#pragma mark - matchesRegex:
 
-- (BOOL)isMatchedByRegex:(NSString *)pattern
+- (BOOL)matchesRegex:(NSString *)pattern
 {
-    return [self isMatchedByRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL];
+    return [self matchesRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL];
 }
 
-- (BOOL)isMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange
+- (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange
 {
-    return [self isMatchedByRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:searchRange error:NULL];
+    return [self matchesRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:searchRange error:NULL];
 }
 
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error
+- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error
 {
-    return [self isMatchedByRegex:pattern options:options matchingOptions:0 inRange:searchRange error:error];
+    return [self matchesRegex:pattern options:options matchingOptions:0 inRange:searchRange error:error];
 }
 
-- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error
+- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return NO;
