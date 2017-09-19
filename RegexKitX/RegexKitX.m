@@ -248,22 +248,22 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 #pragma mark - stringByReplacincOccurrencesOfRegex:withString:
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withString:replacement options:RKXNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template options:RKXNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement range:(NSRange)searchRange
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withString:replacement options:RKXNoOptions matchingOptions:0 range:searchRange error:NULL];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template options:RKXNoOptions matchingOptions:0 range:searchRange error:NULL];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withString:replacement options:options matchingOptions:0 range:searchRange error:error];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template options:options matchingOptions:0 range:searchRange error:error];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return nil;
@@ -272,7 +272,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSMutableString *target = [self mutableCopy];
 
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        [target replaceCharactersInRange:match.range withString:replacement];
+        NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:template];
+        [target replaceCharactersInRange:match.range withString:swap];
     }
     
     return [target copy];
@@ -739,22 +740,22 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
 
 #pragma mark - replaceOccurrencesOfRegex:withString:
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
 {
-    return [self replaceOccurrencesOfRegex:pattern withString:replacement options:RKXNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
+    return [self replaceOccurrencesOfRegex:pattern withTemplate:template options:RKXNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
 }
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement range:(NSRange)searchRange
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange
 {
-    return [self replaceOccurrencesOfRegex:pattern withString:replacement options:RKXNoOptions matchingOptions:0 range:searchRange error:NULL];
+    return [self replaceOccurrencesOfRegex:pattern withTemplate:template options:RKXNoOptions matchingOptions:0 range:searchRange error:NULL];
 }
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error
 {
-    return [self replaceOccurrencesOfRegex:pattern withString:replacement options:options matchingOptions:0 range:searchRange error:error];
+    return [self replaceOccurrencesOfRegex:pattern withTemplate:template options:options matchingOptions:0 range:searchRange error:error];
 }
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return NSNotFound;
@@ -763,7 +764,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSUInteger count = 0;
     
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        [self replaceCharactersInRange:match.range withString:replacement];
+        NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:template];
+        [self replaceCharactersInRange:match.range withString:swap];
         count++;
     }
     

@@ -324,54 +324,54 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
  */
 - (NSString *)stringByMatching:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error;
 
-#pragma mark - stringByReplacincOccurrencesOfRegex:withString:
+#pragma mark - stringByReplacincOccurrencesOfRegex:withTemplate:
 
 /**
- Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c replacement string after performing capture group substitutions.
+ Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c template string after performing capture group substitutions.
 
  @param pattern A @c NSString containing a regular expression.
- @return A @c NSString created from the characters of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of the @c replacement string after performing capture group substitutions.
+ @return A @c NSString created from the characters of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of the @c template string after performing capture group substitutions.
  @return If the receiver is not matched by @c pattern then the string that is returned is a copy of the receiver as if @c stringWithString: had been sent to it.
  @return Will return @c nil if an error occurs.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template;
 
 /**
- Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c replacement string after performing capture group substitutions.
+ Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c template string after performing capture group substitutions.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of the @c replacement string after performing capture group substitutions.
+ @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of the @c template string after performing capture group substitutions.
  @return Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Will return @c nil if an error occurs.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement range:(NSRange)searchRange;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange;
 
 /**
- Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c replacement string after performing capture group substitutions.
+ Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c template string after performing capture group substitutions.
 
  @param pattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKXRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c replacement string after performing capture group substitutions. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
+ @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c template string after performing capture group substitutions. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
 
 
 /**
- Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c replacement string after performing capture group substitutions.
+ Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c template string after performing capture group substitutions.
 
  @param pattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKXRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param matchingOptions The matching options to use. See @c NSMatchingOptions for possible values.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c replacement string after performing capture group substitutions. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
+ @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchingOptions are replaced with the contents of the @c template string after performing capture group substitutions. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
 
 #pragma mark - captureCount:
 
@@ -890,47 +890,47 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
 
 @interface NSMutableString (RegexKitX)
 
-#pragma mark - replaceOccurrencesOfRegex:withString:
+#pragma mark - replaceOccurrencesOfRegex:withTemplate:
 
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options and @c matchingOptions within @c searchRange with the contents of @c replacement string after performing capture group substitutions, returning the number of replacements made.
 
  @param pattern A @c NSString containing a valid regular expression.
- @param replacement The string to use as the replacement text for matches by @c pattern. See ICU Replacement Text Syntax for more information.
+ @param template The string to use as the template text for matches by @c pattern. See ICU Replacement Text Syntax for more information.
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template;
 
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options and @c matchingOptions within @c searchRange with the contents of @c replacement string after performing capture group substitutions, returning the number of replacements made.
 
  @param pattern A @c NSString containing a valid regular expression.
- @param replacement The string to use as the replacement text for matches by @c pattern. See ICU Replacement Text Syntax for more information.
+ @param template The string to use as the template text for matches by @c pattern. See ICU Replacement Text Syntax for more information.
  @param searchRange The range of the receiver to search.
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement range:(NSRange)searchRange;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange;
 
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options and @c matchingOptions within @c searchRange with the contents of @c replacement string after performing capture group substitutions, returning the number of replacements made.
 
  @param pattern A @c NSString containing a valid regular expression.
- @param replacement The string to use as the replacement text for matches by @c pattern. See ICU Replacement Text Syntax for more information.
+ @param template The string to use as the template text for matches by @c pattern. See ICU Replacement Text Syntax for more information.
  @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
 
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options and @c matchingOptions within @c searchRange with the contents of @c replacement string after performing capture group substitutions, returning the number of replacements made.
 
  @param pattern A @c NSString containing a valid regular expression.
- @param replacement The string to use as the replacement text for matches by @c pattern. See ICU Replacement Text Syntax for more information.
+ @param template The string to use as the template text for matches by @c pattern. See ICU Replacement Text Syntax for more information.
  @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param matchingOptions A mask of options specified by combining NSMatchingOptions flags with the C bitwise @c OR operator. @c 0 may be used if no options are required.
  @param searchRange The range of the receiver to search.
@@ -938,7 +938,7 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withString:(NSString *)replacement options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
 
 #pragma mark - replaceOccurrencesOfRegex:usingBlock:
 

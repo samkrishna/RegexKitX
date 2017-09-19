@@ -155,17 +155,18 @@
     XCTAssert([timestamp isEqualToString:@"2014-05-06 17:03:17"]);
 }
 
-- (void)testStringByReplacingOccurrencesOfRegexWithStringOptionsMatchingOptionsRangeError
+- (void)testStringByReplacingOccurrencesOfRegexWithTemplateOptionsMatchingOptionsRangeError
 {
     NSString *failedPattern = @"2014-05-06 17:03:17.967 EXECUTION_DINO";
     NSString *failureControl = @"2014-05-06 17:03:17.967 EXECUTION_DATA";
     NSRange failureRange = NSMakeRange(0, 38);
-    NSString *failureResult = [self.candidate stringByReplacingOccurrencesOfRegex:failedPattern withString:@"BARNEY RUBBLE" options:RKXNoOptions matchingOptions:0 range:failureRange error:NULL];
+    NSString *failureResult = [self.candidate stringByReplacingOccurrencesOfRegex:failedPattern withTemplate:@"BARNEY RUBBLE" options:RKXNoOptions matchingOptions:0 range:failureRange error:NULL];
     XCTAssert([failureResult isEqualToString:failureControl]);
 
-    NSString *successPattern = @"2014-05-06 17:03:17.967 EXECUTION_DATA";
-    NSString *successResult = [self.candidate stringByReplacingOccurrencesOfRegex:successPattern withString:@"BARNEY RUBBLE" options:RKXNoOptions matchingOptions:0 range:failureRange error:NULL];
-    XCTAssert([successResult isMatchedByRegex:@"BARNEY RUBBLE"]);
+    NSString *successPattern = @"2014-05-06 17:03:17.967 (EXECUTION_DATA)";
+    NSString *successResult = [self.candidate stringByReplacingOccurrencesOfRegex:successPattern withTemplate:@"BARNEY RUBBLE ~~~$1~~~" options:RKXNoOptions matchingOptions:0 range:failureRange error:NULL];
+    XCTAssert([successResult matchesRegex:@"BARNEY RUBBLE"]);
+    XCTAssert([successResult matchesRegex:@"~~~EXECUTION_DATA~~~"]);
 }
 
 - (void)testStringByReplacingOccurrencesOfRegexOptionsMatchingOptionsInRangeErrorUsingBlock
@@ -384,7 +385,7 @@
 - (void)testReplaceOccurrencesOfRegexWithString
 {
     NSMutableString *mutableCandidate = [NSMutableString stringWithString:self.candidate];
-    NSUInteger count = [mutableCandidate replaceOccurrencesOfRegex:@", " withString:@" barney "];
+    NSUInteger count = [mutableCandidate replaceOccurrencesOfRegex:@", " withTemplate:@" barney "];
 
     XCTAssert([mutableCandidate matchesRegex:@" barney "]);
     XCTAssertFalse([mutableCandidate matchesRegex:@", "]);
