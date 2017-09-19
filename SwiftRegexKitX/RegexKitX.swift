@@ -172,8 +172,13 @@ public extension String {
     }
 
     func isRegexValid(options: RKXRegexOptions = [])
-        throws -> Bool {
-            let _ = try String.cachedRegexFor(self, options: options)
+        -> Bool {
+            do {
+                let _ = try String.cachedRegexFor(self, options: options)
+            } catch {
+                return false
+            }
+            
             return true
     }
 

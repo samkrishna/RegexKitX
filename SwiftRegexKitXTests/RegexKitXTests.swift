@@ -247,8 +247,11 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testIsRegexValid() {
-        let regexString = "[a-z"
-        XCTAssertThrowsError(try regexString.isRegexValid())
+        let badPattern = "[a-z"
+        XCTAssertFalse(badPattern.isRegexValid())
+
+        let goodPattern = "[a-z]"
+        XCTAssert(goodPattern.isRegexValid())
     }
 
     func testStringByReplacingOccurrencesOfRegexUsingClosure() {
