@@ -148,7 +148,7 @@ public extension String {
 
     func rangeOf(_ pattern: String,
                  in searchRange: NSRange? = nil,
-                 capture: Int = 0,
+                 for capture: Int = 0,
                  options: RKXRegexOptions = [],
                  matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> NSRange {
@@ -159,18 +159,18 @@ public extension String {
 
     func stringByMatching(_ pattern: String,
                           in searchRange: NSRange? = nil,
-                          capture: Int = 0,
+                          for capture: Int = 0,
                           options: RKXRegexOptions = [],
                           matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> String? {
-            let range = try rangeOf(pattern, in: searchRange, capture: capture, options: options, matchingOptions: matchingOptions)
+            let range = try rangeOf(pattern, in: searchRange, for: capture, options: options, matchingOptions: matchingOptions)
             if NSEqualRanges(range, RKX.NSNotFoundRange) { return nil }
             let substring = (self as NSString).substring(with: range)
             return substring
     }
 
     func stringByReplacingOccurrencesOf(_ pattern: String,
-                                        replacement: String,
+                                        with template: String,
                                         in searchRange: NSRange? = nil,
                                         options: RKXRegexOptions = [],
                                         matchingOptions: NSRegularExpression.MatchingOptions = [])
@@ -207,7 +207,7 @@ public extension String {
 
     func componentsMatchedBy(_ pattern: String,
                              in searchRange: NSRange? = nil,
-                             capture: Int = 0,
+                             for capture: Int = 0,
                              options: RKXRegexOptions = [],
                              matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> [String] {
@@ -264,7 +264,7 @@ public extension String {
             try keysAndCapturePairs.forEach { pair in
                 let captureRange = try rangeOf(pattern,
                                                in: searchRange,
-                                               capture: pair.capture,
+                                               for: pair.capture,
                                                options: options,
                                                matchingOptions: matchingOptions)
                 results[pair.key] = (captureRange.length > 0) ? (self as NSString).substring(with: captureRange) : ""

@@ -53,35 +53,35 @@ class RegexKitXTests: XCTestCase {
         XCTAssert(captureRange.location == 0);
         XCTAssert(captureRange.length == 19);
 
-        let dateRange = try! candidate.rangeOf(regex, capture: 1)
+        let dateRange = try! candidate.rangeOf(regex, for: 1)
         XCTAssert(dateRange.location == 0);
         XCTAssert(dateRange.length == 10);
 
-        let yearRange = try! candidate.rangeOf(regex, capture: 2)
+        let yearRange = try! candidate.rangeOf(regex, for: 2)
         XCTAssert(yearRange.location == 0);
         XCTAssert(yearRange.length == 4);
 
-        let monthRange = try! candidate.rangeOf(regex, capture: 3)
+        let monthRange = try! candidate.rangeOf(regex, for: 3)
         XCTAssert(monthRange.location == 5);
         XCTAssert(monthRange.length == 2);
 
-        let dayRange = try! candidate.rangeOf(regex, capture: 4)
+        let dayRange = try! candidate.rangeOf(regex, for: 4)
         XCTAssert(dayRange.location == 8);
         XCTAssert(dayRange.length == 2);
 
-        let timeRange = try! candidate.rangeOf(regex, capture: 5)
+        let timeRange = try! candidate.rangeOf(regex, for: 5)
         XCTAssert(timeRange.location == 11);
         XCTAssert(timeRange.length == 8);
 
-        let hourRange = try! candidate.rangeOf(regex, capture: 6)
+        let hourRange = try! candidate.rangeOf(regex, for: 6)
         XCTAssert(hourRange.location == 11);
         XCTAssert(hourRange.length == 2);
 
-        let minuteRange = try! candidate.rangeOf(regex, capture: 7)
+        let minuteRange = try! candidate.rangeOf(regex, for: 7)
         XCTAssert(minuteRange.location == 14);
         XCTAssert(minuteRange.length == 2);
 
-        let secondRange = try! candidate.rangeOf(regex, capture: 8)
+        let secondRange = try! candidate.rangeOf(regex, for: 8)
         XCTAssert(secondRange.location == 17);
         XCTAssert(secondRange.length == 2);
     }
@@ -114,7 +114,7 @@ class RegexKitXTests: XCTestCase {
 
     func testComponentsMatchedByRegex() {
         let list = "$10.23, $1024.42, $3099"
-        let listItems: [String] = try! list.componentsMatchedBy("\\$((\\d+)(?:\\.(\\d+)|\\.?))", capture: 3)
+        let listItems: [String] = try! list.componentsMatchedBy("\\$((\\d+)(?:\\.(\\d+)|\\.?))", for: 3)
 
         XCTAssert(listItems[0] == "23")
         XCTAssert(listItems[1] == "42")
