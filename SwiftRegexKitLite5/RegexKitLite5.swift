@@ -61,19 +61,8 @@ enum DictionaryError: Error {
     case unpairedKeysAndCaptures
 }
 
-extension NSRange {
-    func indexingRange(for string: String) -> Range<String.Index>? {
-        guard location != NSNotFound else { return nil }
-        guard let fromUTFIndex = string.utf16.index(string.utf16.startIndex, offsetBy: location, limitedBy: string.utf16.endIndex) else { return nil }
-        guard let toUTFIndex = string.utf16.index(fromUTFIndex, offsetBy: length, limitedBy: string.utf16.endIndex) else { return nil }
-        guard let fromIndex = String.Index(fromUTFIndex, within: string) else { return nil }
-        guard let toIndex = String.Index(toUTFIndex, within: string) else { return nil }
-        return fromIndex ..< toIndex
-    }
-}
-
 public extension NSTextCheckingResult {
-    var ranges: [NSRange] {
+    var captureRanges: [NSRange] {
         var _ranges = [NSRange]()
 
         for i in 0...(self.numberOfRanges - 1) {
@@ -90,7 +79,11 @@ public extension String {
         return NSRange(location: 0, length: utf16.count)
     }
 
-    func rangeFromLocation(location: Int)
+    private func utf16Range(from range: NSRange) -> Range<String.UTF16Index>? {
+        return Range(range, in: self)
+    }
+
+    func rangeFrom(location: Int)
         -> NSRange {
         let deltaLength = (self as NSString).length - location
         return NSRange(location: location, length: deltaLength)
@@ -104,7 +97,6 @@ public extension String {
 
     struct CustomRange {
         static let NSNotFoundRange = NSRange(location: NSNotFound, length: 0)
-        static let NSTerminationRange = NSRange(location: NSNotFound, length: LONG_MAX)
     }
 
     func isMatchedBy(_ regexPattern: String,
@@ -127,7 +119,7 @@ public extension String {
             let nsregexopts = options.coerceToNSRegularExpressionOptions()
             let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
             let match = regex.firstMatch(in: self, options: matchingOptions, range: searchRange ?? stringRange)
-            return match?.range(at: capture) ?? NSMakeRange(NSNotFound, 0)
+            return match?.range(at: capture) ?? CustomRange.NSNotFoundRange
     }
 
     func stringByMatching(_ regexPattern: String,
@@ -155,8 +147,8 @@ public extension String {
             var target = String(self)
 
             for match in matches.reversed() {
-                let range = match.range.indexingRange(for: self)
-                target.replaceSubrange(range!, with: replacement)
+                let range = utf16Range(from: match.range)!
+                target.replaceSubrange(range, with: replacement)
             }
 
             return target
@@ -202,7 +194,7 @@ public extension String {
             let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
             guard let match = regex.firstMatch(in: self, options: matchingOptions, range: searchRange ?? stringRange) else { return [] }
 
-            let captures = match.ranges.map({
+            let captures = match.captureRanges.map({
                 ($0.location != NSNotFound) ? (self as NSString).substring(with: $0) : ""
             })
 
@@ -220,13 +212,15 @@ public extension String {
             if matches.isEmpty { return [] }
 
             let arrayOfCaptures: [[String]] = matches.map({
-                $0.ranges.map({ ($0.location != NSNotFound) ? (self as NSString).substring(with: $0) : "" })
+                $0.captureRanges.map({
+                    $0.location != NSNotFound ? (self as NSString).substring(with: $0) : ""
+                })
             })
 
             return arrayOfCaptures
     }
 
-    fileprivate func dictionaryByMatching(_ regexPattern: String,
+    fileprivate func _dictionaryByMatching(_ regexPattern: String,
                                           searchRange: NSRange? = nil,
                                           options: RKLRegexOptions = [],
                                           matchingOptions: NSRegularExpression.MatchingOptions = [],
@@ -260,7 +254,7 @@ public extension String {
                 (key: keysAndCaptures[$0] as! String, capture: keysAndCaptures[$0.advanced(by: 1)] as! Int)
             }
 
-            let dict = try dictionaryByMatching(regexPattern, searchRange: searchRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
+            let dict = try _dictionaryByMatching(regexPattern, searchRange: searchRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
             return dict
     }
 
@@ -286,7 +280,7 @@ public extension String {
             let dictArray: [Dictionary<String, String>] = try matches.map {
                 let range = $0.range(at: 0)
                 let subtring = (self as NSString).substring(with: range)
-                let dict = try subtring.dictionaryByMatching(regexPattern, searchRange: subtring.stringRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
+                let dict = try subtring._dictionaryByMatching(regexPattern, searchRange: subtring.stringRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
                 return dict
             }
 
@@ -297,7 +291,7 @@ public extension String {
                                    searchRange: NSRange? = nil,
                                    options: RKLRegexOptions = [],
                                    matchingOptions: NSRegularExpression.MatchingOptions = [],
-                                   _ block: (_ strings: [String], _ ranges: [NSRange]) -> Void)
+                                   _ closure: (_ strings: [String], _ ranges: [NSRange]) -> Void)
         throws -> Bool {
             let nsregexopts = options.coerceToNSRegularExpressionOptions()
             let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
@@ -305,8 +299,8 @@ public extension String {
             if matches.isEmpty { return false }
 
             for match in matches {
-                let substrings = match.ranges.map({ ($0.location != NSNotFound) ? (self as NSString).substring(with: $0) : "" })
-                block(substrings, match.ranges)
+                let substrings = match.captureRanges.map({ ($0.location != NSNotFound) ? (self as NSString).substring(with: $0) : "" })
+                closure(substrings, match.captureRanges)
             }
 
             return true
@@ -342,38 +336,105 @@ public extension String {
                                      searchRange: NSRange? = nil,
                                      options: RKLRegexOptions = [],
                                      matchingOptions: NSRegularExpression.MatchingOptions = [],
-                                     _ block: (_ strings: [String], _ ranges: [NSRange]) -> Void)
+                                     _ closure: (_ strings: [String], _ ranges: [NSRange]) -> Void)
         throws -> Bool {
             let nsregexopts = options.coerceToNSRegularExpressionOptions()
             let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
             let target = (self as NSString).substring(with: searchRange ?? stringRange)
             let targetRange = target.stringRange
             let matches = regex.matches(in: target, options: matchingOptions, range: targetRange)
-            if matches.isEmpty return false
+            if matches.isEmpty { return false }
             let strings = try target.componentsSeparatedBy(regexPattern, searchRange: targetRange, options: options, matchingOptions: matchingOptions)
-            let lastStringIndex = strings.endIndex - 1
             var remainderRange = targetRange
 
-            for (index, topString) in strings.enumerated() {
-                let topStringRange = (target as NSString).range(of: topString, options: .backwards, range: remainderRange)
-                let match = (index < lastStringIndex) ? matches[index] : nil
-                var rangeCaptures = Array([topStringRange])
+            for (index, string0) in strings.enumerated() {
+                let range0 = (target as NSString).range(of: string0, options: .backwards, range: remainderRange)
+                let match = (index < strings.endIndex - 1) ? matches[index] : nil
+                var rangeCaptures = Array([range0])
 
                 if match != nil {
-                    rangeCaptures.append(contentsOf: match!.ranges)
+                    rangeCaptures.append(contentsOf: match!.captureRanges)
                     let substrings = rangeCaptures.map {
                         $0.location != NSNotFound ? (target as NSString).substring(with: $0) : ""
                     }
 
-                    remainderRange = target.rangeFromLocation(location: rangeCaptures.last!.location)
-                    block(substrings, rangeCaptures)
+                    remainderRange = target.rangeFrom(location: rangeCaptures.last!.location)
+                    closure(substrings, rangeCaptures)
                 }
                 else {
-                    let lastRange = (target as NSString).range(of: topString, options: .backwards, range: remainderRange)
-                    block( [ topString ], [ lastRange ])
+                    let lastRange = (target as NSString).range(of: string0, options: .backwards, range: remainderRange)
+                    closure( [ string0 ], [ lastRange ])
                 }
             }
 
             return true
     }
+
+    func stringByReplacingOccurencesOf(_ regexPattern: String,
+                                       searchRange: NSRange? = nil,
+                                       options: RKLRegexOptions = [],
+                                       matchingOptions: NSRegularExpression.MatchingOptions = [],
+                                       _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
+        throws -> String {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            var target = (self as NSString).substring(with: searchRange ?? stringRange)
+            let targetRange = (target as String).stringRange
+            let matches = regex.matches(in: (target as String), options: matchingOptions, range: targetRange)
+            if matches.isEmpty { return self }
+
+            for match in matches.reversed() {
+                let substrings = match.captureRanges.map( { $0.location != NSNotFound ? (self as NSString).substring(with: $0) : "" })
+                let replacement = closure( substrings, match.captureRanges )
+                let range = utf16Range(from: match.range)!
+                target.replaceSubrange(range, with: replacement)
+            }
+
+            return target as String
+    }
+
+    mutating func replaceOccurrencesOf(_ regexPattern: String,
+                                       replacement: String,
+                                       searchRange: NSRange? = nil,
+                                       options: RKLRegexOptions = [],
+                                       matchingOptions: NSRegularExpression.MatchingOptions = [])
+        throws -> Int {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            let matches = regex.matches(in: (self as String), options: matchingOptions, range: searchRange ?? stringRange)
+            if matches.isEmpty { return NSNotFound }
+            var count = 0;
+
+            for match in matches.reversed() {
+                let range = utf16Range(from: match.range)!
+                self.replaceSubrange(range, with: replacement)
+                count += 1
+            }
+
+            return count
+    }
+
+    mutating func replaceOccurrencesOf(_ regexPattern: String,
+                                       searchRange: NSRange? = nil,
+                                       options: RKLRegexOptions = [],
+                                       matchingOptions: NSRegularExpression.MatchingOptions = [],
+                                       _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
+        throws -> Int {
+            let nsregexopts = options.coerceToNSRegularExpressionOptions()
+            let regex = try NSRegularExpression(pattern: regexPattern, options: nsregexopts)
+            let matches = regex.matches(in: (self as String), options: matchingOptions, range: searchRange ?? stringRange)
+            if matches.isEmpty { return NSNotFound }
+            var count = 0;
+
+            for match in matches.reversed() {
+                let captures = match.captureRanges.map({ $0.location != NSNotFound ? (self as NSString).substring(with: $0) : "" })
+                let replacement = closure(captures, match.captureRanges)
+                let range = utf16Range(from: match.range)!
+                self.replaceSubrange(range, with: replacement)
+                count += 1
+            }
+
+            return count
+    }
+
 }
