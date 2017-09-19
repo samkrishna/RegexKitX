@@ -182,7 +182,8 @@ public extension String {
 
             matches.reversed().forEach { match in
                 let range = utf16Range(from: match.range)!
-                target.replaceSubrange(range, with: replacement)
+                let swap = regex.replacementString(for: match, in: self, offset: 0, template: template)
+                target.replaceSubrange(range, with: swap)
             }
 
             return target
@@ -423,7 +424,7 @@ public extension String {
     }
 
     mutating func replaceOccurrencesOf(_ pattern: String,
-                                       replacement: String,
+                                       with template: String,
                                        in searchRange: NSRange? = nil,
                                        options: RKXRegexOptions = [],
                                        matchingOptions: NSRegularExpression.MatchingOptions = [])
@@ -435,7 +436,8 @@ public extension String {
 
             matches.reversed().forEach { match in
                 let range = utf16Range(from: match.range)!
-                self.replaceSubrange(range, with: replacement)
+                let swap = regex.replacementString(for: match, in: self, offset: 0, template: template)
+                self.replaceSubrange(range, with: swap)
                 count += 1
             }
 

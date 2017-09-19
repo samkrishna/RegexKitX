@@ -104,12 +104,13 @@ class RegexKitXTests: XCTestCase {
         let failedPattern = "2014-05-06 17:03:17.967 EXECUTION_DINO"
         let failureControl = "2014-05-06 17:03:17.967 EXECUTION_DATA"
         let failureRange = NSMakeRange(0, 38);
-        let failureResult = try! candidate.stringByReplacingOccurrencesOf(failedPattern, replacement: "BARNEY RUBBLE", in: failureRange)
+        let failureResult = try! candidate.stringByReplacingOccurrencesOf(failedPattern, with: "BARNEY RUBBLE", in: failureRange)
         XCTAssert(failureResult == failureControl)
 
-        let successPattern = "2014-05-06 17:03:17.967 EXECUTION_DATA"
-        let successResult = try! candidate.stringByReplacingOccurrencesOf(successPattern, replacement: "BARNEY RUBBLE", in: failureRange)
+        let successPattern = "2014-05-06 17:03:17.967 (EXECUTION_DATA)"
+        let successResult = try! candidate.stringByReplacingOccurrencesOf(successPattern, with: "BARNEY RUBBLE ~~~$1~~~ ", in: failureRange)
         XCTAssert(try! successResult.matches("BARNEY RUBBLE"))
+        XCTAssert(try! successResult.matches("~~~EXECUTION_DATA~~~"))
     }
 
     func testComponentsMatchedByRegex() {
@@ -275,7 +276,7 @@ class RegexKitXTests: XCTestCase {
 
     func testReploceOccurrencesOfRegexWithReplacement() {
         var mutableCandidate = String(candidate)
-        let count = try! mutableCandidate.replaceOccurrencesOf(", ", replacement: " barney ")
+        let count = try! mutableCandidate.replaceOccurrencesOf(", ", with: " barney ")
         XCTAssert(count == 11)
         XCTAssert(mutableCandidate =~ " barney ")
     }
