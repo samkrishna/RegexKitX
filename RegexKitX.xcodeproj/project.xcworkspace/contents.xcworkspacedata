@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:RegexKitLite5.xcodeproj">
+      location = "self:/Users/achilles/Projects/OpenSource/RegexKitLite5/RegexKitX.xcodeproj">
    </FileRef>
 </Workspace>
