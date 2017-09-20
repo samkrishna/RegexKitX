@@ -612,40 +612,39 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
 
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
-    return [self enumerateStringsMatchedByRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL enumerationOptions:0 usingBlock:block];
+    return [self enumerateStringsMatchedByRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 enumerationOptions:0 error:NULL usingBlock:block];
 }
 
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
-    return [self enumerateStringsMatchedByRegex:pattern options:options matchingOptions:0 inRange:searchRange error:error enumerationOptions:0 usingBlock:block];
+    return [self enumerateStringsMatchedByRegex:pattern inRange:searchRange options:options matchOptions:0 enumerationOptions:0 error:error usingBlock:block];
 }
 
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error enumerationOptions:(NSEnumerationOptions)enumOpts usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return NO;
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
+    NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
+    NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
     if (![matches count]) return NO;
     __block BOOL blockStop = NO;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
     [matches enumerateObjectsWithOptions:enumOpts usingBlock:^(NSTextCheckingResult *match, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSUInteger captureCount = match.numberOfRanges;
         NSMutableArray *captures = [NSMutableArray array];
-        NSRange rangeCaptures[captureCount];
-        
-        for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
+        NSMutableArray *rangeCaptures = [NSMutableArray array];
+
+        for (NSUInteger rangeIndex = 0; rangeIndex < match.numberOfRanges; rangeIndex++) {
             NSRange subrange = [match rangeAtIndex:rangeIndex];
-            rangeCaptures[rangeIndex] = subrange;
+            [rangeCaptures addRange:subrange];
             NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
             [captures addObject:substring];
         }
         
-        rangeCaptures[captureCount] = NSTerminationRange;
-        block(captureCount, [captures copy], rangeCaptures, &blockStop);
+        block([captures copy], [rangeCaptures copy], &blockStop);
         *stop = blockStop;
     }];
 #pragma clang diagnostic pop
