@@ -65,6 +65,12 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 };
 
 @interface NSArray (RangeMechanics)
+/**
+ Convenience method to return the NSRange from an NSArray of NSValues.
+
+ @param index An index within the bounds of the array.
+ @return The NSRange contained by the NSValue of the array.
+ */
 - (NSRange)rangeAtIndex:(NSUInteger)index;
 @end
 
