@@ -856,49 +856,46 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
  @param pattern A @c NSString containing a valid regular expression.
  @param block The block that is executed for each match of @c pattern in the receiver. The block returns a @c NSString and takes four arguments:
- @param &nbsp;&nbsp;captureCount The number of strings that @c pattern captured. @c captureCount is always at least 1.
- @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
- @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c pattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}. The termination range at @c capturedRanges[captureCount] is @c {NSNotFound, NSUIntegerMax}.
+ @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
+ @param &nbsp;&nbsp;capturedRanges A @c NSArray containing the ranges matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
  @return A @c NSString created from the characters of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of the @c NSString returned by @c block. If the receiver is not matched by @c pattern then the string that is returned is a copy of the receiver as if @c stringWithString: had been sent to it.
  @return Returns @c nil if there was an error.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
 
  @param pattern A @c NSString containing a valid regular expression.
- @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
+ @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @param block The block that is executed for each match of @c pattern in the receiver. The block returns a @c NSString and takes four arguments:
- @param &nbsp;&nbsp;captureCount The number of strings that @c pattern captured. @c captureCount is always at least 1.
- @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
- @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c pattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}. The termination range at @c capturedRanges[captureCount] is @c {NSNotFound, NSUIntegerMax}.
+ @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
+ @param &nbsp;&nbsp;capturedRanges A @c NSArray containing the ranges matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
  @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c NSString returned by @c block. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Returns @c nil if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 /**
- Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchingOptions and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
+ Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
 
  @param pattern A @c NSString containing a valid regular expression.
- @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
- @param matchingOptions A mask of options specified by combining NSMatchingOptions flags with the C bitwise @c OR operator. 0 may be used if no options are required.
  @param searchRange The range of the receiver to search.
+ @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
+ @param matchOptions A mask of options specified by combining RKXMatchOptions flags with the C bitwise @c OR operator. 0 may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @param block The block that is executed for each match of @c pattern in the receiver. The block takes four arguments:
- @param &nbsp;&nbsp;captureCount The number of strings that @c pattern captured. @c captureCount is always at least 1.
- @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
- @param &nbsp;&nbsp;capturedRanges An array containing the ranges matched by each capture group present in @c pattern. The size of the array is @c captureCount. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}. The termination range at @c capturedRanges[captureCount] is @c {NSNotFound, NSUIntegerMax}.
+ @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
+ @param &nbsp;&nbsp;capturedRanges A @c NSArray containing the ranges matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
  @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c NSString returned by @c block. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Returns @c nil if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 #pragma clang diagnostic pop
 
 @end

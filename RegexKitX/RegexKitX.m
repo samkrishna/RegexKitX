@@ -712,21 +712,22 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlock:
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL usingBlock:block];
+    return [self stringByReplacingOccurrencesOfRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL usingBlock:block];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern options:options matchingOptions:0 inRange:searchRange error:error usingBlock:block];
+    return [self stringByReplacingOccurrencesOfRegex:pattern inRange:searchRange options:options matchOptions:0 error:error usingBlock:block];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error usingBlock:(NSString *(^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return nil;
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
+    NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
+    NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
     if (![matches count]) return [self substringWithRange:searchRange];
     NSMutableString *target = [NSMutableString stringWithString:self];
     BOOL stop = NO;
@@ -738,18 +739,17 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
         NSUInteger captureCount = match.numberOfRanges;
         NSMutableArray *captures = [NSMutableArray array];
-        NSRange rangeCaptures[captureCount];
+        NSMutableArray *rangeCaptures = [NSMutableArray array];
         
         for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
             NSRange subrange = [match rangeAtIndex:rangeIndex];
-            rangeCaptures[rangeIndex] = subrange;
+            [rangeCaptures addRange:subrange];
             NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
             [captures addObject:substring];
         }
         
-        rangeCaptures[captureCount] = NSTerminationRange;
-        NSString *replacement = block(captureCount, [captures copy], rangeCaptures, &stop);
-        [target replaceCharactersInRange:match.range withString:replacement];
+        NSString *swap = block([captures copy], [rangeCaptures copy], &stop);
+        [target replaceCharactersInRange:match.range withString:swap];
         if (stop == YES) break;
     }
     
