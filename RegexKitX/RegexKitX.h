@@ -52,18 +52,16 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
 };
 
 typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
-    /** No match option specified. */
-    RKXNoMatchOptions               = 0,
     /** Call the block periodically during long-running match operations. */
-    RKXMatchReportProgress          = 1 << 0,
+    RKXReportProgress          = 1 << 0,
     /** Call the block once after the completion of any matching. */
-    RKXMatchReportCompletion        = 1 << 1,
+    RKXReportCompletion        = 1 << 1,
     /** Limit matches to those at the start of the search range. */
-    RKXMatchAnchored                = 1 << 2,
+    RKXAnchored                = 1 << 2,
     /** Allow matching to look beyond the bounds of the search range. */
-    RKXMatchWithTransparentBounds   = 1 << 3,
+    RKXWithTransparentBounds   = 1 << 3,
     /** Prevent ^ and $ from automatically matching the beginning and end of the search range. */
-    RKXMatchWithoutAnchoringBounds  = 1 << 4
+    RKXWithoutAnchoringBounds  = 1 << 4
 };
 
 @interface NSArray (RangeMechanics)
