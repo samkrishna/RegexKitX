@@ -204,31 +204,32 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)rangesOfRegex:(NSString *)pattern
 {
-    return [self rangesOfRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL];
+    return [self rangesOfRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange
 {
-    return [self rangesOfRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:searchRange error:NULL];
+    return [self rangesOfRegex:pattern inRange:searchRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSArray *)rangesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error
+- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self rangesOfRegex:pattern options:options matchingOptions:0 inRange:searchRange error:error];
+    return [self rangesOfRegex:pattern inRange:searchRange options:options matchOptions:0 error:error];
 }
 
-- (NSArray *)rangesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error
+- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return nil;
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
+    NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
+    NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
     if (![matches count]) return @[];
     NSMutableArray *ranges = [NSMutableArray array];
 
     for (NSTextCheckingResult *match in matches) {
         for (NSUInteger i = 0; i < match.numberOfRanges; i++) {
             NSRange matchRange = [match rangeAtIndex:i];
-            [ranges addObject:[NSValue valueWithRange:matchRange]];
+            [ranges addRange:matchRange];
         }
     }
 
