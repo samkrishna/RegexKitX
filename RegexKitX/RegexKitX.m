@@ -104,25 +104,26 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern
 {
-    return [self componentsSeparatedByRegex:pattern options:RKXNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
+    return [self componentsSeparatedByRegex:pattern range:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange
 {
-    return [self componentsSeparatedByRegex:pattern options:RKXNoOptions matchingOptions:0 range:searchRange error:NULL];
+    return [self componentsSeparatedByRegex:pattern range:searchRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error
+- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self componentsSeparatedByRegex:pattern options:options matchingOptions:0 range:searchRange error:error];
+    return [self componentsSeparatedByRegex:pattern range:searchRange options:options matchOptions:0 error:error];
 }
 
-- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
+- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     // Repurposed from https://stackoverflow.com/a/9185677
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return nil;
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
+    NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
+    NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
     if (![matches count]) return @[ self ];
     NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matches.count];
     NSUInteger pos = 0;

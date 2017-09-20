@@ -114,26 +114,26 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  Returns an array containing substrings within @c searchRange of the receiver that have been divided by the regular expression @c pattern using @c options.
  
  @param pattern A @c NSString containing a regular expression.
- @param options A mask of options specified by combining @c RKXRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
+ @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray object containing the substrings from the receiver that have been divided by @c pattern. If there is no match, returns an array with the receiver as the single element.
  @return Returns @c nil if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error;
+- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
- Returns an array containing substrings within @c searchRange of the receiver that have been divided by the regular expression @c pattern using @c options and @c matchingOptions.
+ Returns an array containing substrings within @c searchRange of the receiver that have been divided by the regular expression @c pattern using @c options and @c matchOptions.
 
  @param pattern A @c NSString containing a regular expression.
- @param options A mask of options specified by combining @c RKXRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
- @param matchingOptions The matching options to use. See @c NSMatchingOptions for possible values.
  @param searchRange The range of the receiver to search.
+ @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
+ @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray object containing the substrings from the receiver that have been divided by @c pattern. If there is no match, returns an array with the receiver as the single element.
  @return Returns @c nil if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error;
+- (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - matchesRegex:
 
