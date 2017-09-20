@@ -336,29 +336,30 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)componentsMatchedByRegex:(NSString *)pattern
 {
-    return [self componentsMatchedByRegex:pattern options:RKXNoOptions matchingOptions:0 range:[self stringRange] capture:0 error:NULL];
+    return [self componentsMatchedByRegex:pattern range:[self stringRange] capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)componentsMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture
 {
-    return [self componentsMatchedByRegex:pattern options:RKXNoOptions matchingOptions:0 range:[self stringRange] capture:capture error:NULL];
+    return [self componentsMatchedByRegex:pattern range:[self stringRange] capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
 {
-    return [self componentsMatchedByRegex:pattern options:RKXNoOptions matchingOptions:0 range:searchRange capture:0 error:NULL];
+    return [self componentsMatchedByRegex:pattern range:searchRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options range:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error
+- (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self componentsMatchedByRegex:pattern options:options matchingOptions:0 range:searchRange capture:capture error:error];
+    return [self componentsMatchedByRegex:pattern range:searchRange capture:capture options:options matchOptions:0 error:error];
 }
 
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error
+- (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return nil;
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
+    NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
+    NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
     if (![matches count]) return @[];
     NSMutableArray *captures = [NSMutableArray array];
 

@@ -449,7 +449,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSArray *)componentsMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture;
 
 /**
- Returns an array containing all the substrings from the receiver that were matched by capture number capture from the regular expression @c pattern within @c searchRange using @c options and @c matchingOptions.
+ Returns an array containing all the substrings from the receiver that were matched by capture number capture from the regular expression @c pattern within @c searchRange using @c options and @c matchOptions.
 
  @param pattern A @c NSString containing a regular expression.
  @return A @c NSArray object containing all the substrings from the receiver that were matched by @c pattern within @c searchRange.
@@ -462,30 +462,30 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  Returns an array containing all the substrings from the receiver that were matched by capture number @c capture from the regular expression @c pattern within @c searchRange using @c options.
 
  @param pattern A @c NSString containing a regular expression.
- @param options A mask of options specified by combining @c RKXRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param searchRange The range of the receiver to search.
  @param capture The string matched by capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched.
+ @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c NSArray object containing all the substrings from the receiver that were matched by capture number capture from @c pattern within @c searchRange using @c options and @c matchingOptions. Will return an empty array if @c pattern fails to match in @c searchRange.
+ @return A @c NSArray object containing all the substrings from the receiver that were matched by capture number capture from @c pattern within @c searchRange using @c options and @c matchOptions. Will return an empty array if @c pattern fails to match in @c searchRange.
  @return Returns an empty array if @c pattern fails to match in @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options range:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error;
+- (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
- Returns an array containing all the substrings from the receiver that were matched by capture number @c capture from the regular expression @c pattern within @c searchRange using @c options and @c matchingOptions.
+ Returns an array containing all the substrings from the receiver that were matched by capture number @c capture from the regular expression @c pattern within @c searchRange using @c options and @c matchOptions.
 
  @param pattern A @c NSString containing a regular expression.
- @param options A mask of options specified by combining @c RKXRegexOptions or @c NSRegularExpressionOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
- @param matchingOptions The matching options to use. See @c NSMatchingOptions for possible values.
  @param searchRange The range of the receiver to search.
  @param capture The string matched by capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched.
+ @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
+ @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c NSArray object containing all the substrings from the receiver that were matched by capture number capture from @c pattern within @c searchRange using @c options and @c matchingOptions.
+ @return A @c NSArray object containing all the substrings from the receiver that were matched by capture number capture from @c pattern within @c searchRange using @c options and @c matchOptions.
  @return Returns an empty array if @c pattern fails to match in @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange capture:(NSUInteger)capture error:(NSError **)error;
+- (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - captureComponentsMatchedByRegex:
 
