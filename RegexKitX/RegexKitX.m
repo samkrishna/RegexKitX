@@ -145,24 +145,24 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (BOOL)matchesRegex:(NSString *)pattern
 {
-    return [self matchesRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:[self stringRange] error:NULL];
+    return [self matchesRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange
 {
-    return [self matchesRegex:pattern options:RKXNoOptions matchingOptions:0 inRange:searchRange error:NULL];
+    return [self matchesRegex:pattern inRange:searchRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options inRange:(NSRange)searchRange error:(NSError **)error
+- (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self matchesRegex:pattern options:options matchingOptions:0 inRange:searchRange error:error];
+    return [self matchesRegex:pattern inRange:searchRange options:options matchOptions:0 error:error];
 }
 
-- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions inRange:(NSRange)searchRange error:(NSError **)error
+- (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return NO;
-    NSTextCheckingResult *firstMatch = [regex firstMatchInString:self options:matchingOptions range:searchRange];
+    NSTextCheckingResult *firstMatch = [regex firstMatchInString:self options:(NSMatchingOptions)matchOptions range:searchRange];
 
     return (firstMatch != nil);
 }
