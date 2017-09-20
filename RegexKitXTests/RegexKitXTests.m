@@ -256,9 +256,13 @@
     XCTAssert([listItems[2] isEqualToString:@""]);
 }
 
-- (void)testCaptureComponentsMatchedByRegexRangeOptionsMatchingOptionsError
+- (void)testCaptureComponentsMatchedByRegex
 {
-    // <#fill in the code#>
+    NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+).(\\d+))";
+    NSArray *captures = [self.candidate captureComponentsMatchedByRegex:regex];
+    XCTAssert([captures count] == 10);
+    XCTAssert([captures[1] isEqualToString:@"2014-05-06"]);
+    XCTAssert([captures[5] isEqualToString:@"17:03:17.967"]);
 }
 
 - (void)testCaptureCountWithOptionsError
