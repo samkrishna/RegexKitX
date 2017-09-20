@@ -271,24 +271,25 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template options:RKXNoOptions matchingOptions:0 range:[self stringRange] error:NULL];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template options:RKXNoOptions matchingOptions:0 range:searchRange error:NULL];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:searchRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options range:(NSRange)searchRange error:(NSError **)error
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template options:options matchingOptions:0 range:searchRange error:error];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:searchRange options:options matchOptions:0 error:error];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options matchingOptions:(NSMatchingOptions)matchingOptions range:(NSRange)searchRange error:(NSError **)error
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) return nil;
-    NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
+    NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
+    NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
     if (![matches count]) return [self substringWithRange:searchRange];
     NSMutableString *target = [self mutableCopy];
 
