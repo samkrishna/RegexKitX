@@ -29,7 +29,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /** The constants that define the regular expression options. */
 typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
