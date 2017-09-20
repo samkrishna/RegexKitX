@@ -34,7 +34,25 @@
 #define RKX_EXPECTED(cond, expect)       __builtin_expect((long)(cond), (expect))
 
 static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
-static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = NSUIntegerMax});
+
+@interface NSMutableArray (RangeMechanics)
+- (void)addRange:(NSRange)range;
+@end
+
+@implementation NSMutableArray (RangeMechanics)
+- (void)addRange:(NSRange)range
+{
+    [self addObject:[NSValue valueWithRange:range]];
+}
+@end
+
+
+@implementation NSArray (RangeMechanics)
+- (NSRange)rangeAtIndex:(NSUInteger)index
+{
+    return [self[index] rangeValue];
+}
+@end
 
 @implementation NSString (RangeMechanics)
 

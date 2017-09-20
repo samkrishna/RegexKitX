@@ -65,6 +65,11 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
     /** Prevent ^ and $ from automatically matching the beginning and end of the search range. */
     RKXMatchWithoutAnchoringBounds  = 1 << 4
 };
+
+@interface NSArray (RangeMechanics)
+- (NSRange)rangeAtIndex:(NSUInteger)index;
+@end
+
 @interface NSString (RangeMechanics)
 
 /**
