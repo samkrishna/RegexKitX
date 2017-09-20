@@ -255,19 +255,15 @@ public extension String {
             return arrayOfCaptures
     }
 
-    fileprivate func _dictionaryByMatching(_ pattern: String,
-                                           in searchRange: NSRange? = nil,
-                                           options: RKXRegexOptions = [],
-                                           matchingOptions: NSRegularExpression.MatchingOptions = [],
-                                           keysAndCapturePairs: [(key: String, capture: Int)])
+    fileprivate func dictionaryByMatching(_ pattern: String,
+                                          in searchRange: NSRange? = nil,
+                                          for keyAndCapturePairs: [(key: String, capture: Int)],
+                                          options: RKXRegexOptions = [],
+                                          matchingOptions: NSRegularExpression.MatchingOptions = [])
         throws -> Dictionary<String, String> {
             var results = [String: String]()
-            try keysAndCapturePairs.forEach { pair in
-                let captureRange = try rangeOf(pattern,
-                                               in: searchRange,
-                                               for: pair.capture,
-                                               options: options,
-                                               matchingOptions: matchingOptions)
+            try keyAndCapturePairs.forEach { pair in
+                let captureRange = try rangeOf(pattern, in: searchRange, for: pair.capture, options: options, matchingOptions: matchingOptions)
                 results[pair.key] = (captureRange.length > 0) ? (self as NSString).substring(with: captureRange) : ""
             }
 
@@ -289,7 +285,7 @@ public extension String {
                 (key: keysAndCaptures[$0] as! String, capture: keysAndCaptures[$0.advanced(by: 1)] as! Int)
             }
 
-            let dict = try _dictionaryByMatching(pattern, in: searchRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
+            let dict = try dictionaryByMatching(pattern, in: searchRange, for: pairs, options: options, matchingOptions: matchingOptions)
             return dict
     }
 
@@ -314,7 +310,7 @@ public extension String {
             let dictArray: [Dictionary<String, String>] = try matches.map {
                 let range = $0.range(at: 0)
                 let subtring = (self as NSString).substring(with: range)
-                let dict = try subtring._dictionaryByMatching(pattern, in: subtring.stringRange, options: options, matchingOptions: matchingOptions, keysAndCapturePairs: pairs)
+                let dict = try subtring.dictionaryByMatching(pattern, in: subtring.stringRange, for: pairs, options: options, matchingOptions: matchingOptions)
                 return dict
             }
 
@@ -457,9 +453,9 @@ public extension String {
 
             matches.reversed().forEach { match in
                 let captures = match.captureRanges.map({ $0.location != NSNotFound ? (self as NSString).substring(with: $0) : "" })
-                let replacement = closure(captures, match.captureRanges)
+                let swap = closure(captures, match.captureRanges)
                 let range = utf16Range(from: match.range)!
-                self.replaceSubrange(range, with: replacement)
+                self.replaceSubrange(range, with: swap)
                 count += 1
             }
 
