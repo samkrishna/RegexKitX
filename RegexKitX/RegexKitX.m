@@ -238,22 +238,22 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 #pragma mark - rangesOfRegex:
 
-- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern
+- (NSArray *)rangesOfRegex:(NSString *)pattern
 {
     return [self rangesOfRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange
+- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange
 {
     return [self rangesOfRegex:pattern inRange:searchRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
+- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
     return [self rangesOfRegex:pattern inRange:searchRange options:options matchOptions:0 error:error];
 }
 
-- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) return nil;
