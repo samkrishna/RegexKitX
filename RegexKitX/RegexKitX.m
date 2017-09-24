@@ -267,9 +267,10 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSMutableString *target = [self mutableCopy];
 
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        [target replaceCharactersInRange:match.range withString:replacement];
+        NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:replacement];
+        [target replaceCharactersInRange:match.range withString:swap];
     }
-    
+
     return [target copy];
 }
 
@@ -720,8 +721,8 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
         }
         
         rangeCaptures[captureCount] = NSTerminationRange;
-        NSString *replacement = block(captureCount, [captures copy], rangeCaptures, &stop);
-        [target replaceCharactersInRange:match.range withString:replacement];
+        NSString *swap = block(captureCount, [captures copy], rangeCaptures, &stop);
+        [target replaceCharactersInRange:match.range withString:swap];
         if (stop == YES) break;
     }
     
@@ -756,12 +757,13 @@ static NSRange NSTerminationRange = ((NSRange){.location = (NSUInteger)NSNotFoun
     NSArray *matches = [regex matchesInString:self options:matchingOptions range:searchRange];
     if (![matches count]) return NSNotFound;
     NSUInteger count = 0;
-    
+
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        [self replaceCharactersInRange:match.range withString:replacement];
+        NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:replacement];
+        [self replaceCharactersInRange:match.range withString:swap];
         count++;
     }
-    
+
     return count;
 }
 
