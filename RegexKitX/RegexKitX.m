@@ -35,6 +35,13 @@
 
 static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
 
+@implementation NSArray (RangeMechanics)
+- (NSRange)rangeAtIndex:(NSUInteger)index
+{
+    return [self[index] rangeValue];
+}
+@end
+
 @interface NSMutableArray (RangeMechanics)
 - (void)addRange:(NSRange)range;
 @end
@@ -46,12 +53,36 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 }
 @end
 
+@interface NSTextCheckingResult (RangeMechanics)
+@property (nonatomic, readonly, copy) NSArray<NSValue *> *ranges;
+- (NSArray<NSString *> *)substringsFromString:(NSString *)string;
+@end
 
-@implementation NSArray (RangeMechanics)
-- (NSRange)rangeAtIndex:(NSUInteger)index
+@implementation NSTextCheckingResult (RangeMechanics)
+
+- (NSArray<NSValue *> *)ranges
 {
-    return [self[index] rangeValue];
+    NSMutableArray *ranges = [NSMutableArray arrayWithCapacity:self.numberOfRanges];
+
+    for (NSUInteger i = 0; i < self.numberOfRanges; i++) {
+        [ranges addRange:[self rangeAtIndex:i]];
+    }
+
+    return [ranges copy];
 }
+
+- (NSArray<NSString *> *)substringsFromString:(NSString *)string
+{
+    NSMutableArray *substringArray = [NSMutableArray array];
+
+    for (NSValue *subrange in self.ranges) {
+        NSString *matchString = ([subrange rangeValue].location != NSNotFound) ? [string substringWithRange:[subrange rangeValue]] : @"";
+        [substringArray addObject:matchString];
+    }
+
+    return [substringArray copy];
+}
+
 @end
 
 @implementation NSString (RangeMechanics)
