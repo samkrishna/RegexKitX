@@ -252,7 +252,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray of @c NSValue-wrapped NSRanges of all captures matched by @c pattern.
  @return Will return @c nil if @c pattern is invalid.
  */
-- (NSArray *)rangesOfRegex:(NSString *)pattern;
+- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern;
 
 /**
  Returns an @c NSArray of @c NSValue-wrapped @c NSRanges of all captures of @c pattern for all matches within @c searchRange of the receiver.
@@ -262,7 +262,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray of @c NSValue-wrapped @c NSRanges of all captures matched by @c pattern in @c searchRange.
  @return Will return @c nil if @c pattern is invalid.
  */
-- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange;
+- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange;
 
 /**
  Returns a @c NSArray of @c NSValue-wrapped @c NSRanges of all captures of @c pattern for all matches within @c searchRange of the receiver using @c options.
@@ -274,7 +274,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray of @c NSValue-wrapped @c NSRanges of all captures matched by @c pattern in @c searchRange. Returns an empty array if there are no matches in the receiver for @c searchRange.
  @return Will return @c nil if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns a @c NSArray of @c NSValue-wrapped @c NSRanges of all captures of @c pattern for all matches within @c searchRange of the receiver using @c options and @c matchOptions.
@@ -287,7 +287,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray of NSValue-wrapped NSRanges of all captures matched by @c pattern in @c searchRange. Returns an empty array if there are no matches in the receiver for @c searchRange.
  @return Will return @c nil if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - stringByMatching:
 
