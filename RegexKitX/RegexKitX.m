@@ -261,10 +261,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     NSMutableArray *ranges = [NSMutableArray array];
 
     for (NSTextCheckingResult *match in matches) {
-        for (NSUInteger i = 0; i < match.numberOfRanges; i++) {
-            NSRange matchRange = [match rangeAtIndex:i];
-            [ranges addRange:matchRange];
-        }
+        [ranges addObjectsFromArray:match.ranges];
     }
 
     return [ranges copy];
@@ -426,15 +423,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     if (!matches) return nil;
     if (![matches count]) return @[];
     NSTextCheckingResult *firstMatch = [matches firstObject];
-    NSMutableArray *captureArray = [NSMutableArray arrayWithCapacity:firstMatch.numberOfRanges];
-    
-    for (NSUInteger i = 0; i < firstMatch.numberOfRanges; i++) {
-        NSRange matchRange = [firstMatch rangeAtIndex:i];
-        NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : @"";
-        [captureArray addObject:matchString];
-    }
-    
-    return [captureArray copy];
+    return [firstMatch substringsFromString:self];
 }
 
 #pragma mark - arrayOfCaptureComponentsMatchedByRegex:
@@ -462,15 +451,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     NSMutableArray *matchCaptures = [NSMutableArray array];
     
     for (NSTextCheckingResult *match in matches) {
-        NSMutableArray *captureArray = [NSMutableArray arrayWithCapacity:match.numberOfRanges];
-        
-        for (NSUInteger i = 0; i < match.numberOfRanges; i++) {
-            NSRange matchRange = [match rangeAtIndex:i];
-            NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : @"";
-            [captureArray addObject:matchString];
-        }
-        
-        [matchCaptures addObject:[captureArray copy]];
+        [matchCaptures addObject:[match substringsFromString:self]];
     }
     
     return [matchCaptures copy];
@@ -659,17 +640,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
     [matches enumerateObjectsWithOptions:enumOpts usingBlock:^(NSTextCheckingResult *match, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSMutableArray *captures = [NSMutableArray array];
-        NSMutableArray *rangeCaptures = [NSMutableArray array];
-
-        for (NSUInteger rangeIndex = 0; rangeIndex < match.numberOfRanges; rangeIndex++) {
-            NSRange subrange = [match rangeAtIndex:rangeIndex];
-            [rangeCaptures addRange:subrange];
-            NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
-            [captures addObject:substring];
-        }
-        
-        block([captures copy], [rangeCaptures copy], &blockStop);
+        block([match substringsFromString:self], match.ranges, &blockStop);
         *stop = blockStop;
     }];
 #pragma clang diagnostic pop
@@ -705,18 +676,11 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
         NSTextCheckingResult *match = (idx < lastStringIndex) ? matches[idx] : nil;
 
         if (match) {
-            NSUInteger captureCount = match.numberOfRanges;
             NSMutableArray *captures = [NSMutableArray array];
             NSMutableArray *rangeCaptures = [@[[NSValue valueWithRange:topStringRange]] mutableCopy];
             [captures addObject:topString];
-
-            for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
-                NSRange subrange = [match rangeAtIndex:rangeIndex];
-                [rangeCaptures addRange:subrange];
-                NSString *substring = (subrange.location != NSNotFound) ? [target substringWithRange:subrange] : @"";
-                [captures addObject:substring];
-            }
-
+            [rangeCaptures addObjectsFromArray:match.ranges];
+            [captures addObjectsFromArray:[match substringsFromString:self]];
             remainderRange = [[rangeCaptures lastObject] rangeValue];
             remainderRange = (enumOpts == 0) ? [target rangeFromLocation:remainderRange.location] : [target rangeToLocation:remainderRange.location];
             block([captures copy], [rangeCaptures copy], &blockStop);
@@ -757,18 +721,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     }
     
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        NSUInteger captureCount = match.numberOfRanges;
-        NSMutableArray *captures = [NSMutableArray array];
-        NSMutableArray *rangeCaptures = [NSMutableArray array];
-        
-        for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
-            NSRange subrange = [match rangeAtIndex:rangeIndex];
-            [rangeCaptures addRange:subrange];
-            NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
-            [captures addObject:substring];
-        }
-        
-        NSString *swap = block([captures copy], [rangeCaptures copy], &stop);
+        NSString *swap = block([match substringsFromString:self], match.ranges, &stop);
         [target replaceCharactersInRange:match.range withString:swap];
         if (stop == YES) break;
     }
@@ -834,18 +787,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     BOOL stop = NO;
     
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        NSUInteger captureCount = match.numberOfRanges;
-        NSMutableArray *captures = [NSMutableArray array];
-        NSMutableArray *rangeCaptures = [NSMutableArray array];
-
-        for (NSUInteger rangeIndex = 0; rangeIndex < captureCount; rangeIndex++) {
-            NSRange subrange = [match rangeAtIndex:rangeIndex];
-            [rangeCaptures addRange:subrange];
-            NSString *substring = (subrange.location != NSNotFound) ? [self substringWithRange:subrange] : @"";
-            [captures addObject:substring];
-        }
-        
-        NSString *replacement = block([captures copy], [rangeCaptures copy], &stop);
+        NSString *replacement = block([match substringsFromString:self], match.ranges, &stop);
         [self replaceCharactersInRange:match.range withString:replacement];
         count++;
         if (stop == YES) break;
