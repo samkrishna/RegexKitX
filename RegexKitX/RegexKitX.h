@@ -53,15 +53,15 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
 
 typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
     /** Call the block periodically during long-running match operations. */
-    RKXReportProgress          = 1 << 0,
+    RKXReportProgress          = NSMatchingReportProgress,
     /** Call the block once after the completion of any matching. */
-    RKXReportCompletion        = 1 << 1,
+    RKXReportCompletion        = NSMatchingReportCompletion,
     /** Limit matches to those at the start of the search range. */
-    RKXAnchored                = 1 << 2,
+    RKXAnchored                = NSMatchingAnchored,
     /** Allow matching to look beyond the bounds of the search range. */
-    RKXWithTransparentBounds   = 1 << 3,
+    RKXWithTransparentBounds   = NSMatchingWithTransparentBounds,
     /** Prevent ^ and $ from automatically matching the beginning and end of the search range. */
-    RKXWithoutAnchoringBounds  = 1 << 4
+    RKXWithoutAnchoringBounds  = NSMatchingWithoutAnchoringBounds
 };
 
 @interface NSArray (RangeMechanics)
