@@ -396,6 +396,9 @@ public extension String {
             return dictArray
     }
 
+    // enumerateStringsMatchedBy() will take a little work. Needs to be thoughtful about
+    // passing Range<String.UTF16Index> in both searchRange: and ranges: paramaters
+
     func enumerateStringsMatchedBy(_ pattern: String,
                                    in searchRange: NSRange? = nil,
                                    options: RKXRegexOptions = [],
@@ -524,4 +527,112 @@ public extension String {
 
             return matches.count
     }
+
+    // MARK: Required use of searchRange: as Range<String.UTF16Index> type
+    func arrayOfCaptureComponentsMatchedBy(_ pattern: String,
+                                           in searchRange: Range<String.UTF16Index>,
+                                           options: RKXRegexOptions = [],
+                                           matchingOptions: RKXMatchOptions = [])
+        throws -> [[String]] {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try arrayOfCaptureComponentsMatchedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
+    func arrayOfDictionariesByMatching(_ pattern: String,
+                                       in searchRange: Range<String.UTF16Index>,
+                                       options: RKXRegexOptions = [],
+                                       matchingOptions: RKXMatchOptions = [],
+                                       keysAndCaptures: Any...)
+        throws -> [Dictionary<String, String>] {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try arrayOfDictionariesByMatching(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions, keysAndCaptures: keysAndCaptures)
+    }
+
+    func captureComponentsMatchedBy(_ pattern: String,
+                                    in searchRange: Range<String.UTF16Index>,
+                                    options: RKXRegexOptions = [],
+                                    matchingOptions: RKXMatchOptions = [])
+        throws -> [String] {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try captureComponentsMatchedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
+    func componentsMatchedBy(_ pattern: String,
+                             in searchRange: Range<String.UTF16Index>,
+                             for capture: Int = 0,
+                             options: RKXRegexOptions = [],
+                             matchingOptions: RKXMatchOptions = [])
+        throws -> [String] {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try componentsMatchedBy(pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
+    }
+
+    func componentsSeparatedBy(_ pattern: String,
+                               in searchRange: Range<String.UTF16Index>,
+                               options: RKXRegexOptions = [],
+                               matchingOptions: RKXMatchOptions = [])
+        throws -> [String] {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try componentsSeparatedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
+    func dictionaryByMatching(_ pattern: String,
+                              in searchRange: Range<String.UTF16Index>,
+                              options: RKXRegexOptions = [],
+                              matchingOptions: RKXMatchOptions = [],
+                              keysAndCaptures: Any...)
+        throws -> Dictionary<String, String> {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try dictionaryByMatching(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions, keysAndCaptures: keysAndCaptures)
+    }
+
+    func matches(_ pattern: String,
+                 in searchRange: Range<String.UTF16Index>,
+                 options: RKXRegexOptions = [],
+                 matchingOptions: RKXMatchOptions = [])
+        throws -> Bool {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try matches(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
+    func rangeOf(_ pattern: String,
+                 in searchRange: Range<String.UTF16Index>,
+                 for capture: Int = 0,
+                 options: RKXRegexOptions = [],
+                 matchingOptions: RKXMatchOptions = [])
+        throws -> Range<String.UTF16Index>? {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try rangeOf(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
+    func stringByMatching(_ pattern: String,
+                          in searchRange: Range<String.UTF16Index>,
+                          for capture: Int = 0,
+                          options: RKXRegexOptions = [],
+                          matchingOptions: RKXMatchOptions = [])
+        throws -> String? {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try stringByMatching(pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
+    }
+
+    func stringByReplacingOccurrencesOf(_ pattern: String,
+                                        with template: String,
+                                        in searchRange: Range<String.UTF16Index>,
+                                        options: RKXRegexOptions = [],
+                                        matchingOptions: RKXMatchOptions = [])
+        throws -> String {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try stringByReplacingOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
+    mutating func replaceOccurrencesOf(_ pattern: String,
+                                       with template: String,
+                                       in searchRange: Range<String.UTF16Index>,
+                                       options: RKXRegexOptions = [],
+                                       matchingOptions: RKXMatchOptions = [])
+        throws -> Int {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try replaceOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
 }
