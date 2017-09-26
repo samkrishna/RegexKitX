@@ -120,7 +120,7 @@ public extension NSTextCheckingResult {
         return _ranges
     }
 
-    func substringsFrom(_ string: String)
+    fileprivate func substrings(from string: String)
         -> [String] {
             let substrings = ranges.map {
                 $0.location != NSNotFound ? (string as NSString).substring(with: $0) : ""
