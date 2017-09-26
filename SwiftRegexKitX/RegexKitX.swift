@@ -217,10 +217,11 @@ public extension String {
                  for capture: Int = 0,
                  options: RKXRegexOptions = [],
                  matchingOptions: RKXMatchOptions = [])
-        throws -> NSRange {
+        throws -> Range<String.UTF16Index>? {
             let matches = try matchesFor(pattern, in: searchRange, options: options, matchOptions: matchingOptions)
-            guard let match = matches.first else { return RKX.NSNotFoundRange }
-            return match.range(at: capture)
+            guard let match = matches.first else { return nil }
+            let range = utf16Range(from: match.range(at: capture))
+            return range
     }
 
 
