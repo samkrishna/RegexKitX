@@ -135,10 +135,6 @@ public extension String {
         return NSRange(location: 0, length: utf16.count)
     }
 
-    struct RKX {
-        static let NSNotFoundRange = NSRange(location: NSNotFound, length: 0)
-    }
-
     func rangeFrom(location: Int)
         -> NSRange {
             let deltaLength = (self as NSString).length - location
