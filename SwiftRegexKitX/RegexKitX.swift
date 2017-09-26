@@ -131,10 +131,13 @@ public extension NSTextCheckingResult {
 }
 
 public extension String {
+
+    /// The full range of the string as an `NSRange`, based on the UTF-16 length.
     var stringRange: NSRange {
         return NSRange(location: 0, length: utf16.count)
     }
 
+    /// Returns the `NSRange` from `location` to the end of the receiver, in UTF-16 code units.
     func rangeFrom(location: Int)
         -> NSRange {
             let deltaLength = (self as NSString).length - location
@@ -176,6 +179,16 @@ public extension String {
             return regex!
     }
 
+
+    /// Returns a `Bool` value that indicates whether the receiver is matched by `pattern` within `searchRange` using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression pattern.
+    ///   - searchRange: The range of the receiver to search. If no parameter is passed, the method will default to using the entire range of the receiver.
+    ///   - options: An OptionSet of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An OptionSet of options specified by combining the RKXMatchOptions flaghs.
+    /// - Returns: A Bool value indicating whether or not the pattern matches the receiver.
+    /// - Throws: An error if the pattern is invalid.
     func matches(_ pattern: String,
                  in searchRange: NSRange? = nil,
                  options: RKXRegexOptions = [],
@@ -186,6 +199,18 @@ public extension String {
             return true
     }
 
+
+    /// Returns the range of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
+
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search. The default value is the entire range of the receiver.
+    ///   - capture: The matching range of the capture number from `pattern` to search. Use `0` for the entire range that `pattern` matched.
+    ///   - options: An OptionSet specified by combining various `RKXRegexOptions`. If no options are required, ignore this parameter.
+    ///   - matchingOptions: An OptionSet specified by combining various `RKXMatchOptions`. If no options are required, ignore this parameter.
+    /// - Returns: A NSRange structure giving the location and length of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
+    /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
     func rangeOf(_ pattern: String,
                  in searchRange: NSRange? = nil,
                  for capture: Int = 0,
@@ -197,6 +222,17 @@ public extension String {
             return match.range(at: capture)
     }
 
+
+    /// Returns a string created from the characters of the receiver that are in the range of the first match of `pattern` using `options` and `matchOptions` within `searchRange` of the receiver for `capture`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A @c NSString containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - capture: The string matched by capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched.
+    ///   - options: An OptionSet specified by combining various `RKXRegexOptions`. If no options are required, ignore this parameter.
+    ///   - matchingOptions: An OptionSet specified by combining various `RKXMatchOptions`. If no options are required, ignore this parameter.
+    /// - Returns: A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within @c searchRange of the receiver.
+    /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
     func stringByMatching(_ pattern: String,
                           in searchRange: NSRange? = nil,
                           for capture: Int = 0,
