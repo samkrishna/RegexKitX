@@ -50,46 +50,45 @@ class RegexKitXTests: XCTestCase {
     func testRangeOfRegex() {
         let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))"
         let captureRange = try! candidate.rangeOf(regex)
-        XCTAssert(captureRange.location == 0);
-        XCTAssert(captureRange.length == 19);
+        let captureControl = candidate.utf16Range(from: NSMakeRange(0, 19))
+        XCTAssert(captureRange == captureControl)
 
         let dateRange = try! candidate.rangeOf(regex, for: 1)
-        XCTAssert(dateRange.location == 0);
-        XCTAssert(dateRange.length == 10);
+        let dateControl = candidate.utf16Range(from: NSMakeRange(0, 10))
+        XCTAssert(dateRange == dateControl)
 
         let yearRange = try! candidate.rangeOf(regex, for: 2)
-        XCTAssert(yearRange.location == 0);
-        XCTAssert(yearRange.length == 4);
+        let yearControl = candidate.utf16Range(from: NSMakeRange(0, 4))
+        XCTAssert(yearRange == yearControl)
 
         let monthRange = try! candidate.rangeOf(regex, for: 3)
-        XCTAssert(monthRange.location == 5);
-        XCTAssert(monthRange.length == 2);
+        let monthControl = candidate.utf16Range(from: NSMakeRange(5, 2))
+        XCTAssert(monthRange == monthControl)
 
         let dayRange = try! candidate.rangeOf(regex, for: 4)
-        XCTAssert(dayRange.location == 8);
-        XCTAssert(dayRange.length == 2);
+        let dayControl = candidate.utf16Range(from: NSMakeRange(8, 2))
+        XCTAssert(dayRange == dayControl)
 
         let timeRange = try! candidate.rangeOf(regex, for: 5)
-        XCTAssert(timeRange.location == 11);
-        XCTAssert(timeRange.length == 8);
+        let timeControl = candidate.utf16Range(from: NSMakeRange(11, 8))
+        XCTAssert(timeRange == timeControl)
 
         let hourRange = try! candidate.rangeOf(regex, for: 6)
-        XCTAssert(hourRange.location == 11);
-        XCTAssert(hourRange.length == 2);
+        let hourControl = candidate.utf16Range(from: NSMakeRange(11, 2))
+        XCTAssert(hourRange == hourControl)
 
         let minuteRange = try! candidate.rangeOf(regex, for: 7)
-        XCTAssert(minuteRange.location == 14);
-        XCTAssert(minuteRange.length == 2);
+        let minuteControl = candidate.utf16Range(from: NSMakeRange(14, 2))
+        XCTAssert(minuteRange == minuteControl)
 
         let secondRange = try! candidate.rangeOf(regex, for: 8)
-        XCTAssert(secondRange.location == 17);
-        XCTAssert(secondRange.length == 2);
+        let secondControl = candidate.utf16Range(from: NSMakeRange(17, 2))
+        XCTAssert(secondRange == secondControl)
     }
 
     func testFailedRangeOfRegex() {
-        let failRange: NSRange = try! candidate.rangeOf("blah")
-        XCTAssert(failRange.location == NSNotFound)
-        XCTAssert(failRange.length == 0)
+        let failRange = try! candidate.rangeOf("blah")
+        XCTAssertNil(failRange)
     }
 
     func testStringByMatchingRegex() {

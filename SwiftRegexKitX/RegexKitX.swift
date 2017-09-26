@@ -242,9 +242,9 @@ public extension String {
                           matchingOptions: RKXMatchOptions = [])
         throws -> String? {
             let range = try rangeOf(pattern, in: searchRange, for: capture, options: options, matchingOptions: matchingOptions)
-            guard !NSEqualRanges(range, RKX.NSNotFoundRange) else { return nil }
-            let substring = (self as NSString).substring(with: range)
-            return substring
+            guard range != nil else { return nil }
+            let substring = self[range!]
+            return String(substring)
     }
 
     func stringByReplacingOccurrencesOf(_ pattern: String,
@@ -332,7 +332,8 @@ public extension String {
             var results = [String: String]()
             try keyAndCapturePairs.forEach { pair in
                 let captureRange = try rangeOf(pattern, in: searchRange, for: pair.capture, options: options, matchingOptions: matchingOptions)
-                results[pair.key] = (captureRange.length > 0) ? (self as NSString).substring(with: captureRange) : ""
+                let substring = (captureRange?.isEmpty)! ? "" : self[captureRange!]
+                results[pair.key] = String(substring)
             }
 
             return results
