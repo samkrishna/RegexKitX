@@ -84,6 +84,10 @@ class RegexKitXTests: XCTestCase {
         let secondRange = try! candidate.rangeOf(regex, for: 8)
         let secondControl = candidate.utf16Range(from: NSMakeRange(17, 2))
         XCTAssert(secondRange == secondControl)
+
+        let secondNSRange = candidate.legacyNSRange(from: secondRange)
+        let secondNSRangeControl = NSMakeRange(17, 2)
+        XCTAssert(NSEqualRanges(secondNSRange, secondNSRangeControl))
     }
 
     func testFailedRangeOfRegex() {
