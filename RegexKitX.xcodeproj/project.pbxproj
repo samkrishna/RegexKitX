@@ -139,13 +139,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6F5DA5161F71685E00494DA9 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		6F9CEEAA1F5336BB003BAC04 /* SwiftRegexKitX */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				6F9CEEB61F5336BC003BAC04 /* RegexKitXTests.swift */,
-				6F5DA5161F71685E00494DA9 /* New Group */,
 				6F9CEEB81F5336BC003BAC04 /* Info.plist */,
 			);
 			path = SwiftRegexKitXTests;
