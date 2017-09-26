@@ -198,7 +198,6 @@ public extension String {
             return regex!
     }
 
-
     /// Returns a `Bool` value that indicates whether the receiver is matched by `pattern` within `searchRange` using `options` and `matchOptions`.
     ///
     /// - Parameters:
@@ -218,9 +217,7 @@ public extension String {
             return true
     }
 
-
     /// Returns the range of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
-
     ///
     /// - Parameters:
     ///   - pattern: A `String` containing a regular expression.
@@ -241,7 +238,6 @@ public extension String {
             let range = utf16Range(from: match.range(at: capture))
             return range
     }
-
 
     /// Returns a string created from the characters of the receiver that are in the range of the first match of `pattern` using `options` and `matchOptions` within `searchRange` of the receiver for `capture`.
     ///
@@ -350,13 +346,12 @@ public extension String {
             var results = [String: String]()
             try keyAndCapturePairs.forEach { pair in
                 let captureRange = try rangeOf(pattern, in: searchRange, for: pair.capture, options: options, matchingOptions: matchingOptions)
-                let substring = (captureRange?.isEmpty)! ? "" : self[captureRange!]
+                let substring = captureRange!.isEmpty ? "" : self[captureRange!]
                 results[pair.key] = String(substring)
             }
 
             return results
     }
-
 
     func dictionaryByMatching(_ pattern: String,
                               in searchRange: NSRange? = nil,
@@ -488,9 +483,8 @@ public extension String {
             guard !matches.isEmpty else { return self }
 
             matches.reversed().forEach { match in
-                let replacement = closure( match.substrings(from: self), match.ranges )
-                let range = utf16Range(from: match.range)!
-                target.replaceSubrange(range, with: replacement)
+                let swap = closure( match.substrings(from: self), match.ranges )
+                target.replaceSubrange(utf16Range(from: match.range)!, with: swap)
             }
 
             return target as String
@@ -507,9 +501,8 @@ public extension String {
             guard !matches.isEmpty else { return NSNotFound }
 
             matches.reversed().forEach { match in
-                let range = utf16Range(from: match.range)!
                 let swap = regex.replacementString(for: match, in: self, offset: 0, template: template)
-                self.replaceSubrange(range, with: swap)
+                self.replaceSubrange(utf16Range(from: match.range)!, with: swap)
             }
 
             return matches.count
@@ -526,8 +519,7 @@ public extension String {
 
             matches.reversed().forEach { match in
                 let swap = closure(match.substrings(from: self), match.ranges)
-                let range = utf16Range(from: match.range)!
-                self.replaceSubrange(range, with: swap)
+                self.replaceSubrange(utf16Range(from: match.range)!, with: swap)
             }
 
             return matches.count
