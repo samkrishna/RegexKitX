@@ -306,7 +306,7 @@ public extension String {
         throws -> [String] {
             let matches = try matchesFor(pattern, in: searchRange, options: options, matchOptions: matchingOptions)
             guard let match = matches.first else { return [] }
-            return match.substringsFrom(self)
+            return match.substrings(from: self)
     }
 
     func arrayOfCaptureComponentsMatchedBy(_ pattern: String,
@@ -317,7 +317,7 @@ public extension String {
             let matches = try matchesFor(pattern, in: searchRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return [] }
             let arrayOfCaptures: [[String]] = matches.map({
-                $0.substringsFrom(self)
+                $0.substrings(from: self)
             })
 
             return arrayOfCaptures
@@ -392,7 +392,7 @@ public extension String {
             let matches = try matchesFor(pattern, in: searchRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return false }
             matches.forEach { match in
-                closure(match.substringsFrom(self), match.ranges)
+                closure(match.substrings(from: self), match.ranges)
             }
 
             return true
@@ -470,7 +470,7 @@ public extension String {
             guard !matches.isEmpty else { return self }
 
             matches.reversed().forEach { match in
-                let replacement = closure( match.substringsFrom(self), match.ranges )
+                let replacement = closure( match.substrings(from: self), match.ranges )
                 let range = utf16Range(from: match.range)!
                 target.replaceSubrange(range, with: replacement)
             }
@@ -507,7 +507,7 @@ public extension String {
             guard !matches.isEmpty else { return NSNotFound }
 
             matches.reversed().forEach { match in
-                let swap = closure(match.substringsFrom(self), match.ranges)
+                let swap = closure(match.substrings(from: self), match.ranges)
                 let range = utf16Range(from: match.range)!
                 self.replaceSubrange(range, with: swap)
             }
