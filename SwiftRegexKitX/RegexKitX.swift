@@ -144,7 +144,8 @@ public extension String {
             return NSRange(location: location, length: deltaLength)
     }
 
-    private func utf16Range(from range: NSRange) -> Range<String.UTF16Index>? {
+    /// Converts `range` from a `NSRange` to a `String.UTF16Index Range`.
+    func utf16Range(from range: NSRange) -> Range<String.UTF16Index>? {
         return Range(range, in: self)
     }
 
