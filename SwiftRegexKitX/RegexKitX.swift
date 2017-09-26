@@ -132,6 +132,8 @@ public extension NSTextCheckingResult {
 
 public extension String {
 
+    // MARK: CONVENIENCE
+
     /// The full range of the string as an `NSRange`, based on the UTF-16 length.
     var stringRange: NSRange {
         return NSRange(location: 0, length: utf16.count)
@@ -167,6 +169,7 @@ public extension String {
             return NSMakeRange(location, length)
     }
 
+    // MARK: Internal
     fileprivate static func cacheKeyFor(_ pattern: String, options: RKXRegexOptions)
         -> String {
             let key = String("\(pattern)_\(options.rawValue)")
@@ -197,6 +200,8 @@ public extension String {
 
             return regex!
     }
+
+    // MARK: NSRange-based RegexKitX Methods
 
     /// Returns a `Bool` value that indicates whether the receiver is matched by `pattern` within `searchRange` using `options` and `matchOptions`.
     ///
@@ -396,9 +401,6 @@ public extension String {
             return dictArray
     }
 
-    // enumerateStringsMatchedBy() will take a little work. Needs to be thoughtful about
-    // passing Range<String.UTF16Index> in both searchRange: and ranges: paramaters
-
     func enumerateStringsMatchedBy(_ pattern: String,
                                    in searchRange: NSRange? = nil,
                                    options: RKXRegexOptions = [],
@@ -528,7 +530,7 @@ public extension String {
             return matches.count
     }
 
-    // MARK: Required use of searchRange: as Range<String.UTF16Index> type
+    // MARK: Required Range<String.UTF16Index>-based methods
     func arrayOfCaptureComponentsMatchedBy(_ pattern: String,
                                            in searchRange: Range<String.UTF16Index>,
                                            options: RKXRegexOptions = [],
@@ -586,6 +588,59 @@ public extension String {
             return try dictionaryByMatching(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions, keysAndCaptures: keysAndCaptures)
     }
 
+    func enumerateStringsMatchedBy(_ pattern: String,
+                                   in searchRange: Range<String.UTF16Index>,
+                                   options: RKXRegexOptions = [],
+                                   matchingOptions: RKXMatchOptions = [],
+                                   _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
+        throws -> Bool {
+            let legacyRange = legacyNSRange(from: searchRange)
+            let matches = try matchesFor(pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
+            guard !matches.isEmpty else { return false }
+            matches.forEach { match in
+                closure(match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }))
+            }
+
+            return true
+    }
+
+    func enumerateStringsSeparatedBy(_ pattern: String,
+                                     in searchRange: Range<String.UTF16Index>,
+                                     options: RKXRegexOptions = [],
+                                     matchingOptions: RKXMatchOptions = [],
+                                     _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
+        throws -> Bool {
+            let target = String(self[searchRange])
+            let targetRange = target.stringRange
+            let matches = try target.matchesFor(pattern, in: targetRange, options: options, matchOptions: matchingOptions)
+            guard !matches.isEmpty else { return false }
+            let strings = try target.componentsSeparatedBy(pattern, in: targetRange, options: options, matchingOptions: matchingOptions)
+            var remainderRange = targetRange
+
+            for (index, string) in strings.enumerated() {
+                let range0 = (target as NSString).range(of: string, options: .backwards, range: remainderRange)
+                let match = (index < strings.endIndex - 1) ? matches[index] : nil
+                var rangeCaptures = Array([range0])
+
+                if match != nil {
+                    rangeCaptures.append(contentsOf: match!.ranges)
+                    let substrings = rangeCaptures.map {
+                        $0.location != NSNotFound ? (target as NSString).substring(with: $0) : ""
+                    }
+
+                    remainderRange = target.rangeFrom(location: rangeCaptures.last!.location)
+                    let utf16Ranges: [Range<String.UTF16Index>] = rangeCaptures.map({ utf16Range(from: $0)! })
+                    closure(substrings, utf16Ranges)
+                }
+                else {
+                    let lastRange = (target as NSString).range(of: string, options: .backwards, range: remainderRange)
+                    closure( [ string ], [ utf16Range(from: lastRange)! ])
+                }
+            }
+
+            return true
+    }
+
     func matches(_ pattern: String,
                  in searchRange: Range<String.UTF16Index>,
                  options: RKXRegexOptions = [],
@@ -595,6 +650,7 @@ public extension String {
             return try matches(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
+
     func rangeOf(_ pattern: String,
                  in searchRange: Range<String.UTF16Index>,
                  for capture: Int = 0,
@@ -603,6 +659,34 @@ public extension String {
         throws -> Range<String.UTF16Index>? {
             let legacyRange = legacyNSRange(from: searchRange)
             return try rangeOf(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
+    mutating func replaceOccurrencesOf(_ pattern: String,
+                                       with template: String,
+                                       in searchRange: Range<String.UTF16Index>,
+                                       options: RKXRegexOptions = [],
+                                       matchingOptions: RKXMatchOptions = [])
+        throws -> Int {
+            let legacyRange = legacyNSRange(from: searchRange)
+            return try replaceOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
+    }
+
+    mutating func replaceOccurrencesOf(_ pattern: String,
+                                       in searchRange: Range<String.UTF16Index>,
+                                       options: RKXRegexOptions = [],
+                                       matchingOptions: RKXMatchOptions = [],
+                                       _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
+        throws -> Int {
+            let legacyRange = legacyNSRange(from: searchRange)
+            let matches = try matchesFor(pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
+            guard !matches.isEmpty else { return NSNotFound }
+
+            matches.reversed().forEach { match in
+                let swap = closure(match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }))
+                self.replaceSubrange(utf16Range(from: match.range)!, with: swap)
+            }
+
+            return matches.count
     }
 
     func stringByMatching(_ pattern: String,
@@ -625,14 +709,22 @@ public extension String {
             return try stringByReplacingOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
-    mutating func replaceOccurrencesOf(_ pattern: String,
-                                       with template: String,
+    func stringByReplacingOccurencesOf(_ pattern: String,
                                        in searchRange: Range<String.UTF16Index>,
                                        options: RKXRegexOptions = [],
-                                       matchingOptions: RKXMatchOptions = [])
-        throws -> Int {
-            let legacyRange = legacyNSRange(from: searchRange)
-            return try replaceOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
-    }
+                                       matchingOptions: RKXMatchOptions = [],
+                                       _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
+        throws -> String {
+            var target = String(self[searchRange])
+            let targetRange = (target as String).stringRange
+            let matches = try target.matchesFor(pattern, in: targetRange, options: options, matchOptions: matchingOptions)
+            guard !matches.isEmpty else { return self }
 
+            matches.reversed().forEach { match in
+                let swap = closure( match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }) )
+                target.replaceSubrange(utf16Range(from: match.range)!, with: swap)
+            }
+
+            return target as String
+    }
 }
