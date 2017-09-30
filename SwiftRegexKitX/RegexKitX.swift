@@ -433,7 +433,7 @@ public extension String {
             }
 
             if pos < range.length {
-                let finalSubstring = String(characters.suffix(range.length - pos))
+                let finalSubstring = String(suffix(range.length - pos))
                 substrings.append(finalSubstring)
             }
 
@@ -649,7 +649,6 @@ public extension String {
             let legacyRange = legacyNSRange(from: searchRange)
             return try matches(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
-
 
     func rangeOf(_ pattern: String,
                  in searchRange: Range<String.UTF16Index>,
