@@ -12,7 +12,7 @@ This is a Swift 4 implementation inspired by the [RegexKitLite 4.0](http://regex
 
 ## Objective-C
 
-**NOTE:** There's an almost-pure RKL4-API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0-swap-fixed). This version is nearly a drop-in replacement for the original *RKL4* codebase.
+**NOTE:** There's an almost-pure RKL4-API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0-swap-fixed). This version is intended to be a drop-in replacement for the original *RKL4* codebase.
 
 This is a Regular Expression API inspired by the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) API that John Engelhart (@johnezang) [shipped back in 2010](http://regexkit.sourceforge.net/RegexKitLite/index.html#ReleaseInformation_40). ("*RKL4*")
 
