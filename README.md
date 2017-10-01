@@ -23,7 +23,7 @@ Basically, I'm modernizing the API as a cover for [NSRegularExpression](https://
 - The low-level *RKL4* C code accessing the [ICU](http://site.icu-project.org/) regex engine spits out deprecation warnings on macOS 10.12 Sierra
 - The annoyance of having to always remember to **ALWAYS link to the ICU library** on every project
 
-My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do this.
+My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do RegexKitX ("*RKX*").
 
 I've also added documentation that is option-clickable for all the *RKX* category methods.
 
@@ -32,8 +32,6 @@ I've also added documentation that is option-clickable for all the *RKX* categor
 1. I've re-ordered and modernized some of the argument and block parameters for a number of APIs.
 1. I've renamed a few APIs as well.
 1. The regex syntax is 100%-pure ICU syntax.
-1. `RKLRegexEnumerationOptions` is deprecated.
-1. The `RKLICURegex...Error` keys are deprecated in exchange for the `NSRegularExpression` instantiation errors.
 1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration. As usual, `NSEnumerationConcurrent` behavior is undefined.
 1. `NSRegularExpression` and `NSTextCheckingResult` use `NSUInteger` as a return type (especially for capture indexes and capture counts) and *RKX* follows that convention. The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on. I have replaced the `-1` error return code with `NSNotFound` in case of failure.
 
