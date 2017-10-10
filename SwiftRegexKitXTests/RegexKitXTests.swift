@@ -157,6 +157,7 @@ class RegexKitXTests: XCTestCase {
         let dict = try! name.dictionaryByMatching(regex, keysAndCaptures: firstKey, 1, lastKey, 2)
         XCTAssert(dict[firstKey] == "Joe")
         XCTAssert(dict[lastKey] == "")
+        XCTAssertThrowsError(try name.dictionaryByMatching(regex, keysAndCaptures: firstKey, 1, lastKey))
 
         let badRegex = "Name:\\s*(\\w*)\\s*(\\w*";
         XCTAssertThrowsError(try name.dictionaryByMatching(badRegex, keysAndCaptures: firstKey, 1, lastKey, 2))
