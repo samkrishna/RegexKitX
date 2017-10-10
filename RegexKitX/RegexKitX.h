@@ -436,21 +436,30 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 #pragma mark - componentsMatchedByRegex:
 
+
+/**
+ Returns an array containing all the substrings from the receiver that were matched by the regular expression @c pattern.
+
+ @param pattern A @c NSString containing a regular expression.
+ @return A @c NSArray object containing all the substrings from the receiver that were matched by @c pattern.
+ @return Returns an empty array if @c pattern fails to match.
+ @return Will return @c nil if an error occurs.
+ */
 - (NSArray<NSString *> *)componentsMatchedByRegex:(NSString *)pattern;
 
 /**
- Returns an array containing all the substrings from the receiver that were matched by capture number capture from the regular expression @c pattern.
+ Returns an array containing all the substrings from the receiver that were matched by capture number @c capture from the regular expression @c pattern.
 
  @param pattern A @c NSString containing a regular expression.
- @param capture The string matched by capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched.
- @return A @c NSArray object containing all the substrings for capture group capture from the receiver that were matched by @c pattern.
+ @param capture The string matched by @c capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched.
+ @return A @c NSArray object containing all the substrings for capture group @c capture from the receiver that were matched by @c pattern.
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs.
  */
 - (NSArray<NSString *> *)componentsMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture;
 
 /**
- Returns an array containing all the substrings from the receiver that were matched by capture number capture from the regular expression @c pattern within @c searchRange using @c options and @c matchOptions.
+ Returns an array containing all the substrings from the receiver that were matched by capture number @c capture from the regular expression @c pattern within @c searchRange using @c options and @c matchOptions.
 
  @param pattern A @c NSString containing a regular expression.
  @return A @c NSArray object containing all the substrings from the receiver that were matched by @c pattern within @c searchRange.

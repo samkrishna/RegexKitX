@@ -249,7 +249,7 @@
 {
     NSString *list = @"$10.23, $1024.42, $3099";
     NSRange listRange = [list stringRange];
-    NSArray *listItems = [list componentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:listRange capture:3L options:RKXNoOptions error:NULL];
+    NSArray *listItems = [list componentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:listRange capture:3 options:RKXNoOptions error:NULL];
     
     XCTAssert([listItems[0] isEqualToString:@"23"]);
     XCTAssert([listItems[1] isEqualToString:@"42"]);

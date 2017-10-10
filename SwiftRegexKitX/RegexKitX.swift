@@ -237,12 +237,12 @@ public extension String {
     /// Returns a string created from the characters of the receiver that are in the range of the first match of `pattern` using `options` and `matchOptions` within `searchRange` of the receiver for `capture`.
     ///
     /// - Parameters:
-    ///   - pattern: A @c NSString containing a regular expression.
+    ///   - pattern: A NSString containing a regular expression.
     ///   - searchRange: The range of the receiver to search.
-    ///   - capture: The string matched by capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched.
+    ///   - capture: The string matched by capture from pattern to return. Use 0 for the entire string that pattern matched.
     ///   - options: An OptionSet specified by combining various `RKXRegexOptions`. If no options are required, ignore this parameter.
     ///   - matchingOptions: An OptionSet specified by combining various `RKXMatchOptions`. If no options are required, ignore this parameter.
-    /// - Returns: A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within @c searchRange of the receiver.
+    /// - Returns: A NSString containing the substring of the receiver matched by capture number capture of pattern within searchRange of the receiver.
     /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
     func stringByMatching(_ pattern: String,
                           in searchRange: NSRange? = nil,
@@ -256,6 +256,17 @@ public extension String {
             return String(substring)
     }
 
+
+    /// Returns a string created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` and `matchingOptions` are replaced with the contents of `template` after performing capture group substitutions.
+    ///
+    /// - Parameters:
+    ///   - pattern: A String containing a regular expression.
+    ///   - template: A String containing a string template. Can use capture groups variables.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An OptionSet of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An OptionSet of options specified by combining RKXMatchOptions flags.
+    /// - Returns: A String created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` and `matchOptions` are replaced with the contents of the `template` string after performing capture group substitutions. Returns the characters within `searchRange` as if `substring(with:)` had been sent to the receiver if the substring is not matched by `pattern`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func stringByReplacingOccurrencesOf(_ pattern: String,
                                         with template: String,
                                         in searchRange: NSRange? = nil,
@@ -276,6 +287,12 @@ public extension String {
             return target
     }
 
+
+    /// Returns the number of captures that the regex contains.
+    ///
+    /// - Parameter options: An OptionSet of options specified by combining RKXRegexOptions flags.
+    /// - Returns: The number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func captureCount(options: RKXRegexOptions = [])
         throws -> Int {
             let regex = try String.cachedRegexFor(self, options: options)
@@ -374,7 +391,7 @@ public extension String {
         throws -> [Dictionary<String, String>] {
             assert(keysAndCaptures.count > 0)
             if keysAndCaptures.count > 64 { throw DictionaryError.tooManyKeysAndCaptures }
-            if (keysAndCaptures.count % 2) > 0 { throw DictionaryError.unpairedKeysAndCaptures }
+            if keysAndCaptures.count % 2 > 0 { throw DictionaryError.unpairedKeysAndCaptures }
             let pairs = stride(from: 0, to: keysAndCaptures.count, by: 2).map {
                 (key: keysAndCaptures[$0] as! String, capture: keysAndCaptures[$0.advanced(by: 1)] as! Int)
             }
