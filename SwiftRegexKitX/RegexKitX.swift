@@ -265,7 +265,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An OptionSet of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An OptionSet of options specified by combining RKXMatchOptions flags.
-    /// - Returns: A String created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` and `matchOptions` are replaced with the contents of the `template` string after performing capture group substitutions. Returns the characters within `searchRange` as if `substring(with:)` had been sent to the receiver if the substring is not matched by `pattern`.
+    /// - Returns: A String created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` and `matchOptions` are replaced with the contents of the `template` string after performing capture group substitutions. If the substring is not matched by `pattern`, returns the characters within `searchRange` as if `substring(with:)` had been sent to the receiver.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func stringByReplacingOccurrencesOf(_ pattern: String,
                                         with template: String,
@@ -291,7 +291,7 @@ public extension String {
     /// Returns the number of captures that the regex contains.
     ///
     /// - Parameter options: An OptionSet of options specified by combining RKXRegexOptions flags.
-    /// - Returns: The number of captures in the regex is returned, or @c 0 if the regex does not contain any captures.
+    /// - Returns: The number of captures in the regex is returned, or `0` if the regex does not contain any captures.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func captureCount(options: RKXRegexOptions = [])
         throws -> Int {
@@ -299,6 +299,11 @@ public extension String {
             return regex.numberOfCaptureGroups
     }
 
+
+    /// Returns a Bool value that indicates whether the regular expression contained in the receiver is valid using `options`.
+    ///
+    /// - Parameter options: An OptionSet of options specified by combining RKXRegexOptions flags.
+    /// - Returns: Returns a `True` if the regex is valid; `NO` otherwise.
     func isRegexValid(options: RKXRegexOptions = [])
         -> Bool {
             do {
@@ -310,6 +315,17 @@ public extension String {
             return true
     }
 
+    /// Returns an array containing all the substrings from the receiver that were matched by capture number `capture` from the regular expression `pattern` within `searchRange` using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - capture: The string matched by capture from `pattern` to return.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: An `Array` containing all the substrings (as Strings) from the receiver that were matched by capture number `capture` from `pattern` within `searchRange` using `options` and `matchOptions`.
+    /// - Returns: Returns an empty array if `pattern` fails to match in `searchRange`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func componentsMatchedBy(_ pattern: String,
                              in searchRange: NSRange? = nil,
                              for capture: Int = 0,
@@ -325,6 +341,16 @@ public extension String {
             return captures
     }
 
+
+    /// Returns an array containing the substrings matched by each capture group present in `pattern` for the first match of `pattern` within `searchRange` of the receiver using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: An `Array` containing the substrings (as Strings) matched by each capture group present in `pattern` for the first match of `pattern` within `searchRange` of the receiver using `options`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func captureComponentsMatchedBy(_ pattern: String,
                                     in searchRange: NSRange? = nil,
                                     options: RKXRegexOptions = [],
@@ -335,6 +361,16 @@ public extension String {
             return match.substrings(from: self)
     }
 
+
+    /// Returns an array containing all the matches from the receiver that were matched by the regular expression `pattern` within `searchRange` using `options` and `matchOptions`. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: A `Array` object containing all the matches from the receiver by `pattern`. Each match result consists of a `Array` which contains all the capture groups present in `pattern`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group. Will return an empty array if `pattern` fails to match.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func arrayOfCaptureComponentsMatchedBy(_ pattern: String,
                                            in searchRange: NSRange? = nil,
                                            options: RKXRegexOptions = [],
@@ -365,6 +401,17 @@ public extension String {
             return results
     }
 
+
+    /// Creates and returns a Dictionary containing the matches constructed from the specified set of keys and captures for the first match of `pattern` within `searchRange` of the receiver using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - keysAndCaptures: A variadic array taking alternating String keys and Int capture group numbers.
+    /// - Returns: A `Dictionary` containing the matched substrings constructed from the specified set of keys and captures.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression. Will also throw a `DictionaryError` object if the number of key-and-capture elements is larger than 32 distinct pairs (or 64 elements) and will also throw if there is an odd number of elements passed (implying that there are unpaired keys or capture groups).
     func dictionaryByMatching(_ pattern: String,
                               in searchRange: NSRange? = nil,
                               options: RKXRegexOptions = [],
@@ -373,7 +420,7 @@ public extension String {
         throws -> Dictionary<String, String> {
             assert(keysAndCaptures.count > 0)
             if keysAndCaptures.count > 64 { throw DictionaryError.tooManyKeysAndCaptures }
-            if (keysAndCaptures.count % 2) > 0 { throw DictionaryError.unpairedKeysAndCaptures }
+            if keysAndCaptures.count % 2 > 0 { throw DictionaryError.unpairedKeysAndCaptures }
 
             let pairs = stride(from: 0, to: keysAndCaptures.count, by: 2).map {
                 (key: keysAndCaptures[$0] as! String, capture: keysAndCaptures[$0.advanced(by: 1)] as! Int)
@@ -383,6 +430,17 @@ public extension String {
             return dict
     }
 
+
+    /// Returns an Array containing all the matches in the receiver that were matched by the regular expression `pattern` within `searchRange` using `options` and `matchOptions`. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - keysAndCaptures: A variadic array taking alternating String keys and Int capture group numbers.
+    /// - Returns: A `Array` object containing all the matches from the receiver by `pattern`. Each match result consists of a `Dictionary` containing that matches substrings constructed from the specified set of keys and captures.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression. Will also throw a `DictionaryError` object if the number of key-and-capture elements is larger than 32 distinct pairs (or 64 elements) and will also throw if there is an odd number of elements passed (implying that there are unpaired keys or capture groups).
     func arrayOfDictionariesByMatching(_ pattern: String,
                                        in searchRange: NSRange? = nil,
                                        options: RKXRegexOptions = [],
@@ -408,6 +466,19 @@ public extension String {
             return dictArray
     }
 
+
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes the block for each match found.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - closure: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
+    ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
+    ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
+    /// - Returns: `True` if there was no error, otherwise `false` if there were no matches.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func enumerateStringsMatchedBy(_ pattern: String,
                                    in searchRange: NSRange? = nil,
                                    options: RKXRegexOptions = [],
@@ -423,6 +494,16 @@ public extension String {
             return true
     }
 
+
+    /// Returns an array containing substrings (as Strings) within `searchRange` of the receiver that have been divided by the regular expression `pattern` using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: An Array containing the substrings from the receiver that have been divided by `pattern`. If there is no match, returns an Array with the receiver as the single element.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func componentsSeparatedBy(_ pattern: String,
                                in searchRange: NSRange? = nil,
                                options: RKXRegexOptions = [],
@@ -447,6 +528,19 @@ public extension String {
             return substrings
     }
 
+
+    /// Enumerates the strings of the receiver that have been divided by the regular expression `pattern` within `searchRange` using `options` and and `matchOptions` and executes `block` for each divided string.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - closure: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
+    ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
+    ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
+    /// - Returns: `true` if there was no error, otherwise `false` if there were no matches.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func enumerateStringsSeparatedBy(_ pattern: String,
                                      in searchRange: NSRange? = nil,
                                      options: RKXRegexOptions = [],
@@ -483,6 +577,19 @@ public extension String {
             return true
     }
 
+
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of each string returned by `closure`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - closure: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
+    ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
+    ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
+    /// - Returns: A `String` created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` are replaced with the contents of the `String` returned by `block`. Returns the characters within `searchRange` as if `substringWithRange`: had been sent to the receiver if the substring is not matched by `pattern`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func stringByReplacingOccurencesOf(_ pattern: String,
                                        in searchRange: NSRange? = nil,
                                        options: RKXRegexOptions = [],
@@ -502,6 +609,17 @@ public extension String {
             return target as String
     }
 
+
+    /// Replaces all occurrences of the regular expression `pattern` using `options` and `matchOptions` within `searchRange` of the receiver with the contents of `template` after performing capture group substitutions, returning the number of replacements made.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - template: A `NSString` containing a string template. Can use capture groups variables.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     mutating func replaceOccurrencesOf(_ pattern: String,
                                        with template: String,
                                        in searchRange: NSRange? = nil,
@@ -520,6 +638,19 @@ public extension String {
             return matches.count
     }
 
+
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Replaces the characters that were matched with the contents of the string returned by `closure`, returning the number of replacements made.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - closure: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
+    ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
+    ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
+    /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     mutating func replaceOccurrencesOf(_ pattern: String,
                                        in searchRange: NSRange? = nil,
                                        options: RKXRegexOptions = [],
@@ -538,6 +669,16 @@ public extension String {
     }
 
     // MARK: Required Range<String.UTF16Index>-based methods
+
+    /// Returns an array containing all the matches from the receiver that were matched by the regular expression `pattern` within `searchRange` using `options` and `matchOptions`. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: A `Array` object containing all the matches from the receiver by `pattern`. Each match result consists of a `Array` which contains all the capture groups present in `pattern`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group. Will return an empty array if `pattern` fails to match.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func arrayOfCaptureComponentsMatchedBy(_ pattern: String,
                                            in searchRange: Range<String.UTF16Index>,
                                            options: RKXRegexOptions = [],
@@ -547,6 +688,16 @@ public extension String {
             return try arrayOfCaptureComponentsMatchedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Returns an Array containing all the matches in the receiver that were matched by the regular expression `pattern` within `searchRange` using `options` and `matchOptions`. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - keysAndCaptures: A variadic array taking alternating String keys and Int capture group numbers.
+    /// - Returns: A `Array` object containing all the matches from the receiver by `pattern`. Each match result consists of a `Dictionary` containing that matches substrings constructed from the specified set of keys and captures.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression. Will also throw a `DictionaryError` object if the number of key-and-capture elements is larger than 32 distinct pairs (or 64 elements) and will also throw if there is an odd number of elements passed (implying that there are unpaired keys or capture groups).
     func arrayOfDictionariesByMatching(_ pattern: String,
                                        in searchRange: Range<String.UTF16Index>,
                                        options: RKXRegexOptions = [],
@@ -557,6 +708,15 @@ public extension String {
             return try arrayOfDictionariesByMatching(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions, keysAndCaptures: keysAndCaptures)
     }
 
+    /// Returns an array containing the substrings matched by each capture group present in `pattern` for the first match of `pattern` within `searchRange` of the receiver using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: An `Array` containing the substrings (as Strings) matched by each capture group present in `pattern` for the first match of `pattern` within `searchRange` of the receiver using `options`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func captureComponentsMatchedBy(_ pattern: String,
                                     in searchRange: Range<String.UTF16Index>,
                                     options: RKXRegexOptions = [],
@@ -566,6 +726,17 @@ public extension String {
             return try captureComponentsMatchedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Returns an array containing all the substrings from the receiver that were matched by capture number `capture` from the regular expression `pattern` within `searchRange` using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - capture: The string matched by capture from `pattern` to return.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: An `Array` containing all the substrings (as Strings) from the receiver that were matched by capture number `capture` from `pattern` within `searchRange` using `options` and `matchOptions`.
+    /// - Returns: Returns an empty array if `pattern` fails to match in `searchRange`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func componentsMatchedBy(_ pattern: String,
                              in searchRange: Range<String.UTF16Index>,
                              for capture: Int = 0,
@@ -576,6 +747,15 @@ public extension String {
             return try componentsMatchedBy(pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Returns an array containing substrings (as Strings) within `searchRange` of the receiver that have been divided by the regular expression `pattern` using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: An Array containing the substrings from the receiver that have been divided by `pattern`. If there is no match, returns an Array with the receiver as the single element.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func componentsSeparatedBy(_ pattern: String,
                                in searchRange: Range<String.UTF16Index>,
                                options: RKXRegexOptions = [],
@@ -585,6 +765,16 @@ public extension String {
             return try componentsSeparatedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Creates and returns a Dictionary containing the matches constructed from the specified set of keys and captures for the first match of `pattern` within `searchRange` of the receiver using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - keysAndCaptures: A variadic array taking alternating String keys and Int capture group numbers.
+    /// - Returns: A `Dictionary` containing the matched substrings constructed from the specified set of keys and captures.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression. Will also throw a `DictionaryError` object if the number of key-and-capture elements is larger than 32 distinct pairs (or 64 elements) and will also throw if there is an odd number of elements passed (implying that there are unpaired keys or capture groups).
     func dictionaryByMatching(_ pattern: String,
                               in searchRange: Range<String.UTF16Index>,
                               options: RKXRegexOptions = [],
@@ -595,6 +785,18 @@ public extension String {
             return try dictionaryByMatching(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions, keysAndCaptures: keysAndCaptures)
     }
 
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes the block for each match found.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - closure: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
+    ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
+    ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
+    /// - Returns: `True` if there was no error, otherwise `false` if there were no matches.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func enumerateStringsMatchedBy(_ pattern: String,
                                    in searchRange: Range<String.UTF16Index>,
                                    options: RKXRegexOptions = [],
@@ -611,6 +813,18 @@ public extension String {
             return true
     }
 
+    /// Enumerates the strings of the receiver that have been divided by the regular expression `pattern` within `searchRange` using `options` and and `matchOptions` and executes `block` for each divided string.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - closure: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
+    ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
+    ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
+    /// - Returns: `true` if there was no error, otherwise `false` if there were no matches.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func enumerateStringsSeparatedBy(_ pattern: String,
                                      in searchRange: Range<String.UTF16Index>,
                                      options: RKXRegexOptions = [],
@@ -648,6 +862,15 @@ public extension String {
             return true
     }
 
+    /// Returns a `Bool` value that indicates whether the receiver is matched by `pattern` within `searchRange` using `options` and `matchOptions`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression pattern.
+    ///   - searchRange: The range of the receiver to search. If no parameter is passed, the method will default to using the entire range of the receiver.
+    ///   - options: An OptionSet of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An OptionSet of options specified by combining the RKXMatchOptions flaghs.
+    /// - Returns: A Bool value indicating whether or not the pattern matches the receiver.
+    /// - Throws: An error if the pattern is invalid.
     func matches(_ pattern: String,
                  in searchRange: Range<String.UTF16Index>,
                  options: RKXRegexOptions = [],
@@ -657,6 +880,16 @@ public extension String {
             return try matches(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Returns the range of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search. The default value is the entire range of the receiver.
+    ///   - capture: The matching range of the capture number from `pattern` to search. Use `0` for the entire range that `pattern` matched.
+    ///   - options: An OptionSet specified by combining various `RKXRegexOptions`. If no options are required, ignore this parameter.
+    ///   - matchingOptions: An OptionSet specified by combining various `RKXMatchOptions`. If no options are required, ignore this parameter.
+    /// - Returns: A Range<String.UTF16Index> giving the Range of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
+    /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
     func rangeOf(_ pattern: String,
                  in searchRange: Range<String.UTF16Index>,
                  for capture: Int = 0,
@@ -667,6 +900,16 @@ public extension String {
             return try rangeOf(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Replaces all occurrences of the regular expression `pattern` using `options` and `matchOptions` within `searchRange` of the receiver with the contents of `template` after performing capture group substitutions, returning the number of replacements made.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - template: A `NSString` containing a string template. Can use capture groups variables.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     mutating func replaceOccurrencesOf(_ pattern: String,
                                        with template: String,
                                        in searchRange: Range<String.UTF16Index>,
@@ -677,6 +920,18 @@ public extension String {
             return try replaceOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Replaces the characters that were matched with the contents of the string returned by `closure`, returning the number of replacements made.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - closure: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
+    ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
+    ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
+    /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     mutating func replaceOccurrencesOf(_ pattern: String,
                                        in searchRange: Range<String.UTF16Index>,
                                        options: RKXRegexOptions = [],
@@ -695,6 +950,16 @@ public extension String {
             return matches.count
     }
 
+    /// Returns a string created from the characters of the receiver that are in the range of the first match of `pattern` using `options` and `matchOptions` within `searchRange` of the receiver for `capture`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A NSString containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - capture: The string matched by capture from pattern to return. Use 0 for the entire string that pattern matched.
+    ///   - options: An OptionSet specified by combining various `RKXRegexOptions`. If no options are required, ignore this parameter.
+    ///   - matchingOptions: An OptionSet specified by combining various `RKXMatchOptions`. If no options are required, ignore this parameter.
+    /// - Returns: A NSString containing the substring of the receiver matched by capture number capture of pattern within searchRange of the receiver.
+    /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
     func stringByMatching(_ pattern: String,
                           in searchRange: Range<String.UTF16Index>,
                           for capture: Int = 0,
@@ -705,6 +970,16 @@ public extension String {
             return try stringByMatching(pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Returns a string created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` and `matchingOptions` are replaced with the contents of `template` after performing capture group substitutions.
+    ///
+    /// - Parameters:
+    ///   - pattern: A String containing a regular expression.
+    ///   - template: A String containing a string template. Can use capture groups variables.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An OptionSet of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An OptionSet of options specified by combining RKXMatchOptions flags.
+    /// - Returns: A String created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` and `matchOptions` are replaced with the contents of the `template` string after performing capture group substitutions. If the substring is not matched by `pattern`, returns the characters within `searchRange` as if `substring(with:)` had been sent to the receiver.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func stringByReplacingOccurrencesOf(_ pattern: String,
                                         with template: String,
                                         in searchRange: Range<String.UTF16Index>,
@@ -715,6 +990,18 @@ public extension String {
             return try stringByReplacingOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of each string returned by `closure`.
+    ///
+    /// - Parameters:
+    ///   - pattern: A `String` containing a regular expression.
+    ///   - searchRange: The range of the receiver to search.
+    ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
+    ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
+    ///   - closure: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
+    ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
+    ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
+    /// - Returns: A `String` created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` are replaced with the contents of the `String` returned by `block`. Returns the characters within `searchRange` as if `substringWithRange`: had been sent to the receiver if the substring is not matched by `pattern`.
+    /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func stringByReplacingOccurencesOf(_ pattern: String,
                                        in searchRange: Range<String.UTF16Index>,
                                        options: RKXRegexOptions = [],
