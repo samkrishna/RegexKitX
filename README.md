@@ -33,7 +33,6 @@ I've also added documentation that is option-clickable for all the *RKX* categor
 1. I've renamed a few APIs as well.
 1. The regex syntax is 100%-pure ICU syntax.
 1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration. As usual, `NSEnumerationConcurrent` behavior is undefined.
-1. `NSRegularExpression` and `NSTextCheckingResult` use `NSUInteger` as a return type (especially for capture indexes and capture counts) and *RKX* follows that convention. The various method clusters reflect the type change. This should be fine for all 64-bit apps going forward, which is what I chose to focus on. I have replaced the `-1` error return code with `NSNotFound` in case of failure.
 
 ## Tests
 
