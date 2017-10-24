@@ -539,7 +539,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     NSUInteger captureKeysCount = 0UL;
     
     if (varArgsList != NULL) {
-        while (captureKeysCount < 62UL) {
+        while (captureKeysCount < 32UL) {
             id  thisCaptureKey = (captureKeysCount == 0) ? firstKey : va_arg(varArgsList, id);
             if (RKX_EXPECTED(thisCaptureKey == NULL, 0L)) break;
             int thisCaptureKeyIndex = va_arg(varArgsList, int);
