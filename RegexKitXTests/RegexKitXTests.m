@@ -145,16 +145,16 @@
     XCTAssert(failRange.location == NSNotFound, @"This should not work!");
 }
 
-- (void)testStringByMatchingInRangeCaptureOptionsMatchingOptionsError
+- (void)testStringByMatchingRegexInRangeCaptureOptionsMatchingOptionsError
 {
     // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
     
-    NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
+    NSString *regexPattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = [self.candidate stringRange];
-    NSString *fullTimestamp = [self.candidate stringByMatching:regex inRange:entireRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSString *fullTimestamp = [self.candidate stringByMatchingRegex:regexPattern inRange:entireRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
     XCTAssert([fullTimestamp isEqualToString:@"2014-05-06 17:03:17"]);
 
-    NSString *datestamp = [self.candidate stringByMatching:regex inRange:entireRange capture:1 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSString *datestamp = [self.candidate stringByMatchingRegex:regexPattern inRange:entireRange capture:1 options:RKXNoOptions matchOptions:0 error:NULL];
     XCTAssert([datestamp isEqualToString:@"2014-05-06"]);
 }
 
@@ -464,7 +464,7 @@
     char *utf8CString = "Copyright \xC2\xA9 \xE2\x89\x85 2008";
     NSString *regexString = @"Copyright (.*) (\\d+)";
     NSString *subjectString = [NSString stringWithUTF8String:utf8CString];
-    NSString *matchedString = [subjectString stringByMatching:regexString capture:1L];
+    NSString *matchedString = [subjectString stringByMatchingRegex:regexString capture:1L];
     NSRange matchRange = [subjectString rangeOfRegex:regexString capture:1L];
     
     XCTAssert(NSEqualRanges(matchRange, NSMakeRange(10, 3)), @"range: %@", NSStringFromRange(matchRange));

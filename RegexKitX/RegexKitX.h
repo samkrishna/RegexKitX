@@ -286,7 +286,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  */
 - (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
-#pragma mark - stringByMatching:
+#pragma mark - stringByMatchingRegex:
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern.
@@ -295,7 +295,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by @c pattern.
  @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
  */
-- (NSString *)stringByMatching:(NSString *)pattern;
+- (NSString *)stringByMatchingRegex:(NSString *)pattern;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -305,7 +305,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern.
  @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
  */
-- (NSString *)stringByMatching:(NSString *)pattern capture:(NSUInteger)capture;
+- (NSString *)stringByMatchingRegex:(NSString *)pattern capture:(NSUInteger)capture;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -315,7 +315,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within the searchRange of the receiver.
  @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
  */
-- (NSString *)stringByMatching:(NSString *)pattern inRange:(NSRange)searchRange;
+- (NSString *)stringByMatchingRegex:(NSString *)pattern inRange:(NSRange)searchRange;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -328,7 +328,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within @c searchRange of the receiver. Returns @c nil if the receiver is not matched by @c pattern within @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByMatching:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSString *)stringByMatchingRegex:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -342,7 +342,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within @c searchRange of the receiver.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByMatching:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSString *)stringByMatchingRegex:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - stringByReplacincOccurrencesOfRegex:withTemplate:
 
