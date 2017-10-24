@@ -297,6 +297,20 @@
                                  withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
     XCTAssertNil(nameDictionary);
     XCTAssertNotNil(error);
+
+    NSString *execRegex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
+    NSDictionary *executionDict = [self.candidate dictionaryByMatchingRegex:execRegex withKeysAndCaptures:
+                                   @"executionDate", 1,
+                                   @"currencyPair", 2,
+                                   @"orderID", 3,
+                                   @"clientID", 4,
+                                   @"executionID", 5,
+                                   @"accountID", 6,
+                                   @"orderSide", 7,
+                                   @"orderVolume", 8,
+                                   @"executionPrice", 9,
+                                   @"permanentID", 10, nil];
+    XCTAssert([executionDict count] == 10);
 }
 
 - (void)testArrayOfDictionariesByMatchingRegexOptionsMatchingOptionsRangeErrorWithKeysAndCaptures
