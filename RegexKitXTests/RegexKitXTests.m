@@ -166,7 +166,7 @@
     NSString *failureResult = [self.candidate stringByReplacingOccurrencesOfRegex:failedPattern withTemplate:@"BARNEY RUBBLE" range:failureRange options:RKXNoOptions matchOptions:0 error:NULL];
     XCTAssert([failureResult isEqualToString:failureControl]);
 
-    NSString *successPattern = @"2014-05-06 17:03:17.967 (EXECUTION_DATA)";
+    NSString *successPattern = @"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+ (EXECUTION_DATA)";
     NSString *successResult = [self.candidate stringByReplacingOccurrencesOfRegex:successPattern withTemplate:@"BARNEY RUBBLE ~~~$1~~~" range:failureRange options:RKXNoOptions matchOptions:0 error:NULL];
     XCTAssert([successResult matchesRegex:@"BARNEY RUBBLE"]);
     XCTAssert([successResult matchesRegex:@"~~~EXECUTION_DATA~~~"]);
@@ -347,7 +347,6 @@
 
 - (void)testEnumerateStringsSeparatedByRegex
 {
-    // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
     NSString *regexPattern = @",(\\s+)";
     NSArray *rangeValueChecks = @[ [NSValue valueWithRange:NSMakeRange(0, 91)],
                                    [NSValue valueWithRange:NSMakeRange(93, 30)],
@@ -389,7 +388,7 @@
 
 - (void)testLegacyICUtoPerlOperationalFix
 {
-    // This is from the RKX4 sources:
+    // This is from the RKL4 sources:
     
     // "I|at|ice I eat rice" split using the regex "\b\s*" demonstrates the problem. ICU bug http://bugs.icu-project.org/trac/ticket/6826
     // ICU : "", "I", "|", "at", "|", "ice", "", "I", "", "eat", "", "rice" <- Results that RegexKitLite used to produce.
