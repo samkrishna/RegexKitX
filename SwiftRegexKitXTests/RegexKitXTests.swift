@@ -170,7 +170,7 @@ class RegexKitXTests: XCTestCase {
         XCTAssert(name1[lastKey] == "Smith");
     }
 
-    func testEnumerateStringMatchedByRegexBlock() {
+    func testEnumerateStringMatchedByRegexClosure() {
         let searchString = "Name: Bob\n" + "Name: John Smith"
         let regex = "(?m)^Name:\\s*(\\w*)\\s*(\\w*)$"
         var matchCount = 0
