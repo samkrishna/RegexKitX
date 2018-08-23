@@ -164,8 +164,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     // Repurposed from https://stackoverflow.com/a/9185677
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
-    if (![matches count]) { return @[ self ]; }
-    NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:matches.count];
+    if (!matches.count) { return @[ self ]; }
+    NSMutableArray *returnArray = [NSMutableArray array];
     NSUInteger pos = 0;
 
     for (NSTextCheckingResult *match in matches) {
@@ -201,7 +201,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 - (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
-    if (!matches || [matches count] == 0) { return NO; }
+    if (!matches || matches.count == 0) { return NO; }
     return YES;
 }
 
@@ -230,7 +230,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 - (NSRange)rangeOfRegex:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
-    if (!matches || [matches count] == 0) { return NSNotFoundRange; }
+    if (!matches || matches.count == 0) { return NSNotFoundRange; }
     NSTextCheckingResult *match = [matches firstObject];
     return [match rangeAtIndex:capture];
 }
@@ -256,7 +256,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
-    if (![matches count]) { return @[]; }
+    if (!matches.count) { return @[]; }
     NSMutableArray *ranges = [NSMutableArray array];
 
     for (NSTextCheckingResult *match in matches) {
@@ -319,7 +319,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     if (!regex) { return nil; }
     NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
     NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
-    if (![matches count]) { return [self substringWithRange:searchRange]; }
+    if (!matches.count) { return [self substringWithRange:searchRange]; }
     NSMutableString *target = [self mutableCopy];
 
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
@@ -385,7 +385,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
-    if (![matches count]) { return @[]; }
+    if (!matches.count) { return @[]; }
     NSMutableArray *captures = [NSMutableArray array];
 
     for (NSTextCheckingResult *match in matches) {
@@ -418,7 +418,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
-    if (![matches count]) { return @[]; }
+    if (!matches.count) { return @[]; }
     NSTextCheckingResult *firstMatch = [matches firstObject];
     return [firstMatch substringsFromString:self];
 }
@@ -444,7 +444,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
-    if (![matches count]) { return @[]; }
+    if (!matches.count) { return @[]; }
     NSMutableArray *matchCaptures = [NSMutableArray array];
     
     for (NSTextCheckingResult *match in matches) {
@@ -595,16 +595,16 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     return [self dictionaryByMatchingRegex:pattern range:searchRange withKeys:keys forCaptures:captures options:options matchOptions:0 error:error];
 }
 
-- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+- (NSDictionary *)dictionaryByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) { return nil; }
-    NSUInteger count = [keys count];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:count];
+    NSUInteger count = keys.count;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
     for (NSUInteger i = 0; i < count; i++) {
         id key = keys[i];
-        NSUInteger capture = [captures[i] unsignedIntegerValue];
+        NSUInteger capture = captures[i].unsignedIntegerValue;
         NSRange captureRange = [self rangeOfRegex:pattern inRange:searchRange capture:capture options:options matchOptions:matchOptions error:error];
         dict[key] = (captureRange.length > 0) ? [self substringWithRange:captureRange] : @"";
     }
@@ -627,7 +627,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
-    if (!matches || [matches count] == 0) { return NO; }
+    if (!matches || matches.count == 0) { return NO; }
     __block BOOL blockStop = NO;
 
 #pragma clang diagnostic push
@@ -658,7 +658,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     NSString *target = [self substringWithRange:searchRange];
     NSRange targetRange = [target stringRange];
     NSArray *matches = [target _matchesForRegex:pattern range:targetRange options:options matchOptions:matchOptions error:error];
-    if (!matches || [matches count] == 0) { return NO; }
+    if (!matches || matches.count == 0) { return NO; }
     NSArray *strings = [target componentsSeparatedByRegex:pattern range:targetRange options:options matchOptions:matchOptions error:error];
     NSUInteger lastStringIndex = [strings indexOfObject:[strings lastObject]];
     __block NSRange remainderRange = targetRange;
@@ -705,11 +705,11 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
-    if (![matches count]) { return [self substringWithRange:searchRange]; }
+    if (!matches.count) { return [self substringWithRange:searchRange]; }
     NSMutableString *target = [self mutableCopy];
     BOOL stop = NO;
     
-    if (![matches count]) {
+    if (!matches.count) {
         return [NSString stringWithString:self];
     }
     
@@ -748,7 +748,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) { return NSNotFound; }
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
-    if (!matches || [matches count] == 0) { return NSNotFound; }
+    if (!matches || matches.count == 0) { return NSNotFound; }
     NSUInteger count = 0;
     
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
@@ -775,7 +775,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
-    if (!matches || [matches count] == 0) { return NSNotFound; }
+    if (!matches || matches.count == 0) { return NSNotFound; }
     NSUInteger count = 0;
     BOOL stop = NO;
     
