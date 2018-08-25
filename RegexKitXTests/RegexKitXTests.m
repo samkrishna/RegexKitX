@@ -15,9 +15,8 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.candidate = @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
-    
+    self.candidate = @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU275587, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
+
     const char *unicodeCStrings[] = {
         /* 0 */ "pi \xE2\x89\x85 3 (apx eq)",
         /* 1 */ "\xC2\xA5""55 (yen)",
@@ -98,8 +97,6 @@
 
 - (void)testRangeOfRegexOptionsMatchingOptionsInRangeCaptureError
 {
-    // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
-    
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = [self.candidate stringRange];
     NSRange captureRange = [self.candidate rangeOfRegex:regex inRange:entireRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
@@ -147,8 +144,6 @@
 
 - (void)testStringByMatchingRegexInRangeCaptureOptionsMatchingOptionsError
 {
-    // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
-    
     NSString *regexPattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = [self.candidate stringRange];
     NSString *fullTimestamp = [self.candidate stringByMatchingRegex:regexPattern inRange:entireRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
@@ -532,6 +527,5 @@
     XCTAssertTrue((NSEqualRanges([regexRanges[2] rangeValue], NSMakeRange(10, 1))), @"%@", regexRanges[2]);
     XCTAssertTrue((NSEqualRanges([regexRanges[3] rangeValue], NSMakeRange(12, 4))), @"%@", regexRanges[3]);
 }
-
 
 @end
