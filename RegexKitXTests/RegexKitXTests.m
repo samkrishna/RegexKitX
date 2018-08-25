@@ -520,11 +520,11 @@
     NSRange foundationRange = [copyrightString rangeOfString:@"2007"];
     XCTAssertTrue(NSEqualRanges(foundationRange, rangeOf2007));
     
-    NSArray *regexRanges = [copyrightString rangesOfRegex:@"^(\\w+)\\s+(\\p{Any}+)\\s+(2007)$"];
-    XCTAssertTrue((NSEqualRanges([regexRanges[0] rangeValue], NSMakeRange(0, 16))), @"%@", regexRanges[0]);
-    XCTAssertTrue((NSEqualRanges([regexRanges[1] rangeValue], NSMakeRange(0, 9))), @"%@", regexRanges[1]);
-    XCTAssertTrue((NSEqualRanges([regexRanges[2] rangeValue], NSMakeRange(10, 1))), @"%@", regexRanges[2]);
-    XCTAssertTrue((NSEqualRanges([regexRanges[3] rangeValue], NSMakeRange(12, 4))), @"%@", regexRanges[3]);
+    NSArray<NSValue *> *regexRanges = [copyrightString rangesOfRegex:@"^(\\w+)\\s+(\\p{Any}+)\\s+(2007)$"];
+    XCTAssertTrue((NSEqualRanges(regexRanges[0].rangeValue, NSMakeRange(0, 16))), @"%@", regexRanges[0]);
+    XCTAssertTrue((NSEqualRanges(regexRanges[1].rangeValue, NSMakeRange(0, 9))), @"%@", regexRanges[1]);
+    XCTAssertTrue((NSEqualRanges(regexRanges[2].rangeValue, NSMakeRange(10, 1))), @"%@", regexRanges[2]);
+    XCTAssertTrue((NSEqualRanges(regexRanges[3].rangeValue, NSMakeRange(12, 4))), @"%@", regexRanges[3]);
 }
 
 @end
