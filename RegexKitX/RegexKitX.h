@@ -76,7 +76,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns the full NSRange of the receiver. Equivalent to @c NSMakeRange(0, self.length).
  */
-- (NSRange)stringRange;
+@property (nonatomic, readonly) NSRange stringRange;
 
 /**
  Returns the @c NSRange from @c location to the end of the receiver, in UTF-16 code units.

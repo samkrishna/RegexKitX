@@ -76,7 +76,7 @@
     XCTAssertFalse([self.candidate matchesRegex:regex inRange:[self.candidate stringRange] options:RKXNoOptions matchOptions:0 error:&error], @"Case-sensitive match has succeeded when it shouldn't have! Error: %@", error);
 
     NSString *failureCase1 = @"Orthogonal2";
-    BOOL failureResult1 = [failureCase1 matchesRegex:@"Orthogonal" inRange:[failureCase1 stringRange] options:RKXCaseless error:&error];
+    BOOL failureResult1 = [failureCase1 matchesRegex:@"Orthogonal" inRange:failureCase1.stringRange options:RKXCaseless error:&error];
     XCTAssert(failureResult1);
 }
 
@@ -201,7 +201,7 @@
                              @"A peck of pickled peppers Peter Piper picked;\n"
                              @"If Peter Piper picked a peck of pickled peppers,\n"
                              @"Where's the peck of pickled peppers Peter Piper picked?";
-    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern inRange:[newCandidate stringRange] options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, volatile BOOL *const stop) {
+    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern inRange:newCandidate.stringRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, volatile BOOL *const stop) {
         if ([capturedStrings[0] matchesRegex:@"^pick$"]) {
             return @"select";
         }
@@ -229,7 +229,7 @@
 - (void)testArrayOfCaptureComponentsMatchedByRegexOptionsMatchingOptionsRangeError
 {
     NSString *list      = @"$10.23, $1024.42, $3099";
-    NSArray *listItems = [list arrayOfCaptureComponentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:[list stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
+    NSArray *listItems = [list arrayOfCaptureComponentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:list.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
     XCTAssert([listItems count] == 3);
 
     NSArray *list0 = listItems[0];
@@ -248,7 +248,7 @@
 - (void)testComponentsMatchedByRegexOptionsRangeCaptureError
 {
     NSString *list = @"$10.23, $1024.42, $3099";
-    NSRange listRange = [list stringRange];
+    NSRange listRange = list.stringRange;
     NSArray *listItems = [list componentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:listRange capture:3 options:RKXNoOptions error:NULL];
     
     XCTAssert([listItems[0] isEqualToString:@"23"]);
@@ -280,7 +280,7 @@
     NSString *firstKey = @"first";
     NSString *lastKey = @"last";
     NSDictionary *nameDictionary = [name dictionaryByMatchingRegex:regex
-                                                             range:[name stringRange]
+                                                             range:name.stringRange
                                                            options:RKXNoOptions
                                                              error:NULL
                                                withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
@@ -291,7 +291,7 @@
     NSString *badRegex = @"Name:\\s*(\\w*)\\s*(\\w*";
     NSError *error;
     nameDictionary = [name dictionaryByMatchingRegex:badRegex
-                                               range:[name stringRange]
+                                               range:name.stringRange
                                              options:RKXNoOptions
                                                error:&error
                                  withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
@@ -321,7 +321,7 @@
     NSString *firstKey = @"first";
     NSString *lastKey = @"last";
     NSArray  *nameArray = [name arrayOfDictionariesByMatchingRegex:regex
-                                                             range:[name stringRange]
+                                                             range:name.stringRange
                                                            options:RKXNoOptions
                                                       matchOptions:0
                                                              error:NULL

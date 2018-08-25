@@ -146,7 +146,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern
 {
-    return [self componentsSeparatedByRegex:pattern range:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self componentsSeparatedByRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange
@@ -185,7 +185,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (BOOL)matchesRegex:(NSString *)pattern
 {
-    return [self matchesRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self matchesRegex:pattern inRange:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange
@@ -209,12 +209,12 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSRange)rangeOfRegex:(NSString *)pattern
 {
-    return [self rangeOfRegex:pattern inRange:[self stringRange] capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self rangeOfRegex:pattern inRange:self.stringRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSRange)rangeOfRegex:(NSString *)pattern capture:(NSUInteger)capture
 {
-    return [self rangeOfRegex:pattern inRange:[self stringRange] capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self rangeOfRegex:pattern inRange:self.stringRange capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSRange)rangeOfRegex:(NSString *)pattern inRange:(NSRange)searchRange
@@ -239,7 +239,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)rangesOfRegex:(NSString *)pattern
 {
-    return [self rangesOfRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self rangesOfRegex:pattern inRange:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange
@@ -270,12 +270,12 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSString *)stringByMatchingRegex:(NSString *)pattern
 {
-    return [self stringByMatchingRegex:pattern inRange:[self stringRange] capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self stringByMatchingRegex:pattern inRange:self.stringRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSString *)stringByMatchingRegex:(NSString *)pattern capture:(NSUInteger)capture
 {
-    return [self stringByMatchingRegex:pattern inRange:[self stringRange] capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self stringByMatchingRegex:pattern inRange:self.stringRange capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSString *)stringByMatchingRegex:(NSString *)pattern inRange:(NSRange)searchRange
@@ -300,7 +300,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange
@@ -363,12 +363,12 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)componentsMatchedByRegex:(NSString *)pattern
 {
-    return [self componentsMatchedByRegex:pattern range:[self stringRange] capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self componentsMatchedByRegex:pattern range:self.stringRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)componentsMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture
 {
-    return [self componentsMatchedByRegex:pattern range:[self stringRange] capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self componentsMatchedByRegex:pattern range:self.stringRange capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
@@ -401,7 +401,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)pattern
 {
-    return [self captureComponentsMatchedByRegex:pattern range:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self captureComponentsMatchedByRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)captureComponentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
@@ -427,7 +427,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)pattern
 {
-    return [self arrayOfCaptureComponentsMatchedByRegex:pattern range:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self arrayOfCaptureComponentsMatchedByRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
@@ -462,7 +462,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:[self stringRange] withKeys:captureKeys forCaptures:captureKeyIndexes options:0 matchOptions:0 error:NULL];
+    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:self.stringRange withKeys:captureKeys forCaptures:captureKeyIndexes options:0 matchOptions:0 error:NULL];
     va_end(varArgsList);
     return dictArray;
 }
@@ -515,7 +515,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 #pragma clang diagnostic ignored "-Wunused-parameter"
     [self enumerateStringsMatchedByRegex:pattern inRange:searchRange options:options matchOptions:matchOptions enumerationOptions:0 error:error usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
         NSString *mainString = capturedStrings[0];
-        NSDictionary *dict = [mainString dictionaryByMatchingRegex:pattern range:[mainString stringRange] withKeys:keys forCaptures:captures options:options matchOptions:matchOptions error:error];
+        NSDictionary *dict = [mainString dictionaryByMatchingRegex:pattern range:mainString.stringRange withKeys:keys forCaptures:captures options:options matchOptions:matchOptions error:error];
         [dictArray addObject:dict];
     }];
 #pragma clang diagnostic pop
@@ -552,7 +552,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern range:[self stringRange] withKeys:captureKeys forCaptures:captureKeyIndexes options:RKXNoOptions matchOptions:0 error:NULL ];
+    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern range:self.stringRange withKeys:captureKeys forCaptures:captureKeyIndexes options:RKXNoOptions matchOptions:0 error:NULL ];
     va_end(varArgsList);
     return dict;
 }
@@ -616,7 +616,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
-    return [self enumerateStringsMatchedByRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 enumerationOptions:0 error:NULL usingBlock:block];
+    return [self enumerateStringsMatchedByRegex:pattern inRange:self.stringRange options:RKXNoOptions matchOptions:0 enumerationOptions:0 error:NULL usingBlock:block];
 }
 
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
@@ -645,7 +645,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
-    return [self enumerateStringsSeparatedByRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 enumerationOptions:0 error:NULL usingBlock:block];
+    return [self enumerateStringsSeparatedByRegex:pattern inRange:self.stringRange options:RKXNoOptions matchOptions:0 enumerationOptions:0 error:NULL usingBlock:block];
 }
 
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
@@ -656,11 +656,11 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
     NSString *target = [self substringWithRange:searchRange];
-    NSRange targetRange = [target stringRange];
+    NSRange targetRange = target.stringRange;
     NSArray *matches = [target _matchesForRegex:pattern range:targetRange options:options matchOptions:matchOptions error:error];
     if (!matches || matches.count == 0) { return NO; }
     NSArray *strings = [target componentsSeparatedByRegex:pattern range:targetRange options:options matchOptions:matchOptions error:error];
-    NSUInteger lastStringIndex = [strings indexOfObject:[strings lastObject]];
+    NSUInteger lastStringIndex = [strings indexOfObject:strings.lastObject];
     __block NSRange remainderRange = targetRange;
     __block BOOL blockStop = NO;
 
@@ -693,7 +693,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL usingBlock:block];
+    return [self stringByReplacingOccurrencesOfRegex:pattern inRange:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:block];
 }
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
@@ -730,7 +730,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
 {
-    return [self replaceOccurrencesOfRegex:pattern withTemplate:template range:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self replaceOccurrencesOfRegex:pattern withTemplate:template range:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange
@@ -764,7 +764,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
 {
-    return [self replaceOccurrencesOfRegex:pattern inRange:[self stringRange] options:RKXNoOptions matchOptions:0 error:NULL usingBlock:block];
+    return [self replaceOccurrencesOfRegex:pattern inRange:self.stringRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:block];
 }
 
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block
