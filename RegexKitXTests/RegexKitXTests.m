@@ -343,38 +343,36 @@
 - (void)testEnumerateStringsSeparatedByRegex
 {
     NSString *regexPattern = @",(\\s+)";
-    NSArray *rangeValueChecks = @[ [NSValue valueWithRange:NSMakeRange(0, 91)],
-                                   [NSValue valueWithRange:NSMakeRange(93, 30)],
-                                   [NSValue valueWithRange:NSMakeRange(125, 23)],
-                                   [NSValue valueWithRange:NSMakeRange(150, 19)],
-                                   [NSValue valueWithRange:NSMakeRange(171, 17)],
-                                   [NSValue valueWithRange:NSMakeRange(190, 8)],
-                                   [NSValue valueWithRange:NSMakeRange(200, 13)],
-                                   [NSValue valueWithRange:NSMakeRange(215, 12)],
-                                   [NSValue valueWithRange:NSMakeRange(229, 16)],
-                                   [NSValue valueWithRange:NSMakeRange(247, 13)],
-                                   [NSValue valueWithRange:NSMakeRange(262, 13)],
-                                   [NSValue valueWithRange:NSMakeRange(277, 15)] ];
+    NSArray<NSValue *> *rangeValueChecks = @[ [NSValue valueWithRange:NSMakeRange(0, 91)],
+                                              [NSValue valueWithRange:NSMakeRange(93, 30)],
+                                              [NSValue valueWithRange:NSMakeRange(125, 23)],
+                                              [NSValue valueWithRange:NSMakeRange(150, 19)],
+                                              [NSValue valueWithRange:NSMakeRange(171, 17)],
+                                              [NSValue valueWithRange:NSMakeRange(190, 8)],
+                                              [NSValue valueWithRange:NSMakeRange(200, 13)],
+                                              [NSValue valueWithRange:NSMakeRange(215, 12)],
+                                              [NSValue valueWithRange:NSMakeRange(229, 16)],
+                                              [NSValue valueWithRange:NSMakeRange(247, 13)],
+                                              [NSValue valueWithRange:NSMakeRange(262, 13)],
+                                              [NSValue valueWithRange:NSMakeRange(277, 15)] ];
 
     __block NSUInteger index = 0;
-    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern usingBlock:^(NSArray *capturedStrings, NSArray *capturedRanges, volatile BOOL *const stop) {
-        NSString *string = capturedStrings[0];
+    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
         NSRange range = [capturedRanges rangeAtIndex:0];
-        NSRange rangeCheck = [rangeValueChecks[index] rangeValue];
-        NSLog(@"Forward: string = %@ and range = %@", string, NSStringFromRange(range));
-        XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", string, NSStringFromRange(range), NSStringFromRange(rangeCheck));
+        NSRange rangeCheck = rangeValueChecks[index].rangeValue;
+        NSLog(@"Forward: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
+        XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", capturedStrings[0], NSStringFromRange(range), NSStringFromRange(rangeCheck));
         index++;
     }];
-    
+
     XCTAssert(result);
     index--;
 
-    result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern inRange:[self.candidate stringRange] options:0 matchOptions:0 enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray *capturedStrings, NSArray *capturedRanges, volatile BOOL *const stop) {
-        NSString *string = capturedStrings[0];
+    result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern inRange:[self.candidate stringRange] options:0 matchOptions:0 enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
         NSRange range = [capturedRanges rangeAtIndex:0];
         NSRange rangeCheck = [rangeValueChecks[index] rangeValue];
-        NSLog(@"Reverse: string = %@ and range = %@", string, NSStringFromRange(range));
-        XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", string, NSStringFromRange(range), NSStringFromRange(rangeCheck));
+        NSLog(@"Reverse: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
+        XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", capturedStrings[0], NSStringFromRange(range), NSStringFromRange(rangeCheck));
         index--;
     }];
 
@@ -385,19 +383,20 @@
 {
     // This is from the RKL4 sources:
     
-    // "I|at|ice I eat rice" split using the regex "\b\s*" demonstrates the problem. ICU bug http://bugs.icu-project.org/trac/ticket/6826
-    // ICU : "", "I", "|", "at", "|", "ice", "", "I", "", "eat", "", "rice" <- Results that RegexKitLite used to produce.
-    // PERL:     "I", "|", "at", "|", "ice",     "I",     "eat",     "rice" <- Results that RegexKitLite now produces.
+    // "I|at|ice I eat rice" split using the regex "\b\s*" demonstrates the problem.
+    // ICU bug http://bugs.icu-project.org/trac/ticket/6826
+    //
+    // ICU : "", "I", "|", "at", "|", "ice", "", "I", "", "eat", "", "rice" <- Results that RegexKitX produces
+    // PERL:     "I", "|", "at", "|", "ice",     "I",     "eat",     "rice" <- Results that RKL4 produces.
 
     // Follow-up: I followed the ticket to see what the outcome was. The ICU dev team rejected this ticket and
     // said it was closed b/c the behavior worked as intended. I'm noting this here for historical purposes.
 
     NSString *testString = @"I|at|ice I eat rice";
     NSString *pattern = @"\\b\\s*";
-    NSArray *components = [testString componentsSeparatedByRegex:pattern];
-    
-    XCTAssertFalse([[components firstObject] isEqualToString:@"I"], @"For RKX4: This used to be \'I\'");
-    XCTAssert([[components lastObject] isEqualToString:@"rice"], @"This should actually be \'rice\'");
+    NSArray<NSString *> *components = [testString componentsSeparatedByRegex:pattern];
+    XCTAssertFalse([components.firstObject isEqualToString:@"I"], @"For RKX4: This used to be \'I\'");
+    XCTAssert([components.lastObject isEqualToString:@"rice"], @"This should actually be \'rice\'");
 }
 
 #pragma mark - NSMutableString tests
