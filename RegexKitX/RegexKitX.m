@@ -670,11 +670,11 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
         if (match) {
             NSMutableArray *captures = [NSMutableArray array];
-            NSMutableArray *rangeCaptures = [@[[NSValue valueWithRange:topStringRange]] mutableCopy];
+            NSMutableArray<NSValue *> *rangeCaptures = [@[[NSValue valueWithRange:topStringRange]] mutableCopy];
             [captures addObject:topString];
             [rangeCaptures addObjectsFromArray:match.ranges];
             [captures addObjectsFromArray:[match substringsFromString:self]];
-            remainderRange = [[rangeCaptures lastObject] rangeValue];
+            remainderRange = rangeCaptures.lastObject.rangeValue;
             remainderRange = (enumOpts == 0) ? [target rangeFromLocation:remainderRange.location] : [target rangeToLocation:remainderRange.location];
             block([captures copy], [rangeCaptures copy], &blockStop);
         }
