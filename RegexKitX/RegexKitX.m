@@ -76,7 +76,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     NSMutableArray *substringArray = [NSMutableArray array];
 
     for (NSValue *subrange in self.ranges) {
-        NSString *matchString = ([subrange rangeValue].location != NSNotFound) ? [string substringWithRange:[subrange rangeValue]] : @"";
+        NSString *matchString = (subrange.rangeValue.location != NSNotFound) ? [string substringWithRange:subrange.rangeValue] : @"";
         [substringArray addObject:matchString];
     }
 

@@ -438,7 +438,7 @@
     
     [searchString enumerateStringsMatchedByRegex:regexString usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
         NSString *matchedString = capturedStrings[0];
-        NSLog(@"%lu: %lu '%@'", ++line, [matchedString length], matchedString);
+        NSLog(@"%lu: %lu '%@'", ++line, matchedString.length, matchedString);
         matchCount++;
     }];
     
@@ -456,7 +456,7 @@
     NSLog(@"regexString : '%@'", regexString);
     
     for (NSString *matchedString in [searchString componentsMatchedByRegex:regexString]) {
-        NSLog(@"%lu: %lu '%@'", ++line, [matchedString length], matchedString);
+        NSLog(@"%lu: %lu '%@'", ++line, matchedString.length, matchedString);
         matchCount++;
     }
     
