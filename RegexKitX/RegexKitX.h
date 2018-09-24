@@ -783,7 +783,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 /**
- Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes the block using enumerationOptions for each match found.
+ Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes the block for each match found.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param searchRange The range of the receiver to search.
@@ -797,7 +797,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  */
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 /**
- Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes the block using @c enumOpts for each match found.
+ Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes the block using the enumeration direction defined by @c enumOpts for each match found.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param searchRange The range of the receiver to search.
@@ -843,7 +843,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 /**
- Enumerates the strings of the receiver that have been divided by the regular expression @c pattern within @c searchRange using @c options and and @c matchOptions and executes @c block for each divided string. The enumeration is set by @c enumOpts.
+ Enumerates the strings of the receiver that have been divided by the regular expression @c pattern within @c searchRange using @c options and and @c matchOptions and executes @c block for each divided string. The enumeration direction is set by @c enumOpts.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param searchRange The range of the receiver to search.
