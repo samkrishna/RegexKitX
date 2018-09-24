@@ -161,24 +161,23 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSArray *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
-    // Repurposed from https://stackoverflow.com/a/9185677
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
     if (!matches.count) { return @[ self ]; }
-    NSMutableArray *returnArray = [NSMutableArray array];
+    NSMutableArray *components = [NSMutableArray array];
     NSUInteger pos = 0;
 
     for (NSTextCheckingResult *match in matches) {
         NSRange subrange = NSMakeRange(pos, match.range.location - pos);
-        [returnArray addObject:[self substringWithRange:subrange]];
+        [components addObject:[self substringWithRange:subrange]];
         pos = match.range.location + match.range.length;
     }
 
     if (pos < searchRange.length) {
-        [returnArray addObject:[self substringFromIndex:pos]];
+        [components addObject:[self substringFromIndex:pos]];
     }
     
-    return [returnArray copy];
+    return [components copy];
 }
 
 #pragma mark - matchesRegex:
