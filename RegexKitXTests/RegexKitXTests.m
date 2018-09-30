@@ -365,7 +365,7 @@
 
     __block NSUInteger index = 0;
     BOOL result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
-        NSRange range = [capturedRanges rangeAtIndex:0];
+        NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = rangeValueChecks[index].rangeValue;
         NSLog(@"Forward: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
         XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", capturedStrings[0], NSStringFromRange(range), NSStringFromRange(rangeCheck));
@@ -376,7 +376,7 @@
     index--;
 
     result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern range:self.candidate.stringRange options:0 matchOptions:0 enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
-        NSRange range = [capturedRanges rangeAtIndex:0];
+        NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = [rangeValueChecks[index] rangeValue];
         NSLog(@"Reverse: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
         XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", capturedStrings[0], NSStringFromRange(range), NSStringFromRange(rangeCheck));

@@ -64,13 +64,6 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
     RKXWithoutAnchoringBounds  = NSMatchingWithoutAnchoringBounds
 };
 
-@interface NSArray (RangeMechanics)
-/**
- Returns the @c NSRange of the @c NSValue at @c index.
- */
-- (NSRange)rangeAtIndex:(NSUInteger)index;
-@end
-
 @interface NSString (RangeMechanics)
 
 /**

@@ -35,6 +35,10 @@
 
 static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
 
+@interface NSArray (RangeMechanics)
+- (NSRange)rangeAtIndex:(NSUInteger)index;
+@end
+
 @implementation NSArray (RangeMechanics)
 - (NSRange)rangeAtIndex:(NSUInteger)index
 {
