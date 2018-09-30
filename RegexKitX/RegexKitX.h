@@ -158,6 +158,16 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (BOOL)matchesRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
+ Returns a Boolean value that indicates whether the receiver is matched by @c pattern using @c options.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
+ @return A @c BOOL value indicating whether or not the @c pattern has been matched in the receiver.
+ @return Will return @c NO if @c pattern is invalid.
+ */
+- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options;
+
+/**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options.
 
  @param pattern A @c NSString containing a regular expression.

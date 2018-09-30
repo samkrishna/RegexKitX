@@ -192,6 +192,11 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     return [self matchesRegex:pattern range:searchRange options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
+- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options
+{
+    return [self matchesRegex:pattern range:self.stringRange options:options matchOptions:0 error:NULL];
+}
+
 - (BOOL)matchesRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
     return [self matchesRegex:pattern range:searchRange options:options matchOptions:0 error:error];
