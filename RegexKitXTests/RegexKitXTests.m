@@ -85,7 +85,7 @@
 {
     NSString *regex = @", ";
     NSArray *captures = [self.candidate componentsSeparatedByRegex:regex];
-    XCTAssert([captures count] == 12);
+    XCTAssert(captures.count == 12);
     
     for (NSString *substring in captures) {
         BOOL result = [substring matchesRegex:@", "];
@@ -225,7 +225,7 @@
 {
     NSString *list      = @"$10.23, $1024.42, $3099";
     NSArray *listItems = [list arrayOfCaptureComponentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:list.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert([listItems count] == 3);
+    XCTAssert(listItems.count == 3);
 
     NSArray *list0 = listItems[0];
     BOOL result0 = [list0 isEqualToArray:@[ @"$10.23", @"10.23", @"10", @"23" ]];
@@ -254,7 +254,7 @@
 {
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+).(\\d+))";
     NSArray *captures = [self.candidate captureComponentsMatchedByRegex:regex];
-    XCTAssert([captures count] == 10);
+    XCTAssert(captures.count == 10);
     XCTAssert([captures[1] isEqualToString:@"2014-05-06"]);
     XCTAssert([captures[5] isEqualToString:@"17:03:17.967"]);
 }
@@ -304,7 +304,7 @@
                                    @"orderVolume", 8,
                                    @"executionPrice", 9,
                                    @"permanentID", 10, nil];
-    XCTAssert([executionDict count] == 10);
+    XCTAssert(executionDict.count == 10);
 }
 
 - (void)testArrayOfDictionariesByMatchingRegexOptionsMatchingOptionsRangeErrorWithKeysAndCaptures
@@ -336,7 +336,7 @@
                                                                           error:NULL
                                                             withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
     XCTAssertNotNil(failureResult);
-    XCTAssert([failureResult count] == 0);
+    XCTAssert(failureResult.count == 0);
 }
 
 - (void)testEnumerateStringsSeparatedByRegex
