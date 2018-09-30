@@ -519,14 +519,14 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     if (!regex) { return nil; }
     NSMutableArray *dictArray = [NSMutableArray array];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
     [self enumerateStringsMatchedByRegex:pattern range:searchRange options:options matchOptions:matchOptions enumerationOptions:0 error:error usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
         NSString *mainString = capturedStrings[0];
-        NSRange capturedRange = capturedRanges[0].rangeValue;
-        NSRange targetRange = NSEqualRanges(mainString.stringRange, capturedRange) ? capturedRange : mainString.stringRange;
-        NSDictionary *dict = [mainString dictionaryByMatchingRegex:pattern range:targetRange withKeys:keys forCaptures:captures options:options matchOptions:matchOptions error:error];
+        NSDictionary *dict = [mainString dictionaryByMatchingRegex:pattern range:mainString.stringRange withKeys:keys forCaptures:captures options:options matchOptions:matchOptions error:error];
         [dictArray addObject:dict];
-        *stop = NO;
     }];
+#pragma clang diagnostic pop
 
     return [dictArray copy];
 }
