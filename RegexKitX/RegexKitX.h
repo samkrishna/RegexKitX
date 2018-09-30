@@ -155,7 +155,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
  */
-- (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange;
+- (BOOL)matchesRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options.
@@ -167,7 +167,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c BOOL value indicating whether or not the @c pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+- (BOOL)matchesRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options and @c matchOptions.
@@ -180,7 +180,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)matchesRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (BOOL)matchesRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - rangeOfRegex:
 
@@ -211,7 +211,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSRange structure giving the location and length of capture number @c capture for the first match of @c pattern. Returns @c {NSNotFound, 0} if the receiver is not matched by @c pattern.
  @return Returns @c {NSNotFound, 0} if an error occurs.
  */
-- (NSRange)rangeOfRegex:(NSString *)pattern inRange:(NSRange)searchRange;
+- (NSRange)rangeOfRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
  Returns the range of capture number @c capture for the first match of @c pattern within @c searchRange of the receiver.
@@ -224,7 +224,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSRange structure giving the location and length of capture number @c capture for the first match of @c pattern within @c searchRange of the receiver. Returns @c {NSNotFound, 0} if the receiver is not matched by @c pattern within @c searchRange.
  @return Returns @c {NSNotFound, 0} if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSRange)rangeOfRegex:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSRange)rangeOfRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns the range of capture number @c capture for the first match of @c pattern within @c searchRange of the receiver.
@@ -238,7 +238,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSRange structure giving the location and length of capture number @c capture for the first match of @c pattern within @c searchRange of the receiver.
  @return Returns @c {NSNotFound, 0} if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSRange)rangeOfRegex:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSRange)rangeOfRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - rangesOfRegex:
 
@@ -259,7 +259,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray of @c NSValue-wrapped @c NSRanges of all captures matched by @c pattern in @c searchRange.
  @return Will return @c nil if @c pattern is invalid.
  */
-- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange;
+- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
  Returns a @c NSArray of @c NSValue-wrapped @c NSRanges of all captures of @c pattern for all matches within @c searchRange of the receiver using @c options.
@@ -271,7 +271,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray of @c NSValue-wrapped @c NSRanges of all captures matched by @c pattern in @c searchRange. Returns an empty array if there are no matches in the receiver for @c searchRange.
  @return Will return @c nil if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns a @c NSArray of @c NSValue-wrapped @c NSRanges of all captures of @c pattern for all matches within @c searchRange of the receiver using @c options and @c matchOptions.
@@ -284,7 +284,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray of NSValue-wrapped NSRanges of all captures matched by @c pattern in @c searchRange. Returns an empty array if there are no matches in the receiver for @c searchRange.
  @return Will return @c nil if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - stringByMatchingRegex:
 
@@ -315,7 +315,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within the searchRange of the receiver.
  @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
  */
-- (NSString *)stringByMatchingRegex:(NSString *)pattern inRange:(NSRange)searchRange;
+- (NSString *)stringByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -328,7 +328,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within @c searchRange of the receiver. Returns @c nil if the receiver is not matched by @c pattern within @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByMatchingRegex:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSString *)stringByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -342,7 +342,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within @c searchRange of the receiver.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByMatchingRegex:(NSString *)pattern inRange:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSString *)stringByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - stringByReplacingOccurrencesOfRegex:withTemplate:
 
@@ -795,7 +795,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
  @return Returns @c YES if there was no error, otherwise returns @c NO and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes the block using the enumeration direction defined by @c enumOpts for each match found.
 
@@ -811,7 +811,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
  @return Returns @c YES if there was no error, otherwise returns @c NO and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 #pragma mark - enumerateStringsSeparatedByRegex:usingBlock:
 
@@ -840,7 +840,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
  @return Returns @c YES if there was no error, otherwise returns @c NO and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 /**
  Enumerates the strings of the receiver that have been divided by the regular expression @c pattern within @c searchRange using @c options and and @c matchOptions and executes @c block for each divided string. The enumeration direction is set by @c enumOpts.
@@ -857,7 +857,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param &nbsp;&nbsp;stop A reference to a Boolean value. The block can set the value to @c YES to stop further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished. The stop argument is an out-only argument. You should only ever set this Boolean to @c YES within the block.
  @return Returns @c YES if there was no error, otherwise returns @c NO and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlock:
 
@@ -888,7 +888,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c NSString returned by @c block. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Returns @c nil if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
@@ -905,7 +905,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c NSString returned by @c block. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Returns @c nil if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 #pragma clang diagnostic pop
 
 @end
@@ -996,7 +996,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Replaces the characters that were matched with the contents of the string returned by @c block, returning the number of replacements made.
@@ -1013,7 +1013,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern inRange:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
 #pragma clang diagnostic pop
 
 @end
