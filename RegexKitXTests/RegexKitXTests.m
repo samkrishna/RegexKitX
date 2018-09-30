@@ -62,8 +62,16 @@
 {
     // NOTE: Not Comprehensive Yet
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate matchesRegex:regex range:self.candidate.stringRange options:RKXCaseless error:nil]);
-    XCTAssertFalse([self.candidate matchesRegex:regex range:self.candidate.stringRange options:RKXNoOptions error:nil]);
+    XCTAssertTrue([self.candidate matchesRegex:regex range:self.candidate.stringRange options:RKXCaseless error:NULL]);
+    XCTAssertFalse([self.candidate matchesRegex:regex range:self.candidate.stringRange options:RKXNoOptions error:NULL]);
+}
+
+- (void)testMatchesRegexOptions
+{
+    // NOTE: Not Comprehensive Yet
+    NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
+    XCTAssertTrue([self.candidate matchesRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([self.candidate matchesRegex:regex options:RKXNoOptions]);
 }
 
 - (void)testMatchesRegexRangeOptionsMatchingOptionsError
