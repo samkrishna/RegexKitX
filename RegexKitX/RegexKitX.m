@@ -137,14 +137,13 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 + (NSRegularExpression *)cachedRegexForPattern:(NSString *)patten options:(RKXRegexOptions)options error:(NSError **)error
 {
     NSString *patternKey = [NSString cacheKeyForRegex:patten options:options];
-    NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
-    NSRegularExpression *regex = dictionary[patternKey];
-    
+    NSRegularExpression *regex = NSThread.currentThread.threadDictionary[patternKey];
+
     if (!regex) {
         NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
         regex = [NSRegularExpression regularExpressionWithPattern:patten options:regexOptions error:error];
         if (!regex) { return nil; }
-        dictionary[patternKey] = regex;
+        NSThread.currentThread.threadDictionary[patternKey] = regex;
     }
     
     return regex;
