@@ -48,7 +48,7 @@
 - (void)testMatchesRegex
 {
     NSString *regex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate matchesRegex:regex], @"Match has failed!");
+    XCTAssertTrue([self.candidate matchesRegex:regex]);
 }
 
 - (void)testMatchesRegexRange
@@ -80,7 +80,7 @@
     NSError *error;
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
     XCTAssertTrue([self.candidate matchesRegex:regex range:self.candidate.stringRange options:RKXCaseless error:nil]);
-    XCTAssertFalse([self.candidate matchesRegex:regex range:self.candidate.stringRange options:RKXNoOptions matchOptions:0 error:&error], @"Case-sensitive match has succeeded when it shouldn't have! Error: %@", error);
+    XCTAssertFalse([self.candidate matchesRegex:regex range:self.candidate.stringRange options:RKXNoOptions matchOptions:0 error:&error], @"Error: %@", error);
 
     NSString *failureCase1 = @"Orthogonal2";
     BOOL failureResult1 = [failureCase1 matchesRegex:@"Orthogonal" range:failureCase1.stringRange options:RKXCaseless error:&error];
@@ -147,7 +147,7 @@
 - (void)testFailedRangeOfRegex
 {
     NSRange failRange = [self.candidate rangeOfRegex:@"blah"];
-    XCTAssert(failRange.location == NSNotFound, @"This should not work!");
+    XCTAssert(failRange.location == NSNotFound);
 }
 
 - (void)testStringByMatchingRegexInRangeCaptureOptionsMatchingOptionsError
@@ -198,13 +198,20 @@
     }];
     
     XCTAssert([output matchesRegex:@"cray cray!"]);
-    
+
+    __block NSUInteger blockCount = 0;
     pattern = @"pick(led)?";
     NSString *newCandidate = @"Peter Piper picked a peck of pickled peppers;\n"
                              @"A peck of pickled peppers Peter Piper picked;\n"
                              @"If Peter Piper picked a peck of pickled peppers,\n"
                              @"Where's the peck of pickled peppers Peter Piper picked?";
     output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern range:newCandidate.stringRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, volatile BOOL *const stop) {
+        blockCount++;
+
+        if (blockCount == 2) {
+            *stop = YES;
+        }
+
         if ([capturedStrings[0] matchesRegex:@"^pick$"]) {
             return @"select";
         }
@@ -215,9 +222,11 @@
         return @"FAIL";
     }];
     
-    XCTAssert([output matchesRegex:@"selected"], @"The block didn't work!");
-    XCTAssert([output matchesRegex:@"marinated"], @"The block didn't work!");
-    XCTAssertFalse([output matchesRegex:@"FAIL"], @"The block should NOT have inserted \'FAIL\'!!");
+    XCTAssert([output matchesRegex:@"selected"]);
+    XCTAssert([output matchesRegex:@"marinated"]);
+    XCTAssert([output matchesRegex:@"pick"]);
+    XCTAssert([output matchesRegex:@"pickled"]);
+    XCTAssertFalse([output matchesRegex:@"FAIL"]);
 }
 
 - (void)testIsRegexValidWithOptionsError
@@ -402,8 +411,8 @@
     NSString *testString = @"I|at|ice I eat rice";
     NSString *pattern = @"\\b\\s*";
     NSArray<NSString *> *components = [testString componentsSeparatedByRegex:pattern];
-    XCTAssertFalse([components.firstObject isEqualToString:@"I"], @"For RKX4: This used to be \'I\'");
-    XCTAssert([components.lastObject isEqualToString:@"rice"], @"This should actually be \'rice\'");
+    XCTAssertFalse([components.firstObject isEqualToString:@"I"]);
+    XCTAssert([components.lastObject isEqualToString:@"rice"]);
 }
 
 #pragma mark - NSMutableString tests
@@ -503,21 +512,21 @@
     XCTAssert([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
     
     // ICU likes this regex under a weird options combo (that included ignoring all metacharacters)
-    XCTAssert([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0xffffffff error:NULL], @"Should be valid");
+    XCTAssert([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0xffffffff error:NULL]);
     // But didn't when options = 0
-    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL]);
 
     // ICU fails a number of perfectly good PCRE regexes.
-    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
-    XCTAssertFalse([@"\\( ( ( (?>[^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
-    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:0 error:NULL]);
+    XCTAssertFalse([@"\\( ( ( (?>[^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL]);
+    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL]);
     
     // These are bad PCRE regexes
-    XCTAssertFalse([@"^(Match)\\s+the\\s+((MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
-    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&xq) )* \\) )" isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    XCTAssertFalse([@"^(Match)\\s+the\\s+((MAGIC)$" isRegexValidWithOptions:0 error:NULL]);
+    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&xq) )* \\) )" isRegexValidWithOptions:0 error:NULL]);
 
     NSString *nilString = nil;
-    XCTAssertFalse([nilString isRegexValidWithOptions:0 error:NULL], @"Should be invalid");
+    XCTAssertFalse([nilString isRegexValidWithOptions:0 error:NULL]);
 }
 
 - (void)testSimpleUnicodeMatching
