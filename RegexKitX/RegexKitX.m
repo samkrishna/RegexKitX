@@ -127,7 +127,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 }
 
 /**
- Returns a canonical @c NSRegularExpression object from the current thread dictionary. This is utilized to cut down on excessive @c NSRegularExpression object creation for each API call.
+ Creates and/or returns the canonical @c NSRegularExpression object from the current thread dictionary for a given pattern. This is utilized to cut down on excessive @c NSRegularExpression object creation for each API call.
 
  @param patten The regex pattern to be matched against.
  @param options The regex options used for matching.
