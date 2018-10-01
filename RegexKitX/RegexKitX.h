@@ -603,59 +603,59 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 #pragma mark - arrayOfDictionariesByMatchingRegex:
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
 
  @param pattern A @c NSString containing a regular expression.
- @param firstKey The first key to add to the new dictionary.
- @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures.
+ @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a nil-terminated list of alternating keys and captures. Captures are specified using int values.
+ @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Will return an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs.
  */
 - (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @param firstKey The first key to add to the new dictionary.
- @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures.
+ @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a nil-terminated list of alternating keys and captures. Captures are specified using int values.
+ @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Will return an empty array if @c pattern fails to match in @c searchRange.
  @return Will return @c nil if an error occurs.
  */
 - (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange. Each match result consists of a dictionary containing the matching substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param firstKey The first key to add to the new dictionary.
- @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures.
+ @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a nil-terminated list of alternating keys and captures. Captures are specified using int values.
+ @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param firstKey The first key to add to the new dictionary.
- @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures.
+ @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a nil-terminated list of alternating keys and captures. Captures are specified using int values.
+ @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -663,14 +663,14 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param captures A @c NSArray object of NSNumber capture group values for the dictionaries.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures
+ @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
- Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing that matches substrings constructed from the specified set of keys and captures.
+ Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -679,7 +679,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing that matches substrings constructed from the specified set of keys and captures.
+ @return A @c NSArray object containing all the matches from the receiver by @c pattern. Each match result consists of a @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
@@ -691,7 +691,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of @c pattern in the receiver.
 
  @param pattern A @c NSString containing a regular expression.
- @param firstKey The first key to add to the new dictionary.
+ @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a nil-terminated list of alternating keys and captures. Captures are specified using int values.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Will return @c nil if an error occurs.
  */
@@ -702,7 +702,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @param firstKey The first key to add to the new dictionary.
+ @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a nil-terminated list of alternating keys and captures. Captures are specified using int values.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Will return @c nil if an error occurs.
  */
@@ -715,7 +715,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param searchRange The range of the receiver to search.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param firstKey The first key to add to the new dictionary.
+ @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a nil-terminated list of alternating keys and captures. Captures are specified using int values.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
@@ -730,7 +730,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param firstKey The first key to add to the new dictionary.
+ @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a nil-terminated list of alternating keys and captures. Captures are specified using int values.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
