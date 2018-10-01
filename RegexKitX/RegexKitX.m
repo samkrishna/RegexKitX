@@ -113,12 +113,27 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 #pragma mark - Caching Methods
 
+/**
+ Returns a key string to be used to access the stored @c NSRegularExpression object.
+
+ @param pattern The pattern to match.
+ @param options The options used for the @c NSRegularExpression.
+ @return The cache key representation of the regex pattern with options.
+ */
 + (NSString *)cacheKeyForRegex:(NSString *)pattern options:(RKXRegexOptions)options
 {
     NSString *key = [NSString stringWithFormat:@"%@_%lu", pattern, options];
     return key;
 }
 
+/**
+ Returns a canonical @c NSRegularExpression object from the current thread dictionary. This is utilized to cut down on excessive @c NSRegularExpression object creation for each API call.
+
+ @param patten The regex pattern to be matched against.
+ @param options The regex options used for matching.
+ @param error The error object indirectly returned if instantiation of the @c NSRegularExpression fails.
+ @return The @c NSRegularExpression object created and stored in the current thread's dictionary.
+ */
 + (NSRegularExpression *)cachedRegexForPattern:(NSString *)patten options:(RKXRegexOptions)options error:(NSError **)error
 {
     NSString *patternKey = [NSString cacheKeyForRegex:patten options:options];
