@@ -484,8 +484,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:self.stringRange withKeys:captureKeys forCaptures:captureKeyIndexes options:0 matchOptions:0 error:NULL];
     va_end(varArgsList);
+    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:self.stringRange withKeys:captureKeys forCaptures:captureKeyIndexes options:0 matchOptions:0 error:NULL];
     return dictArray;
 }
 
@@ -495,8 +495,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:0 matchOptions:0 error:NULL];
     va_end(varArgsList);
+    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:0 matchOptions:0 error:NULL];
     return dictArray;
 }
 
@@ -506,8 +506,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:options matchOptions:0 error:error];
     va_end(varArgsList);
+    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:options matchOptions:0 error:error];
     return dictArray;
 }
 
@@ -517,8 +517,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:options matchOptions:matchOptions error:error];
     va_end(varArgsList);
+    NSArray *dictArray = [self arrayOfDictionariesByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:options matchOptions:matchOptions error:error];
     return dictArray;
 }
 
@@ -574,8 +574,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern range:self.stringRange withKeys:captureKeys forCaptures:captureKeyIndexes options:RKXNoOptions matchOptions:0 error:NULL ];
     va_end(varArgsList);
+    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern range:self.stringRange withKeys:captureKeys forCaptures:captureKeyIndexes options:RKXNoOptions matchOptions:0 error:NULL ];
     return dict;
 }
 
@@ -585,8 +585,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *keys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern  range:searchRange withKeys:keys forCaptures:captureKeyIndexes options:RKXNoOptions matchOptions:0 error:NULL];
     va_end(varArgsList);
+    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern  range:searchRange withKeys:keys forCaptures:captureKeyIndexes options:RKXNoOptions matchOptions:0 error:NULL];
     return dict;
 }
 
@@ -596,8 +596,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:options matchOptions:0 error:error];
     va_end(varArgsList);
+    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:options matchOptions:0 error:error];
     return dict;
 }
 
@@ -607,8 +607,8 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     va_start(varArgsList, firstKey);
     NSArray *captureKeyIndexes;
     NSArray *captureKeys = [self _keysForVarArgsList:varArgsList withFirstKey:firstKey indexes:&captureKeyIndexes];
-    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:options matchOptions:matchOptions error:error];
     va_end(varArgsList);
+    NSDictionary *dict = [self dictionaryByMatchingRegex:pattern range:searchRange withKeys:captureKeys forCaptures:captureKeyIndexes options:options matchOptions:matchOptions error:error];
     return dict;
 }
 
