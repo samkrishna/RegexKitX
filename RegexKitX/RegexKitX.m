@@ -748,7 +748,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 @implementation NSMutableString (RegexKitX)
 
-#pragma mark - replaceOccurrencesOfRegex:withString:
+#pragma mark - replaceOccurrencesOfRegex:withTemplate:
 
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
 {
