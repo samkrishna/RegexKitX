@@ -253,7 +253,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches || matches.count == 0) { return NSNotFoundRange; }
-    NSTextCheckingResult *match = [matches firstObject];
+    NSTextCheckingResult *match = matches.firstObject;
     return [match rangeAtIndex:capture];
 }
 
@@ -441,7 +441,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
     if (!matches.count) { return @[]; }
-    NSTextCheckingResult *firstMatch = [matches firstObject];
+    NSTextCheckingResult *firstMatch = matches.firstObject;
     return [firstMatch substringsFromString:self];
 }
 
