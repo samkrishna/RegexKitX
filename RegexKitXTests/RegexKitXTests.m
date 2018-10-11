@@ -309,19 +309,32 @@
     XCTAssertNil(nameDictionary);
     XCTAssertNotNil(error);
 
-    NSString *execRegex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
+    NSString *execRegex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), time:(\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
     NSDictionary *executionDict = [self.candidate dictionaryByMatchingRegex:execRegex withKeysAndCaptures:
                                    @"executionDate", 1,
                                    @"currencyPair", 2,
                                    @"orderID", 3,
                                    @"clientID", 4,
                                    @"executionID", 5,
-                                   @"accountID", 6,
-                                   @"orderSide", 7,
-                                   @"orderVolume", 8,
-                                   @"executionPrice", 9,
-                                   @"permanentID", 10, nil];
-    XCTAssert(executionDict.count == 10);
+                                   @"canonicalExecutionDate", 6,
+                                   @"accountID", 7,
+                                   @"orderSide", 8,
+                                   @"orderVolume", 9,
+                                   @"executionPrice", 10,
+                                   @"permanentID", 11, nil];
+    XCTAssert(executionDict.count == 11);
+
+    XCTAssert([executionDict[@"executionDate"] isEqualToString:@"2014-05-06 17:03:17.967"]);
+    XCTAssert([executionDict[@"currencyPair"] isEqualToString:@"EUR.JPY"]);
+    XCTAssert([executionDict[@"orderID"] isEqualToString:@"439"]);
+    XCTAssert([executionDict[@"clientID"] isEqualToString:@"75018"]);
+    XCTAssert([executionDict[@"executionID"] isEqualToString:@"0001f4e8.536956da.01.01"]);
+    XCTAssert([executionDict[@"canonicalExecutionDate"] isEqualToString:@"20140506  17:03:18"]);
+    XCTAssert([executionDict[@"accountID"] isEqualToString:@"DU275587"]);
+    XCTAssert([executionDict[@"orderSide"] isEqualToString:@"SLD"]);
+    XCTAssert([executionDict[@"orderVolume"] isEqualToString:@"141500"]);
+    XCTAssert([executionDict[@"executionPrice"] isEqualToString:@"141.73"]);
+    XCTAssert([executionDict[@"permanentID"] isEqualToString:@"825657452"]);
 }
 
 - (void)testArrayOfDictionariesByMatchingRegexOptionsMatchingOptionsRangeErrorWithKeysAndCaptures
@@ -541,6 +554,17 @@
     XCTAssertTrue((NSEqualRanges(regexRanges[1].rangeValue, NSMakeRange(0, 9))), @"%@", regexRanges[1]);
     XCTAssertTrue((NSEqualRanges(regexRanges[2].rangeValue, NSMakeRange(10, 1))), @"%@", regexRanges[2]);
     XCTAssertTrue((NSEqualRanges(regexRanges[3].rangeValue, NSMakeRange(12, 4))), @"%@", regexRanges[3]);
+}
+
+#pragma mark - Mastering Regular Expression 3rd Ed. examples
+
+- (void)testDoubledWordExampleUsingBackreferences
+{
+    // mre3 = "Mastering Regular Expressions, 3rd Ed."
+    NSString *mre3Text = @"In many regular-expression flavors, parentheses can \"remember\" text matched by the subexpression they enclose. We'll use this in a partial solution to the doubled-word problem at the beginning of this chapter. If you knew the the specific doubled word to find (such as \"the\" earlier in this sentence — did you catch it?)....\n"
+    "\nExcerpt From: Jeffrey E. F. Friedl. \"Mastering Regular Expressions, Third Edition.\" Apple Books.";
+    NSString *pattern = @"\\b([A-Za-z]+) \\1\\b";
+    XCTAssert([mre3Text matchesRegex:pattern]);
 }
 
 @end
