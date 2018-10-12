@@ -337,18 +337,9 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
-    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
-    if (!regex) { return nil; }
-    NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
-    NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
-    if (!matches.count) { return [self substringWithRange:searchRange]; }
     NSMutableString *target = [self mutableCopy];
-
-    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:template];
-        [target replaceCharactersInRange:match.range withString:swap];
-    }
-    
+    NSUInteger swapCount = [target replaceOccurrencesOfRegex:pattern withTemplate:template range:searchRange options:options matchOptions:matchOptions error:error];
+    if (swapCount == NSNotFound) { return [self substringWithRange:searchRange]; }
     return [target copy];
 }
 
