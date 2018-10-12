@@ -563,6 +563,7 @@
     // mre3 = "Mastering Regular Expressions, 3rd Ed."
     NSString *mre3Text = @"In many regular-expression flavors, parentheses can \"remember\" text matched by the subexpression they enclose. We'll use this in a partial solution to the doubled-word problem at the beginning of this chapter. If you knew the the specific doubled word to find (such as \"the\" earlier in this sentence — did you catch it?)....\n"
     "\nExcerpt From: Jeffrey E. F. Friedl. \"Mastering Regular Expressions, Third Edition.\" Apple Books.";
+
     NSString *pattern = @"\\b([A-Za-z]+) \\1\\b";
     XCTAssert([mre3Text matchesRegex:pattern]);
 }
