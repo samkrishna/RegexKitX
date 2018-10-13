@@ -610,10 +610,9 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) { return nil; }
-    NSUInteger count = keys.count;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
-    for (NSUInteger i = 0; i < count; i++) {
+    for (NSUInteger i = 0; i < keys.count; i++) {
         id key = keys[i];
         NSUInteger capture = captures[i].unsignedIntegerValue;
         NSRange captureRange = [self rangeOfRegex:pattern range:searchRange capture:capture options:options matchOptions:matchOptions error:error];
@@ -756,12 +755,11 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
 
 - (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
-    NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
-    if (!regex) { return NSNotFound; }
-    NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+    NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches || matches.count == 0) { return NSNotFound; }
     NSUInteger count = 0;
-    
+    NSRegularExpression *regex = matches.firstObject.regularExpression;
+
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
         NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:template];
         [self replaceCharactersInRange:match.range withString:swap];
