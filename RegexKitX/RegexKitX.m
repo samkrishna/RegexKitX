@@ -317,7 +317,7 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     return result;
 }
 
-#pragma mark - stringByReplacincOccurrencesOfRegex:withString:
+#pragma mark - stringByReplacincOccurrencesOfRegex:withTemplate:
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
 {
