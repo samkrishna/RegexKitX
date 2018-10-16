@@ -153,7 +153,7 @@ public extension String {
     }
 
     /// Converts 'range' from a `Range<String.UTF16Index>` to a `NSRange`
-    func nsange(from range: Range<String.UTF16Index>?)
+    func nsrange(from range: Range<String.UTF16Index>?)
         -> NSRange {
         guard range != nil else { return NSMakeRange(NSNotFound, 0) }
         return NSRange(range!, in: self)
@@ -684,7 +684,7 @@ public extension String {
                                            options: RKXRegexOptions = [],
                                            matchingOptions: RKXMatchOptions = [])
         throws -> [[String]] {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try arrayOfCaptureComponentsMatchedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
@@ -704,7 +704,7 @@ public extension String {
                                        matchingOptions: RKXMatchOptions = [],
                                        keysAndCaptures: Any...)
         throws -> [Dictionary<String, String>] {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try arrayOfDictionariesByMatching(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions, keysAndCaptures: keysAndCaptures)
     }
 
@@ -722,7 +722,7 @@ public extension String {
                                     options: RKXRegexOptions = [],
                                     matchingOptions: RKXMatchOptions = [])
         throws -> [String] {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try captureComponentsMatchedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
@@ -743,7 +743,7 @@ public extension String {
                              options: RKXRegexOptions = [],
                              matchingOptions: RKXMatchOptions = [])
         throws -> [String] {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try componentsMatchedBy(pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
     }
 
@@ -761,7 +761,7 @@ public extension String {
                                options: RKXRegexOptions = [],
                                matchingOptions: RKXMatchOptions = [])
         throws -> [String] {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try componentsSeparatedBy(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
@@ -781,7 +781,7 @@ public extension String {
                               matchingOptions: RKXMatchOptions = [],
                               keysAndCaptures: Any...)
         throws -> Dictionary<String, String> {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try dictionaryByMatching(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions, keysAndCaptures: keysAndCaptures)
     }
 
@@ -803,7 +803,7 @@ public extension String {
                                    matchingOptions: RKXMatchOptions = [],
                                    _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
         throws -> Bool {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             let matches = try matchesFor(pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return false }
             matches.forEach { match in
@@ -876,7 +876,7 @@ public extension String {
                  options: RKXRegexOptions = [],
                  matchingOptions: RKXMatchOptions = [])
         throws -> Bool {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try matches(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
@@ -896,7 +896,7 @@ public extension String {
                  options: RKXRegexOptions = [],
                  matchingOptions: RKXMatchOptions = [])
         throws -> Range<String.UTF16Index>? {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try rangeOf(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
@@ -916,7 +916,7 @@ public extension String {
                                        options: RKXRegexOptions = [],
                                        matchingOptions: RKXMatchOptions = [])
         throws -> Int {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try replaceOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
@@ -938,7 +938,7 @@ public extension String {
                                        matchingOptions: RKXMatchOptions = [],
                                        _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
         throws -> Int {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             let matches = try matchesFor(pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return NSNotFound }
 
@@ -966,7 +966,7 @@ public extension String {
                           options: RKXRegexOptions = [],
                           matchingOptions: RKXMatchOptions = [])
         throws -> String? {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try stringByMatching(pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
     }
 
@@ -986,7 +986,7 @@ public extension String {
                                         options: RKXRegexOptions = [],
                                         matchingOptions: RKXMatchOptions = [])
         throws -> String {
-            let legacyRange = nsange(from: searchRange)
+            let legacyRange = nsrange(from: searchRange)
             return try stringByReplacingOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 

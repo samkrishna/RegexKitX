@@ -75,7 +75,7 @@ class RegexKitXTests: XCTestCase {
         let secondControl = candidate.utf16Range(from: NSMakeRange(17, 2))
         XCTAssert(secondRange == secondControl)
 
-        let secondNSRange = candidate.nsange(from: secondRange)
+        let secondNSRange = candidate.nsrange(from: secondRange)
         let secondNSRangeControl = NSMakeRange(17, 2)
         XCTAssert(NSEqualRanges(secondNSRange, secondNSRangeControl))
     }
