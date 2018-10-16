@@ -568,4 +568,45 @@
     XCTAssert([mre3Text matchesRegex:pattern]);
 }
 
+- (void)testFirstLookaheadExample
+{
+    NSString *jeffs = @"Jeffs";
+
+    // backward-to-forward lookaround
+    NSString *output = [jeffs stringByReplacingOccurrencesOfRegex:@"(?<=\\bJeff)(?=s\\b)" withTemplate:@"\'"];
+    XCTAssert([output isEqualToString:@"Jeff\'s"]);
+
+    // forward-to-backward lookaround
+    NSString *output2 = [jeffs stringByReplacingOccurrencesOfRegex:@"(?=s\\b)(?<=\\bJeff)" withTemplate:@"\'"];
+    XCTAssert([output2 isEqualToString:@"Jeff\'s"]);
+}
+
+- (void)testLookaheadPopulationExample
+{
+    // As of 2018-10-16 07:06:50 -0700 from https://www.census.gov/popclock/
+    NSString *rawUSPop = @"328807309";
+    NSString *testControl = @"328,807,309";
+
+    // Positive lookbehind and lookahead
+    NSString *formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(\\d\\d\\d)+$)" withTemplate:@","];
+    XCTAssert([formattedUSPop isEqualToString:testControl]);
+
+    // More compact digit-matching sub-regex
+    formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(\\d{3})+$)" withTemplate:@","];
+    XCTAssert([formattedUSPop isEqualToString:testControl]);
+
+    // Positive lookbehind (?<=...), positive lookahead (?=...), and Negative lookahead (?!...)
+    formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(\\d{3})+(?!\\d))" withTemplate:@","];
+    XCTAssert([formattedUSPop isEqualToString:testControl]);
+
+    // Non-capturing parentheses (?:...)
+    // NOTE: A little more efficient since they don't spend extra ops capturing.
+    formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(?:\\d{3})+$)" withTemplate:@","];
+    XCTAssert([formattedUSPop isEqualToString:testControl]);
+
+    // Negative lookbehind (?<!)
+    formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<!\\b)(?=(?:\\d{3})+$)" withTemplate:@","];
+    XCTAssert([formattedUSPop isEqualToString:testControl]);
+}
+
 @end
