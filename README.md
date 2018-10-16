@@ -38,5 +38,10 @@ I've also added documentation that is option-clickable for all the *RKX* categor
 
 1. I have started a Unit Test file that tests the baseline argument-rich methods for expected behavior.
 1. @johnezang also included a few test executables in his *RKL4* sources, which are now ported and exist as test cases.
+1. I've also started adding a few pedagogical examples that have helped me learn some of the more nuanced aspects of regexes.
 
 Additional test cases and pull requests are welcome.
+
+## Inspiration
+
+I've loved regular expressions since the beginning of my programming career back when I worked at Apple. I learned (and continue to learn) A LOT from Jeffrey Friedl's book, [Mastering Regular Expression, 3rd. ed](http://shop.oreilly.com/product/9780596528126.do). I know they are [controversial](https://blog.codinghorror.com/regex-use-vs-regex-abuse/) in some circles but when crafted well, there's really nothing like them.
