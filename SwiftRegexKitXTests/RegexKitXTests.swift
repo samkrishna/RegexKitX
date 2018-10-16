@@ -97,11 +97,11 @@ class RegexKitXTests: XCTestCase {
         let failedPattern = "2014-05-06 17:03:17.967 EXECUTION_DINO"
         let failureControl = "2014-05-06 17:03:17.967 EXECUTION_DATA"
         let failureRange = NSMakeRange(0, 38);
-        let failureResult = try! candidate.stringByReplacingOccurrencesOf(failedPattern, with: "BARNEY RUBBLE", in: failureRange)
+        let failureResult = try! candidate.stringByReplacingOccurrences(of: failedPattern, with: "BARNEY RUBBLE", in: failureRange)
         XCTAssert(failureResult == failureControl)
 
         let successPattern = "2014-05-06 17:03:17.967 (EXECUTION_DATA)"
-        let successResult = try! candidate.stringByReplacingOccurrencesOf(successPattern, with: "BARNEY RUBBLE ~~~$1~~~ ", in: failureRange)
+        let successResult = try! candidate.stringByReplacingOccurrences(of: successPattern, with: "BARNEY RUBBLE ~~~$1~~~ ", in: failureRange)
         XCTAssert(try! successResult.matches("BARNEY RUBBLE"))
         XCTAssert(try! successResult.matches("~~~EXECUTION_DATA~~~"))
     }
@@ -248,7 +248,7 @@ class RegexKitXTests: XCTestCase {
     func testStringByReplacingOccurrencesOfRegexUsingClosure() {
         let pattern = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
 
-        let output = try! candidate.stringByReplacingOccurencesOf(pattern, { (capturedStrings, capturedRanges) in
+        let output = try! candidate.stringByReplacingOccurences(of: pattern, { (capturedStrings, capturedRanges) in
             var replacement = ""
             let dateRegex = "^\\d+-\\d+-\\d+$"
             let timeRegex = "^\\d+:\\d+:\\d+\\.\\d+$"
@@ -270,14 +270,14 @@ class RegexKitXTests: XCTestCase {
 
     func testReploceOccurrencesOfRegexWithReplacement() {
         var mutableCandidate = String(candidate)
-        let count = try! mutableCandidate.replaceOccurrencesOf(", ", with: " barney ")
+        let count = try! mutableCandidate.replaceOccurrences(of: ", ", with: " barney ")
         XCTAssert(count == 11)
         XCTAssert(mutableCandidate =~ " barney ")
     }
 
     func testReplaceOccurrencesOfRegexUsingClosure() {
         var mutableCandidate = String(candidate)
-        let count = try! mutableCandidate.replaceOccurrencesOf(", ", { (captureStrings, captureRanges) -> String in
+        let count = try! mutableCandidate.replaceOccurrences(of: ", ", { (captureStrings, captureRanges) -> String in
             return " barney "
         })
 

@@ -267,11 +267,11 @@ public extension String {
     ///   - matchingOptions: An OptionSet of options specified by combining RKXMatchOptions flags.
     /// - Returns: A String created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` and `matchOptions` are replaced with the contents of the `template` string after performing capture group substitutions. If the substring is not matched by `pattern`, returns the characters within `searchRange` as if `substring(with:)` had been sent to the receiver.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func stringByReplacingOccurrencesOf(_ pattern: String,
-                                        with template: String,
-                                        in searchRange: NSRange? = nil,
-                                        options: RKXRegexOptions = [],
-                                        matchingOptions: RKXMatchOptions = [])
+    func stringByReplacingOccurrences(of pattern: String,
+                                      with template: String,
+                                      in searchRange: NSRange? = nil,
+                                      options: RKXRegexOptions = [],
+                                      matchingOptions: RKXMatchOptions = [])
         throws -> String {
             let regex = try String.cachedRegex(for: pattern, options: options)
             let matches = try regexMatches(for: pattern, in: searchRange, options: options, matchOptions: matchingOptions)
@@ -590,11 +590,11 @@ public extension String {
     ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
     /// - Returns: A `String` created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` are replaced with the contents of the `String` returned by `block`. Returns the characters within `searchRange` as if `substringWithRange`: had been sent to the receiver if the substring is not matched by `pattern`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func stringByReplacingOccurencesOf(_ pattern: String,
-                                       in searchRange: NSRange? = nil,
-                                       options: RKXRegexOptions = [],
-                                       matchingOptions: RKXMatchOptions = [],
-                                       _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
+    func stringByReplacingOccurences(of pattern: String,
+                                     in searchRange: NSRange? = nil,
+                                     options: RKXRegexOptions = [],
+                                     matchingOptions: RKXMatchOptions = [],
+                                     _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
         throws -> String {
             var target = (self as NSString).substring(with: searchRange ?? stringRange)
             let targetRange = (target as String).stringRange
@@ -620,11 +620,11 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    mutating func replaceOccurrencesOf(_ pattern: String,
-                                       with template: String,
-                                       in searchRange: NSRange? = nil,
-                                       options: RKXRegexOptions = [],
-                                       matchingOptions: RKXMatchOptions = [])
+    mutating func replaceOccurrences(of pattern: String,
+                                     with template: String,
+                                     in searchRange: NSRange? = nil,
+                                     options: RKXRegexOptions = [],
+                                     matchingOptions: RKXMatchOptions = [])
         throws -> Int {
             let regex = try String.cachedRegex(for: pattern, options: options)
             let matches = try regexMatches(for: pattern, in: searchRange, options: options, matchOptions: matchingOptions)
@@ -651,11 +651,11 @@ public extension String {
     ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
     /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    mutating func replaceOccurrencesOf(_ pattern: String,
-                                       in searchRange: NSRange? = nil,
-                                       options: RKXRegexOptions = [],
-                                       matchingOptions: RKXMatchOptions = [],
-                                       _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
+    mutating func replaceOccurrences(of pattern: String,
+                                     in searchRange: NSRange? = nil,
+                                     options: RKXRegexOptions = [],
+                                     matchingOptions: RKXMatchOptions = [],
+                                     _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
         throws -> Int {
             let matches = try regexMatches(for: pattern, in: searchRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return NSNotFound }
@@ -910,14 +910,14 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    mutating func replaceOccurrencesOf(_ pattern: String,
-                                       with template: String,
-                                       in searchRange: Range<String.UTF16Index>,
-                                       options: RKXRegexOptions = [],
-                                       matchingOptions: RKXMatchOptions = [])
+    mutating func replaceOccurrences(of pattern: String,
+                                     with template: String,
+                                     in searchRange: Range<String.UTF16Index>,
+                                     options: RKXRegexOptions = [],
+                                     matchingOptions: RKXMatchOptions = [])
         throws -> Int {
             let legacyRange = nsrange(from: searchRange)
-            return try replaceOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
+            return try replaceOccurrences(of: pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
     /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Replaces the characters that were matched with the contents of the string returned by `closure`, returning the number of replacements made.
@@ -932,11 +932,11 @@ public extension String {
     ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    mutating func replaceOccurrencesOf(_ pattern: String,
-                                       in searchRange: Range<String.UTF16Index>,
-                                       options: RKXRegexOptions = [],
-                                       matchingOptions: RKXMatchOptions = [],
-                                       _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
+    mutating func replaceOccurrences(of pattern: String,
+                                     in searchRange: Range<String.UTF16Index>,
+                                     options: RKXRegexOptions = [],
+                                     matchingOptions: RKXMatchOptions = [],
+                                     _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
         throws -> Int {
             let legacyRange = nsrange(from: searchRange)
             let matches = try regexMatches(for: pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
@@ -987,7 +987,7 @@ public extension String {
                                         matchingOptions: RKXMatchOptions = [])
         throws -> String {
             let legacyRange = nsrange(from: searchRange)
-            return try stringByReplacingOccurrencesOf(pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
+            return try stringByReplacingOccurrences(of: pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
     /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of each string returned by `closure`.
@@ -1002,11 +1002,11 @@ public extension String {
     ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: A `String` created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` are replaced with the contents of the `String` returned by `block`. Returns the characters within `searchRange` as if `substringWithRange`: had been sent to the receiver if the substring is not matched by `pattern`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func stringByReplacingOccurencesOf(_ pattern: String,
-                                       in searchRange: Range<String.UTF16Index>,
-                                       options: RKXRegexOptions = [],
-                                       matchingOptions: RKXMatchOptions = [],
-                                       _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
+    func stringByReplacingOccurences(of pattern: String,
+                                     in searchRange: Range<String.UTF16Index>,
+                                     options: RKXRegexOptions = [],
+                                     matchingOptions: RKXMatchOptions = [],
+                                     _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
         throws -> String {
             var target = String(self[searchRange])
             let targetRange = (target as String).stringRange
