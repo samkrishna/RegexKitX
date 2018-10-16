@@ -222,7 +222,7 @@ public extension String {
     ///   - matchingOptions: An OptionSet specified by combining various `RKXMatchOptions`. If no options are required, ignore this parameter.
     /// - Returns: A NSRange structure giving the location and length of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
     /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
-    func rangeOf(_ pattern: String,
+    func range(of pattern: String,
                  in searchRange: NSRange? = nil,
                  for capture: Int = 0,
                  options: RKXRegexOptions = [],
@@ -250,9 +250,9 @@ public extension String {
                           options: RKXRegexOptions = [],
                           matchingOptions: RKXMatchOptions = [])
         throws -> String? {
-            let range = try rangeOf(pattern, in: searchRange, for: capture, options: options, matchingOptions: matchingOptions)
-            guard range != nil else { return nil }
-            let substring = self[range!]
+            let matchedRange = try range(of: pattern, in: searchRange, for: capture, options: options, matchingOptions: matchingOptions)
+            guard matchedRange != nil else { return nil }
+            let substring = self[matchedRange!]
             return String(substring)
     }
 
@@ -393,7 +393,7 @@ public extension String {
         throws -> Dictionary<String, String> {
             var results = [String: String]()
             try keyAndCapturePairs.forEach { pair in
-                let captureRange = try rangeOf(pattern, in: searchRange, for: pair.capture, options: options, matchingOptions: matchingOptions)
+                let captureRange = try range(of: pattern, in: searchRange, for: pair.capture, options: options, matchingOptions: matchingOptions)
                 let substring = captureRange!.isEmpty ? "" : self[captureRange!]
                 results[pair.key] = String(substring)
             }
@@ -890,14 +890,14 @@ public extension String {
     ///   - matchingOptions: An OptionSet specified by combining various `RKXMatchOptions`. If no options are required, ignore this parameter.
     /// - Returns: A Range<String.UTF16Index> giving the Range of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
     /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
-    func rangeOf(_ pattern: String,
-                 in searchRange: Range<String.UTF16Index>,
-                 for capture: Int = 0,
-                 options: RKXRegexOptions = [],
-                 matchingOptions: RKXMatchOptions = [])
+    func range(of pattern: String,
+               in searchRange: Range<String.UTF16Index>,
+               for capture: Int = 0,
+               options: RKXRegexOptions = [],
+               matchingOptions: RKXMatchOptions = [])
         throws -> Range<String.UTF16Index>? {
             let legacyRange = nsrange(from: searchRange)
-            return try rangeOf(pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+            return try range(of: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
     /// Replaces all occurrences of the regular expression `pattern` using `options` and `matchOptions` within `searchRange` of the receiver with the contents of `template` after performing capture group substitutions, returning the number of replacements made.
