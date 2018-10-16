@@ -117,7 +117,7 @@ class RegexKitXTests: XCTestCase {
 
     func testCaptureComponentsMatcheByRegex() {
         let list = "$10.23, $1024.42, $3099"
-        let listItems: [String] = try! list.captureComponentsMatchedBy("\\$((\\d+)(?:\\.(\\d+)|\\.?))")
+        let listItems: [String] = try! list.captureComponentsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))")
         XCTAssert(listItems.count == 4)
         XCTAssert(listItems[0] == "$10.23")
         XCTAssert(listItems[1] == "10.23")
@@ -127,7 +127,7 @@ class RegexKitXTests: XCTestCase {
 
     func testArrayOfCaptureComponentsMatchedByRegex() {
         let list = "$10.23, $1024.42, $3099"
-        let listItems: [[String]] = try! list.arrayOfCaptureComponentsMatchedBy("\\$((\\d+)(?:\\.(\\d+)|\\.?))")
+        let listItems: [[String]] = try! list.arrayOfCaptureComponentsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))")
         XCTAssert(listItems.count == 3)
 
         let list0 = listItems[0]
