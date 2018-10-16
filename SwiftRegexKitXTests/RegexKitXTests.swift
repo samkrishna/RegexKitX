@@ -108,7 +108,7 @@ class RegexKitXTests: XCTestCase {
 
     func testComponentsMatchedByRegex() {
         let list = "$10.23, $1024.42, $3099"
-        let listItems: [String] = try! list.componentsMatchedBy("\\$((\\d+)(?:\\.(\\d+)|\\.?))", for: 3)
+        let listItems: [String] = try! list.componentsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))", for: 3)
 
         XCTAssert(listItems[0] == "23")
         XCTAssert(listItems[1] == "42")
@@ -175,7 +175,7 @@ class RegexKitXTests: XCTestCase {
         let regex = "(?m)^Name:\\s*(\\w*)\\s*(\\w*)$"
         var matchCount = 0
 
-        let result = try! searchString.enumerateStringsMatchedBy(regex, { (stringArray, ranges) in
+        let result = try! searchString.enumerateStringsMatched(by: regex, { (stringArray, ranges) in
             print("stringArray = \(stringArray)")
             print("ranges = \(ranges)")
             matchCount += 1
@@ -187,7 +187,7 @@ class RegexKitXTests: XCTestCase {
 
     func testComponentsSeparatedBy() {
         let regex = ", ";
-        let captures = try! candidate.componentsSeparatedBy(regex)
+        let captures = try! candidate.componentsSeparated(by: regex)
         XCTAssert(captures.count == 12);
 
         for substring in captures {
@@ -212,7 +212,7 @@ class RegexKitXTests: XCTestCase {
                                  NSMakeRange(277, 15) ];
 
         var index = 0;
-        let result = try! candidate.enumerateStringsSeparatedBy(regexPattern) { (capturedStrings, capturedRanges) in
+        let result = try! candidate.enumerateStringsSeparated(by: regexPattern) { (capturedStrings, capturedRanges) in
             let string = capturedStrings[0]
             let range = capturedRanges[0]
             let rangeCheck = rangeValueChecks[index]
