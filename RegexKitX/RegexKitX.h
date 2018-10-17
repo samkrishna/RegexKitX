@@ -129,7 +129,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  */
 - (NSArray<NSString *> *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
-#pragma mark - matchesRegex:
+#pragma mark - isMatchedByRegex:
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern.
@@ -138,7 +138,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
  */
-- (BOOL)matchesRegex:(NSString *)pattern;
+- (BOOL)isMatchedByRegex:(NSString *)pattern;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange.
@@ -148,7 +148,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
  */
-- (BOOL)matchesRegex:(NSString *)pattern range:(NSRange)searchRange;
+- (BOOL)isMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern using @c options.
@@ -158,7 +158,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c BOOL value indicating whether or not the @c pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
  */
-- (BOOL)matchesRegex:(NSString *)pattern options:(RKXRegexOptions)options;
+- (BOOL)isMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options.
@@ -170,7 +170,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c BOOL value indicating whether or not the @c pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)matchesRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+- (BOOL)isMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options and @c matchOptions.
@@ -183,7 +183,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)matchesRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (BOOL)isMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - rangeOfRegex:
 
@@ -289,7 +289,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  */
 - (NSArray<NSValue *> *)rangesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
-#pragma mark - stringByMatchingRegex:
+#pragma mark - stringMatchedByRegex:
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern.
@@ -298,7 +298,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by @c pattern.
  @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
  */
-- (NSString *)stringByMatchingRegex:(NSString *)pattern;
+- (NSString *)stringMatchedByRegex:(NSString *)pattern;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -308,7 +308,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern.
  @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
  */
-- (NSString *)stringByMatchingRegex:(NSString *)pattern capture:(NSUInteger)capture;
+- (NSString *)stringMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -318,7 +318,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within the searchRange of the receiver.
  @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
  */
-- (NSString *)stringByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange;
+- (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -331,7 +331,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within @c searchRange of the receiver. Returns @c nil if the receiver is not matched by @c pattern within @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for capture.
@@ -345,7 +345,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSString containing the substring of the receiver matched by capture number capture of @c pattern within @c searchRange of the receiver.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - stringByReplacingOccurrencesOfRegex:withTemplate:
 
@@ -599,7 +599,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  */
 - (NSArray *)arrayOfCaptureComponentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
-#pragma mark - arrayOfDictionariesByMatchingRegex:
+#pragma mark - arrayOfDictionariesMatchedByRegex:
 
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
@@ -610,7 +610,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Will return an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs.
  */
-- (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
@@ -622,7 +622,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Will return an empty array if @c pattern fails to match in @c searchRange.
  @return Will return @c nil if an error occurs.
  */
-- (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
@@ -636,7 +636,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
@@ -651,7 +651,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
@@ -666,7 +666,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
@@ -682,9 +682,9 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSDictionary *> *)arrayOfDictionariesByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
-#pragma mark - dictionaryByMatchingRegex:
+#pragma mark - dictionaryMatchedByRegex:
 
 /**
  Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of @c pattern in the receiver.
@@ -694,7 +694,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Will return @c nil if an error occurs.
  */
-- (NSDictionary<NSString *, NSString *> *)dictionaryByMatchingRegex:(NSString *)pattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of @c pattern within @c searchRange of the receiver.
@@ -705,7 +705,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
  @return Will return @c nil if an error occurs.
  */
-- (NSDictionary<NSString *, NSString *> *)dictionaryByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of @c pattern within @c searchRange of the receiver using @c options.
@@ -719,7 +719,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSDictionary<NSString *, NSString *> *)dictionaryByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  Creates and returns a NSDictionary containing the matches constructed from the specified set of keys and captures for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
@@ -734,7 +734,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSDictionary<NSString *, NSString *> *)dictionaryByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of @c pattern within @c searchRange of the receiver using @c options.
@@ -749,7 +749,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSDictionary<NSString *, NSString *> *)dictionaryByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Creates and returns a dictionary containing the matches constructed from the specified set of keys and captures for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
@@ -765,7 +765,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSDictionary<NSString *, NSString *> *)dictionaryByMatchingRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
 
