@@ -196,9 +196,9 @@
     __block NSUInteger blockCount = 0;
     pattern = @"pick(led)?";
     NSString *newCandidate = @"Peter Piper picked a peck of pickled peppers;\n"
-    @"A peck of pickled peppers Peter Piper picked;\n"
-    @"If Peter Piper picked a peck of pickled peppers,\n"
-    @"Where's the peck of pickled peppers Peter Piper picked?";
+                             @"A peck of pickled peppers Peter Piper picked;\n"
+                             @"If Peter Piper picked a peck of pickled peppers,\n"
+                             @"Where's the peck of pickled peppers Peter Piper picked?";
     output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern range:newCandidate.stringRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, volatile BOOL *const stop) {
         blockCount++;
 
