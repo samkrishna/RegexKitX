@@ -6,11 +6,25 @@
 #import <XCTest/XCTest.h>
 
 @interface RegexKitXTests : XCTestCase
+@property (nonatomic, readonly, strong) NSString *testCorpus;
 @property (nonatomic, readwrite, strong) NSString *candidate;
 @property (nonatomic, readwrite, strong) NSMutableArray *unicodeStringsArray;
 @end
 
 @implementation RegexKitXTests
+
+- (NSString *)testCorpus
+{
+    static dispatch_once_t onceToken;
+    static NSString *_testCorpus;
+
+    dispatch_once(&onceToken, ^{
+        NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"sherlock-utf-8" ofType:@"txt"];
+        _testCorpus = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    });
+
+    return _testCorpus;
+}
 
 - (void)setUp
 {
@@ -35,6 +49,8 @@
         [self.unicodeStringsArray addObject:[NSString stringWithUTF8String:*cString]];
         cString++;
     }
+
+    XCTAssertNotNil(self.testCorpus);
 }
 
 - (void)tearDown
@@ -601,5 +617,130 @@
     formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<!\\b)(?=(?:\\d{3})+$)" withTemplate:@","];
     XCTAssert([formattedUSPop isEqualToString:testControl]);
 }
+
+#pragma mark - Performance Tests
+// These performance tests were adapted from https://rpubs.com/jonclayden/regex-performance
+// by Jon Clayden
+
+- (void)testPerformanceRegex01
+{
+    [self measureBlock:^{
+        NSArray *ranges = [self.testCorpus rangesOfRegex:@"Sherlock" options:RKXMultiline];
+        XCTAssert(ranges.count == 97);
+    }];
+}
+
+- (void)testPerformanceRegex02
+{
+    [self measureBlock:^{
+        NSArray *ranges = [self.testCorpus rangesOfRegex:@"^Sherlock" options:(RKXMultiline | RKXCaseless)];
+        XCTAssert(ranges.count == 34, @"The count is %lu", ranges.count);
+    }];
+}
+
+- (void)testPerformanceRegex03
+{
+    [self measureBlock:^{
+        NSArray *ranges = [self.testCorpus rangesOfRegex:@"Sherlock$" options:(RKXMultiline | RKXCaseless)];
+        XCTAssert(ranges.count == 6, @"The count is %lu", ranges.count);
+    }];
+}
+
+- (void)testPerformanceRegex04
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"a[^x]{20}b" options:(RKXMultiline | RKXCaseless)];
+        XCTAssert(matches.count == 438, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex05
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Holmes|Watson" options:(RKXMultiline | RKXCaseless)];
+        XCTAssert(matches.count == 548, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex06
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@".{0,3}(Holmes|Watson)" options:RKXCaseless];
+        XCTAssert(matches.count == 548, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex07
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"[a-zA-Z]+ing" options:(RKXMultiline | RKXCaseless)];
+        XCTAssert(matches.count == 2826, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex08
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^([a-zA-Z]{0,4}ing)[^a-zA-Z]" options:(RKXMultiline | RKXCaseless)];
+        XCTAssert(matches.count == 163, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex09
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"[a-zA-Z]+ing$" options:(RKXMultiline | RKXCaseless)];
+        XCTAssert(matches.count == 152, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex10
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^[a-zA-Z ]{5,}$" options:RKXMultiline];
+        XCTAssert(matches.count == 876, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex11
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^.{16,20}$" options:RKXMultiline];
+        XCTAssert(matches.count == 238, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex12
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"([a-f](.[d-m].){0,2}[h-n]){2}" options:(RKXMultiline | RKXCaseless)];
+        XCTAssert(matches.count == 1910, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex13
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"([A-Za-z]olmes)|([A-Za-z]atson)[^a-zA-Z]" options:RKXMultiline];
+        XCTAssert(matches.count == 542, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex14
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"\"[^\"]{0,30}[?!\\.]\"" options:RKXMultiline];
+        XCTAssert(matches.count == 582, @"The match count is %lu", matches.count);
+    }];
+}
+
+- (void)testPerformanceRegex15
+{
+    [self measureBlock:^{
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Holmes.{10,60}Watson|Watson.{10,60}Holmes"];
+        XCTAssert(matches.count == 2, @"The match count is %lu", matches.count);
+    }];
+}
+
 
 @end
