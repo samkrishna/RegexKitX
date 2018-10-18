@@ -227,7 +227,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSRange)rangeOfRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
- Returns the range of capture number @c capture for the first match of @c pattern within @c searchRange of the receiver using @c options.
+ Returns the range for the first match of @c pattern within the receiver using @c options.
 
  @param pattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
@@ -351,7 +351,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
- Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options within @c searchRange of the receiver for @c capture.
+ Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options.
 
  @param pattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
@@ -585,7 +585,7 @@ Returns a string created from the characters of the receiver that are in the ran
 - (NSArray<NSString *> *)captureComponentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
- Returns an array containing the substrings matched by each capture group present in @c pattern for the first match of @c pattern within @c searchRange of the receiver using @c options.
+ Returns an array containing the substrings matched by each capture group present in @c pattern for the first match of @c pattern within the receiver using @c options.
 
  @param pattern A @c NSString containing a regular expression.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
