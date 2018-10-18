@@ -16,6 +16,8 @@
 		6F9CEEB71F5336BC003BAC04 /* RegexKitXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CEEB61F5336BC003BAC04 /* RegexKitXTests.swift */; };
 		6F9CEEB91F5336BC003BAC04 /* SwiftRegexKitX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F9CEEAB1F5336BB003BAC04 /* SwiftRegexKitX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F9CEEC01F5336D8003BAC04 /* RegexKitX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CEEA01F53345B003BAC04 /* RegexKitX.swift */; };
+		6F9D40CB2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */; };
+		6F9D40CC2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,7 @@
 		6F9CEEB11F5336BB003BAC04 /* SwiftRegexKitXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftRegexKitXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F9CEEB61F5336BC003BAC04 /* RegexKitXTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 1; path = RegexKitXTests.swift; sourceTree = "<group>"; };
 		6F9CEEB81F5336BC003BAC04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "sherlock-utf-8.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,7 @@
 		6F2B4E141EF5B85000DB6629 /* RegexKitXTests */ = {
 			isa = PBXGroup;
 			children = (
+				6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */,
 				6F2B4E841EF5BA7F00DB6629 /* RegexKitXTests.m */,
 				6F2B4E171EF5B85000DB6629 /* Info.plist */,
 			);
@@ -316,6 +320,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F9D40CB2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +335,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F9D40CC2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
