@@ -85,11 +85,11 @@ class RegexKitXTests: XCTestCase {
         XCTAssertNil(failRange)
     }
 
-    func testStringByMatchingRegex() {
+    func testStringMatchedByRegex() {
         // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
 
         let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
-        let timestamp = try! candidate.stringByMatching(regex)
+        let timestamp = try! candidate.stringMatched(by: regex)
         XCTAssert(timestamp == "2014-05-06 17:03:17");
     }
 
@@ -138,19 +138,19 @@ class RegexKitXTests: XCTestCase {
         XCTAssert(list2 == [ "$3099", "3099", "3099", "" ])
     }
 
-    func testDictionaryByMatchingRegex() {
+    func testDictionaryMatchedByRegex() {
         let name = "Name: Joe";
         let regex = "Name:\\s*(\\w*)\\s*(\\w*)";
         let firstKey = "first";
         let lastKey = "last";
 
-        let dict = try! name.dictionaryByMatching(regex, keysAndCaptures: firstKey, 1, lastKey, 2)
+        let dict = try! name.dictionaryMatched(by:regex, keysAndCaptures: firstKey, 1, lastKey, 2)
         XCTAssert(dict[firstKey] == "Joe")
         XCTAssert(dict[lastKey] == "")
-        XCTAssertThrowsError(try name.dictionaryByMatching(regex, keysAndCaptures: firstKey, 1, lastKey))
+        XCTAssertThrowsError(try name.dictionaryMatched(by:regex, keysAndCaptures: firstKey, 1, lastKey))
 
         let badRegex = "Name:\\s*(\\w*)\\s*(\\w*";
-        XCTAssertThrowsError(try name.dictionaryByMatching(badRegex, keysAndCaptures: firstKey, 1, lastKey, 2))
+        XCTAssertThrowsError(try name.dictionaryMatched(by: badRegex, keysAndCaptures: firstKey, 1, lastKey, 2))
     }
 
     func testArrayOfDictionariesByMatchingRegex() {
@@ -159,7 +159,7 @@ class RegexKitXTests: XCTestCase {
         let firstKey = "first"
         let lastKey = "last"
 
-        let nameArray = try! name.arrayOfDictionariesByMatching(regex, keysAndCaptures: firstKey, 1, lastKey, 2)
+        let nameArray = try! name.arrayOfDictionariesMatched(by: regex, keysAndCaptures: firstKey, 1, lastKey, 2)
 
         let name0 = nameArray[0];
         XCTAssert(name0[firstKey] == "Bob");
