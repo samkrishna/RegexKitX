@@ -175,7 +175,7 @@ class RegexKitXTests: XCTestCase {
         let regex = "(?m)^Name:\\s*(\\w*)\\s*(\\w*)$"
         var matchCount = 0
 
-        let result = try! searchString.enumerateStringsMatched(by: regex, { (stringArray, ranges) in
+        let result = try! searchString.enumerateStringsMatched(by: regex, using: { (stringArray, ranges) in
             print("stringArray = \(stringArray)")
             print("ranges = \(ranges)")
             matchCount += 1
@@ -248,7 +248,7 @@ class RegexKitXTests: XCTestCase {
     func testStringByReplacingOccurrencesOfRegexUsingClosure() {
         let pattern = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
 
-        let output = try! candidate.stringByReplacingOccurences(of: pattern, { (capturedStrings, capturedRanges) in
+        let output = try! candidate.stringByReplacingOccurences(of: pattern, using: { (capturedStrings, capturedRanges) in
             var replacement = ""
             let dateRegex = "^\\d+-\\d+-\\d+$"
             let timeRegex = "^\\d+:\\d+:\\d+\\.\\d+$"
@@ -277,7 +277,7 @@ class RegexKitXTests: XCTestCase {
 
     func testReplaceOccurrencesOfRegexUsingClosure() {
         var mutableCandidate = String(candidate)
-        let count = try! mutableCandidate.replaceOccurrences(of: ", ", { (captureStrings, captureRanges) -> String in
+        let count = try! mutableCandidate.replaceOccurrences(of: ", ", using: { (captureStrings, captureRanges) -> String in
             return " barney "
         })
 

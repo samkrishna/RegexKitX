@@ -663,7 +663,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
-    ///   - closure: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
+    ///   - block: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
     ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
     /// - Returns: `True` if there was no error, otherwise `false` if there were no matches.
@@ -672,12 +672,12 @@ public extension String {
                                  in searchRange: NSRange? = nil,
                                  options: RKXRegexOptions = [],
                                  matchingOptions: RKXMatchOptions = [],
-                                 _ closure: (_ strings: [String], _ ranges: [NSRange]) -> Void)
+                                 using block: (_ strings: [String], _ ranges: [NSRange]) -> Void)
         throws -> Bool {
             let matches = try regexMatches(for: pattern, in: searchRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return false }
             matches.forEach { match in
-                closure(match.substrings(from: self), match.ranges)
+                block(match.substrings(from: self), match.ranges)
             }
 
             return true
@@ -690,7 +690,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
-    ///   - closure: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
+    ///   - block: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
     ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: `True` if there was no error, otherwise `false` if there were no matches.
@@ -699,13 +699,13 @@ public extension String {
                                  in searchRange: Range<String.UTF16Index>,
                                  options: RKXRegexOptions = [],
                                  matchingOptions: RKXMatchOptions = [],
-                                 _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
+                                 using block: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
         throws -> Bool {
             let legacyRange = nsrange(from: searchRange)
             let matches = try regexMatches(for: pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return false }
             matches.forEach { match in
-                closure(match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }))
+                block(match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }))
             }
 
             return true
@@ -773,7 +773,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
-    ///   - closure: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
+    ///   - block: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
     ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
     /// - Returns: `true` if there was no error, otherwise `false` if there were no matches.
@@ -782,7 +782,7 @@ public extension String {
                                    in searchRange: NSRange? = nil,
                                    options: RKXRegexOptions = [],
                                    matchingOptions: RKXMatchOptions = [],
-                                   _ closure: (_ strings: [String], _ ranges: [NSRange]) -> Void)
+                                   using block: (_ strings: [String], _ ranges: [NSRange]) -> Void)
         throws -> Bool {
             let target = (self as NSString).substring(with: searchRange ?? stringRange)
             let targetRange = target.stringRange
@@ -803,11 +803,11 @@ public extension String {
                     }
 
                     remainderRange = target.rangeFrom(location: rangeCaptures.last!.location)
-                    closure(substrings, rangeCaptures)
+                    block(substrings, rangeCaptures)
                 }
                 else {
                     let lastRange = (target as NSString).range(of: string, options: .backwards, range: remainderRange)
-                    closure( [ string ], [ lastRange ])
+                    block( [ string ], [ lastRange ])
                 }
             }
 
@@ -821,7 +821,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
-    ///   - closure: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
+    ///   - block: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
     ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: `true` if there was no error, otherwise `false` if there were no matches.
@@ -830,7 +830,7 @@ public extension String {
                                    in searchRange: Range<String.UTF16Index>,
                                    options: RKXRegexOptions = [],
                                    matchingOptions: RKXMatchOptions = [],
-                                   _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
+                                   using block: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
         throws -> Bool {
             let target = String(self[searchRange])
             let targetRange = target.stringRange
@@ -852,11 +852,11 @@ public extension String {
 
                     remainderRange = target.rangeFrom(location: rangeCaptures.last!.location)
                     let utf16Ranges: [Range<String.UTF16Index>] = rangeCaptures.map({ utf16Range(from: $0)! })
-                    closure(substrings, utf16Ranges)
+                    block(substrings, utf16Ranges)
                 }
                 else {
                     let lastRange = (target as NSString).range(of: string, options: .backwards, range: remainderRange)
-                    closure( [ string ], [ utf16Range(from: lastRange)! ])
+                    block( [ string ], [ utf16Range(from: lastRange)! ])
                 }
             }
 
@@ -872,7 +872,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
-    ///   - closure: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
+    ///   - block: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
     ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
     /// - Returns: A `String` created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` are replaced with the contents of the `String` returned by `block`. Returns the characters within `searchRange` as if `substringWithRange`: had been sent to the receiver if the substring is not matched by `pattern`.
@@ -881,7 +881,7 @@ public extension String {
                                      in searchRange: NSRange? = nil,
                                      options: RKXRegexOptions = [],
                                      matchingOptions: RKXMatchOptions = [],
-                                     _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
+                                     using block: (_ strings: [String], _ ranges: [NSRange]) -> String)
         throws -> String {
             var target = (self as NSString).substring(with: searchRange ?? stringRange)
             let targetRange = (target as String).stringRange
@@ -889,7 +889,7 @@ public extension String {
             guard !matches.isEmpty else { return self }
 
             matches.reversed().forEach { match in
-                let swap = closure( match.substrings(from: self), match.ranges )
+                let swap = block( match.substrings(from: self), match.ranges )
                 target.replaceSubrange(utf16Range(from: match.range)!, with: swap)
             }
 
@@ -903,7 +903,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
-    ///   - closure: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
+    ///   - block: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
     ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: A `String` created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` are replaced with the contents of the `String` returned by `block`. Returns the characters within `searchRange` as if `substringWithRange`: had been sent to the receiver if the substring is not matched by `pattern`.
@@ -912,7 +912,7 @@ public extension String {
                                      in searchRange: Range<String.UTF16Index>,
                                      options: RKXRegexOptions = [],
                                      matchingOptions: RKXMatchOptions = [],
-                                     _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
+                                     using block: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
         throws -> String {
             var target = String(self[searchRange])
             let targetRange = (target as String).stringRange
@@ -920,7 +920,7 @@ public extension String {
             guard !matches.isEmpty else { return self }
 
             matches.reversed().forEach { match in
-                let swap = closure( match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }) )
+                let swap = block( match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }) )
                 target.replaceSubrange(utf16Range(from: match.range)!, with: swap)
             }
 
@@ -986,7 +986,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
-    ///   - closure: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
+    ///   - block: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
     ///   - ranges: An array of NSRanges containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a `NSRange` equal to `{NSNotFound, 0}`.
     /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
@@ -995,13 +995,13 @@ public extension String {
                                      in searchRange: NSRange? = nil,
                                      options: RKXRegexOptions = [],
                                      matchingOptions: RKXMatchOptions = [],
-                                     _ closure: (_ strings: [String], _ ranges: [NSRange]) -> String)
+                                     using block: (_ strings: [String], _ ranges: [NSRange]) -> String)
         throws -> Int {
             let matches = try regexMatches(for: pattern, in: searchRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return NSNotFound }
 
             matches.reversed().forEach { match in
-                let swap = closure(match.substrings(from: self), match.ranges)
+                let swap = block(match.substrings(from: self), match.ranges)
                 self.replaceSubrange(utf16Range(from: match.range)!, with: swap)
             }
 
@@ -1015,7 +1015,7 @@ public extension String {
     ///   - searchRange: The range of the receiver to search.
     ///   - options: An `OptionSet` of options specified by combining RKXRegexOptions flags.
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
-    ///   - closure: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
+    ///   - block: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
     ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
@@ -1024,14 +1024,14 @@ public extension String {
                                      in searchRange: Range<String.UTF16Index>,
                                      options: RKXRegexOptions = [],
                                      matchingOptions: RKXMatchOptions = [],
-                                     _ closure: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
+                                     using block: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
         throws -> Int {
             let legacyRange = nsrange(from: searchRange)
             let matches = try regexMatches(for: pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return NSNotFound }
 
             matches.reversed().forEach { match in
-                let swap = closure(match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }))
+                let swap = block(match.substrings(from: self), match.ranges.map({ utf16Range(from: $0)! }))
                 self.replaceSubrange(utf16Range(from: match.range)!, with: swap)
             }
 
