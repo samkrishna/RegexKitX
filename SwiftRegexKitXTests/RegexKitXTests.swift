@@ -96,8 +96,6 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testStringMatchedByRegex() {
-        // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
-
         let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
         let timestamp = try! candidate.stringMatched(by: regex)
         XCTAssert(timestamp == "2014-05-06 17:03:17");
@@ -141,7 +139,7 @@ class RegexKitXTests: XCTestCase {
         XCTAssert(listItems.count == 3)
 
         let list0 = listItems[0]
-        XCTAssert(list0 == [ "$10.23", "10.23", "10", "23" ]);
+        XCTAssert(list0 == [ "$10.23", "10.23", "10", "23" ])
         let list1 = listItems[1];
         XCTAssert(list1 == [ "$1024.42", "1024.42", "1024", "42" ])
         let list2 = listItems[2];
@@ -323,6 +321,61 @@ class RegexKitXTests: XCTestCase {
 
         XCTAssert(count == 11)
         XCTAssert(mutableCandidate =~ " barney ")
+    }
+
+    // MARK: Mastering Regular Expressions 3rd Ed. examples
+
+    func testDoubleWordExampleUsingBackreferences() {
+        // mre3 = "Mastering Regular Expressions, 3rd Ed."
+        let mre3Text = """
+                        In many regular-expression flavors, parentheses can \"remember\" text matched by the
+                        subexpression they enclose. We'll use this in a partial solution to the doubled-word
+                        problem at the beginning of this chapter. If you knew the the specific doubled word to
+                        find (such as \"the\" earlier in this sentence — did you catch it?)....
+
+                        Excerpt From: Jeffrey E. F. Friedl. \"Mastering Regular Expressions, Third Edition.\" Apple Books.
+                        """
+        let pattern = "\\b([A-Za-z]+) \\1\\b";
+        XCTAssert(try mre3Text.matches(pattern));
+    }
+
+    func testFirstLookaheadExample() {
+        let jeffs = "Jeffs";
+
+        // backward-to-forward lookaround
+        let output = try! jeffs.stringByReplacingOccurrences(of: "(?<=\\bJeff)(?=s\\b)", with: "\'")
+        XCTAssert(output == "Jeff\'s");
+
+        // forward-to-backward lookaround
+        let output2 = try! jeffs.stringByReplacingOccurrences(of: "(?=s\\b)(?<=\\bJeff)", with: "\'")
+        XCTAssert(output2 == "Jeff\'s");
+    }
+
+    func testLookaheadPopulationExample() {
+        // As of 2018-10-16 07:06:50 -0700 from https://www.census.gov/popclock/
+        let rawUSPop = "328807309";
+        let testControl = "328,807,309";
+
+        // Positive lookbehind and lookahead
+        var formattedUSPop = try! rawUSPop.stringByReplacingOccurrences(of: "(?<=\\d)(?=(\\d\\d\\d)+$)", with: ",")
+        XCTAssert(formattedUSPop == testControl)
+
+        // More compact digit-matching sub-regex
+        formattedUSPop = try! rawUSPop.stringByReplacingOccurrences(of: "(?<=\\d)(?=(\\d{3})+$)", with: ",")
+        XCTAssert(formattedUSPop == testControl)
+
+        // Positive lookbehind (?<=...), positive lookahead (?=...), and Negative lookahead (?!...)
+        formattedUSPop = try! rawUSPop.stringByReplacingOccurrences(of:"(?<=\\d)(?=(\\d{3})+(?!\\d))",  with: ",")
+        XCTAssert(formattedUSPop == testControl)
+
+        // Non-capturing parentheses (?:...)
+        // NOTE: A little more efficient since they don't spend extra ops capturing.
+        formattedUSPop = try! rawUSPop.stringByReplacingOccurrences(of:"(?<=\\d)(?=(?:\\d{3})+$)", with: ",")
+        XCTAssert(formattedUSPop == testControl)
+
+        // Negative lookbehind (?<!)
+        formattedUSPop = try! rawUSPop.stringByReplacingOccurrences(of: "(?<!\\b)(?=(?:\\d{3})+$)",  with: ",")
+        XCTAssert(formattedUSPop == testControl)
     }
 
     // MARK: Performance Tests
