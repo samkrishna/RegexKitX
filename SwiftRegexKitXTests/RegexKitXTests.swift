@@ -283,7 +283,7 @@ class RegexKitXTests: XCTestCase {
         XCTAssert(goodPattern.isRegexValid())
     }
 
-    func testStringByReplacingOccurrencesOfRegexUsingClosure() {
+    func testStringByReplacingOccurrencesOfRegexUsingBlock() {
         let pattern = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
 
         let output = try! candidate.stringByReplacingOccurences(of: pattern, using: { (capturedStrings, capturedRanges) in
@@ -313,7 +313,7 @@ class RegexKitXTests: XCTestCase {
         XCTAssert(mutableCandidate =~ " barney ")
     }
 
-    func testReplaceOccurrencesOfRegexUsingClosure() {
+    func testReplaceOccurrencesOfRegexUsingBlock() {
         var mutableCandidate = String(candidate)
         let count = try! mutableCandidate.replaceOccurrences(of: ", ", using: { (captureStrings, captureRanges) -> String in
             return " barney "
