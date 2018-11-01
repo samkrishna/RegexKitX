@@ -161,7 +161,7 @@ class RegexKitXTests: XCTestCase {
         XCTAssertThrowsError(try name.dictionaryMatched(by: badRegex, keysAndCaptures: firstKey, 1, lastKey, 2))
 
         let execRegex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), time:(\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
-        let executionDict = try! self.candidate.dictionaryMatched(by: execRegex, keysAndCaptures:
+        let executionDict = try! candidate.dictionaryMatched(by: execRegex, keysAndCaptures:
             "executionDate", 1,
             "currencyPair", 2,
             "orderID", 3,
@@ -204,7 +204,7 @@ class RegexKitXTests: XCTestCase {
         XCTAssert(name1[firstKey] == "John");
         XCTAssert(name1[lastKey] == "Smith");
 
-        let failureResult = try! self.candidate.arrayOfDictionariesMatched(by: regex, keysAndCaptures: firstKey, 1, lastKey, 2)
+        let failureResult = try! candidate.arrayOfDictionariesMatched(by: regex, keysAndCaptures: firstKey, 1, lastKey, 2)
         XCTAssertNotNil(failureResult)
         XCTAssert(failureResult.count == 0)
     }
@@ -384,98 +384,98 @@ class RegexKitXTests: XCTestCase {
 
     func testPerformanceRegex01() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "Sherlock", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "Sherlock", options:.RKXMultiline)
             XCTAssert(matches.count == 97, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex02() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "^Sherlock", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "^Sherlock", options:.RKXMultiline)
             XCTAssert(matches.count == 34, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex03() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "Sherlock$", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "Sherlock$", options:.RKXMultiline)
             XCTAssert(matches.count == 6, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex04() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "a[^x]{20}b", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "a[^x]{20}b", options:.RKXMultiline)
             XCTAssert(matches.count == 405, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex05() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "Holmes|Watson", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "Holmes|Watson", options:.RKXMultiline)
             XCTAssert(matches.count == 542, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex06() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: ".{0,3}(Holmes|Watson)", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: ".{0,3}(Holmes|Watson)", options:.RKXMultiline)
             XCTAssert(matches.count == 542, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex07() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "[a-zA-Z]+ing", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "[a-zA-Z]+ing", options:.RKXMultiline)
             XCTAssert(matches.count == 2824, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex08() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "^([a-zA-Z]{0,4}ing)[^a-zA-Z]", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "^([a-zA-Z]{0,4}ing)[^a-zA-Z]", options:.RKXMultiline)
             XCTAssert(matches.count == 163, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex09() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "[a-zA-Z]+ing$", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "[a-zA-Z]+ing$", options:.RKXMultiline)
             XCTAssert(matches.count == 152, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex10() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "^[a-zA-Z ]{5,}$", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "^[a-zA-Z ]{5,}$", options:.RKXMultiline)
             XCTAssert(matches.count == 876, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex11() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "^.{16,20}$", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "^.{16,20}$", options:.RKXMultiline)
             XCTAssert(matches.count == 238, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex12() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "([a-f](.[d-m].){0,2}[h-n]){2}", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "([a-f](.[d-m].){0,2}[h-n]){2}", options:.RKXMultiline)
             XCTAssert(matches.count == 1597, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex13() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "([A-Za-z]olmes)|([A-Za-z]atson)[^a-zA-Z]", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "([A-Za-z]olmes)|([A-Za-z]atson)[^a-zA-Z]", options:.RKXMultiline)
             XCTAssert(matches.count == 542, "The count is \(matches.count)")
         }
     }
 
     func testPerformanceRegex14() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "\"[^\"]{0,30}[?!\\.]\"", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "\"[^\"]{0,30}[?!\\.]\"", options:.RKXMultiline)
             XCTAssert(matches.count == 582, "The count is \(matches.count)")
         }
     }
@@ -483,7 +483,7 @@ class RegexKitXTests: XCTestCase {
 
     func testPerformanceRegex15() {
         measure {
-            let matches = try! self.testCorpus.componentsMatched(by: "Holmes.{10,60}Watson|Watson.{10,60}Holmes", options:.RKXMultiline)
+            let matches = try! testCorpus.componentsMatched(by: "Holmes.{10,60}Watson|Watson.{10,60}Holmes", options:.RKXMultiline)
             XCTAssert(matches.count == 2, "The count is \(matches.count)")
         }
     }
