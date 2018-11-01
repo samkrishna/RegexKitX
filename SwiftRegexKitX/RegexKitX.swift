@@ -654,7 +654,7 @@ public extension String {
             return try arrayOfDictionariesMatched(by: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions, keysAndCaptures: keysAndCaptures)
     }
 
-    // MARK: enumerateStringsMatched(by:in:options:matchingOptions:closure)
+    // MARK: enumerateStringsMatched(by:in:options:matchingOptions:using block:)
 
     /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes the block for each match found.
     ///
@@ -764,7 +764,7 @@ public extension String {
             return try componentsSeparated(by: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
-    // MARK: enumerateStringsSeparated(by:in:options:matchingOptions:closure:)
+    // MARK: enumerateStringsSeparated(by:in:options:matchingOptions:using block:)
 
     /// Enumerates the strings of the receiver that have been divided by the regular expression `pattern` within `searchRange` using `options` and and `matchOptions` and executes `block` for each divided string.
     ///
@@ -863,9 +863,9 @@ public extension String {
             return true
     }
 
-    // MARK: stringByReplacingOccurrences(of:in:options:matchingOptions:closure:)
+    // MARK: stringByReplacingOccurrences(of:in:options:matchingOptions:using block:)
 
-    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of each string returned by `closure`.
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `block` for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of each string returned by `block`.
     ///
     /// - Parameters:
     ///   - pattern: A `String` containing a regular expression.
@@ -896,7 +896,7 @@ public extension String {
             return target as String
     }
 
-    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of each string returned by `closure`.
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `block` for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of each string returned by `block`.
     ///
     /// - Parameters:
     ///   - pattern: A `String` containing a regular expression.
@@ -977,9 +977,9 @@ public extension String {
             return try replaceOccurrences(of: pattern, with: template, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
-    // MARK: replaceOccurrences(of:in:options:matchingOptions:closure:)
+    // MARK: replaceOccurrences(of:in:options:matchingOptions:using block:)
 
-    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Replaces the characters that were matched with the contents of the string returned by `closure`, returning the number of replacements made.
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `block` for each match found. Replaces the characters that were matched with the contents of the string returned by `block`, returning the number of replacements made.
     ///
     /// - Parameters:
     ///   - pattern: A `String` containing a regular expression.
@@ -1008,7 +1008,7 @@ public extension String {
             return matches.count
     }
 
-    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `closure` for each match found. Replaces the characters that were matched with the contents of the string returned by `closure`, returning the number of replacements made.
+    /// Enumerates the matches in the receiver by the regular expression `pattern` within `searchRange` using `options` and `matchOptions` and executes `block` for each match found. Replaces the characters that were matched with the contents of the string returned by `block`, returning the number of replacements made.
     ///
     /// - Parameters:
     ///   - pattern: A `String` containing a regular expression.

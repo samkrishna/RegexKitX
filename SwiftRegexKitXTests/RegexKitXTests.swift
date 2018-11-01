@@ -6,7 +6,7 @@ import XCTest
 @testable import SwiftRegexKitX
 
 class RegexKitXTests: XCTestCase {
-    public let candidate = "2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
+    public let candidate = "2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU275587, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
 
     var testCorpus: String {
         return type(of: self).corpus
@@ -161,6 +161,33 @@ class RegexKitXTests: XCTestCase {
 
         let badRegex = "Name:\\s*(\\w*)\\s*(\\w*";
         XCTAssertThrowsError(try name.dictionaryMatched(by: badRegex, keysAndCaptures: firstKey, 1, lastKey, 2))
+
+        let execRegex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), time:(\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
+        let executionDict = try! self.candidate.dictionaryMatched(by: execRegex, keysAndCaptures:
+            "executionDate", 1,
+            "currencyPair", 2,
+            "orderID", 3,
+            "clientID", 4,
+            "executionID", 5,
+            "canonicalExecutionDate", 6,
+            "accountID", 7,
+            "orderSide", 8,
+            "orderVolume", 9,
+            "executionPrice", 10,
+            "permanentID", 11)
+
+        XCTAssert(executionDict.count == 11);
+        XCTAssert(executionDict["executionDate"] == "2014-05-06 17:03:17.967")
+        XCTAssert(executionDict["currencyPair"] == "EUR.JPY")
+        XCTAssert(executionDict["orderID"] == "439")
+        XCTAssert(executionDict["clientID"] == "75018");
+        XCTAssert(executionDict["executionID"] == "0001f4e8.536956da.01.01")
+        XCTAssert(executionDict["canonicalExecutionDate"] == "20140506  17:03:18")
+        XCTAssert(executionDict["accountID"] == "DU275587")
+        XCTAssert(executionDict["orderSide"] == "SLD")
+        XCTAssert(executionDict["orderVolume"] == "141500")
+        XCTAssert(executionDict["executionPrice"] == "141.73")
+        XCTAssert(executionDict["permanentID"] == "825657452")
     }
 
     func testArrayOfDictionariesByMatchingRegex() {
@@ -178,9 +205,13 @@ class RegexKitXTests: XCTestCase {
         let name1 = nameArray[1];
         XCTAssert(name1[firstKey] == "John");
         XCTAssert(name1[lastKey] == "Smith");
+
+        let failureResult = try! self.candidate.arrayOfDictionariesMatched(by: regex, keysAndCaptures: firstKey, 1, lastKey, 2)
+        XCTAssertNotNil(failureResult)
+        XCTAssert(failureResult.count == 0)
     }
 
-    func testEnumerateStringMatchedByRegexClosure() {
+    func testEnumerateStringMatchedByRegexUsingBlock() {
         let searchString = "Name: Bob\n" + "Name: John Smith"
         let regex = "(?m)^Name:\\s*(\\w*)\\s*(\\w*)$"
         var matchCount = 0
@@ -195,7 +226,7 @@ class RegexKitXTests: XCTestCase {
         XCTAssert(matchCount == 2)
     }
 
-    func testComponentsSeparatedBy() {
+    func testComponentsSeparatedByRegex() {
         let regex = ", ";
         let captures = try! candidate.componentsSeparated(by: regex)
         XCTAssert(captures.count == 12);
@@ -205,8 +236,7 @@ class RegexKitXTests: XCTestCase {
         }
     }
 
-    func testEnumerateStringsSeparatedyByRegex() {
-        // @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU161169, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
+    func testEnumerateStringsSeparatedyByRegexUsingBlock() {
         let regexPattern = ",(\\s+)";
         let rangeValueChecks = [ NSMakeRange(0, 91),
                                  NSMakeRange(93, 30),
@@ -222,14 +252,14 @@ class RegexKitXTests: XCTestCase {
                                  NSMakeRange(277, 15) ];
 
         var index = 0;
-        let result = try! candidate.enumerateStringsSeparated(by: regexPattern) { (capturedStrings, capturedRanges) in
+        let result = try! candidate.enumerateStringsSeparated(by: regexPattern, using: { (capturedStrings, capturedRanges) in
             let string = capturedStrings[0]
             let range = capturedRanges[0]
             let rangeCheck = rangeValueChecks[index]
             print("Forward: string = \(string) and range = \(range)")
             XCTAssert(NSEqualRanges(range, rangeCheck))
             index += 1
-        }
+        })
 
         XCTAssert(result);
     }
