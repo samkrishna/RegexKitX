@@ -13,10 +13,9 @@ class RegexKitXTests: XCTestCase {
     }
 
     static var corpus: String = {
-        let myBundle = Bundle(for: RegexKitXTests.self)
-        let corpusPath = myBundle.path(forResource: "sherlock-utf-8", ofType: "txt")!
-        let _corpus = try? String(contentsOfFile: corpusPath, encoding: String.Encoding.utf8)
-        return _corpus!
+        let corpusPath = Bundle(for: RegexKitXTests.self).path(forResource: "sherlock-utf-8", ofType: "txt")!
+        let _corpus = try! String(contentsOfFile: corpusPath, encoding: String.Encoding.utf8)
+        return _corpus
     }()
 
     func testMatchesRegex() {
