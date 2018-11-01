@@ -332,8 +332,8 @@
                                    @"orderVolume", 9,
                                    @"executionPrice", 10,
                                    @"permanentID", 11, nil];
-    XCTAssert(executionDict.count == 11);
 
+    XCTAssert(executionDict.count == 11);
     XCTAssert([executionDict[@"executionDate"] isEqualToString:@"2014-05-06 17:03:17.967"]);
     XCTAssert([executionDict[@"currencyPair"] isEqualToString:@"EUR.JPY"]);
     XCTAssert([executionDict[@"orderID"] isEqualToString:@"439"]);
@@ -378,7 +378,7 @@
     XCTAssert(failureResult.count == 0);
 }
 
-- (void)testEnumerateStringsSeparatedByRegex
+- (void)testEnumerateStringsSeparatedByRegexUsingBlock
 {
     NSString *regexPattern = @",(\\s+)";
     NSArray<NSValue *> *rangeValueChecks = @[ [NSValue valueWithRange:NSMakeRange(0, 91)],
