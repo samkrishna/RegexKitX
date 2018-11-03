@@ -18,6 +18,83 @@ class RegexKitXTests: XCTestCase {
         return _corpus
     }()
 
+    var unicodeStringArray: [String] {
+        return type(of: self).unicodeArray
+    }
+
+    static var unicodeArray: [String] = {
+        let s0 = "pi \u{2245} 3 (apx eq)" // pi ≅ 3 (apx eq)
+        let s1 = "\u{A5}55 (yen)"
+        let s2 = "\u{E6} (ae)"
+        let s3 = "Copyright \u{A9} 2007"
+        let s4 = "Ring of integers \u{2124} (double struck Z)"
+        let s5 = "At the \u{2229} of two sets (intersection)"
+        let s6 = "\u{0041} \u{0077}\u{014d}\u{0155}\u{0111} \u{0077}\u{0129}\u{021b}\u{021f} \u{0065}\u{0078}\u{0074}\u{0072}\u{0061} \u{023f}\u{0163}\u{1e7b}\u{1e1f}\u{0066}"
+        let s7 = "Frank Tang's \u{0049}\u{00f1}\u{0074}\u{00eb}\u{0072}\u{006e}\u{00e2}\u{0074}\u{0069}\u{00f4}\u{006e}\u{00e0}\u{006c}\u{0069}\u{007a}\u{00e6}\u{0074}\u{0069}\u{00f8}\u{006e} Secrets"
+
+        // Unicode
+        // Hexagrams - 6-Character Chinese Symbol Graphemes: https://www.unicode.org/charts/PDF/U4DC0.pdf
+        // Tetragrams - 4-Character Chinese Symbol Graphemes: using Tai Xuan Jing Symbols
+        // from http://www.unicode.org/charts/PDF/U1D300.pdf
+        //
+        // Also thanks to the Unicode Converter at: https://www.branah.com/unicode-converter
+        // and Scarfboy at http://unicode.scarfboy.com/
+        // for help sussing out some of the nuanced conversions from UTF-8 to UTF-16
+
+        // The story:
+        // ䷂ - 4DC2 - Difficulty at the Beginning
+        // 𝌢 - 1D322 - Decisiveness
+        // 𝌌 - 1D30C - Ascent
+        // ䷢ - 4DE2 - Progress
+        // 𝍕 - 1D355 - Labouring
+        // 𝍐 - 1D350 - Failure
+        // 𝍃 - 1D343 - Doubt
+        // ䷣ - 4DE3 - Darkening of the Light
+        // ䷅ - 4DC5 - Conflict
+        // ䷿ - 4DFF - Before Completion
+        // 𝍓 - 1D353 - On The Verge
+        // ䷪ - 4DEA - Breakthrough
+        // 𝌴 - 1D334 - Pattern
+        // ䷧ - 4DE7 - Deliverance
+        // 𝍎 - 1D34E - Completion
+        // ䷾ - 4DFE - After Completion
+        // ䷊ - 4DCA - Peace
+        // ䷍ - 4DCD - Great Possession
+        // ䷶ - 4DF6 - Abundance
+        // ䷀ - 4DC0 - Creative Heaven
+
+        let s8 = """
+                 \u{4DC2}
+                 \u{1D322}
+                 \u{1D30C}
+                 \u{4DE2}
+                 \u{1D355}
+                 \u{1D350}
+                 \u{1D343}
+                 \u{4DE3}
+                 \u{4DC5}
+                 \u{4DFF}
+                 \u{1D353}
+                 \u{4DEA}
+                 \u{1D334}
+                 \u{4DE7}
+                 \u{1D34E}
+                 \u{4DFE}
+                 \u{4DCA}
+                 \u{4DCD}
+                 \u{4DF6}
+                 \u{4DC0}
+                 """
+
+        return [s0, s1, s2, s3, s4, s5, s6, s7, s8]
+    }()
+
+    func testSimpleUnicodeMatching() {
+        let storyString = unicodeStringArray[8]
+        XCTAssert(try! storyString.matches("\u{4DF6}", options:.RKXMultiline))
+        XCTAssert(try! storyString.matches("䷶", options:.RKXMultiline))
+    }
+
     func testMatchesRegex() {
         let regex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
         let result = try! candidate.matches(regex)
@@ -102,14 +179,14 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testStringByReplacingOccurrencesOfRegex() {
-        let failedPattern = "2014-05-06 17:03:17.967 EXECUTION_DINO"
+        let failedRegex = "2014-05-06 17:03:17.967 EXECUTION_DINO"
         let failureControl = "2014-05-06 17:03:17.967 EXECUTION_DATA"
         let failureRange = NSMakeRange(0, 38);
-        let failureResult = try! candidate.stringByReplacingOccurrences(of: failedPattern, with: "BARNEY RUBBLE", in: failureRange)
+        let failureResult = try! candidate.stringByReplacingOccurrences(of: failedRegex, with: "BARNEY RUBBLE", in: failureRange)
         XCTAssert(failureResult == failureControl)
 
-        let successPattern = "2014-05-06 17:03:17.967 (EXECUTION_DATA)"
-        let successResult = try! candidate.stringByReplacingOccurrences(of: successPattern, with: "BARNEY RUBBLE ~~~$1~~~ ", in: failureRange)
+        let successRegex = "2014-05-06 17:03:17.967 (EXECUTION_DATA)"
+        let successResult = try! candidate.stringByReplacingOccurrences(of: successRegex, with: "BARNEY RUBBLE ~~~$1~~~ ", in: failureRange)
         XCTAssert(try! successResult.matches("BARNEY RUBBLE"))
         XCTAssert(try! successResult.matches("~~~EXECUTION_DATA~~~"))
     }
@@ -235,7 +312,7 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testEnumerateStringsSeparatedyByRegexUsingBlock() {
-        let regexPattern = ",(\\s+)";
+        let regex = ",(\\s+)";
         let rangeValueChecks = [ NSMakeRange(0, 91),
                                  NSMakeRange(93, 30),
                                  NSMakeRange(125, 23),
@@ -250,7 +327,7 @@ class RegexKitXTests: XCTestCase {
                                  NSMakeRange(277, 15) ];
 
         var index = 0;
-        let result = try! candidate.enumerateStringsSeparated(by: regexPattern, using: { (capturedStrings, capturedRanges) in
+        let result = try! candidate.enumerateStringsSeparated(by: regex, using: { (capturedStrings, capturedRanges) in
             let string = capturedStrings[0]
             let range = capturedRanges[0]
             let rangeCheck = rangeValueChecks[index]
@@ -276,17 +353,17 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testIsRegexValid() {
-        let badPattern = "[a-z"
-        XCTAssertFalse(badPattern.isRegexValid())
+        let badRegex = "[a-z"
+        XCTAssertFalse(badRegex.isRegexValid())
 
-        let goodPattern = "[a-z]"
-        XCTAssert(goodPattern.isRegexValid())
+        let goodRegex = "[a-z]"
+        XCTAssert(goodRegex.isRegexValid())
     }
 
     func testStringByReplacingOccurrencesOfRegexUsingBlock() {
-        let pattern = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
+        let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
 
-        let output = try! candidate.stringByReplacingOccurences(of: pattern, using: { (capturedStrings, capturedRanges) in
+        let output = try! candidate.stringByReplacingOccurences(of: regex, using: { (capturedStrings, capturedRanges) in
             var replacement = ""
             let dateRegex = "^\\d+-\\d+-\\d+$"
             let timeRegex = "^\\d+:\\d+:\\d+\\.\\d+$"
@@ -335,8 +412,8 @@ class RegexKitXTests: XCTestCase {
 
                         Excerpt From: Jeffrey E. F. Friedl. \"Mastering Regular Expressions, Third Edition.\" Apple Books.
                         """
-        let pattern = "\\b([A-Za-z]+) \\1\\b";
-        XCTAssert(try mre3Text.matches(pattern));
+        let regex = "\\b([A-Za-z]+) \\1\\b";
+        XCTAssert(try mre3Text.matches(regex));
     }
 
     func testFirstLookaheadExample() {
