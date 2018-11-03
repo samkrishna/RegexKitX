@@ -8,7 +8,7 @@
 @interface RegexKitXTests : XCTestCase
 @property (nonatomic, readonly, strong) NSString *testCorpus;
 @property (nonatomic, readwrite, strong) NSString *candidate;
-@property (nonatomic, readwrite, strong) NSMutableArray *unicodeStringsArray;
+@property (nonatomic, readwrite, strong) NSMutableArray<NSString *> *unicodeStringsArray;
 @end
 
 @implementation RegexKitXTests
@@ -36,7 +36,7 @@
         /* 1 */ "\xC2\xA5""55 (yen)",
         /* 2 */ "\xC3\x86 (ae)",
         /* 3 */ "Copyright \xC2\xA9 2007",
-        /* 4 */ "Ring of integers \xE2\x84\xA4 (dbl stk Z)",
+        /* 4 */ "Ring of integers \xE2\x84\xA4 (double struck Z)",
         /* 5 */ "At the \xE2\x88\xA9 of two sets.",
         /* 6 */ "A w\xC5\x8D\xC5\x95\xC4\x91 \xF0\x9D\x8C\xB4\xF4\x8F\x8F\xBC w\xC4\xA9\xC8\x9B\xC8\x9F extra \xC8\xBF\xC5\xA3\xE1\xB9\xBB\xE1\xB8\x9F" "f",
         /* 7 */ "Frank Tang\xE2\x80\x99s I\xC3\xB1t\xC3\xABrn\xC3\xA2ti\xC3\xB4n\xC3\xA0liz\xC3\xA6ti\xC3\xB8n Secrets",
@@ -49,6 +49,9 @@
         [self.unicodeStringsArray addObject:[NSString stringWithUTF8String:*cString]];
         cString++;
     }
+
+    NSString *s8 = @"䷂\n𝌢\n𝌌\n䷢\n𝍕\n𝍐\n𝍃\n䷣\n䷅\n䷿\n𝍓\n䷪\n𝌴\n䷧\n𝍎\n䷾\n䷊\n䷍\n䷶\n䷀";
+    [self.unicodeStringsArray addObject:s8];
 
     XCTAssertNotNil(self.testCorpus);
 }
@@ -553,7 +556,7 @@
 
 - (void)testSimpleUnicodeMatching
 {
-    NSString *copyrightString = [self.unicodeStringsArray objectAtIndex:3];
+    NSString *copyrightString = self.unicodeStringsArray[3];
     NSRange rangeOf2007 = [copyrightString rangeOfRegex:@"2007"];
     NSRange foundationRange = [copyrightString rangeOfString:@"2007"];
     XCTAssertTrue(NSEqualRanges(foundationRange, rangeOf2007));
@@ -563,6 +566,8 @@
     XCTAssertTrue((NSEqualRanges(regexRanges[1].rangeValue, NSMakeRange(0, 9))), @"%@", regexRanges[1]);
     XCTAssertTrue((NSEqualRanges(regexRanges[2].rangeValue, NSMakeRange(10, 1))), @"%@", regexRanges[2]);
     XCTAssertTrue((NSEqualRanges(regexRanges[3].rangeValue, NSMakeRange(12, 4))), @"%@", regexRanges[3]);
+
+    XCTAssertTrue([self.unicodeStringsArray[8] isMatchedByRegex:@"䷀"]);
 }
 
 #pragma mark - Mastering Regular Expression 3rd Ed. examples
