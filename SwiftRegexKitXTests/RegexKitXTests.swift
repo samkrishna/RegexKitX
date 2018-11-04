@@ -70,8 +70,7 @@ class RegexKitXTests: XCTestCase {
 
     func testSimpleUnicodeMatching() {
         let herosJourney = unicodeStrings[8]
-        XCTAssert(try! herosJourney.matches("\u{4DF6}", options:.RKXMultiline))
-        XCTAssert(try! herosJourney.matches("䷶", options:.RKXMultiline))
+        XCTAssertTrue(try! herosJourney.matches("\u{4DF6}", options:.RKXMultiline))
 
         XCTAssertTrue(try! herosJourney.matches("䷂"))
         XCTAssertTrue(try! herosJourney.matches("𝌢"))
