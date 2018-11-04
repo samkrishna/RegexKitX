@@ -454,13 +454,15 @@
     // ICU : "", "I", "|", "at", "|", "ice", "", "I", "", "eat", "", "rice" <- Results that RegexKitX produces
     // PERL:     "I", "|", "at", "|", "ice",     "I",     "eat",     "rice" <- Results that RKL4 produces.
 
-    // Follow-up: I followed the ticket to see what the outcome was. The ICU dev team rejected this ticket and
-    // said it was closed b/c the behavior worked as intended. I'm noting this here for historical purposes.
+    // Follow-up: I followed the ticket to see what the outcome was. The ICU dev team closed this ticket
+    // by asserting that the behavior worked as intended, which is to clone Java's split().
+    // I'm noting this here for historical purposes.
 
     NSString *testString = @"I|at|ice I eat rice";
     NSString *pattern = @"\\b\\s*";
     NSArray<NSString *> *components = [testString componentsSeparatedByRegex:pattern];
     XCTAssertFalse([components.firstObject isEqualToString:@"I"]);
+    XCTAssert([components.firstObject isEqualToString:@""]);
     XCTAssert([components.lastObject isEqualToString:@"rice"]);
 }
 
