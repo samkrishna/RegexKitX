@@ -8,7 +8,7 @@
 @interface RegexKitXTests : XCTestCase
 @property (nonatomic, readonly, strong) NSString *testCorpus;
 @property (nonatomic, readwrite, strong) NSString *candidate;
-@property (nonatomic, readwrite, strong) NSMutableArray<NSString *> *unicodeStringsArray;
+@property (nonatomic, readwrite, strong) NSMutableArray<NSString *> *unicodeStrings;
 @end
 
 @implementation RegexKitXTests
@@ -23,6 +23,7 @@
         _testCorpus = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
     });
 
+    NSAssert(_testCorpus, @"There was a failure in loading the test corpus!");
     return _testCorpus;
 }
 
@@ -43,17 +44,40 @@
         NULL
     };
     const char **cString = unicodeCStrings;
-    self.unicodeStringsArray = [NSMutableArray array];
+    self.unicodeStrings = [NSMutableArray array];
     
     while (*cString != NULL) {
-        [self.unicodeStringsArray addObject:[NSString stringWithUTF8String:*cString]];
+        [self.unicodeStrings addObject:[NSString stringWithUTF8String:*cString]];
         cString++;
     }
 
-    NSString *s8 = @"䷂\n𝌢\n𝌌\n䷢\n𝍕\n𝍐\n𝍃\n䷣\n䷅\n䷿\n𝍓\n䷪\n𝌴\n䷧\n𝍎\n䷾\n䷊\n䷍\n䷶\n䷀";
-    [self.unicodeStringsArray addObject:s8];
+    static NSString *hj;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        hj = @"The Hero's Journey:\n"
+            "䷂ - Difficulty at the Beginning\n"
+            "𝌢 - Decisiveness\n"
+            "𝌌 - Ascent\n"
+            "䷢ - Progress\n"
+            "𝍕 - Labouring\n"
+            "𝍐 - Failure\n"
+            "𝍃 - Doubt\n"
+            "䷣ - Darkening of the Light\n"
+            "䷅ - Conflict\n"
+            "䷿ - Before Completion\n"
+            "𝍓 - On The Verge\n"
+            "䷪ - Breakthrough\n"
+            "𝌴 - Pattern\n"
+            "䷧ - Deliverance\n"
+            "𝍎 - Completion\n"
+            "䷾ - After Completion\n"
+            "䷊ - Peace\n"
+            "䷍ - Great Possession\n"
+            "䷶ - Abundance\n"
+            "䷀ - Creative Heaven";
+    });
 
-    XCTAssertNotNil(self.testCorpus);
+    [self.unicodeStrings addObject:hj];
 }
 
 - (void)tearDown
@@ -556,7 +580,7 @@
 
 - (void)testSimpleUnicodeMatching
 {
-    NSString *copyrightString = self.unicodeStringsArray[3];
+    NSString *copyrightString = self.unicodeStrings[3];
     NSRange rangeOf2007 = [copyrightString rangeOfRegex:@"2007"];
     NSRange foundationRange = [copyrightString rangeOfString:@"2007"];
     XCTAssertTrue(NSEqualRanges(foundationRange, rangeOf2007));
@@ -567,7 +591,27 @@
     XCTAssertTrue((NSEqualRanges(regexRanges[2].rangeValue, NSMakeRange(10, 1))), @"%@", regexRanges[2]);
     XCTAssertTrue((NSEqualRanges(regexRanges[3].rangeValue, NSMakeRange(12, 4))), @"%@", regexRanges[3]);
 
-    XCTAssertTrue([self.unicodeStringsArray[8] isMatchedByRegex:@"䷀"]);
+    NSString *herosJourney = self.unicodeStrings[8];
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷂"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"𝌢"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"𝌌"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷢"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"𝍕"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"𝍐"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"𝍃"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷣"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷅"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷿"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"𝍓"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷪"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"𝌴"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷧"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"𝍎"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷾"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷊"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷍"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷶"]);
+    XCTAssertTrue([herosJourney isMatchedByRegex:@"䷀"]);
 }
 
 #pragma mark - Mastering Regular Expression 3rd Ed. examples
