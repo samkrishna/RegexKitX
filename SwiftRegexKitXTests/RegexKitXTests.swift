@@ -18,7 +18,7 @@ class RegexKitXTests: XCTestCase {
         return _corpus
     }()
 
-    var unicodeStringArray: [String] {
+    var unicodeStrings: [String] {
         return type(of: self).unicodeArray
     }
 
@@ -41,58 +41,58 @@ class RegexKitXTests: XCTestCase {
         // and Scarfboy at http://unicode.scarfboy.com/
         // for help sussing out some of the nuanced conversions from UTF-8 to UTF-16
 
-        // The story:
-        // ䷂ - 4DC2 - Difficulty at the Beginning
-        // 𝌢 - 1D322 - Decisiveness
-        // 𝌌 - 1D30C - Ascent
-        // ䷢ - 4DE2 - Progress
-        // 𝍕 - 1D355 - Labouring
-        // 𝍐 - 1D350 - Failure
-        // 𝍃 - 1D343 - Doubt
-        // ䷣ - 4DE3 - Darkening of the Light
-        // ䷅ - 4DC5 - Conflict
-        // ䷿ - 4DFF - Before Completion
-        // 𝍓 - 1D353 - On The Verge
-        // ䷪ - 4DEA - Breakthrough
-        // 𝌴 - 1D334 - Pattern
-        // ䷧ - 4DE7 - Deliverance
-        // 𝍎 - 1D34E - Completion
-        // ䷾ - 4DFE - After Completion
-        // ䷊ - 4DCA - Peace
-        // ䷍ - 4DCD - Great Possession
-        // ䷶ - 4DF6 - Abundance
-        // ䷀ - 4DC0 - Creative Heaven
-
         let s8 = """
-                 \u{4DC2}
-                 \u{1D322}
-                 \u{1D30C}
-                 \u{4DE2}
-                 \u{1D355}
-                 \u{1D350}
-                 \u{1D343}
-                 \u{4DE3}
-                 \u{4DC5}
-                 \u{4DFF}
-                 \u{1D353}
-                 \u{4DEA}
-                 \u{1D334}
-                 \u{4DE7}
-                 \u{1D34E}
-                 \u{4DFE}
-                 \u{4DCA}
-                 \u{4DCD}
-                 \u{4DF6}
-                 \u{4DC0}
+                 The Hero's Journey:
+                 \u{4DC2} - Difficulty at the Beginning
+                 \u{1D322} - Decisiveness
+                 \u{1D30C} - Ascent
+                 \u{4DE2} - Progress
+                 \u{1D355} - Labouring
+                 \u{1D350} - Failure
+                 \u{1D343} - Doubt
+                 \u{4DE3} - Darkening of the Light
+                 \u{4DC5} - Conflict
+                 \u{4DFF} - Before Completion
+                 \u{1D353} - On The Verge
+                 \u{4DEA} - Breakthrough
+                 \u{1D334} - Pattern
+                 \u{4DE7} - Deliverance
+                 \u{1D34E} - Completion
+                 \u{4DFE} - After Completion
+                 \u{4DCA} - Peace
+                 \u{4DCD} - Great Possession
+                 \u{4DF6} - Abundance
+                 \u{4DC0} - Creative Heaven
                  """
 
         return [s0, s1, s2, s3, s4, s5, s6, s7, s8]
     }()
 
     func testSimpleUnicodeMatching() {
-        let storyString = unicodeStringArray[8]
-        XCTAssert(try! storyString.matches("\u{4DF6}", options:.RKXMultiline))
-        XCTAssert(try! storyString.matches("䷶", options:.RKXMultiline))
+        let herosJourney = unicodeStrings[8]
+        XCTAssert(try! herosJourney.matches("\u{4DF6}", options:.RKXMultiline))
+        XCTAssert(try! herosJourney.matches("䷶", options:.RKXMultiline))
+
+        XCTAssertTrue(try! herosJourney.matches("䷂"))
+        XCTAssertTrue(try! herosJourney.matches("𝌢"))
+        XCTAssertTrue(try! herosJourney.matches("𝌌"))
+        XCTAssertTrue(try! herosJourney.matches("䷢"))
+        XCTAssertTrue(try! herosJourney.matches("𝍕"))
+        XCTAssertTrue(try! herosJourney.matches("𝍐"))
+        XCTAssertTrue(try! herosJourney.matches("𝍃"))
+        XCTAssertTrue(try! herosJourney.matches("䷣"))
+        XCTAssertTrue(try! herosJourney.matches("䷅"))
+        XCTAssertTrue(try! herosJourney.matches("䷿"))
+        XCTAssertTrue(try! herosJourney.matches("𝍓"))
+        XCTAssertTrue(try! herosJourney.matches("䷪"))
+        XCTAssertTrue(try! herosJourney.matches("𝌴"))
+        XCTAssertTrue(try! herosJourney.matches("䷧"))
+        XCTAssertTrue(try! herosJourney.matches("𝍎"))
+        XCTAssertTrue(try! herosJourney.matches("䷾"))
+        XCTAssertTrue(try! herosJourney.matches("䷊"))
+        XCTAssertTrue(try! herosJourney.matches("䷍"))
+        XCTAssertTrue(try! herosJourney.matches("䷶"))
+        XCTAssertTrue(try! herosJourney.matches("䷀"))
     }
 
     func testMatchesRegex() {
