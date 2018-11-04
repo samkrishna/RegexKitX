@@ -123,16 +123,16 @@
     XCTAssertTrue([self.candidate isMatchedByRegex:regex range:self.candidate.stringRange options:RKXCaseless error:nil]);
     XCTAssertFalse([self.candidate isMatchedByRegex:regex range:self.candidate.stringRange options:RKXNoOptions matchOptions:0 error:&error], @"Error: %@", error);
 
-    NSString *failureCase1 = @"Orthogonal2";
-    BOOL failureResult1 = [failureCase1 isMatchedByRegex:@"Orthogonal" range:failureCase1.stringRange options:RKXCaseless error:&error];
-    XCTAssert(failureResult1);
+    NSString *testString = @"Orthogonal2";
+    BOOL testResult = [testString isMatchedByRegex:@"orthogonal" range:testString.stringRange options:RKXCaseless error:&error];
+    XCTAssertTrue(testResult);
 }
 
 - (void)testComponentsSeparatedByRegex
 {
     NSString *regex = @", ";
     NSArray *captures = [self.candidate componentsSeparatedByRegex:regex];
-    XCTAssert(captures.count == 12);
+    XCTAssertTrue(captures.count == 12);
     
     for (NSString *substring in captures) {
         BOOL result = [substring isMatchedByRegex:@", "];
@@ -145,46 +145,46 @@
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = self.candidate.stringRange;
     NSRange captureRange = [self.candidate rangeOfRegex:regex range:entireRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(captureRange.location == 0);
-    XCTAssert(captureRange.length == 19);
+    XCTAssertTrue(captureRange.location == 0);
+    XCTAssertTrue(captureRange.length == 19);
     
     NSRange dateRange = [self.candidate rangeOfRegex:regex range:entireRange capture:1 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(dateRange.location == 0);
-    XCTAssert(dateRange.length == 10);
+    XCTAssertTrue(dateRange.location == 0);
+    XCTAssertTrue(dateRange.length == 10);
 
     NSRange yearRange = [self.candidate rangeOfRegex:regex range:entireRange capture:2 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(yearRange.location == 0);
-    XCTAssert(yearRange.length == 4);
+    XCTAssertTrue(yearRange.location == 0);
+    XCTAssertTrue(yearRange.length == 4);
 
     NSRange monthRange = [self.candidate rangeOfRegex:regex range:entireRange capture:3 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(monthRange.location == 5);
-    XCTAssert(monthRange.length == 2);
+    XCTAssertTrue(monthRange.location == 5);
+    XCTAssertTrue(monthRange.length == 2);
 
     NSRange dayRange = [self.candidate rangeOfRegex:regex range:entireRange capture:4 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(dayRange.location == 8);
-    XCTAssert(dayRange.length == 2);
+    XCTAssertTrue(dayRange.location == 8);
+    XCTAssertTrue(dayRange.length == 2);
 
     NSRange timeRange = [self.candidate rangeOfRegex:regex range:entireRange capture:5 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(timeRange.location == 11);
-    XCTAssert(timeRange.length == 8);
+    XCTAssertTrue(timeRange.location == 11);
+    XCTAssertTrue(timeRange.length == 8);
 
     NSRange hourRange = [self.candidate rangeOfRegex:regex range:entireRange capture:6 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(hourRange.location == 11);
-    XCTAssert(hourRange.length == 2);
+    XCTAssertTrue(hourRange.location == 11);
+    XCTAssertTrue(hourRange.length == 2);
 
     NSRange minuteRange = [self.candidate rangeOfRegex:regex range:entireRange capture:7 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(minuteRange.location == 14);
-    XCTAssert(minuteRange.length == 2);
+    XCTAssertTrue(minuteRange.location == 14);
+    XCTAssertTrue(minuteRange.length == 2);
 
     NSRange secondRange = [self.candidate rangeOfRegex:regex range:entireRange capture:8 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(secondRange.location == 17);
-    XCTAssert(secondRange.length == 2);
+    XCTAssertTrue(secondRange.location == 17);
+    XCTAssertTrue(secondRange.length == 2);
 }
 
 - (void)testFailedRangeOfRegex
 {
     NSRange failRange = [self.candidate rangeOfRegex:@"blah"];
-    XCTAssert(failRange.location == NSNotFound);
+    XCTAssertTrue(failRange.location == NSNotFound);
 }
 
 - (void)testStringMatchedByRegexRangeCaptureOptionsMatchOptionsError
@@ -192,10 +192,10 @@
     NSString *regexPattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = self.candidate.stringRange;
     NSString *fullTimestamp = [self.candidate stringMatchedByRegex:regexPattern range:entireRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert([fullTimestamp isEqualToString:@"2014-05-06 17:03:17"]);
+    XCTAssertTrue([fullTimestamp isEqualToString:@"2014-05-06 17:03:17"]);
 
     NSString *datestamp = [self.candidate stringMatchedByRegex:regexPattern range:entireRange capture:1 options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert([datestamp isEqualToString:@"2014-05-06"]);
+    XCTAssertTrue([datestamp isEqualToString:@"2014-05-06"]);
 }
 
 - (void)testStringByReplacingOccurrencesOfRegexWithTemplateOptionsMatchingOptionsRangeError
@@ -204,12 +204,12 @@
     NSString *failureControl = @"2014-05-06 17:03:17.967 EXECUTION_DATA";
     NSRange failureRange = NSMakeRange(0, 38);
     NSString *failureResult = [self.candidate stringByReplacingOccurrencesOfRegex:failedPattern withTemplate:@"BARNEY RUBBLE" range:failureRange options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert([failureResult isEqualToString:failureControl]);
+    XCTAssertTrue([failureResult isEqualToString:failureControl]);
 
     NSString *successPattern = @"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+ (EXECUTION_DATA)";
     NSString *successResult = [self.candidate stringByReplacingOccurrencesOfRegex:successPattern withTemplate:@"BARNEY RUBBLE ~~~$1~~~" range:failureRange options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert([successResult isMatchedByRegex:@"BARNEY RUBBLE"]);
-    XCTAssert([successResult isMatchedByRegex:@"~~~EXECUTION_DATA~~~"]);
+    XCTAssertTrue([successResult isMatchedByRegex:@"BARNEY RUBBLE"]);
+    XCTAssertTrue([successResult isMatchedByRegex:@"~~~EXECUTION_DATA~~~"]);
 }
 
 - (void)testStringByReplacingOccurrencesOfRegexRangeOptionsMatchOptionsErrorUsingBlock
@@ -234,7 +234,7 @@
         return [replacement copy];
     }];
     
-    XCTAssert([output isMatchedByRegex:@"cray cray!"]);
+    XCTAssertTrue([output isMatchedByRegex:@"cray cray!"]);
 
     __block NSUInteger blockCount = 0;
     pattern = @"pick(led)?";
@@ -259,10 +259,10 @@
         return @"FAIL";
     }];
     
-    XCTAssert([output isMatchedByRegex:@"selected"]);
-    XCTAssert([output isMatchedByRegex:@"marinated"]);
-    XCTAssert([output isMatchedByRegex:@"pick"]);
-    XCTAssert([output isMatchedByRegex:@"pickled"]);
+    XCTAssertTrue([output isMatchedByRegex:@"selected"]);
+    XCTAssertTrue([output isMatchedByRegex:@"marinated"]);
+    XCTAssertTrue([output isMatchedByRegex:@"pick"]);
+    XCTAssertTrue([output isMatchedByRegex:@"pickled"]);
     XCTAssertFalse([output isMatchedByRegex:@"FAIL"]);
 }
 
@@ -271,27 +271,27 @@
     NSError *error;
     NSString *regexString = @"[a-z";
     XCTAssertFalse([regexString isRegexValidWithOptions:RKXNoOptions error:&error]);
-    XCTAssert(error.code == 2048);
-    XCTAssert(error.domain == NSCocoaErrorDomain);
+    XCTAssertTrue(error.code == 2048);
+    XCTAssertTrue(error.domain == NSCocoaErrorDomain);
 }
 
 - (void)testArrayOfCaptureComponentsMatchedByRegexRangeOptionsMatchOptionsError
 {
     NSString *list      = @"$10.23, $1024.42, $3099";
     NSArray *listItems = [list arrayOfCaptureComponentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:list.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
-    XCTAssert(listItems.count == 3);
+    XCTAssertTrue(listItems.count == 3);
 
     NSArray *list0 = listItems[0];
     BOOL result0 = [list0 isEqualToArray:@[ @"$10.23", @"10.23", @"10", @"23" ]];
-    XCTAssert(result0);
+    XCTAssertTrue(result0);
 
     NSArray *list1 = listItems[1];
     BOOL result1 = [list1 isEqualToArray:@[ @"$1024.42", @"1024.42", @"1024", @"42" ]];
-    XCTAssert(result1);
+    XCTAssertTrue(result1);
 
     NSArray *list2 = listItems[2];
     BOOL result2 = [list2 isEqualToArray:@[ @"$3099", @"3099", @"3099", @"" ]];
-    XCTAssert(result2);
+    XCTAssertTrue(result2);
 }
 
 - (void)testComponentsMatchedByRegexRangeCaptureOptionsError
@@ -299,18 +299,18 @@
     NSString *list = @"$10.23, $1024.42, $3099";
     NSArray *listItems = [list componentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:list.stringRange capture:3 options:RKXNoOptions error:NULL];
     
-    XCTAssert([listItems[0] isEqualToString:@"23"]);
-    XCTAssert([listItems[1] isEqualToString:@"42"]);
-    XCTAssert([listItems[2] isEqualToString:@""]);
+    XCTAssertTrue([listItems[0] isEqualToString:@"23"]);
+    XCTAssertTrue([listItems[1] isEqualToString:@"42"]);
+    XCTAssertTrue([listItems[2] isEqualToString:@""]);
 }
 
 - (void)testCaptureComponentsMatchedByRegex
 {
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+).(\\d+))";
     NSArray *captures = [self.candidate captureComponentsMatchedByRegex:regex];
-    XCTAssert(captures.count == 10);
-    XCTAssert([captures[1] isEqualToString:@"2014-05-06"]);
-    XCTAssert([captures[5] isEqualToString:@"17:03:17.967"]);
+    XCTAssertTrue(captures.count == 10);
+    XCTAssertTrue([captures[1] isEqualToString:@"2014-05-06"]);
+    XCTAssertTrue([captures[5] isEqualToString:@"17:03:17.967"]);
 }
 
 - (void)testCaptureCountWithOptionsError
@@ -318,7 +318,7 @@
     NSString *pattern = @"\\$((\\d+)(?:\\.(\\d+)|\\.?))";
     NSError *error;
     NSUInteger captureCount = [pattern captureCountWithOptions:RKXNoOptions error:&error];
-    XCTAssert(captureCount == 3);
+    XCTAssertTrue(captureCount == 3);
 }
 
 - (void)testDictionaryMatchedByRegexRangeOptionsErrorWithKeysAndCaptures
@@ -333,8 +333,8 @@
                                                             error:NULL
                                               withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
 
-    XCTAssert([nameDictionary[firstKey] isEqualToString:@"Joe"]);
-    XCTAssert([nameDictionary[lastKey] isEqualToString:@""]);
+    XCTAssertTrue([nameDictionary[firstKey] isEqualToString:@"Joe"]);
+    XCTAssertTrue([nameDictionary[lastKey] isEqualToString:@""]);
     
     NSString *badRegex = @"Name:\\s*(\\w*)\\s*(\\w*";
     NSError *error;
@@ -360,18 +360,18 @@
                                    @"executionPrice", 10,
                                    @"permanentID", 11, nil];
 
-    XCTAssert(executionDict.count == 11);
-    XCTAssert([executionDict[@"executionDate"] isEqualToString:@"2014-05-06 17:03:17.967"]);
-    XCTAssert([executionDict[@"currencyPair"] isEqualToString:@"EUR.JPY"]);
-    XCTAssert([executionDict[@"orderID"] isEqualToString:@"439"]);
-    XCTAssert([executionDict[@"clientID"] isEqualToString:@"75018"]);
-    XCTAssert([executionDict[@"executionID"] isEqualToString:@"0001f4e8.536956da.01.01"]);
-    XCTAssert([executionDict[@"canonicalExecutionDate"] isEqualToString:@"20140506  17:03:18"]);
-    XCTAssert([executionDict[@"accountID"] isEqualToString:@"DU275587"]);
-    XCTAssert([executionDict[@"orderSide"] isEqualToString:@"SLD"]);
-    XCTAssert([executionDict[@"orderVolume"] isEqualToString:@"141500"]);
-    XCTAssert([executionDict[@"executionPrice"] isEqualToString:@"141.73"]);
-    XCTAssert([executionDict[@"permanentID"] isEqualToString:@"825657452"]);
+    XCTAssertTrue(executionDict.count == 11);
+    XCTAssertTrue([executionDict[@"executionDate"] isEqualToString:@"2014-05-06 17:03:17.967"]);
+    XCTAssertTrue([executionDict[@"currencyPair"] isEqualToString:@"EUR.JPY"]);
+    XCTAssertTrue([executionDict[@"orderID"] isEqualToString:@"439"]);
+    XCTAssertTrue([executionDict[@"clientID"] isEqualToString:@"75018"]);
+    XCTAssertTrue([executionDict[@"executionID"] isEqualToString:@"0001f4e8.536956da.01.01"]);
+    XCTAssertTrue([executionDict[@"canonicalExecutionDate"] isEqualToString:@"20140506  17:03:18"]);
+    XCTAssertTrue([executionDict[@"accountID"] isEqualToString:@"DU275587"]);
+    XCTAssertTrue([executionDict[@"orderSide"] isEqualToString:@"SLD"]);
+    XCTAssertTrue([executionDict[@"orderVolume"] isEqualToString:@"141500"]);
+    XCTAssertTrue([executionDict[@"executionPrice"] isEqualToString:@"141.73"]);
+    XCTAssertTrue([executionDict[@"permanentID"] isEqualToString:@"825657452"]);
 }
 
 - (void)testArrayOfDictionariesMatchedByRegexRangeOptionsMatchOptionsErrorWithKeysAndCaptures
@@ -388,12 +388,12 @@
                                               withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
 
     NSDictionary *name1 = nameArray[0];
-    XCTAssert([name1[firstKey] isEqualToString:@"Bob"]);
-    XCTAssert([name1[lastKey] isEqualToString:@""]);
+    XCTAssertTrue([name1[firstKey] isEqualToString:@"Bob"]);
+    XCTAssertTrue([name1[lastKey] isEqualToString:@""]);
 
     NSDictionary *name2 = nameArray[1];
-    XCTAssert([name2[firstKey] isEqualToString:@"John"]);
-    XCTAssert([name2[lastKey] isEqualToString:@"Smith"]);
+    XCTAssertTrue([name2[firstKey] isEqualToString:@"John"]);
+    XCTAssertTrue([name2[lastKey] isEqualToString:@"Smith"]);
 
     NSArray *failureResult = [self.candidate arrayOfDictionariesMatchedByRegex:regex
                                                                          range:self.candidate.stringRange
@@ -402,7 +402,7 @@
                                                                          error:NULL
                                                            withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
     XCTAssertNotNil(failureResult);
-    XCTAssert(failureResult.count == 0);
+    XCTAssertTrue(failureResult.count == 0);
 }
 
 - (void)testEnumerateStringsSeparatedByRegexUsingBlock
@@ -426,22 +426,22 @@
         NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = rangeValueChecks[index].rangeValue;
         NSLog(@"Forward: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
-        XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", capturedStrings[0], NSStringFromRange(range), NSStringFromRange(rangeCheck));
+        XCTAssertTrue(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", capturedStrings[0], NSStringFromRange(range), NSStringFromRange(rangeCheck));
         index++;
     }];
 
-    XCTAssert(result);
+    XCTAssertTrue(result);
     index--;
 
     result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern range:self.candidate.stringRange options:0 matchOptions:0 enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
         NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = rangeValueChecks[index].rangeValue;
         NSLog(@"Reverse: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
-        XCTAssert(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", capturedStrings[0], NSStringFromRange(range), NSStringFromRange(rangeCheck));
+        XCTAssertTrue(NSEqualRanges(range, rangeCheck), @"The string (%@) doesn't have the correct ranges: %@ != %@", capturedStrings[0], NSStringFromRange(range), NSStringFromRange(rangeCheck));
         index--;
     }];
 
-    XCTAssert(result);
+    XCTAssertTrue(result);
 }
 
 - (void)testLegacyICUtoPerlOperationalFix
@@ -462,8 +462,8 @@
     NSString *pattern = @"\\b\\s*";
     NSArray<NSString *> *components = [testString componentsSeparatedByRegex:pattern];
     XCTAssertFalse([components.firstObject isEqualToString:@"I"]);
-    XCTAssert([components.firstObject isEqualToString:@""]);
-    XCTAssert([components.lastObject isEqualToString:@"rice"]);
+    XCTAssertTrue([components.firstObject isEqualToString:@""]);
+    XCTAssertTrue([components.lastObject isEqualToString:@"rice"]);
 }
 
 #pragma mark - NSMutableString tests
@@ -473,9 +473,9 @@
     NSMutableString *mutableCandidate = [NSMutableString stringWithString:self.candidate];
     NSUInteger count = [mutableCandidate replaceOccurrencesOfRegex:@", " withTemplate:@" barney "];
 
-    XCTAssert([mutableCandidate isMatchedByRegex:@" barney "]);
+    XCTAssertTrue([mutableCandidate isMatchedByRegex:@" barney "]);
     XCTAssertFalse([mutableCandidate isMatchedByRegex:@", "]);
-    XCTAssert(count == 11);
+    XCTAssertTrue(count == 11);
 }
 
 - (void)testReplaceOccurrencesOfRegexUsingBlock
@@ -486,9 +486,9 @@
         return @" barney ";
     }];
 
-    XCTAssert(count == 1);
-    XCTAssert([mutableCandidate isMatchedByRegex:@" barney "]);
-    XCTAssert([mutableCandidate isMatchedByRegex:@", "]);
+    XCTAssertTrue(count == 1);
+    XCTAssertTrue([mutableCandidate isMatchedByRegex:@" barney "]);
+    XCTAssertTrue([mutableCandidate isMatchedByRegex:@", "]);
 }
 
 #pragma mark - Ported RKX4 Demos/Tests
@@ -509,7 +509,7 @@
         matchCount++;
     }];
     
-    XCTAssert(matchCount == 4);
+    XCTAssertTrue(matchCount == 4);
 }
 
 - (void)testForInExample
@@ -527,7 +527,7 @@
         matchCount++;
     }
     
-    XCTAssert(matchCount == 4);
+    XCTAssertTrue(matchCount == 4);
 }
 
 - (void)testLinkExample
@@ -541,7 +541,7 @@
     NSString *matchedString = [subjectString stringMatchedByRegex:regexString capture:1L];
     NSRange matchRange = [subjectString rangeOfRegex:regexString capture:1L];
     
-    XCTAssert(NSEqualRanges(matchRange, NSMakeRange(10, 3)), @"range: %@", NSStringFromRange(matchRange));
+    XCTAssertTrue(NSEqualRanges(matchRange, NSMakeRange(10, 3)), @"range: %@", NSStringFromRange(matchRange));
 
     NSLog(@"subject: \"%@\"", subjectString);
     NSLog(@"matched: \"%@\"", matchedString);
@@ -552,18 +552,18 @@
 - (void)testRegexString
 {
     NSString *pattern123 = [NSString stringWithFormat:@"123"];
-    XCTAssert([pattern123 isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssertTrue([pattern123 isRegexValidWithOptions:0 error:NULL], @"Should be valid");
     NSString *patternMAGIC = [NSString stringWithFormat:@"^(Match)\\s+the\\s+(MAGIC)$"];
-    XCTAssert([patternMAGIC isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssertTrue([patternMAGIC isRegexValidWithOptions:0 error:NULL], @"Should be valid");
 }
 
 - (void)testValidRegexString
 {
-    XCTAssert([@"123" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
-    XCTAssert([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssertTrue([@"123" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssertTrue([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
     
     // ICU likes this regex under a weird options combo (that included ignoring all metacharacters)
-    XCTAssert([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0xffffffff error:NULL]);
+    XCTAssertTrue([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0xffffffff error:NULL]);
     // But didn't when options = 0
     XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL]);
 
@@ -630,7 +630,7 @@
     "\nExcerpt From: Jeffrey E. F. Friedl. \"Mastering Regular Expressions, Third Edition.\" Apple Books.";
 
     NSString *pattern = @"\\b([A-Za-z]+) \\1\\b";
-    XCTAssert([mre3Text isMatchedByRegex:pattern]);
+    XCTAssertTrue([mre3Text isMatchedByRegex:pattern]);
 }
 
 - (void)testFirstLookaheadExample
@@ -639,11 +639,11 @@
 
     // backward-to-forward lookaround
     NSString *output = [jeffs stringByReplacingOccurrencesOfRegex:@"(?<=\\bJeff)(?=s\\b)" withTemplate:@"\'"];
-    XCTAssert([output isEqualToString:@"Jeff\'s"]);
+    XCTAssertTrue([output isEqualToString:@"Jeff\'s"]);
 
     // forward-to-backward lookaround
     NSString *output2 = [jeffs stringByReplacingOccurrencesOfRegex:@"(?=s\\b)(?<=\\bJeff)" withTemplate:@"\'"];
-    XCTAssert([output2 isEqualToString:@"Jeff\'s"]);
+    XCTAssertTrue([output2 isEqualToString:@"Jeff\'s"]);
 }
 
 - (void)testLookaheadPopulationExample
@@ -654,24 +654,24 @@
 
     // Positive lookbehind and lookahead
     NSString *formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(\\d\\d\\d)+$)" withTemplate:@","];
-    XCTAssert([formattedUSPop isEqualToString:testControl]);
+    XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 
     // More compact digit-matching sub-regex
     formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(\\d{3})+$)" withTemplate:@","];
-    XCTAssert([formattedUSPop isEqualToString:testControl]);
+    XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 
     // Positive lookbehind (?<=...), positive lookahead (?=...), and Negative lookahead (?!...)
     formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(\\d{3})+(?!\\d))" withTemplate:@","];
-    XCTAssert([formattedUSPop isEqualToString:testControl]);
+    XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 
     // Non-capturing parentheses (?:...)
     // NOTE: A little more efficient since they don't spend extra ops capturing.
     formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(?:\\d{3})+$)" withTemplate:@","];
-    XCTAssert([formattedUSPop isEqualToString:testControl]);
+    XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 
     // Negative lookbehind (?<!)
     formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<!\\b)(?=(?:\\d{3})+$)" withTemplate:@","];
-    XCTAssert([formattedUSPop isEqualToString:testControl]);
+    XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 }
 
 #pragma mark - Performance Tests
@@ -682,7 +682,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Sherlock" options:RKXMultiline];
-        XCTAssert(matches.count == 97);
+        XCTAssertTrue(matches.count == 97);
     }];
 }
 
@@ -690,7 +690,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^Sherlock" options:RKXMultiline];
-        XCTAssert(matches.count == 34, @"The count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 34, @"The count is %lu", matches.count);
     }];
 }
 
@@ -698,7 +698,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Sherlock$" options:RKXMultiline];
-        XCTAssert(matches.count == 6, @"The count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 6, @"The count is %lu", matches.count);
     }];
 }
 
@@ -706,7 +706,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"a[^x]{20}b" options:RKXMultiline];
-        XCTAssert(matches.count == 405, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 405, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -714,7 +714,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Holmes|Watson" options:RKXMultiline];
-        XCTAssert(matches.count == 542, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 542, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -722,7 +722,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@".{0,3}(Holmes|Watson)" options:RKXMultiline];
-        XCTAssert(matches.count == 542, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 542, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -730,7 +730,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"[a-zA-Z]+ing" options:RKXMultiline];
-        XCTAssert(matches.count == 2824, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 2824, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -738,7 +738,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^([a-zA-Z]{0,4}ing)[^a-zA-Z]" options:RKXMultiline];
-        XCTAssert(matches.count == 163, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 163, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -746,7 +746,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"[a-zA-Z]+ing$" options:RKXMultiline];
-        XCTAssert(matches.count == 152, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 152, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -754,7 +754,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^[a-zA-Z ]{5,}$" options:RKXMultiline];
-        XCTAssert(matches.count == 876, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 876, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -762,7 +762,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^.{16,20}$" options:RKXMultiline];
-        XCTAssert(matches.count == 238, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 238, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -770,7 +770,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"([a-f](.[d-m].){0,2}[h-n]){2}" options:RKXMultiline];
-        XCTAssert(matches.count == 1597, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 1597, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -778,7 +778,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"([A-Za-z]olmes)|([A-Za-z]atson)[^a-zA-Z]" options:RKXMultiline];
-        XCTAssert(matches.count == 542, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 542, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -786,7 +786,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"\"[^\"]{0,30}[?!\\.]\"" options:RKXMultiline];
-        XCTAssert(matches.count == 582, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 582, @"The match count is %lu", matches.count);
     }];
 }
 
@@ -794,7 +794,7 @@
 {
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Holmes.{10,60}Watson|Watson.{10,60}Holmes"];
-        XCTAssert(matches.count == 2, @"The match count is %lu", matches.count);
+        XCTAssertTrue(matches.count == 2, @"The match count is %lu", matches.count);
     }];
 }
 
