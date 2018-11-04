@@ -590,7 +590,12 @@
     XCTAssertTrue((NSEqualRanges(regexRanges[1].rangeValue, NSMakeRange(0, 9))), @"%@", regexRanges[1]);
     XCTAssertTrue((NSEqualRanges(regexRanges[2].rangeValue, NSMakeRange(10, 1))), @"%@", regexRanges[2]);
     XCTAssertTrue((NSEqualRanges(regexRanges[3].rangeValue, NSMakeRange(12, 4))), @"%@", regexRanges[3]);
+}
 
+#pragma mark - Hero's Journey Unicode Testing
+
+- (void)testHerosJourneyUnicode
+{
     NSString *herosJourney = self.unicodeStrings[8];
     XCTAssertTrue([herosJourney isMatchedByRegex:@"䷂"]);
     XCTAssertTrue([herosJourney isMatchedByRegex:@"𝌢"]);
