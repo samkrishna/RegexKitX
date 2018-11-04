@@ -6,7 +6,7 @@ import XCTest
 @testable import SwiftRegexKitX
 
 class RegexKitXTests: XCTestCase {
-    public let candidate = "2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU275587, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
+    public let candidate = "2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU275587, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73"
 
     var testCorpus: String {
         return type(of: self).corpus
@@ -114,7 +114,7 @@ class RegexKitXTests: XCTestCase {
         let result = try! candidate.matches(regex, options: .RKXCaseless)
         XCTAssertTrue(result)
 
-        let failResult = try! candidate.matches(regex, options: [.RKXCaseless, .RKXIgnoreMetacharacters ])
+        let failResult = try! candidate.matches(regex, options: [.RKXCaseless, .RKXIgnoreMetacharacters])
         XCTAssertFalse(failResult)
     }
 
@@ -173,15 +173,15 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testStringMatchedByRegex() {
-        let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
+        let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))"
         let timestamp = try! candidate.stringMatched(by: regex)
-        XCTAssert(timestamp == "2014-05-06 17:03:17");
+        XCTAssert(timestamp == "2014-05-06 17:03:17")
     }
 
     func testStringByReplacingOccurrencesOfRegex() {
         let failedRegex = "2014-05-06 17:03:17.967 EXECUTION_DINO"
         let failureControl = "2014-05-06 17:03:17.967 EXECUTION_DATA"
-        let failureRange = NSMakeRange(0, 38);
+        let failureRange = NSMakeRange(0, 38)
         let failureResult = try! candidate.stringByReplacingOccurrences(of: failedRegex, with: "BARNEY RUBBLE", in: failureRange)
         XCTAssert(failureResult == failureControl)
 
@@ -217,24 +217,24 @@ class RegexKitXTests: XCTestCase {
 
         let list0 = listItems[0]
         XCTAssert(list0 == [ "$10.23", "10.23", "10", "23" ])
-        let list1 = listItems[1];
+        let list1 = listItems[1]
         XCTAssert(list1 == [ "$1024.42", "1024.42", "1024", "42" ])
-        let list2 = listItems[2];
+        let list2 = listItems[2]
         XCTAssert(list2 == [ "$3099", "3099", "3099", "" ])
     }
 
     func testDictionaryMatchedByRegex() {
-        let name = "Name: Joe";
-        let regex = "Name:\\s*(\\w*)\\s*(\\w*)";
-        let firstKey = "first";
-        let lastKey = "last";
+        let name = "Name: Joe"
+        let regex = "Name:\\s*(\\w*)\\s*(\\w*)"
+        let firstKey = "first"
+        let lastKey = "last"
 
         let dict = try! name.dictionaryMatched(by:regex, keysAndCaptures: firstKey, 1, lastKey, 2)
         XCTAssert(dict[firstKey] == "Joe")
         XCTAssert(dict[lastKey] == "")
         XCTAssertThrowsError(try name.dictionaryMatched(by:regex, keysAndCaptures: firstKey, 1, lastKey))
 
-        let badRegex = "Name:\\s*(\\w*)\\s*(\\w*";
+        let badRegex = "Name:\\s*(\\w*)\\s*(\\w*"
         XCTAssertThrowsError(try name.dictionaryMatched(by: badRegex, keysAndCaptures: firstKey, 1, lastKey, 2))
 
         let execRegex = "(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), time:(\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*"
@@ -251,11 +251,11 @@ class RegexKitXTests: XCTestCase {
             "executionPrice", 10,
             "permanentID", 11)
 
-        XCTAssert(executionDict.count == 11);
+        XCTAssert(executionDict.count == 11)
         XCTAssert(executionDict["executionDate"] == "2014-05-06 17:03:17.967")
         XCTAssert(executionDict["currencyPair"] == "EUR.JPY")
         XCTAssert(executionDict["orderID"] == "439")
-        XCTAssert(executionDict["clientID"] == "75018");
+        XCTAssert(executionDict["clientID"] == "75018")
         XCTAssert(executionDict["executionID"] == "0001f4e8.536956da.01.01")
         XCTAssert(executionDict["canonicalExecutionDate"] == "20140506  17:03:18")
         XCTAssert(executionDict["accountID"] == "DU275587")
@@ -273,13 +273,13 @@ class RegexKitXTests: XCTestCase {
 
         let nameArray = try! name.arrayOfDictionariesMatched(by: regex, keysAndCaptures: firstKey, 1, lastKey, 2)
 
-        let name0 = nameArray[0];
-        XCTAssert(name0[firstKey] == "Bob");
-        XCTAssert(name0[lastKey] == "");
+        let name0 = nameArray[0]
+        XCTAssert(name0[firstKey] == "Bob")
+        XCTAssert(name0[lastKey] == "")
 
-        let name1 = nameArray[1];
-        XCTAssert(name1[firstKey] == "John");
-        XCTAssert(name1[lastKey] == "Smith");
+        let name1 = nameArray[1]
+        XCTAssert(name1[firstKey] == "John")
+        XCTAssert(name1[lastKey] == "Smith")
 
         let failureResult = try! candidate.arrayOfDictionariesMatched(by: regex, keysAndCaptures: firstKey, 1, lastKey, 2)
         XCTAssertNotNil(failureResult)
@@ -302,9 +302,9 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testComponentsSeparatedByRegex() {
-        let regex = ", ";
+        let regex = ", "
         let captures = try! candidate.componentsSeparated(by: regex)
-        XCTAssert(captures.count == 12);
+        XCTAssert(captures.count == 12)
 
         for substring in captures {
             XCTAssertFalse(substring =~ regex)
@@ -312,7 +312,7 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testEnumerateStringsSeparatedyByRegexUsingBlock() {
-        let regex = ",(\\s+)";
+        let regex = ",(\\s+)"
         let rangeValueChecks = [ NSMakeRange(0, 91),
                                  NSMakeRange(93, 30),
                                  NSMakeRange(125, 23),
@@ -324,9 +324,9 @@ class RegexKitXTests: XCTestCase {
                                  NSMakeRange(229, 16),
                                  NSMakeRange(247, 13),
                                  NSMakeRange(262, 13),
-                                 NSMakeRange(277, 15) ];
+                                 NSMakeRange(277, 15) ]
 
-        var index = 0;
+        var index = 0
         let result = try! candidate.enumerateStringsSeparated(by: regex, using: { (capturedStrings, capturedRanges) in
             let string = capturedStrings[0]
             let range = capturedRanges[0]
@@ -336,7 +336,7 @@ class RegexKitXTests: XCTestCase {
             index += 1
         })
 
-        XCTAssert(result);
+        XCTAssert(result)
     }
 
     func testCaseBehavior() {
@@ -361,7 +361,7 @@ class RegexKitXTests: XCTestCase {
     }
 
     func testStringByReplacingOccurrencesOfRegexUsingBlock() {
-        let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
+        let regex = "((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))"
 
         let output = try! candidate.stringByReplacingOccurences(of: regex, using: { (capturedStrings, capturedRanges) in
             var replacement = ""
@@ -412,26 +412,26 @@ class RegexKitXTests: XCTestCase {
 
                         Excerpt From: Jeffrey E. F. Friedl. \"Mastering Regular Expressions, Third Edition.\" Apple Books.
                         """
-        let regex = "\\b([A-Za-z]+) \\1\\b";
-        XCTAssert(try mre3Text.matches(regex));
+        let regex = "\\b([A-Za-z]+) \\1\\b"
+        XCTAssert(try mre3Text.matches(regex))
     }
 
     func testFirstLookaheadExample() {
-        let jeffs = "Jeffs";
+        let jeffs = "Jeffs"
 
         // backward-to-forward lookaround
         let output = try! jeffs.stringByReplacingOccurrences(of: "(?<=\\bJeff)(?=s\\b)", with: "\'")
-        XCTAssert(output == "Jeff\'s");
+        XCTAssert(output == "Jeff\'s")
 
         // forward-to-backward lookaround
         let output2 = try! jeffs.stringByReplacingOccurrences(of: "(?=s\\b)(?<=\\bJeff)", with: "\'")
-        XCTAssert(output2 == "Jeff\'s");
+        XCTAssert(output2 == "Jeff\'s")
     }
 
     func testLookaheadPopulationExample() {
         // As of 2018-10-16 07:06:50 -0700 from https://www.census.gov/popclock/
-        let rawUSPop = "328807309";
-        let testControl = "328,807,309";
+        let rawUSPop = "328807309"
+        let testControl = "328,807,309"
 
         // Positive lookbehind and lookahead
         var formattedUSPop = try! rawUSPop.stringByReplacingOccurrences(of: "(?<=\\d)(?=(\\d\\d\\d)+$)", with: ",")
