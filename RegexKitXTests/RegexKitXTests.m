@@ -491,7 +491,7 @@
     XCTAssertTrue([mutableCandidate isMatchedByRegex:@", "]);
 }
 
-#pragma mark - Ported RKX4 Demos/Tests
+#pragma mark - Ported RKL4 Demos/Tests
 
 - (void)testEnumerateStringsMatchedByRegexUsingBlock
 {
