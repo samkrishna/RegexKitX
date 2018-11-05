@@ -12,25 +12,42 @@ This is a Swift 4 implementation inspired by the [RegexKitLite 4.0](http://regex
 
 ## Objective-C
 
-**NOTE:** There's an almost-pure RKL4-API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0-swap-fixed). This version is intended to be a drop-in replacement for the original *RKL4* codebase.
-
 This is a Regular Expression API inspired by the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) API that John Engelhart (@johnezang) [shipped back in 2010](http://regexkit.sourceforge.net/RegexKitLite/index.html#ReleaseInformation_40). ("*RKL4*")
 
-Basically, I'm modernizing the API as a cover for [NSRegularExpression](https://developer.apple.com/documentation/foundation/nsregularexpression) and [NSTextCheckingResult](https://developer.apple.com/documentation/foundation/nstextcheckingresult). I am doing this for several reasons:
+Basically, I'm modernizing the API as a cover for [NSRegularExpression](https://developer.apple.com/documentation/foundation/nsregularexpression) and [NSTextCheckingResult](https://developer.apple.com/documentation/foundation/nstextcheckingresult).
+
+I am doing this for several reasons:
 
 - How [unwieldy NSRegularExpression naturally is](http://nshipster.com/nsregularexpression/)
 - The false positives that the Clang Static Analyzer flagged in *RKL4*
-- The low-level *RKL4* C code accessing the [ICU](http://site.icu-project.org/) regex engine spits out deprecation warnings on macOS 10.12 Sierra
-- The annoyance of having to always remember to **ALWAYS link to the ICU library** on every project
+- The fact that *RKL4* is **NOT** ARC-compliant
+- The fact that the low-level *RKL4* C code accessing the [ICU](http://site.icu-project.org/) regex engine spits out `OSSpinLock`-based deprecation warnings on macOS 10.12 Sierra and above
+- How easy it is to forget to **ALWAYS link to the ICU library** on every project using *RKL4*
 
 My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do RegexKitX ("*RKX*").
 
 I've also added documentation that is option-clickable for all the *RKX* category methods.
 
+**NOTE:** There's an almost-pure *RKL4* API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0-swap-fixed). This version is intended to be a drop-in replacement for the original *RKL4* codebase. If you are using the original *RKL4* block-based API and choose to use*RKX* as a drop-in replacement, you'll need to do some modifications at the block signature level. Specifically, you'll need to convert *RKL4* API blocks from this kind of block signature:
+
+```
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)regex 
+                            usingBlock:(void (^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
+```
+to this kind of block signature:
+
+```
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)regexPattern 
+                            usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
+
+```
+
+It's a small conversion to `NSArray` for the `capturedStrings` block argument.
+
 ## A few caveats:
 
 1. I've re-ordered and modernized some of the argument and block parameters for a number of APIs.
-1. I've renamed a few APIs as well.
+1. I've renamed a few APIs as well to make them grammatically consistent.
 1. The regex syntax is 100%-pure ICU syntax.
 1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration. As usual, `NSEnumerationConcurrent` behavior is undefined.
 
