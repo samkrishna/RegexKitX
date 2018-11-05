@@ -866,7 +866,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
  @return Returns @c YES if there was no error, otherwise returns @c NO.
  */
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern using @c options and executes the block for each match found.
@@ -879,7 +879,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
  @return Returns @c YES if there was no error, otherwise returns @c NO.
  */
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and executes the block for each match found.
@@ -894,7 +894,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
  @return Returns @c YES if there was no error, otherwise returns @c NO and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes the block using the enumeration direction defined by @c enumOpts for each match found.
@@ -911,7 +911,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
  @return Returns @c YES if there was no error, otherwise returns @c NO and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 #pragma mark - enumerateStringsSeparatedByRegex:usingBlock:
 
@@ -925,7 +925,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
  @return Returns @c YES if there was no error, otherwise returns @c NO.
  */
-- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the strings of the receiver that have been divided by the regular expression @c pattern using @c options and executes @c block for each divided string. The enumeration occurrs serially from left-to-right.
@@ -938,7 +938,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
  @return Returns @c YES if there was no error, otherwise returns @c NO.
  */
-- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the strings of the receiver that have been divided by the regular expression @c pattern within @c searchRange using @c options and executes @c block for each divided string. The enumeration occurrs serially from left-to-right.
@@ -953,7 +953,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
  @return Returns @c YES if there was no error, otherwise returns @c NO and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the strings of the receiver that have been divided by the regular expression @c pattern within @c searchRange using @c options and and @c matchOptions and executes @c block for each divided string. The enumeration direction is set by @c enumOpts.
@@ -970,7 +970,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
  @return Returns @c YES if there was no error, otherwise returns @c NO and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (BOOL)enumerateStringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions enumerationOptions:(NSEnumerationOptions)enumOpts error:(NSError **)error usingBlock:(void (^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlock:
 
@@ -985,7 +985,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return A @c NSString created from the characters of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of the @c NSString returned by @c block. If the receiver is not matched by @c pattern then the string that is returned is a copy of the receiver as if @c stringWithString: had been sent to it.
  @return Returns @c nil if there was an error.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern using @c options and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
@@ -999,7 +999,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return A @c NSString created from the characters within the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c NSString returned by @c block. Returns the characters within the receiver as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Returns @c nil if there was an error.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
@@ -1015,7 +1015,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c NSString returned by @c block. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Returns @c nil if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
@@ -1032,7 +1032,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return A @c NSString created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the @c NSString returned by @c block. Returns the characters within @c searchRange as if @c substringWithRange: had been sent to the receiver if the substring is not matched by @c pattern.
  @return Returns @c nil if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 #pragma clang diagnostic pop
 
 @end
@@ -1118,7 +1118,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern using @c options and executes @c block for each match found. Replaces the characters that were matched with the contents of the string returned by @c block, returning the number of replacements made.
@@ -1132,7 +1132,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and executes @c block for each match found. Replaces the characters that were matched with the contents of the string returned by @c block, returning the number of replacements made.
@@ -1148,7 +1148,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Replaces the characters that were matched with the contents of the string returned by @c block, returning the number of replacements made.
@@ -1165,7 +1165,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns number of successful substitutions of the matched @c pattern.
  @return Returns @c NSNotFound if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL * const stop))block;
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 #pragma clang diagnostic pop
 
 @end

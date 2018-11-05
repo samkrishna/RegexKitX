@@ -217,7 +217,7 @@
     NSString *pattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
     NSRange entireRange = self.candidate.stringRange;
 
-    NSString *output = [self.candidate stringByReplacingOccurrencesOfRegex:pattern range:entireRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
+    NSString *output = [self.candidate stringByReplacingOccurrencesOfRegex:pattern range:entireRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSMutableString *replacement = [NSMutableString string];
         NSString *dateRegex = @"^\\d+-\\d+-\\d+$";
         NSString *timeRegex = @"^\\d+:\\d+:\\d+\\.\\d+$";
@@ -242,7 +242,7 @@
                              @"A peck of pickled peppers Peter Piper picked;\n"
                              @"If Peter Piper picked a peck of pickled peppers,\n"
                              @"Where's the peck of pickled peppers Peter Piper picked?";
-    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern range:newCandidate.stringRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, volatile BOOL *const stop) {
+    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern range:newCandidate.stringRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, BOOL *stop) {
         blockCount++;
 
         if (blockCount == 2) {
@@ -422,7 +422,7 @@
                                               [NSValue valueWithRange:NSMakeRange(277, 15)] ];
 
     __block NSUInteger index = 0;
-    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
+    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = rangeValueChecks[index].rangeValue;
         NSLog(@"Forward: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
@@ -433,7 +433,7 @@
     XCTAssertTrue(result);
     index--;
 
-    result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern range:self.candidate.stringRange options:0 matchOptions:0 enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
+    result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern range:self.candidate.stringRange options:0 matchOptions:0 enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = rangeValueChecks[index].rangeValue;
         NSLog(@"Reverse: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
@@ -481,7 +481,7 @@
 - (void)testReplaceOccurrencesOfRegexUsingBlock
 {
     NSMutableString *mutableCandidate = [NSMutableString stringWithString:self.candidate];
-    NSUInteger count = [mutableCandidate replaceOccurrencesOfRegex:@", " usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
+    NSUInteger count = [mutableCandidate replaceOccurrencesOfRegex:@", " usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         *stop = YES;
         return @" barney ";
     }];
@@ -503,7 +503,7 @@
     NSLog(@"searchString: '%@'", searchString);
     NSLog(@"regexString : '%@'", regexString);
     
-    [searchString enumerateStringsMatchedByRegex:regexString usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, volatile BOOL *const stop) {
+    [searchString enumerateStringsMatchedByRegex:regexString usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSString *matchedString = capturedStrings[0];
         NSLog(@"%lu: %lu '%@'", ++line, matchedString.length, matchedString);
         matchCount++;
