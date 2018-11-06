@@ -919,7 +919,7 @@ Returns a string created from the characters of the receiver that are in the ran
  Enumerates the strings of the receiver that have been divided by the regular expression @c pattern and executes @c block for each divided string. The enumeration occurrs serially from left-to-right.
 
  @param pattern A @c NSString containing a valid regular expression.
- @param block The block that is executed for each match of @c pattern in the receiver. The block takes three arguments:
+ @param block The block that is executed for each divided string between the matches of @c pattern in the receiver. The block takes three arguments:
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges A @c NSArray containing the ranges matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
@@ -932,7 +932,7 @@ Returns a string created from the characters of the receiver that are in the ran
 
  @param pattern A @c NSString containing a valid regular expression.
  @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
- @param block The block that is executed for each match of @c pattern in the receiver. The block takes three arguments:
+ @param block The block that is executed for each divided string between the matches of @c pattern in the receiver. The block takes three arguments:
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges A @c NSArray containing the ranges matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
@@ -947,7 +947,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param searchRange The range of the receiver to search.
  @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param block The block that is executed for each match of @c pattern in the receiver. The block takes three arguments:
+ @param block The block that is executed for each divided string between the matches of @c pattern in the receiver. The block takes three arguments:
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges A @c NSArray containing the ranges matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
@@ -964,7 +964,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @param matchOptions A mask of options specified by combining RKXMatchOptions flags with the C bitwise @c OR operator. 0 may be used if no options are required.
  @param enumOpts Options for block enumeration operations. Use @c 0 for serial forward operations (best with left-to-right languages). Use @c NSEnumerationReverse for right-to-left languages. Behavior is undefined for @c NSEnumerationConcurrent.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @param block The block that is executed for each match of @c pattern in the receiver. The block takes three arguments:
+ @param block The block that is executed for each divided string between the matches of @c pattern in the receiver. The block takes three arguments:
  @param &nbsp;&nbsp;capturedStrings A @c NSArray containing the substrings matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a pointer to a string that is equal to @c @@"".
  @param &nbsp;&nbsp;capturedRanges A @c NSArray containing the NSValue-wrapped NSRanges matched by each capture group present in @c pattern. If a capture group did not match anything, it will contain a @c NSRange equal to @c {NSNotFound, 0}.
  @param &nbsp;&nbsp;stop A reference to a Boolean value. Setting the value to @c YES within the block stops further enumeration of the array. If a block stops further enumeration, that block continues to run until it’s finished.
