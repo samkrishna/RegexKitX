@@ -2,13 +2,15 @@
 
 Use the pattern-matching Force.
 
-## Swift
+## Inspiration
 
-This is a Swift 4 implementation inspired by the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) API. It is:
+I've loved regular expressions since the beginning of my programming career back when I worked at Apple. I learned (and continue to learn) A LOT from Jeffrey Friedl's book, [Mastering Regular Expression, 3rd. ed](http://shop.oreilly.com/product/9780596528126.do). I know they are [controversial](https://blog.codinghorror.com/regex-use-vs-regex-abuse/) in some circles but when crafted well, there's really nothing like them.
 
-- Yet another cover for `NSRegularExpression` and `NSTextCheckingResult`.
-- 100% pure ICU regex syntax
-- Allows the developer the ability to use either *NSRange* or *Range<String.UTF16Index>* to operate on portions of substrings.
+Here's some follow-up reading about regexes:
+
+- [Patrick Triest: You Should Learn Regex](https://blog.patricktriest.com/you-should-learn-regex/)
+- [Regular Expression Matching Can Be Simple and Fast](https://swtch.com/~rsc/regexp/regexp1.html)
+- [Why are regular expressions so controversial?](https://stackoverflow.com/q/764247)
 
 ## Objective-C
 
@@ -51,6 +53,14 @@ It's a small conversion to `NSArray` for the `capturedStrings` block argument.
 1. The regex syntax is 100%-pure ICU syntax.
 1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration. As usual, `NSEnumerationConcurrent` behavior is undefined.
 
+## Swift
+
+This is a Swift 4.x implementation inspired by the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) API. It is:
+
+- Yet another cover for `NSRegularExpression` and `NSTextCheckingResult`.
+- 100% pure ICU regex syntax
+- Allows the developer the ability to use either *NSRange* or *Range<String.UTF16Index>* to operate on portions of substrings.
+
 ## Tests
 
 1. I have started a Unit Test file that tests the baseline argument-rich methods for expected behavior.
@@ -59,13 +69,3 @@ It's a small conversion to `NSArray` for the `capturedStrings` block argument.
 1. I've included [a set of performance tests from Jon Clayden](https://rpubs.com/jonclayden/regex-performance) performing matches against a non-trivial size of text.
 
 Additional test cases and pull requests are welcome.
-
-## Inspiration
-
-I've loved regular expressions since the beginning of my programming career back when I worked at Apple. I learned (and continue to learn) A LOT from Jeffrey Friedl's book, [Mastering Regular Expression, 3rd. ed](http://shop.oreilly.com/product/9780596528126.do). I know they are [controversial](https://blog.codinghorror.com/regex-use-vs-regex-abuse/) in some circles but when crafted well, there's really nothing like them.
-
-Here's some follow-up reading about regexes:
-
-- [Patrick Triest: You Should Learn Regex](https://blog.patricktriest.com/you-should-learn-regex/)
-- [Regular Expression Matching Can Be Simple and Fast](https://swtch.com/~rsc/regexp/regexp1.html)
-- [Why are regular expressions so controversial?](https://stackoverflow.com/q/764247)
