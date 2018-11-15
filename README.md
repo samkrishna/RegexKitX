@@ -30,22 +30,7 @@ My concern is that no amount of work-arounds or modifications to all the low-lev
 
 I've also added documentation that is option-clickable for all the *RKX* category methods.
 
-**NOTE:** There's an almost-pure *RKL4* API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0-swap-fixed). This version is intended to be a drop-in replacement for the original  *RKL4* codebase. If you are using the original *RKL4* block-based API and choose to use *RKX* as a drop-in replacement, you'll need to do some modifications at the block signature level. Specifically, you'll need to convert *RKL4* API blocks from this kind of block signature:
-
-```
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)regex 
-                            usingBlock:(void (^)(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
-```
-
-to this kind of block signature:
-
-```
-- (BOOL)enumerateStringsMatchedByRegex:(NSString *)regexPattern 
-                            usingBlock:(void (^)(NSUInteger captureCount, NSArray *capturedStrings, const NSRange capturedRanges[captureCount], volatile BOOL * const stop))block;
-
-```
-
-It's a small conversion to `NSUInteger` and `NSArray` for the `captureCount` and  `capturedStrings` block arguments.
+**NOTE:** There's an almost-pure *RKL4* API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0). This version is intended to be a drop-in replacement (with possible modifications) for the original  *RKL4* codebase.
 
 ## A few caveats:
 
