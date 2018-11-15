@@ -30,7 +30,7 @@ My concern is that no amount of work-arounds or modifications to all the low-lev
 
 I've also added documentation that is option-clickable for all the *RKX* category methods.
 
-**NOTE:** There's an almost-pure *RKL4* API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0-swap-fixed). This version is intended to be a drop-in replacement for the original *RKL4* codebase. If you are using the original *RKL4* block-based API and choose to use*RKX* as a drop-in replacement, you'll need to do some modifications at the block signature level. Specifically, you'll need to convert *RKL4* API blocks from this kind of block signature:
+**NOTE:** There's an almost-pure *RKL4* API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0-swap-fixed). This version is intended to be a drop-in replacement for the original  *RKL4* codebase. If you are using the original *RKL4* block-based API and choose to use*RKX* as a drop-in replacement, you'll need to do some modifications at the block signature level. Specifically, you'll need to convert *RKL4* API blocks from this kind of block signature:
 
 ```
 - (BOOL)enumerateStringsMatchedByRegex:(NSString *)regex 
@@ -44,7 +44,7 @@ to this kind of block signature:
 
 ```
 
-It's a small conversion to `NSArray` for the `capturedStrings` block argument.
+It's a small conversion to `NSUInteger` and `NSArray` for the `captureCount` and  `capturedStrings` block arguments.
 
 ## A few caveats:
 
