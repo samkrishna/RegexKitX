@@ -51,6 +51,9 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
     RKXUnicodeWordBoundaries    = NSRegularExpressionUseUnicodeWordBoundaries
 };
 
+/**
+ The matching options constants specify the reporting, completion and matching rules to the expression matching methods. These constants are used by all methods that search for, or replace values, using a regular expression.
+ */
 typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
     /** Call the block periodically during long-running match operations. */
     RKXReportProgress          = NSMatchingReportProgress,
