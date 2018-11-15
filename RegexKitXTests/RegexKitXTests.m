@@ -680,6 +680,7 @@
 
 - (void)testPerformanceRegex01
 {
+    // The literal string, “Sherlock”
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Sherlock" options:RKXMultiline];
         XCTAssertTrue(matches.count == 97);
@@ -688,6 +689,7 @@
 
 - (void)testPerformanceRegex02
 {
+    // “Sherlock” at the beginning of a line
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^Sherlock" options:RKXMultiline];
         XCTAssertTrue(matches.count == 34, @"The count is %lu", matches.count);
@@ -696,6 +698,7 @@
 
 - (void)testPerformanceRegex03
 {
+    // “Sherlock” at the end of a line
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Sherlock$" options:RKXMultiline];
         XCTAssertTrue(matches.count == 6, @"The count is %lu", matches.count);
@@ -704,6 +707,7 @@
 
 - (void)testPerformanceRegex04
 {
+    // The letters “a” and “b”, separated by 20 other characters that aren’t “x”
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"a[^x]{20}b" options:RKXMultiline];
         XCTAssertTrue(matches.count == 405, @"The match count is %lu", matches.count);
@@ -712,6 +716,7 @@
 
 - (void)testPerformanceRegex05
 {
+    // Either of the strings “Holmes” or “Watson”
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Holmes|Watson" options:RKXMultiline];
         XCTAssertTrue(matches.count == 542, @"The match count is %lu", matches.count);
@@ -720,6 +725,7 @@
 
 - (void)testPerformanceRegex06
 {
+    // Zero to three characters, followed by either of the strings “Holmes” or “Watson”
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@".{0,3}(Holmes|Watson)" options:RKXMultiline];
         XCTAssertTrue(matches.count == 542, @"The match count is %lu", matches.count);
@@ -728,6 +734,7 @@
 
 - (void)testPerformanceRegex07
 {
+    // Any word ending in “ing”
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"[a-zA-Z]+ing" options:RKXMultiline];
         XCTAssertTrue(matches.count == 2824, @"The match count is %lu", matches.count);
@@ -736,6 +743,7 @@
 
 - (void)testPerformanceRegex08
 {
+    // Up to four letters followed by “ing” and then a non-letter, at the beginning of a line
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^([a-zA-Z]{0,4}ing)[^a-zA-Z]" options:RKXMultiline];
         XCTAssertTrue(matches.count == 163, @"The match count is %lu", matches.count);
@@ -744,6 +752,7 @@
 
 - (void)testPerformanceRegex09
 {
+    // Any word ending in “ing”, at the end of a line
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"[a-zA-Z]+ing$" options:RKXMultiline];
         XCTAssertTrue(matches.count == 152, @"The match count is %lu", matches.count);
@@ -752,6 +761,7 @@
 
 - (void)testPerformanceRegex10
 {
+    // Lines consisting of five or more letters and spaces, only
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^[a-zA-Z ]{5,}$" options:RKXMultiline];
         XCTAssertTrue(matches.count == 876, @"The match count is %lu", matches.count);
@@ -760,6 +770,7 @@
 
 - (void)testPerformanceRegex11
 {
+    // Lines of between 16 and 20 characters
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"^.{16,20}$" options:RKXMultiline];
         XCTAssertTrue(matches.count == 238, @"The match count is %lu", matches.count);
@@ -768,6 +779,7 @@
 
 - (void)testPerformanceRegex12
 {
+    // Sequences of characters from certain sets (complex to explain!)
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"([a-f](.[d-m].){0,2}[h-n]){2}" options:RKXMultiline];
         XCTAssertTrue(matches.count == 1597, @"The match count is %lu", matches.count);
@@ -776,6 +788,7 @@
 
 - (void)testPerformanceRegex13
 {
+    // A word ending in “olmes” or “atson”, followed by a non-letter
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"([A-Za-z]olmes)|([A-Za-z]atson)[^a-zA-Z]" options:RKXMultiline];
         XCTAssertTrue(matches.count == 542, @"The match count is %lu", matches.count);
@@ -784,6 +797,7 @@
 
 - (void)testPerformanceRegex14
 {
+    // A quoted string of between 0 and 30 characters, ending with a punctuation mark
     [self measureBlock:^{
         NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"\"[^\"]{0,30}[?!\\.]\"" options:RKXMultiline];
         XCTAssertTrue(matches.count == 582, @"The match count is %lu", matches.count);
@@ -792,11 +806,11 @@
 
 - (void)testPerformanceRegex15
 {
+    // The names “Holmes” and “Watson” on the same line, separated by 10 to 60 other characters
     [self measureBlock:^{
-        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Holmes.{10,60}Watson|Watson.{10,60}Holmes"];
+        NSArray *matches = [self.testCorpus componentsMatchedByRegex:@"Holmes.{10,60}Watson|Watson.{10,60}Holmes" options:RKXMultiline];
         XCTAssertTrue(matches.count == 2, @"The match count is %lu", matches.count);
     }];
 }
-
 
 @end
