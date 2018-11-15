@@ -128,15 +128,15 @@
     XCTAssertTrue(testResult);
 }
 
-- (void)testComponentsSeparatedByRegex
+- (void)testSubstringsSeparatedByRegex
 {
     NSString *regex = @", ";
-    NSArray *captures = [self.candidate componentsSeparatedByRegex:regex];
-    XCTAssertTrue(captures.count == 12);
+    NSArray *substrings = [self.candidate substringsSeparatedByRegex:regex];
+    XCTAssertTrue(substrings.count == 12);
     
-    for (NSString *substring in captures) {
-        BOOL result = [substring isMatchedByRegex:@", "];
-        XCTAssertFalse(result, @"There should be no separators in this substring! (%@)", substring);
+    for (NSString *string in substrings) {
+        BOOL result = [string isMatchedByRegex:@", "];
+        XCTAssertFalse(result, @"There should be no separators in this substring! (%@)", string);
     }
 }
 
@@ -460,10 +460,10 @@
 
     NSString *testString = @"I|at|ice I eat rice";
     NSString *pattern = @"\\b\\s*";
-    NSArray<NSString *> *components = [testString componentsSeparatedByRegex:pattern];
-    XCTAssertFalse([components.firstObject isEqualToString:@"I"]);
-    XCTAssertTrue([components.firstObject isEqualToString:@""]);
-    XCTAssertTrue([components.lastObject isEqualToString:@"rice"]);
+    NSArray<NSString *> *substrings = [testString substringsSeparatedByRegex:pattern];
+    XCTAssertFalse([substrings.firstObject isEqualToString:@"I"]);
+    XCTAssertTrue([substrings.firstObject isEqualToString:@""]);
+    XCTAssertTrue([substrings.lastObject isEqualToString:@"rice"]);
 }
 
 #pragma mark - NSMutableString tests

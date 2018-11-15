@@ -84,7 +84,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 @interface NSString (RegexKitX)
 
-#pragma mark - componentsSeparatedByRegex:
+#pragma mark - substringsSeparatedByRegex:
 
 /**
  Returns an array containing substrings within the receiver that have been divided by the regular expression @c pattern.
@@ -92,7 +92,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @param pattern A @c NSString containing a regular expression.
  @return A @c NSArray object containing the substrings from the receiver that have been divided by @c pattern.
  */
-- (NSArray<NSString *> *)componentsSeparatedByRegex:(NSString *)pattern;
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern;
 
 /**
  Returns an array containing substrings within @c searchRange of the receiver that have been divided by the regular expression @c pattern.
@@ -102,7 +102,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray object containing the substrings from the receiver that have been divided by @c pattern.
  @return Returns @c nil if @c pattern is invalid.
  */
-- (NSArray<NSString *> *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange;
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
  Returns an array containing substrings within the receiver that have been divided by the regular expression @c pattern using @c options.
@@ -112,7 +112,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray object containing the substrings from the receiver that have been divided by @c pattern. If there is no match, returns an array with the receiver as the single element.
  @return Returns @c nil if @c pattern is invalid.
  */
-- (NSArray<NSString *> *)componentsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
 
 /**
  Returns an array containing substrings within @c searchRange of the receiver that have been divided by the regular expression @c pattern using @c options.
@@ -124,7 +124,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray object containing the substrings from the receiver that have been divided by @c pattern. If there is no match, returns an array with the receiver as the single element.
  @return Returns @c nil if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSString *> *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns an array containing substrings within @c searchRange of the receiver that have been divided by the regular expression @c pattern using @c options and @c matchOptions.
@@ -137,7 +137,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return A @c NSArray object containing the substrings from the receiver that have been divided by @c pattern. If there is no match, returns an array with the receiver as the single element.
  @return Returns @c nil if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSString *> *)componentsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - isMatchedByRegex:
 
