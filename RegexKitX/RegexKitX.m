@@ -396,34 +396,34 @@ static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, 
     return YES;
 }
 
-#pragma mark - componentsMatchedByRegex:
+#pragma mark - substringsMatchedByRegex:
 
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern
+- (NSArray *)substringsMatchedByRegex:(NSString *)pattern
 {
-    return [self componentsMatchedByRegex:pattern range:self.stringRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self substringsMatchedByRegex:pattern range:self.stringRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture
+- (NSArray *)substringsMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture
 {
-    return [self componentsMatchedByRegex:pattern range:self.stringRange capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self substringsMatchedByRegex:pattern range:self.stringRange capture:capture options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
+- (NSArray *)substringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
 {
-    return [self componentsMatchedByRegex:pattern range:searchRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
+    return [self substringsMatchedByRegex:pattern range:searchRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
 }
 
-- (NSArray<NSString *> *)componentsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options
+- (NSArray<NSString *> *)substringsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options
 {
-    return [self componentsMatchedByRegex:pattern range:self.stringRange capture:0 options:options matchOptions:0 error:NULL];
+    return [self substringsMatchedByRegex:pattern range:self.stringRange capture:0 options:options matchOptions:0 error:NULL];
 }
 
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error
+- (NSArray *)substringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self componentsMatchedByRegex:pattern range:searchRange capture:capture options:options matchOptions:0 error:error];
+    return [self substringsMatchedByRegex:pattern range:searchRange capture:capture options:options matchOptions:0 error:error];
 }
 
-- (NSArray *)componentsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+- (NSArray *)substringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches) { return nil; }
