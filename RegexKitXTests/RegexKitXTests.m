@@ -294,7 +294,7 @@
     XCTAssertTrue(result2);
 }
 
-- (void)testComponentsMatchedByRegexRangeCaptureOptionsError
+- (void)testSubstringsMatchedByRegexRangeCaptureOptionsError
 {
     NSString *list = @"$10.23, $1024.42, $3099";
     NSArray *listItems = [list substringsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:list.stringRange capture:3 options:RKXNoOptions error:NULL];
@@ -304,10 +304,10 @@
     XCTAssertTrue([listItems[2] isEqualToString:@""]);
 }
 
-- (void)testCaptureComponentsMatchedByRegex
+- (void)testCaptureSubstringsMatchedByRegex
 {
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+).(\\d+))";
-    NSArray *captures = [self.candidate captureComponentsMatchedByRegex:regex];
+    NSArray *captures = [self.candidate captureSubstringsMatchedByRegex:regex];
     XCTAssertTrue(captures.count == 10);
     XCTAssertTrue([captures[1] isEqualToString:@"2014-05-06"]);
     XCTAssertTrue([captures[5] isEqualToString:@"17:03:17.967"]);
