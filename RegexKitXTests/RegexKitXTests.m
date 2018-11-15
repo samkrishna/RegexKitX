@@ -275,10 +275,10 @@
     XCTAssertTrue(error.domain == NSCocoaErrorDomain);
 }
 
-- (void)testArrayOfCaptureComponentsMatchedByRegexRangeOptionsMatchOptionsError
+- (void)testArrayOfCaptureSubstringsMatchedByRegexRangeOptionsMatchOptionsError
 {
     NSString *list      = @"$10.23, $1024.42, $3099";
-    NSArray *listItems = [list arrayOfCaptureComponentsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:list.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
+    NSArray *listItems = [list arrayOfCaptureSubstringsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))" range:list.stringRange options:RKXNoOptions matchOptions:0 error:NULL];
     XCTAssertTrue(listItems.count == 3);
 
     NSArray *list0 = listItems[0];
