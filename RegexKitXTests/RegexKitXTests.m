@@ -3,7 +3,7 @@
 //  RegexKitXTests
 
 #import "RegexKitX.h"
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 @interface RegexKitXTests : XCTestCase
 @property (nonatomic, readonly, strong) NSString *testCorpus;

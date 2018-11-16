@@ -635,7 +635,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs.
  */
-- (NSArray *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern;
+- (NSArray<NSArray *> *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern;
 
 /**
  Returns an array containing all the matches from the receiver that were matched by the regular expression @c pattern within @c searchRange. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
@@ -646,7 +646,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs.
  */
-- (NSArray *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
+- (NSArray<NSArray *> *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /**
  Returns an array containing all the matches from the receiver that were matched by the regular expression @c pattern using @c options. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
@@ -657,7 +657,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs.
  */
-- (NSArray *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
+- (NSArray<NSArray *> *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
 
 /**
  Returns an array containing all the matches from the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
@@ -670,7 +670,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSArray<NSArray *> *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns an array containing all the matches from the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
@@ -684,7 +684,7 @@ Returns a string created from the characters of the receiver that are in the ran
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSArray<NSArray *> *)arrayOfCaptureSubstringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - arrayOfDictionariesMatchedByRegex:
 
