@@ -669,7 +669,7 @@
     formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(?:\\d{3})+$)" withTemplate:@","];
     XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 
-    // Negative lookbehind (?<!)
+    // Negative lookbehind (?<!...)
     formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<!\\b)(?=(?:\\d{3})+$)" withTemplate:@","];
     XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 }
