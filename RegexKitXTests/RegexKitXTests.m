@@ -186,14 +186,13 @@
     XCTAssertTrue(failRange.location == NSNotFound);
 }
 
-- (void)testStringMatchedByRegexRangeCaptureOptionsMatchOptionsError
+- (void)testStringMatchedByRegex
 {
     NSString *regexPattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
-    NSRange entireRange = self.candidate.stringRange;
-    NSString *fullTimestamp = [self.candidate stringMatchedByRegex:regexPattern range:entireRange capture:0 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSString *fullTimestamp = [self.candidate stringMatchedByRegex:regexPattern];
     XCTAssertTrue([fullTimestamp isEqualToString:@"2014-05-06 17:03:17"]);
 
-    NSString *datestamp = [self.candidate stringMatchedByRegex:regexPattern range:entireRange capture:1 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSString *datestamp = [self.candidate stringMatchedByRegex:regexPattern capture:1];
     XCTAssertTrue([datestamp isEqualToString:@"2014-05-06"]);
 }
 
