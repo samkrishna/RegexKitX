@@ -115,16 +115,15 @@
     XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKXNoOptions]);
 }
 
-- (void)testMatchesRegexRangeOptionsMatchingOptionsError
+- (void)testIsMatchedByRegex
 {
     // NOTE: Not Comprehensive Yet
-    NSError *error;
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
-    XCTAssertTrue([self.candidate isMatchedByRegex:regex range:self.candidate.stringRange options:RKXCaseless error:nil]);
-    XCTAssertFalse([self.candidate isMatchedByRegex:regex range:self.candidate.stringRange options:RKXNoOptions matchOptions:kNilOptions error:&error], @"Error: %@", error);
+    XCTAssertTrue([self.candidate isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([self.candidate isMatchedByRegex:regex options:RKXNoOptions]);
 
     NSString *testString = @"Orthogonal2";
-    BOOL testResult = [testString isMatchedByRegex:@"orthogonal" range:testString.stringRange options:RKXCaseless error:&error];
+    BOOL testResult = [testString isMatchedByRegex:@"orthogonal" options:RKXCaseless];
     XCTAssertTrue(testResult);
 }
 
