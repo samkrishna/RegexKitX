@@ -121,7 +121,7 @@
     NSError *error;
     NSString *regex = @"(.*) execution_data: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), .*, acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
     XCTAssertTrue([self.candidate isMatchedByRegex:regex range:self.candidate.stringRange options:RKXCaseless error:nil]);
-    XCTAssertFalse([self.candidate isMatchedByRegex:regex range:self.candidate.stringRange options:RKXNoOptions matchOptions:0 error:&error], @"Error: %@", error);
+    XCTAssertFalse([self.candidate isMatchedByRegex:regex range:self.candidate.stringRange options:RKXNoOptions matchOptions:kNilOptions error:&error], @"Error: %@", error);
 
     NSString *testString = @"Orthogonal2";
     BOOL testResult = [testString isMatchedByRegex:@"orthogonal" range:testString.stringRange options:RKXCaseless error:&error];
@@ -144,39 +144,39 @@
 {
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = self.candidate.stringRange;
-    NSRange captureRange = [self.candidate rangeOfRegex:regex range:entireRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange captureRange = [self.candidate rangeOfRegex:regex range:entireRange capture:0 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(captureRange.location == 0);
     XCTAssertTrue(captureRange.length == 19);
     
-    NSRange dateRange = [self.candidate rangeOfRegex:regex range:entireRange capture:1 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange dateRange = [self.candidate rangeOfRegex:regex range:entireRange capture:1 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(dateRange.location == 0);
     XCTAssertTrue(dateRange.length == 10);
 
-    NSRange yearRange = [self.candidate rangeOfRegex:regex range:entireRange capture:2 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange yearRange = [self.candidate rangeOfRegex:regex range:entireRange capture:2 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(yearRange.location == 0);
     XCTAssertTrue(yearRange.length == 4);
 
-    NSRange monthRange = [self.candidate rangeOfRegex:regex range:entireRange capture:3 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange monthRange = [self.candidate rangeOfRegex:regex range:entireRange capture:3 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(monthRange.location == 5);
     XCTAssertTrue(monthRange.length == 2);
 
-    NSRange dayRange = [self.candidate rangeOfRegex:regex range:entireRange capture:4 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange dayRange = [self.candidate rangeOfRegex:regex range:entireRange capture:4 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(dayRange.location == 8);
     XCTAssertTrue(dayRange.length == 2);
 
-    NSRange timeRange = [self.candidate rangeOfRegex:regex range:entireRange capture:5 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange timeRange = [self.candidate rangeOfRegex:regex range:entireRange capture:5 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(timeRange.location == 11);
     XCTAssertTrue(timeRange.length == 8);
 
-    NSRange hourRange = [self.candidate rangeOfRegex:regex range:entireRange capture:6 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange hourRange = [self.candidate rangeOfRegex:regex range:entireRange capture:6 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(hourRange.location == 11);
     XCTAssertTrue(hourRange.length == 2);
 
-    NSRange minuteRange = [self.candidate rangeOfRegex:regex range:entireRange capture:7 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange minuteRange = [self.candidate rangeOfRegex:regex range:entireRange capture:7 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(minuteRange.location == 14);
     XCTAssertTrue(minuteRange.length == 2);
 
-    NSRange secondRange = [self.candidate rangeOfRegex:regex range:entireRange capture:8 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSRange secondRange = [self.candidate rangeOfRegex:regex range:entireRange capture:8 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(secondRange.location == 17);
     XCTAssertTrue(secondRange.length == 2);
 }
@@ -191,10 +191,10 @@
 {
     NSString *regexPattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
     NSRange entireRange = self.candidate.stringRange;
-    NSString *fullTimestamp = [self.candidate stringMatchedByRegex:regexPattern range:entireRange capture:0 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSString *fullTimestamp = [self.candidate stringMatchedByRegex:regexPattern range:entireRange capture:0 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue([fullTimestamp isEqualToString:@"2014-05-06 17:03:17"]);
 
-    NSString *datestamp = [self.candidate stringMatchedByRegex:regexPattern range:entireRange capture:1 options:RKXNoOptions matchOptions:0 error:NULL];
+    NSString *datestamp = [self.candidate stringMatchedByRegex:regexPattern range:entireRange capture:1 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue([datestamp isEqualToString:@"2014-05-06"]);
 }
 
@@ -203,11 +203,11 @@
     NSString *failedPattern = @"2014-05-06 17:03:17.967 EXECUTION_DINO";
     NSString *failureControl = @"2014-05-06 17:03:17.967 EXECUTION_DATA";
     NSRange failureRange = NSMakeRange(0, 38);
-    NSString *failureResult = [self.candidate stringByReplacingOccurrencesOfRegex:failedPattern withTemplate:@"BARNEY RUBBLE" range:failureRange options:RKXNoOptions matchOptions:0 error:NULL];
+    NSString *failureResult = [self.candidate stringByReplacingOccurrencesOfRegex:failedPattern withTemplate:@"BARNEY RUBBLE" range:failureRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue([failureResult isEqualToString:failureControl]);
 
     NSString *successPattern = @"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+ (EXECUTION_DATA)";
-    NSString *successResult = [self.candidate stringByReplacingOccurrencesOfRegex:successPattern withTemplate:@"BARNEY RUBBLE ~~~$1~~~" range:failureRange options:RKXNoOptions matchOptions:0 error:NULL];
+    NSString *successResult = [self.candidate stringByReplacingOccurrencesOfRegex:successPattern withTemplate:@"BARNEY RUBBLE ~~~$1~~~" range:failureRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue([successResult isMatchedByRegex:@"BARNEY RUBBLE"]);
     XCTAssertTrue([successResult isMatchedByRegex:@"~~~EXECUTION_DATA~~~"]);
 }
@@ -217,7 +217,7 @@
     NSString *pattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
     NSRange entireRange = self.candidate.stringRange;
 
-    NSString *output = [self.candidate stringByReplacingOccurrencesOfRegex:pattern range:entireRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+    NSString *output = [self.candidate stringByReplacingOccurrencesOfRegex:pattern range:entireRange options:RKXNoOptions matchOptions:kNilOptions error:NULL usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSMutableString *replacement = [NSMutableString string];
         NSString *dateRegex = @"^\\d+-\\d+-\\d+$";
         NSString *timeRegex = @"^\\d+:\\d+:\\d+\\.\\d+$";
@@ -242,7 +242,7 @@
                              @"A peck of pickled peppers Peter Piper picked;\n"
                              @"If Peter Piper picked a peck of pickled peppers,\n"
                              @"Where's the peck of pickled peppers Peter Piper picked?";
-    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern range:newCandidate.stringRange options:RKXNoOptions matchOptions:0 error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, BOOL *stop) {
+    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern range:newCandidate.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, BOOL *stop) {
         blockCount++;
 
         if (blockCount == 2) {
@@ -433,7 +433,7 @@
     XCTAssertTrue(result);
     index--;
 
-    result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern range:self.candidate.stringRange options:0 matchOptions:0 enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+    result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern range:self.candidate.stringRange options:RKXNoOptions matchOptions:kNilOptions enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = rangeValueChecks[index].rangeValue;
         NSLog(@"Reverse: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
@@ -552,32 +552,32 @@
 - (void)testRegexString
 {
     NSString *pattern123 = [NSString stringWithFormat:@"123"];
-    XCTAssertTrue([pattern123 isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssertTrue([pattern123 isRegexValidWithOptions:RKXNoOptions error:NULL], @"Should be valid");
     NSString *patternMAGIC = [NSString stringWithFormat:@"^(Match)\\s+the\\s+(MAGIC)$"];
-    XCTAssertTrue([patternMAGIC isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssertTrue([patternMAGIC isRegexValidWithOptions:RKXNoOptions error:NULL], @"Should be valid");
 }
 
 - (void)testValidRegexString
 {
-    XCTAssertTrue([@"123" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
-    XCTAssertTrue([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:0 error:NULL], @"Should be valid");
+    XCTAssertTrue([@"123" isRegexValidWithOptions:RKXNoOptions error:NULL], @"Should be valid");
+    XCTAssertTrue([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:RKXNoOptions error:NULL], @"Should be valid");
     
     // ICU likes this regex under a weird options combo (that included ignoring all metacharacters)
     XCTAssertTrue([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0xffffffff error:NULL]);
     // But didn't when options = 0
-    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL]);
+    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:NULL]);
 
     // ICU fails a number of perfectly good PCRE regexes.
-    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:0 error:NULL]);
-    XCTAssertFalse([@"\\( ( ( (?>[^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL]);
-    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0 error:NULL]);
+    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:RKXNoOptions error:NULL]);
+    XCTAssertFalse([@"\\( ( ( (?>[^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:NULL]);
+    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:NULL]);
     
     // These are bad PCRE regexes
-    XCTAssertFalse([@"^(Match)\\s+the\\s+((MAGIC)$" isRegexValidWithOptions:0 error:NULL]);
-    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&xq) )* \\) )" isRegexValidWithOptions:0 error:NULL]);
+    XCTAssertFalse([@"^(Match)\\s+the\\s+((MAGIC)$" isRegexValidWithOptions:RKXNoOptions error:NULL]);
+    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&xq) )* \\) )" isRegexValidWithOptions:RKXNoOptions error:NULL]);
 
     NSString *nilString = nil;
-    XCTAssertFalse([nilString isRegexValidWithOptions:0 error:NULL]);
+    XCTAssertFalse([nilString isRegexValidWithOptions:RKXNoOptions error:NULL]);
 }
 
 - (void)testSimpleUnicodeMatching
