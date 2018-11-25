@@ -140,43 +140,42 @@
     }
 }
 
-- (void)testRangeOfRegexOptionsMatchingOptionsInRangeCaptureError
+- (void)testRangeOfRegex
 {
     NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
-    NSRange entireRange = self.candidate.stringRange;
-    NSRange captureRange = [self.candidate rangeOfRegex:regex range:entireRange capture:0 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange captureRange = [self.candidate rangeOfRegex:regex capture:0];
     XCTAssertTrue(captureRange.location == 0);
     XCTAssertTrue(captureRange.length == 19);
     
-    NSRange dateRange = [self.candidate rangeOfRegex:regex range:entireRange capture:1 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange dateRange = [self.candidate rangeOfRegex:regex capture:1];
     XCTAssertTrue(dateRange.location == 0);
     XCTAssertTrue(dateRange.length == 10);
 
-    NSRange yearRange = [self.candidate rangeOfRegex:regex range:entireRange capture:2 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange yearRange = [self.candidate rangeOfRegex:regex capture:2];
     XCTAssertTrue(yearRange.location == 0);
     XCTAssertTrue(yearRange.length == 4);
 
-    NSRange monthRange = [self.candidate rangeOfRegex:regex range:entireRange capture:3 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange monthRange = [self.candidate rangeOfRegex:regex capture:3];
     XCTAssertTrue(monthRange.location == 5);
     XCTAssertTrue(monthRange.length == 2);
 
-    NSRange dayRange = [self.candidate rangeOfRegex:regex range:entireRange capture:4 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange dayRange = [self.candidate rangeOfRegex:regex capture:4];
     XCTAssertTrue(dayRange.location == 8);
     XCTAssertTrue(dayRange.length == 2);
 
-    NSRange timeRange = [self.candidate rangeOfRegex:regex range:entireRange capture:5 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange timeRange = [self.candidate rangeOfRegex:regex capture:5];
     XCTAssertTrue(timeRange.location == 11);
     XCTAssertTrue(timeRange.length == 8);
 
-    NSRange hourRange = [self.candidate rangeOfRegex:regex range:entireRange capture:6 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange hourRange = [self.candidate rangeOfRegex:regex capture:6];
     XCTAssertTrue(hourRange.location == 11);
     XCTAssertTrue(hourRange.length == 2);
 
-    NSRange minuteRange = [self.candidate rangeOfRegex:regex range:entireRange capture:7 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange minuteRange = [self.candidate rangeOfRegex:regex capture:7];
     XCTAssertTrue(minuteRange.location == 14);
     XCTAssertTrue(minuteRange.length == 2);
 
-    NSRange secondRange = [self.candidate rangeOfRegex:regex range:entireRange capture:8 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSRange secondRange = [self.candidate rangeOfRegex:regex capture:8];
     XCTAssertTrue(secondRange.location == 17);
     XCTAssertTrue(secondRange.length == 2);
 }
