@@ -371,17 +371,13 @@
     XCTAssertTrue([executionDict[@"permanentID"] isEqualToString:@"825657452"]);
 }
 
-- (void)testArrayOfDictionariesMatchedByRegexRangeOptionsMatchOptionsErrorWithKeysAndCaptures
+- (void)testArrayOfDictionariesMatchedByRegexWithKeysAndCaptures
 {
     NSString *name = @"Name: Bob\nName: John Smith";
     NSString *regex = @"(?m)^Name:\\s*(\\w*)\\s*(\\w*)$";
     NSString *firstKey = @"first";
     NSString *lastKey = @"last";
     NSArray  *nameArray = [name arrayOfDictionariesMatchedByRegex:regex
-                                                            range:name.stringRange
-                                                          options:RKXNoOptions
-                                                     matchOptions:0
-                                                            error:NULL
                                               withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
 
     NSDictionary *name1 = nameArray[0];
@@ -393,10 +389,6 @@
     XCTAssertTrue([name2[lastKey] isEqualToString:@"Smith"]);
 
     NSArray *failureResult = [self.candidate arrayOfDictionariesMatchedByRegex:regex
-                                                                         range:self.candidate.stringRange
-                                                                       options:RKXNoOptions
-                                                                  matchOptions:0
-                                                                         error:NULL
                                                            withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
     XCTAssertNotNil(failureResult);
     XCTAssertTrue(failureResult.count == 0);
