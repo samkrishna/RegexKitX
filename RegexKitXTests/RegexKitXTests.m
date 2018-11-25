@@ -328,9 +328,6 @@
     NSString *firstKey = @"first";
     NSString *lastKey = @"last";
     NSDictionary *nameDictionary = [name dictionaryMatchedByRegex:regex
-                                                            range:name.stringRange
-                                                          options:RKXNoOptions
-                                                            error:NULL
                                               withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
 
     XCTAssertTrue([nameDictionary[firstKey] isEqualToString:@"Joe"]);
