@@ -179,6 +179,42 @@
     XCTAssertTrue(secondRange.length == 2);
 }
 
+- (void)testRangeOfRegexNamedCapture
+{
+    NSString *regex = @"((?<year>\\d+)-(?<month>\\d+)-(?<day>\\d+)) ((?<hour>\\d+):(?<minute>\\d+):(?<second>\\d+))";
+    NSRange captureRange = [self.candidate rangeOfRegex:regex capture:0];
+    XCTAssertTrue(captureRange.location == 0);
+    XCTAssertTrue(captureRange.length == 19);
+
+    NSRange yearRange = [self.candidate rangeOfRegex:regex namedCapture:@"year"];
+    XCTAssertTrue(yearRange.location == 0);
+    XCTAssertTrue(yearRange.length == 4);
+
+    NSRange monthRange = [self.candidate rangeOfRegex:regex namedCapture:@"month"];
+    XCTAssertTrue(monthRange.location == 5);
+    XCTAssertTrue(monthRange.length == 2);
+
+    NSRange dayRange = [self.candidate rangeOfRegex:regex namedCapture:@"day"];
+    XCTAssertTrue(dayRange.location == 8);
+    XCTAssertTrue(dayRange.length == 2);
+
+    NSRange timeRange = [self.candidate rangeOfRegex:regex capture:5];
+    XCTAssertTrue(timeRange.location == 11);
+    XCTAssertTrue(timeRange.length == 8);
+
+    NSRange hourRange = [self.candidate rangeOfRegex:regex namedCapture:@"hour"];
+    XCTAssertTrue(hourRange.location == 11);
+    XCTAssertTrue(hourRange.length == 2);
+
+    NSRange minuteRange = [self.candidate rangeOfRegex:regex namedCapture:@"minute"];
+    XCTAssertTrue(minuteRange.location == 14);
+    XCTAssertTrue(minuteRange.length == 2);
+
+    NSRange secondRange = [self.candidate rangeOfRegex:regex namedCapture:@"second"];
+    XCTAssertTrue(secondRange.location == 17);
+    XCTAssertTrue(secondRange.length == 2);
+}
+
 - (void)testFailedRangeOfRegex
 {
     NSRange failRange = [self.candidate rangeOfRegex:@"blah"];
