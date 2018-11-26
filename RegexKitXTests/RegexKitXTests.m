@@ -231,6 +231,16 @@
     XCTAssertTrue([datestamp isEqualToString:@"2014-05-06"]);
 }
 
+- (void)testStringMatchedByRegexNamedCapture
+{
+    NSString *pattern = @"(?<calendardate>(?<year>\\d+)-(?<month>\\d+)-(?<day>\\d+)) ((?<hour>\\d+):(?<minute>\\d+):(?<second>\\d+))";
+    NSString *fullTimestamp = [self.candidate stringMatchedByRegex:pattern];
+    XCTAssertTrue([fullTimestamp isEqualToString:@"2014-05-06 17:03:17"]);
+
+    NSString *datestamp = [self.candidate stringMatchedByRegex:pattern namedCapture:@"calendardate"];
+    XCTAssertTrue([datestamp isEqualToString:@"2014-05-06"]);
+}
+
 - (void)testStringByReplacingOccurrencesOfRegexWithTemplateOptionsMatchingOptionsRangeError
 {
     NSString *failedPattern = @"2014-05-06 17:03:17.967 EXECUTION_DINO";

@@ -617,32 +617,37 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 
 - (NSString *)stringMatchedByRegex:(NSString *)pattern
 {
-    return [self stringMatchedByRegex:pattern range:self.stringRange capture:0 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    return [self stringMatchedByRegex:pattern range:self.stringRange capture:0 namedCapture:nil options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
 - (NSString *)stringMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture
 {
-    return [self stringMatchedByRegex:pattern range:self.stringRange capture:capture options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    return [self stringMatchedByRegex:pattern range:self.stringRange capture:capture namedCapture:nil options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSString *)stringMatchedByRegex:(NSString *)pattern namedCapture:(NSString *)captureName
+{
+    return [self stringMatchedByRegex:pattern range:self.stringRange capture:NSNotFound namedCapture:captureName options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
 - (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
 {
-    return [self stringMatchedByRegex:pattern range:searchRange capture:0 options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    return [self stringMatchedByRegex:pattern range:searchRange capture:0 namedCapture:nil options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
 - (NSString *)stringMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options
 {
-    return [self stringMatchedByRegex:pattern range:self.stringRange capture:0 options:options matchOptions:kNilOptions error:NULL];
+    return [self stringMatchedByRegex:pattern range:self.stringRange capture:0 namedCapture:nil options:options matchOptions:kNilOptions error:NULL];
 }
 
 - (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self stringMatchedByRegex:pattern range:searchRange capture:capture options:options matchOptions:kNilOptions error:error];
+    return [self stringMatchedByRegex:pattern range:searchRange capture:capture namedCapture:nil options:options matchOptions:kNilOptions error:error];
 }
 
-- (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+- (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture namedCapture:(NSString *)captureName options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
-    NSRange range = [self rangeOfRegex:pattern range:searchRange capture:capture namedCapture:nil options:options matchOptions:matchOptions error:error];
+    NSRange range = [self rangeOfRegex:pattern range:searchRange capture:capture namedCapture:captureName options:options matchOptions:matchOptions error:error];
     if (NSEqualRanges(range, NSNotFoundRange)) { return nil; }
     NSString *result = [self substringWithRange:range];
     return result;
