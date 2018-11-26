@@ -521,7 +521,6 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 {
     if (capture != NSNotFound) { NSParameterAssert(!captureName); }
     if (captureName) { NSParameterAssert(capture == NSNotFound); }
-
     if (capture != NSNotFound) {
         NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
         if (!matches || matches.count == 0) { return NSNotFoundRange; }
@@ -647,8 +646,6 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 
 - (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture namedCapture:(NSString *)captureName options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
-    if (capture != NSNotFound) { NSParameterAssert(!captureName); }
-    if (captureName) { NSParameterAssert(capture == NSNotFound); }
     NSRange range = [self rangeOfRegex:pattern range:searchRange capture:capture namedCapture:captureName options:options matchOptions:matchOptions error:error];
     if (NSEqualRanges(range, NSNotFoundRange)) { return nil; }
     NSString *result = [self substringWithRange:range];
