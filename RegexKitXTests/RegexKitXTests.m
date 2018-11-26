@@ -5,6 +5,8 @@
 #import "RegexKitX.h"
 @import XCTest;
 
+#define NFA_FAIL_TEST 0
+
 @interface RegexKitXTests : XCTestCase
 @property (nonatomic, readonly, strong) NSString *testCorpus;
 @property (nonatomic, readwrite, strong) NSString *candidate;
@@ -776,8 +778,17 @@
     XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 }
 
+#if NFA_FAIL_TEST
+- (void)testCrazyNFAPerformance
 {
+    // This is from the NFA example in MRE3 chapter 4.
+    // It didn't finish after runnning about a minute or so.
+    // That's why I'm using a preprocessor directive to turn this test off.
+    NSString *equalString = @"=XX=========================================";
+    BOOL result = [equalString isMatchedByRegex:@"X(.+)+X"];
+    XCTAssertFalse(result);
 }
+#endif
 
 #pragma mark - Performance Tests
 // These performance tests were adapted from https://rpubs.com/jonclayden/regex-performance
