@@ -752,6 +752,29 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSArray<NSString *> *)substringsMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture;
 
 /**
+ Returns an array containing all the substrings from the receiver that were matched by named capture group @c captureName from the regular expression @c pattern.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param captureName The string matched by the named capture group from @c pattern to return. Use @c nil if there are no named groups in @c pattern.
+ @return A @c NSArray containing all the substrings from the receiver that were matched by @c namedCapture from @c pattern.
+ @return Returns an empty array if @c pattern fails to match.
+ @return Will return @c nil if an error occurs.
+ */
+- (NSArray<NSString *> *)substringsMatchedByRegex:(NSString *)pattern namedCapture:(NSString *)captureName;
+
+/**
+ Returns an array containing all the substrings from the receiver that were matched by capture number @c capture and named capture group @c captureName from the regular expression @c pattern.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param capture The capture group number @c capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched. Use @c NSNotFound to exclude all numbered captures.
+ @param captureName The string matched by the named capture group from @c pattern to return. Use @c nil if there are no named groups in @c pattern.
+ @return A @c NSArray containing all the substrings from the receiver that were matched by @c capture and @c namedCapture from @c pattern.
+ @return Returns an empty array if @c pattern fails to match.
+ @return Will return @c nil if an error occurs.
+ */
+- (NSArray<NSString *> *)substringsMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture namedCapture:(NSString *)captureName;
+
+/**
  Returns an array containing all the substrings from the receiver that were matched by the regular expression @c pattern within @c searchRange.
 
  @param pattern A @c NSString containing a regular expression.
@@ -777,7 +800,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @param capture The string matched by capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched.
+ @param capture The capture group number @c capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched. Use @c NSNotFound to exclude all numbered captures.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSArray containing all the substrings from the receiver that were matched by @c capture from @c pattern within @c searchRange using @c options.
@@ -787,11 +810,12 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSArray<NSString *> *)substringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
- Returns an array containing all the substrings from the receiver that were matched by capture number @c capture from the regular expression @c pattern within @c searchRange using @c options and @c matchOptions.
+ Returns an array containing all the substrings from the receiver that were matched by capture number @c capture and named capture group @c captureName from the regular expression @c pattern within @c searchRange using @c options and @c matchOptions.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @param capture The string matched by capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched.
+ @param capture The capture group number @c capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched. Use @c NSNotFound to exclude all numbered captures.
+ @param captureName The string matched by the named capture group from @c pattern to return. Use @c nil if there are no named groups in @c pattern.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
@@ -799,7 +823,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  @return Returns an empty array if @c pattern fails to match in @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSString *> *)substringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSArray<NSString *> *)substringsMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture namedCapture:(NSString *)captureName options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - substringsSeparatedByRegex:
 

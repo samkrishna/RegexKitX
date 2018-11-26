@@ -660,6 +660,23 @@
     XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 }
 
+- (void)testSubstringsMatchedByRegexWithNamedCaptures
+{
+    // da = directory assistance
+    NSString *da = @"310-555-1212";
+    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSArray<NSString *> *captures = [da substringsMatchedByRegex:pattern range:da.stringRange capture:2 namedCapture:@"area" options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    XCTAssertTrue(captures.count == 2);
+    XCTAssertTrue([captures[0] isEqualToString:@"555-1212"]);
+    XCTAssertTrue([captures[1] isEqualToString:@"310"]);
+
+    NSString *daOf3AreaCodes = @"310-555-1212 919-555-1212 212-555-1212";
+    captures = [daOf3AreaCodes substringsMatchedByRegex:pattern namedCapture:@"area"];
+    XCTAssertTrue(captures.count == 3);
+    XCTAssertTrue([captures[0] isEqualToString:@"310"]);
+    XCTAssertTrue([captures[1] isEqualToString:@"919"]);
+    XCTAssertTrue([captures[2] isEqualToString:@"212"]);
+}
 #pragma mark - Performance Tests
 // These performance tests were adapted from https://rpubs.com/jonclayden/regex-performance
 // by Jon Clayden
