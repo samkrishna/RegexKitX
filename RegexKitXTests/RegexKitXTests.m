@@ -677,6 +677,29 @@
     XCTAssertTrue([captures[1] isEqualToString:@"919"]);
     XCTAssertTrue([captures[2] isEqualToString:@"212"]);
 }
+
+- (void)testReplaceOccurrencesOfRegexWithTemplateWithNamedBackreferences
+{
+    NSString *daOf3AreaCodes = @"310-555-1212 919-555-1212 212-555-1212";
+    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSString *output = [daOf3AreaCodes stringByReplacingOccurrencesOfRegex:pattern withTemplate:@"${area}-666-2323 (Satan 411 in the ${area}!)"];
+    NSArray<NSString *> *captures = [output substringsMatchedByRegex:@"\\d{3}-666-2323 \\(Satan 411 in the \\d{3}!\\)"];
+    XCTAssertTrue(captures.count == 3);
+    XCTAssertTrue([captures[0] substringsMatchedByRegex:@"310"].count == 2);
+    XCTAssertTrue([captures[1] substringsMatchedByRegex:@"919"].count == 2);
+    XCTAssertTrue([captures[2] substringsMatchedByRegex:@"212"].count == 2);
+}
+
+- (void)testReplaceOccurrencesOfRegexWithTemplateWithMixedBackreferenceTypesInTemplate
+{
+    NSString *daOf3AreaCodes = @"310-555-1212 919-555-1212 212-555-1212";
+    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSString *output = [daOf3AreaCodes stringByReplacingOccurrencesOfRegex:pattern withTemplate:@"${area}-666-2323 (old number: ${area}-$2)"];
+    XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 310-555-1212\\)"]);
+    XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 919-555-1212\\)"]);
+    XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 212-555-1212\\)$"]);
+}
+
 #pragma mark - Performance Tests
 // These performance tests were adapted from https://rpubs.com/jonclayden/regex-performance
 // by Jon Clayden

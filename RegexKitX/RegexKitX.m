@@ -35,6 +35,7 @@
 
 static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
 NSString *const kRKXNamedCapturePattern = @"\\?<(\\w+)>";
+NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 
 #pragma mark -
 @interface NSArray (RangeMechanics)
@@ -894,15 +895,55 @@ NSString *const kRKXNamedCapturePattern = @"\\?<(\\w+)>";
 {
     NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches || matches.count == 0) { return NSNotFound; }
-    NSUInteger count = 0;
+    __block NSUInteger count = 0;
     NSRegularExpression *regex = matches.firstObject.regularExpression;
 
-    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:template];
-        [self replaceCharactersInRange:match.range withString:swap];
-        count++;
+    void(^performRegularSwap)(void) = ^(void) {
+        for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
+            NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:template];
+            [self replaceCharactersInRange:match.range withString:swap];
+            count++;
+        }
+    };
+
+    if (@available(macOS 10.13, *)) {
+        NSArray *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
+        NSArray *backreferenceNames = [template _captureNamesWithMetaPattern:kRKXNamedReferencePattern];
+
+        if (!captureNames || !backreferenceNames) {
+            performRegularSwap();
+            return count;
+        }
+
+        NSSet *captureNameSet = [NSSet setWithArray:captureNames];
+        NSMutableSet *backreferenceNameSetM = [NSMutableSet setWithArray:backreferenceNames];
+        [backreferenceNameSetM intersectSet:captureNameSet];
+        backreferenceNames = [backreferenceNameSetM allObjects];
+
+        for (NSString *groupName in backreferenceNames) {
+            for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
+                // (?<name>...) <- define a named capture group named "name>
+                // ${name} <- captured named group reference
+                NSRange namedGroupRange = [match rangeWithName:groupName];
+                NSString *namedGroupCapture = [self substringWithRange:namedGroupRange];
+                NSString *templateCapturePattern = [NSString stringWithFormat:@"\\$\\{%@\\}", groupName];
+                NSArray<NSValue *> *templateRanges = [template rangesOfRegex:templateCapturePattern];
+                NSMutableString *templateM = [template mutableCopy];
+
+                for (NSValue *range in [templateRanges reverseObjectEnumerator]) {
+                    [templateM replaceCharactersInRange:range.rangeValue withString:namedGroupCapture];
+                }
+
+                NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:[templateM copy]];
+                [self replaceCharactersInRange:match.range withString:swap];
+                count++;
+            }
+        }
     }
-    
+    else {
+        performRegularSwap();
+    }
+
     return count;
 }
 
