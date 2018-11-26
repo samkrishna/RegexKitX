@@ -502,6 +502,11 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
     return [self rangeOfRegex:pattern range:self.stringRange capture:NSNotFound namedCapture:captureName options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
+- (NSRange)rangeOfRegex:(NSString *)pattern capture:(NSUInteger)capture namedCapture:(NSString *)captureName
+{
+    return [self rangeOfRegex:pattern range:self.stringRange capture:capture namedCapture:captureName options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
 - (NSRange)rangeOfRegex:(NSString *)pattern range:(NSRange)searchRange
 {
     return [self rangeOfRegex:pattern range:searchRange capture:0 namedCapture:nil options:RKXNoOptions matchOptions:kNilOptions error:NULL];
@@ -519,31 +524,80 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 
 - (NSRange)rangeOfRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture namedCapture:(NSString *)captureName options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
-    if (capture != NSNotFound) { NSParameterAssert(!captureName); }
-    if (captureName) { NSParameterAssert(capture == NSNotFound); }
+    NSRange captureRange = NSNotFoundRange;
+    NSRange captureNameRange = NSNotFoundRange;
+    NSRange finalRange;
+
     if (capture != NSNotFound) {
         NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
         if (!matches || matches.count == 0) { return NSNotFoundRange; }
-        return [matches.firstObject rangeAtIndex:capture];
+        captureRange = [matches.firstObject rangeAtIndex:capture];
     }
 
-    NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
-    NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
+    if (captureName) {
+        NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+        NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
-    NSUInteger index = [captureNames indexOfObjectPassingTest:^BOOL(NSString * _Nonnull name, NSUInteger idx, BOOL * _Nonnull stop) {
-        return [name isEqualToString:captureName];
-    }];
+        NSUInteger index = [captureNames indexOfObjectPassingTest:^BOOL(NSString * _Nonnull name, NSUInteger idx, BOOL * _Nonnull stop) {
+            return [name isEqualToString:captureName];
+        }];
 #pragma clang diagnostic pop
-    if (index == NSNotFound) { return NSNotFoundRange; }
 
-    if (@available(macOS 10.13, *)) {
-        return [matches.firstObject rangeWithName:captureName];
+        if (@available(macOS 10.13, *)) {
+            captureNameRange = (index != NSNotFound) ? [matches.firstObject rangeWithName:captureName] : NSNotFoundRange;
+        }
+        else {
+            // Fallback on earlier versions
+            captureNameRange = NSNotFoundRange;
+        }
+    }
+
+    finalRange = [self _earliestRangeForCaptureRange:captureRange namedCaptureRange:captureNameRange];
+    return finalRange;
+}
+
+- (NSRange)_earliestRangeForCaptureRange:(NSRange)captureRange namedCaptureRange:(NSRange)captureNameRange
+{
+    BOOL shouldConsiderCaptureRange = (!NSEqualRanges(captureRange, NSNotFoundRange));
+    BOOL shouldConsiderCaptureNameRange = (!NSEqualRanges(captureNameRange, NSNotFoundRange));
+    NSRange finalRange;
+
+    if (shouldConsiderCaptureRange && !shouldConsiderCaptureNameRange) {
+        return captureRange;
+    }
+    else if (!shouldConsiderCaptureRange && shouldConsiderCaptureNameRange) {
+        return captureNameRange;
+    }
+
+    if (captureRange.location < captureNameRange.location) {
+        finalRange = captureRange;
+    }
+    else if (captureNameRange.location < captureRange.location) {
+        finalRange = captureNameRange;
     }
     else {
-        // Fallback on earlier versions
-        return NSNotFoundRange;
+        // OK, so **WHY** the longest length if there's a location tie?
+        // Basically, even though NSRegularExpression is based on ICU
+        // (which is an NFA regex engine), I'm choosing to return longest length because it's
+        // not entirely clear what the "return match range" should be in an NFA. There's a whole
+        // notion of the NFA working through its matches before exiting and THEN reporting back
+        // the first match. The DFA idea of "same location, longest match wins" is
+        // simpler to implement and understand. At least this is what my understanding is
+        // based on the MRE3 book at the end of chapter 4.
+        
+        if (captureRange.length > captureNameRange.length) {
+            finalRange = captureRange;
+        }
+        else if (captureNameRange.length > captureRange.length) {
+            finalRange = captureNameRange;
+        }
+        else {
+            finalRange = captureRange;
+        }
     }
+
+    return finalRange;
 }
 
 #pragma mark - rangesOfRegex:
@@ -627,6 +681,11 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 - (NSString *)stringMatchedByRegex:(NSString *)pattern namedCapture:(NSString *)captureName
 {
     return [self stringMatchedByRegex:pattern range:self.stringRange capture:NSNotFound namedCapture:captureName options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSString *)stringMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture namedCapture:(NSString *)captureName
+{
+    return [self stringMatchedByRegex:pattern range:self.stringRange capture:capture namedCapture:captureName options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
 - (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange

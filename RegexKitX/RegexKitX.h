@@ -496,12 +496,29 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns the range of capture number @c capture for the first match of @c pattern in the receiver.
 
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
+
  @param pattern A @c NSString containing a regular expression.
  @param captureName The matching range of the named capture group @c captureName in @c pattern. Use @c nil for the entire range that @c pattern matched or if @c capture is not @c NSNotFound.
  @return A @c NSRange structure giving the location and length of the first match of @c pattern within @c searchRange of the receiver. Returns @c {NSNotFound, 0} if the receiver is not matched by @c pattern.
  @return Returns @c {NSNotFound, 0} if an error occurs.
  */
 - (NSRange)rangeOfRegex:(NSString *)pattern namedCapture:(NSString *)captureName;
+
+/**
+ Returns the earliest range of either @c capture or @c captureName for the first match of @c pattern in the receiver.
+
+ NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location. In the event of a location tie, the returned range will be the range that has the LONGEST length.
+
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
+
+ @param pattern A @c NSString containing a regular expression.
+ @param capture The matching range of the capture number from @c pattern to return. Use @c 0 for the entire range that @c pattern matched.
+ @param captureName The matching range of the named capture group @c captureName in @c pattern. Use @c nil for the entire range that @c pattern matched or if @c capture is not @c NSNotFound.
+ @return A @c NSRange structure giving the location and length of the first match of @c pattern within @c searchRange of the receiver. Returns @c {NSNotFound, 0} if the receiver is not matched by @c pattern.
+ @return Returns @c {NSNotFound, 0} if an error occurs.
+ */
+- (NSRange)rangeOfRegex:(NSString *)pattern capture:(NSUInteger)capture namedCapture:(NSString *)captureName;
 
 /**
  Returns the range for the first match of @c pattern within @c searchRange of the receiver.
@@ -539,7 +556,9 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns the range of capture number @c capture or named capture group @c captureName for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
 
- Use EITHER @c capture (by passing @c nil to @c captureName) or @c captureName (by passing @c NSNotFound to @c capture) to find the first matching range, otherwise the method will assert.
+ NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location from the beginning of @c searchRange. In the event of a location tie, the returned range will be the range that has the LONGEST length.
+
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -614,6 +633,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns a string in which all matches of the regular expression @c pattern are replaced with the contents of @c templ after performing capture group substitutions.
 
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
  @return A @c NSString created from the characters of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of the @c templ string after performing capture group substitutions.
@@ -624,6 +645,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of @c templ after performing capture group substitutions.
+
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -637,6 +660,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the of @c templ after performing capture group substitutions.
 
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
@@ -647,6 +672,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the of @c templ after performing capture group substitutions.
+
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -661,6 +688,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchOptions are replaced with the contents of @c templ after performing capture group substitutions.
+
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -695,14 +724,31 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSString *)stringMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture;
 
 /**
- Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern for @c capture.
+ Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern for @c captureName.
+
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
 
  @param pattern A @c NSString containing a regular expression.
- @param captureName The string matched by named capture group @c captureName from @c pattern to return. Use @c nil for the entire string that @c pattern matched.
+ @param captureName The string matched by @c captureName from @c pattern to return. Use @c nil for the entire string that @c pattern matched.
  @return A @c NSString containing the substring of the receiver matched by @c captureName of @c pattern.
  @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
  */
 - (NSString *)stringMatchedByRegex:(NSString *)pattern namedCapture:(NSString *)captureName;
+
+/**
+ Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern for @c capture or @c captureName.
+
+ NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring string, the returned string will be the substring conforming to the first matched range. In the event of a location tie, the returned substring will be of the captured range that has the LONGEST length.
+
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param capture The string matched by @c capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched. Use @c NSNotFound to exclude all numbered group captures.
+ @param captureName The string matched by @c captureName from @c pattern to return. Use @c nil for the entire string that @c pattern matched.
+ @return A @c NSString containing the substring of the receiver matched by @c captureName of @c pattern.
+ @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
+ */
+- (NSString *)stringMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture namedCapture:(NSString *)captureName;
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern within @c searchRange of the receiver.
@@ -740,7 +786,9 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for @c capture or @c captureName.
 
- Use EITHER @c capture (by passing @c nil to @c captureName) or @c captureName (by passing @c NSNotFound to @c capture) to find the first matching string, otherwise the method will assert.
+ NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring string, the returned string will be the substring conforming to the first matched range within @c searchRange. In the event of a location tie, the returned substring will be conform to the matched range that has the LONGEST length.
+
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -780,6 +828,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns an array containing all the substrings from the receiver that were matched by named capture group @c captureName from the regular expression @c pattern.
 
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
+
  @param pattern A @c NSString containing a regular expression.
  @param captureName The string matched by the named capture group from @c pattern to return. Use @c nil if there are no named groups in @c pattern.
  @return A @c NSArray containing all the substrings from the receiver that were matched by @c namedCapture from @c pattern.
@@ -790,6 +840,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns an array containing all the substrings from the receiver that were matched by capture number @c capture and named capture group @c captureName from the regular expression @c pattern.
+
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
  @param pattern A @c NSString containing a regular expression.
  @param capture The capture group number @c capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched. Use @c NSNotFound to exclude all numbered captures.
@@ -837,6 +889,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns an array containing all the substrings from the receiver that were matched by capture number @c capture and named capture group @c captureName from the regular expression @c pattern within @c searchRange using @c options and @c matchOptions.
+
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -1101,6 +1155,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Replaces all occurrences of the regular expression @c pattern with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
 
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
  @return Returns number of successful substitutions of the matched @c pattern.
@@ -1110,6 +1166,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Replaces all occurrences of the regular expression @c pattern within @c searchRange with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
+
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -1122,6 +1180,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
 
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
  @param options A mask of options specified by combining RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
@@ -1132,6 +1192,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options within @c searchRange with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
+
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -1145,6 +1207,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options and @c matchOptions within @c searchRange with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
+
+ NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.

@@ -215,6 +215,23 @@
     XCTAssertTrue(secondRange.length == 2);
 }
 
+- (void)testRangeOfRegexWithCaptureAndNamedCapture
+{
+    // 2014-05-06 17:03:17.967
+    NSString *regex = @"(?<calendarDate>(?<year>\\d+)-(?<month>\\d+)-(?<day>\\d+)) ((?<hour>\\d+):(?<minute>\\d+):(?<second>\\d+)\\.(?<millisecond>\\d+))";
+    NSRange captureRange = [self.candidate rangeOfRegex:regex capture:2 namedCapture:@"calendarDate"];
+    XCTAssertTrue(captureRange.location == 0);
+    XCTAssertTrue(captureRange.length == 10);
+    NSString *calendarDate = [self.candidate substringWithRange:captureRange];
+    XCTAssertTrue([calendarDate isEqualToString:@"2014-05-06"]);
+
+    NSRange yearRange = [self.candidate rangeOfRegex:regex capture:2 namedCapture:nil];
+    XCTAssertTrue(yearRange.location == 0);
+    XCTAssertTrue(yearRange.length == 4);
+    NSString *year = [self.candidate substringWithRange:yearRange];
+    XCTAssertTrue([year isEqualToString:@"2014"]);
+}
+
 - (void)testFailedRangeOfRegex
 {
     NSRange failRange = [self.candidate rangeOfRegex:@"blah"];
@@ -239,6 +256,17 @@
 
     NSString *datestamp = [self.candidate stringMatchedByRegex:pattern namedCapture:@"calendardate"];
     XCTAssertTrue([datestamp isEqualToString:@"2014-05-06"]);
+}
+
+- (void)testStringMatchedByRegexCaptureNamedCapture
+{
+    // 2014-05-06 17:03:17.967
+    NSString *regex = @"(?<calendarDate>(?<year>\\d+)-(?<month>\\d+)-(?<day>\\d+)) ((?<hour>\\d+):(?<minute>\\d+):(?<second>\\d+)\\.(?<millisecond>\\d+))";
+    NSString *calendarDateString = [self.candidate stringMatchedByRegex:regex capture:2 namedCapture:@"calendarDate"];
+    XCTAssertTrue([calendarDateString isEqualToString:@"2014-05-06"]);
+
+    NSString *year = [self.candidate stringMatchedByRegex:regex capture:2 namedCapture:nil];
+    XCTAssertTrue([year isEqualToString:@"2014"]);
 }
 
 - (void)testStringByReplacingOccurrencesOfRegexWithTemplateOptionsMatchingOptionsRangeError
