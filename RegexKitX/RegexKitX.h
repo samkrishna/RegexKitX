@@ -539,10 +539,12 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns the range of capture number @c capture or named capture group @c captureName for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
 
+ Use EITHER @c capture (by passing @c nil to @c captureName) or @c captureName (by passing @c NSNotFound to @c capture) to find the first matching range, otherwise the method will assert.
+
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
- @param capture The matching range of the capture number from @c pattern to return. Use @c 0 for the entire range that @c pattern matched. Use @c NSNotFound if @c captureName is not @c nil.
- @param captureName The matching range of the named capture group @c captureName in @c pattern. Use @c nil for the entire range that @c pattern matched or if @c capture is not @c NSNotFound.
+ @param capture The matching range of the capture number from @c pattern to return. Use @c 0 for the entire range that @c pattern matched. Use @c NSNotFound to exclude all numbered captures.
+ @param captureName The matching range of the named capture group @c captureName in @c pattern. Use @c nil for the entire range that @c pattern matched or if there are no named capture groups in @c pattern.
  @param options A mask of options specified by combining @c RKXRegexOptions flags with the C bitwise @c OR operator. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
@@ -736,7 +738,9 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange capture:(NSUInteger)capture options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
- Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for @c capture.
+ Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for @c capture or @c captureName.
+
+ Use EITHER @c capture (by passing @c nil to @c captureName) or @c captureName (by passing @c NSNotFound to @c capture) to find the first matching string, otherwise the method will assert.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
