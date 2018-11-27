@@ -766,14 +766,14 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
     if (!captureName) { return [captures copy]; }
     NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
     if (!captureNames) { return [captures copy]; }
-    __block NSUInteger index = NSNotFound;
+    NSUInteger index = NSNotFound;
 
-    [captureNames enumerateObjectsUsingBlock:^(NSString * _Nonnull name, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([name isEqualToString:captureName]) {
-            index = idx;
-            *stop = YES;
-        }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
+    index = [captureNames indexOfObjectPassingTest:^BOOL(NSString * _Nonnull name, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [name isEqualToString:captureName];
     }];
+#pragma clang diagnostic pop
 
     if (index == NSNotFound) { return [captures copy]; }
 
