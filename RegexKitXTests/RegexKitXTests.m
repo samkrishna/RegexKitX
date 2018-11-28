@@ -790,6 +790,48 @@
 }
 #endif
 
+#pragma mark - Apple Bugs
+
+- (void)testAppleBugWithNamedBackreferenceSubstitutionTest
+{
+    // da = directory assistance
+    // rdar://46309223
+    NSString *da = @"310-555-1212";
+    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:kNilOptions error:NULL];
+    NSString *template = @"Reversed number: ${num}-${exch}-${area}";
+    NSString *output = [regex stringByReplacingMatchesInString:da options:kNilOptions range:NSMakeRange(0, da.length) withTemplate:template];
+    NSString *testControl = @"Reversed number: 1212-555-310";
+    XCTAssertTrue([output isEqualToString:testControl], @"Output is %@", output);
+
+    NSMutableString *mutableDA = [da mutableCopy];
+    NSUInteger substitutionCount = [regex replaceMatchesInString:mutableDA options:kNilOptions range:NSMakeRange(0, da.length) withTemplate:template];
+    XCTAssertTrue(substitutionCount == 3, @"substitution count = %lu", substitutionCount);
+    XCTAssertTrue([mutableDA isEqualToString:testControl], @"mutatated string is %@", output);
+}
+
+- (void)testAppleBugWithCaseSensitiveUnicodeMatching
+{
+    // In Greek, the "BRAVO" characters are:
+    // 'B' - Beta
+    // 'R' - Rho
+    // 'A' - Alpha
+    // 'V' - Upsilon (Best I could do instead of a classic "V"
+    // 'O' - Omicron
+
+    // rdar://46309431
+    NSString *upperCaseBravo = @"𝛣𝛲𝛢𝛶𝛰";
+    NSString *lowerCaseBravo = @"𝛽𝜌𝛂𝜐𝜊";
+    NSRegularExpression *bravoRegex = [NSRegularExpression regularExpressionWithPattern:upperCaseBravo options:NSRegularExpressionCaseInsensitive error:NULL];
+    NSRange ucBravoRange = [bravoRegex rangeOfFirstMatchInString:upperCaseBravo options:kNilOptions range:NSMakeRange(0, upperCaseBravo.length)];
+    XCTAssertTrue(ucBravoRange.location == 0, @"Failed match: location = %@", (ucBravoRange.location == NSNotFound) ? @"NSNotFound" : @(ucBravoRange.location));
+    XCTAssertTrue(ucBravoRange.length == 10, @"Failed match: length = %lu", ucBravoRange.length);
+
+    NSRange lcBravoRange = [bravoRegex rangeOfFirstMatchInString:lowerCaseBravo options:kNilOptions range:NSMakeRange(0, lowerCaseBravo.length)];
+    XCTAssertTrue(lcBravoRange.location == 0, @"Failed match: location = %@", (lcBravoRange.location == NSNotFound) ? @"NSNotFound" : @(lcBravoRange.location));
+    XCTAssertTrue(lcBravoRange.length == 10, @"Failed match: length = %lu", lcBravoRange.length);
+}
+
 #pragma mark - Performance Tests
 // These performance tests were adapted from https://rpubs.com/jonclayden/regex-performance
 // by Jon Clayden
