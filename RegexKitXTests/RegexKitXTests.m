@@ -6,6 +6,7 @@
 @import XCTest;
 
 #define NFA_FAIL_TEST 0
+#define TEST_APPLE_BUGS 0
 
 @interface RegexKitXTests : XCTestCase
 @property (nonatomic, readonly, strong) NSString *testCorpus;
@@ -792,6 +793,9 @@
 
 #pragma mark - Apple Bugs
 
+#if TEST_APPLE_BUGS
+// These two tests are for Apple's devs to fix. They demonstrate the issues
+// documented in their respected Radars.
 - (void)testAppleBugWithNamedBackreferenceSubstitutionTest
 {
     // da = directory assistance
@@ -831,6 +835,7 @@
     XCTAssertTrue(lcBravoRange.location == 0, @"Failed match: location = %@", (lcBravoRange.location == NSNotFound) ? @"NSNotFound" : @(lcBravoRange.location));
     XCTAssertTrue(lcBravoRange.length == 10, @"Failed match: length = %lu", lcBravoRange.length);
 }
+#endif
 
 #pragma mark - Performance Tests
 // These performance tests were adapted from https://rpubs.com/jonclayden/regex-performance
