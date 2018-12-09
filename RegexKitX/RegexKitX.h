@@ -38,7 +38,7 @@ typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
     /** Match letters in the pattern independent of case. */
     RKXCaseless                 = NSRegularExpressionCaseInsensitive,
     /** Ignore whitespace and #-prefixed comments in the pattern. */
-    RKXComments                 = NSRegularExpressionAllowCommentsAndWhitespace,
+    RKXIgnoreWhitespace         = NSRegularExpressionAllowCommentsAndWhitespace,
     /** Treat the entire pattern as a literal string. */
     RKXIgnoreMetacharacters     = NSRegularExpressionIgnoreMetacharacters,
     /** Allow . to match any character, including line separators. */
