@@ -751,6 +751,21 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSString *)stringMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture namedCapture:(NSString *)captureName;
 
 /**
+ Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern for @c capture or @c captureName using @c options.
+
+ NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring string, the returned string will be the substring conforming to the first matched range. In the event of a location tie, the returned substring will be of the captured range that has the LONGEST length.
+
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param capture The string matched by @c capture from @c pattern to return. Use @c 0 for the entire string that @c pattern matched. Use @c NSNotFound to exclude all numbered group captures.
+ @param captureName The string matched by @c captureName from @c pattern to return. Use @c nil for the entire string that @c pattern matched.
+ @return A @c NSString containing the substring of the receiver matched by @c captureName of @c pattern.
+ @return Returns @c nil if the receiver is not matched by @c pattern or an error occurs.
+ */
+- (NSString *)stringMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture namedCapture:(NSString *)captureName options:(RKXRegexOptions)options;
+
+/**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern within @c searchRange of the receiver.
 
  @param pattern A @c NSString containing a regular expression.

@@ -688,6 +688,11 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
     return [self stringMatchedByRegex:pattern range:self.stringRange capture:capture namedCapture:captureName options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
+- (NSString *)stringMatchedByRegex:(NSString *)pattern capture:(NSUInteger)capture namedCapture:(NSString *)captureName options:(RKXRegexOptions)options
+{
+    return [self stringMatchedByRegex:pattern range:self.stringRange capture:capture namedCapture:captureName options:options matchOptions:kNilOptions error:NULL];
+}
+
 - (NSString *)stringMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
 {
     return [self stringMatchedByRegex:pattern range:searchRange capture:0 namedCapture:nil options:RKXNoOptions matchOptions:kNilOptions error:NULL];
