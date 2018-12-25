@@ -35,7 +35,7 @@ I've also added documentation that is option-clickable for all the *RKX* categor
 ## A few caveats:
 
 1. I've re-ordered and modernized some of the argument and block parameters for a number of APIs.
-1. I've renamed a few APIs as well to make them grammatically consistent.
+1. I've renamed a few APIs as well to make them grammatically and contextually consistent.
 1. The regex syntax is 100%-pure ICU syntax.
 1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration. As usual, `NSEnumerationConcurrent` behavior is undefined.
 
@@ -53,5 +53,6 @@ This is a Swift 4.x implementation inspired by the [RegexKitLite 4.0](http://reg
 1. @johnezang also included a few test executables in his *RKL4* sources, which are now ported and exist as test cases.
 1. I've also started adding a few pedagogical examples that have helped me learn some of the more nuanced aspects of regexes.
 1. I've included [a set of performance tests from Jon Clayden](https://rpubs.com/jonclayden/regex-performance) performing matches against a non-trivial size of text.
+1. I've begun exercises from the [Regular Expressions Cookbook, 2nd Ed.](http://www.regular-expressions-cookbook.com) by Steven Levithan and Jan Goyvaerts.
 
 Additional test cases and pull requests are welcome.
