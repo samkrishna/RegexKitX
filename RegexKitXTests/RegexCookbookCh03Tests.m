@@ -1,5 +1,5 @@
 //
-//  RegexCookbookTests.m
+//  RegexCookbookCh03Tests.m
 //  RegexKitXTests
 //
 //  Created by Sam Krishna on 12/8/18.
@@ -9,11 +9,10 @@
 #import "RegexKitX.h"
 #import <XCTest/XCTest.h>
 
-@interface RegexCookbookTests : XCTestCase
-
+@interface RegexCookbookCh03Tests : XCTestCase
 @end
 
-@implementation RegexCookbookTests
+@implementation RegexCookbookCh03Tests
 
 - (void)testRegexFromSection31
 {
