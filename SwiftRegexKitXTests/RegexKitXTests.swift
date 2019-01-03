@@ -201,7 +201,7 @@ class RegexKitXTests: XCTestCase {
 
     func testCaptureComponentsMatcheByRegex() {
         let list = "$10.23, $1024.42, $3099"
-        let listItems: [String] = try! list.captureComponentsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))")
+        let listItems: [String] = try! list.captureSubstringsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))")
         XCTAssertTrue(listItems.count == 4)
         XCTAssertTrue(listItems[0] == "$10.23")
         XCTAssertTrue(listItems[1] == "10.23")
@@ -211,7 +211,7 @@ class RegexKitXTests: XCTestCase {
 
     func testArrayOfCaptureComponentsMatchedByRegex() {
         let list = "$10.23, $1024.42, $3099"
-        let listItems: [[String]] = try! list.arrayOfCaptureComponentsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))")
+        let listItems: [[String]] = try! list.arrayOfCaptureSubstringsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))")
         XCTAssertTrue(listItems.count == 3)
 
         let list0 = listItems[0]
@@ -302,7 +302,7 @@ class RegexKitXTests: XCTestCase {
 
     func testComponentsSeparatedByRegex() {
         let regex = ", "
-        let captures = try! candidate.componentsSeparated(by: regex)
+        let captures = try! candidate.substringsSeparated(by: regex)
         XCTAssertTrue(captures.count == 12)
 
         for substring in captures {

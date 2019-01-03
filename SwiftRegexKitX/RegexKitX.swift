@@ -449,7 +449,7 @@ public extension String {
             return try substringsMatched(by: pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
     }
 
-    // MARK: captureComponentsMatched(by:in:options:matchingOptions:)
+    // MARK: captureSubstringsMatched(by:in:options:matchingOptions:)
 
     /// Returns an array containing the substrings matched by each capture group present in `pattern` for the first match of `pattern` within `searchRange` of the receiver using `options` and `matchOptions`.
     ///
@@ -460,7 +460,7 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     /// - Returns: An `Array` containing the substrings (as Strings) matched by each capture group present in `pattern` for the first match of `pattern` within `searchRange` of the receiver using `options`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func captureComponentsMatched(by pattern: String,
+    func captureSubstringsMatched(by pattern: String,
                                   in searchRange: NSRange? = nil,
                                   options: RKXRegexOptions = [],
                                   matchingOptions: RKXMatchOptions = [])
@@ -479,16 +479,16 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     /// - Returns: An `Array` containing the substrings (as Strings) matched by each capture group present in `pattern` for the first match of `pattern` within `searchRange` of the receiver using `options`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func captureComponentsMatched(by pattern: String,
+    func captureSubstringsMatched(by pattern: String,
                                   in searchRange: Range<String.UTF16Index>,
                                   options: RKXRegexOptions = [],
                                   matchingOptions: RKXMatchOptions = [])
         throws -> [String] {
             let legacyRange = nsrange(from: searchRange)
-            return try captureComponentsMatched(by: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+            return try captureSubstringsMatched(by: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
-    // MARK: arrayOfCaptureComponentsMatched(by:in:options:matchingOptions:)
+    // MARK: arrayOfCaptureSubstringsMatched(by:in:options:matchingOptions:)
 
     /// Returns an array containing all the matches from the receiver that were matched by the regular expression `pattern` within `searchRange` using `options` and `matchOptions`. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
     ///
@@ -499,7 +499,7 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     /// - Returns: A `Array` object containing all the matches from the receiver by `pattern`. Each match result consists of a `Array` which contains all the capture groups present in `pattern`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group. Will return an empty array if `pattern` fails to match.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func arrayOfCaptureComponentsMatched(by pattern: String,
+    func arrayOfCaptureSubstringsMatched(by pattern: String,
                                          in searchRange: NSRange? = nil,
                                          options: RKXRegexOptions = [],
                                          matchingOptions: RKXMatchOptions = [])
@@ -522,13 +522,13 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     /// - Returns: A `Array` object containing all the matches from the receiver by `pattern`. Each match result consists of a `Array` which contains all the capture groups present in `pattern`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group. Will return an empty array if `pattern` fails to match.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func arrayOfCaptureComponentsMatched(by pattern: String,
+    func arrayOfCaptureSubstringsMatched(by pattern: String,
                                          in searchRange: Range<String.UTF16Index>,
                                          options: RKXRegexOptions = [],
                                          matchingOptions: RKXMatchOptions = [])
         throws -> [[String]] {
             let legacyRange = nsrange(from: searchRange)
-            return try arrayOfCaptureComponentsMatched(by: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+            return try arrayOfCaptureSubstringsMatched(by: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
     // MARK: dictionaryMatched(by:in:options:matchingOptions:keysAndCaptures:)
@@ -711,7 +711,7 @@ public extension String {
             return true
     }
 
-    // MARK: componentsSeparated(by:in:options:matchingOptions:)
+    // MARK: substringsSeparated(by:in:options:matchingOptions:)
 
     /// Returns an array containing substrings (as Strings) within `searchRange` of the receiver that have been divided by the regular expression `pattern` using `options` and `matchOptions`.
     ///
@@ -722,7 +722,7 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     /// - Returns: An Array containing the substrings from the receiver that have been divided by `pattern`. If there is no match, returns an Array with the receiver as the single element.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func componentsSeparated(by pattern: String,
+    func substringsSeparated(by pattern: String,
                              in searchRange: NSRange? = nil,
                              options: RKXRegexOptions = [],
                              matchingOptions: RKXMatchOptions = [])
@@ -755,13 +755,13 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     /// - Returns: An Array containing the substrings from the receiver that have been divided by `pattern`. If there is no match, returns an Array with the receiver as the single element.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func componentsSeparatedBy(_ pattern: String,
+    func substringsSeparatedBy(_ pattern: String,
                                in searchRange: Range<String.UTF16Index>,
                                options: RKXRegexOptions = [],
                                matchingOptions: RKXMatchOptions = [])
         throws -> [String] {
             let legacyRange = nsrange(from: searchRange)
-            return try componentsSeparated(by: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
+            return try substringsSeparated(by: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
 
     // MARK: enumerateStringsSeparated(by:in:options:matchingOptions:using block:)
@@ -788,7 +788,7 @@ public extension String {
             let targetRange = target.stringRange
             let matches = try target.regexMatches(for: pattern, in: searchRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return false }
-            let strings = try target.componentsSeparated(by: pattern, in: targetRange, options: options, matchingOptions: matchingOptions)
+            let strings = try target.substringsSeparated(by: pattern, in: targetRange, options: options, matchingOptions: matchingOptions)
             var remainderRange = targetRange
 
             for (index, string) in strings.enumerated() {
@@ -836,7 +836,7 @@ public extension String {
             let targetRange = target.stringRange
             let matches = try target.regexMatches(for: pattern, in: targetRange, options: options, matchOptions: matchingOptions)
             guard !matches.isEmpty else { return false }
-            let strings = try target.componentsSeparated(by: pattern, in: targetRange, options: options, matchingOptions: matchingOptions)
+            let strings = try target.substringsSeparated(by: pattern, in: targetRange, options: options, matchingOptions: matchingOptions)
             var remainderRange = targetRange
 
             for (index, string) in strings.enumerated() {
