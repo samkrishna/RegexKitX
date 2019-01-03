@@ -400,7 +400,7 @@ public extension String {
             return true
     }
 
-    // MARK: componentsMatched(by:in:for:options:matchingOptions:)
+    // MARK: substringsMatched(by:in:for:options:matchingOptions:)
 
     /// Returns an array containing all the substrings from the receiver that were matched by capture number `capture` from the regular expression `pattern` within `searchRange` using `options` and `matchOptions`.
     ///
@@ -413,7 +413,7 @@ public extension String {
     /// - Returns: An `Array` containing all the substrings (as Strings) from the receiver that were matched by capture number `capture` from `pattern` within `searchRange` using `options` and `matchOptions`.
     /// - Returns: Returns an empty array if `pattern` fails to match in `searchRange`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func componentsMatched(by pattern: String,
+    func substringsMatched(by pattern: String,
                            in searchRange: NSRange? = nil,
                            for capture: Int = 0,
                            options: RKXRegexOptions = [],
@@ -439,14 +439,14 @@ public extension String {
     /// - Returns: An `Array` containing all the substrings (as Strings) from the receiver that were matched by capture number `capture` from `pattern` within `searchRange` using `options` and `matchOptions`.
     /// - Returns: Returns an empty array if `pattern` fails to match in `searchRange`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
-    func componentsMatched(by pattern: String,
+    func substringsMatched(by pattern: String,
                            in searchRange: Range<String.UTF16Index>,
                            for capture: Int = 0,
                            options: RKXRegexOptions = [],
                            matchingOptions: RKXMatchOptions = [])
         throws -> [String] {
             let legacyRange = nsrange(from: searchRange)
-            return try componentsMatched(by: pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
+            return try substringsMatched(by: pattern, in: legacyRange, for: capture, options: options, matchingOptions: matchingOptions)
     }
 
     // MARK: captureComponentsMatched(by:in:options:matchingOptions:)

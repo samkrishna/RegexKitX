@@ -192,7 +192,7 @@ class RegexKitXTests: XCTestCase {
 
     func testComponentsMatchedByRegex() {
         let list = "$10.23, $1024.42, $3099"
-        let listItems: [String] = try! list.componentsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))", for: 3)
+        let listItems: [String] = try! list.substringsMatched(by: "\\$((\\d+)(?:\\.(\\d+)|\\.?))", for: 3)
 
         XCTAssertTrue(listItems[0] == "23")
         XCTAssertTrue(listItems[1] == "42")
@@ -461,7 +461,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex01() {
         // The literal string, “Sherlock”
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "Sherlock", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "Sherlock", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 97, "The count is \(matches.count)")
         }
     }
@@ -469,7 +469,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex02() {
         // “Sherlock” at the beginning of a line
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "^Sherlock", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "^Sherlock", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 34, "The count is \(matches.count)")
         }
     }
@@ -477,7 +477,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex03() {
         // “Sherlock” at the end of a line
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "Sherlock$", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "Sherlock$", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 6, "The count is \(matches.count)")
         }
     }
@@ -485,7 +485,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex04() {
         // The letters “a” and “b”, separated by 20 other characters that aren’t “x”
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "a[^x]{20}b", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "a[^x]{20}b", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 405, "The count is \(matches.count)")
         }
     }
@@ -493,7 +493,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex05() {
         // Either of the strings “Holmes” or “Watson”
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "Holmes|Watson", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "Holmes|Watson", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 542, "The count is \(matches.count)")
         }
     }
@@ -501,7 +501,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex06() {
         // Zero to three characters, followed by either of the strings “Holmes” or “Watson”
         measure {
-            let matches = try! testCorpus.componentsMatched(by: ".{0,3}(Holmes|Watson)", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: ".{0,3}(Holmes|Watson)", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 542, "The count is \(matches.count)")
         }
     }
@@ -509,7 +509,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex07() {
         // Any word ending in “ing”
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "[a-zA-Z]+ing", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "[a-zA-Z]+ing", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 2824, "The count is \(matches.count)")
         }
     }
@@ -517,7 +517,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex08() {
         // Up to four letters followed by “ing” and then a non-letter, at the beginning of a line
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "^([a-zA-Z]{0,4}ing)[^a-zA-Z]", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "^([a-zA-Z]{0,4}ing)[^a-zA-Z]", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 163, "The count is \(matches.count)")
         }
     }
@@ -525,7 +525,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex09() {
         // Any word ending in “ing”, at the end of a line
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "[a-zA-Z]+ing$", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "[a-zA-Z]+ing$", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 152, "The count is \(matches.count)")
         }
     }
@@ -533,7 +533,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex10() {
         // Lines consisting of five or more letters and spaces, only
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "^[a-zA-Z ]{5,}$", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "^[a-zA-Z ]{5,}$", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 876, "The count is \(matches.count)")
         }
     }
@@ -541,7 +541,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex11() {
         // Lines of between 16 and 20 characters
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "^.{16,20}$", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "^.{16,20}$", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 238, "The count is \(matches.count)")
         }
     }
@@ -549,7 +549,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex12() {
         // Sequences of characters from certain sets (complex to explain!)
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "([a-f](.[d-m].){0,2}[h-n]){2}", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "([a-f](.[d-m].){0,2}[h-n]){2}", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 1597, "The count is \(matches.count)")
         }
     }
@@ -557,7 +557,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex13() {
         // A word ending in “olmes” or “atson”, followed by a non-letter
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "([A-Za-z]olmes)|([A-Za-z]atson)[^a-zA-Z]", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "([A-Za-z]olmes)|([A-Za-z]atson)[^a-zA-Z]", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 542, "The count is \(matches.count)")
         }
     }
@@ -565,7 +565,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex14() {
         // A quoted string of between 0 and 30 characters, ending with a punctuation mark
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "\"[^\"]{0,30}[?!\\.]\"", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "\"[^\"]{0,30}[?!\\.]\"", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 582, "The count is \(matches.count)")
         }
     }
@@ -574,7 +574,7 @@ class RegexKitXTests: XCTestCase {
     func testPerformanceRegex15() {
         // The names “Holmes” and “Watson” on the same line, separated by 10 to 60 other characters
         measure {
-            let matches = try! testCorpus.componentsMatched(by: "Holmes.{10,60}Watson|Watson.{10,60}Holmes", options:.RKXMultiline)
+            let matches = try! testCorpus.substringsMatched(by: "Holmes.{10,60}Watson|Watson.{10,60}Holmes", options:.RKXMultiline)
             XCTAssertTrue(matches.count == 2, "The count is \(matches.count)")
         }
     }
