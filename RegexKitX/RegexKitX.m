@@ -43,10 +43,7 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 @end
 
 @implementation NSArray (RangeMechanics)
-- (NSRange)rangeAtIndex:(NSUInteger)index
-{
-    return [self[index] rangeValue];
-}
+- (NSRange)rangeAtIndex:(NSUInteger)index { return [self[index] rangeValue]; }
 @end
 
 #pragma mark -
@@ -55,10 +52,7 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 @end
 
 @implementation NSMutableArray (RangeMechanics)
-- (void)addRange:(NSRange)range
-{
-    [self addObject:[NSValue valueWithRange:range]];
-}
+- (void)addRange:(NSRange)range { [self addObject:[NSValue valueWithRange:range]]; }
 @end
 
 #pragma mark -
@@ -96,23 +90,14 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 
 #pragma mark -
 @implementation NSString (RangeMechanics)
-
-- (NSRange)stringRange
-{
-    return ((NSRange){.location = 0UL, .length = self.length});
-}
+- (NSRange)stringRange { return ((NSRange){.location = 0UL, .length = self.length}); }
+- (NSRange)rangeToLocation:(NSUInteger)location { return ((NSRange){.location = 0UL, .length = location}); }
 
 - (NSRange)rangeFromLocation:(NSUInteger)location
 {
     NSUInteger deltaLength = self.length - location;
     return ((NSRange){.location = location, .length = deltaLength});
 }
-
-- (NSRange)rangeToLocation:(NSUInteger)location
-{
-    return ((NSRange){.location = 0UL, .length = location});
-}
-
 @end
 
 #pragma mark -
