@@ -494,7 +494,9 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 - (NSRange)rangeOfRegex:(NSString *)pattern capture:(NSUInteger)capture;
 
 /**
- Returns the range of capture number @c capture for the first match of @c pattern in the receiver.
+ Returns the range of the named capture group @c captureName for the first match of @c pattern in the receiver.
+
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
 
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
 
@@ -507,6 +509,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns the earliest range of either @c capture or @c captureName for the first match of @c pattern in the receiver.
+
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
 
  NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location. In the event of a location tie, the returned range will be the range that has the LONGEST length.
 
@@ -555,6 +559,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns the range of capture number @c capture or named capture group @c captureName for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
+
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
 
  NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location from the beginning of @c searchRange. In the event of a location tie, the returned range will be the range that has the LONGEST length.
 
@@ -726,6 +732,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern for @c captureName.
 
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
+
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
 
  @param pattern A @c NSString containing a regular expression.
@@ -737,6 +745,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern for @c capture or @c captureName.
+
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
 
  NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring string, the returned string will be the substring conforming to the first matched range. In the event of a location tie, the returned substring will be of the captured range that has the LONGEST length.
 
@@ -752,6 +762,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern for @c capture or @c captureName using @c options.
+
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
 
  NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring string, the returned string will be the substring conforming to the first matched range. In the event of a location tie, the returned substring will be of the captured range that has the LONGEST length.
 
@@ -801,6 +813,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns a string created from the characters of the receiver that are in the range of the first match of @c pattern using @c options and @c matchOptions within @c searchRange of the receiver for @c capture or @c captureName.
 
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
+
  NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring string, the returned string will be the substring conforming to the first matched range within @c searchRange. In the event of a location tie, the returned substring will be conform to the matched range that has the LONGEST length.
 
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
@@ -843,6 +857,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 /**
  Returns an array containing all the substrings from the receiver that were matched by named capture group @c captureName from the regular expression @c pattern.
 
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
+
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
  @param pattern A @c NSString containing a regular expression.
@@ -855,6 +871,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns an array containing all the substrings from the receiver that were matched by capture number @c capture and named capture group @c captureName from the regular expression @c pattern.
+
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
 
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
@@ -904,6 +922,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
 /**
  Returns an array containing all the substrings from the receiver that were matched by capture number @c capture and named capture group @c captureName from the regular expression @c pattern within @c searchRange using @c options and @c matchOptions.
+
+ The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...).
 
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
