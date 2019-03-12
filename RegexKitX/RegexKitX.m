@@ -1008,7 +1008,7 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 
         for (NSString *groupName in backreferenceNames) {
             for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-                // (?<name>...) <- define a named capture group named "name>
+                // (?<name>...) <- define a named capture group named "name"
                 // ${name} <- captured named group reference
                 NSRange namedGroupRange = [match rangeWithName:groupName];
                 NSString *namedGroupCapture = [self substringWithRange:namedGroupRange];
