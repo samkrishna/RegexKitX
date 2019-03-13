@@ -146,14 +146,14 @@ public extension String {
             return NSRange(location: location, length: deltaLength)
     }
 
-    /// Converts `range` from a `NSRange` to a `String.UTF16Index Range`.
+    /// Converts `range` from a `NSRange` to a `String.UTF16View.Index Range`.
     func utf16Range(from range: NSRange)
-        -> Range<String.UTF16Index>? {
+        -> Range<String.UTF16View.Index>? {
         return Range(range, in: self)
     }
 
-    /// Converts 'range' from a `Range<String.UTF16Index>` to a `NSRange`
-    func nsrange(from range: Range<String.UTF16Index>?)
+    /// Converts 'range' from a `Range<String.UTF16View.Index>` to a `NSRange`
+    func nsrange(from range: Range<String.UTF16View.Index>?)
         -> NSRange {
         guard range != nil else { return NSMakeRange(NSNotFound, 0) }
         return NSRange(range!, in: self)
@@ -222,7 +222,7 @@ public extension String {
     /// - Returns: A Bool value indicating whether or not the pattern matches the receiver.
     /// - Throws: An error if the pattern is invalid.
     func matches(_ pattern: String,
-                 in searchRange: Range<String.UTF16Index>,
+                 in searchRange: Range<String.UTF16View.Index>,
                  options: RKXRegexOptions = [],
                  matchingOptions: RKXMatchOptions = [])
         throws -> Bool {
@@ -247,7 +247,7 @@ public extension String {
                for capture: Int = 0,
                options: RKXRegexOptions = [],
                matchingOptions: RKXMatchOptions = [])
-        throws -> Range<String.UTF16Index>? {
+        throws -> Range<String.UTF16View.Index>? {
             let matches = try regexMatches(for: pattern, in: searchRange, options: options, matchOptions: matchingOptions)
             guard let match = matches.first else { return nil }
             let range = utf16Range(from: match.range(at: capture))
@@ -262,14 +262,14 @@ public extension String {
     ///   - capture: The matching range of the capture number from `pattern` to search. Use `0` for the entire range that `pattern` matched.
     ///   - options: An OptionSet specified by combining various `RKXRegexOptions`. If no options are required, ignore this parameter.
     ///   - matchingOptions: An OptionSet specified by combining various `RKXMatchOptions`. If no options are required, ignore this parameter.
-    /// - Returns: A Range<String.UTF16Index> giving the Range of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
+    /// - Returns: A Range<String.UTF16View.Index> giving the Range of capture number `capture` for the first match of `pattern` within `searchRange` of the receiver.
     /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
     func range(of pattern: String,
-               in searchRange: Range<String.UTF16Index>,
+               in searchRange: Range<String.UTF16View.Index>,
                for capture: Int = 0,
                options: RKXRegexOptions = [],
                matchingOptions: RKXMatchOptions = [])
-        throws -> Range<String.UTF16Index>? {
+        throws -> Range<String.UTF16View.Index>? {
             let legacyRange = nsrange(from: searchRange)
             return try range(of: pattern, in: legacyRange, options: options, matchingOptions: matchingOptions)
     }
@@ -309,7 +309,7 @@ public extension String {
     /// - Returns: A NSString containing the substring of the receiver matched by capture number capture of pattern within searchRange of the receiver.
     /// - Throws: A NSError object for any issue that came up during initialization of the regular expression.
     func stringMatched(by pattern: String,
-                       in searchRange: Range<String.UTF16Index>,
+                       in searchRange: Range<String.UTF16View.Index>,
                        for capture: Int = 0,
                        options: RKXRegexOptions = [],
                        matchingOptions: RKXMatchOptions = [])
@@ -362,7 +362,7 @@ public extension String {
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func stringByReplacingOccurrences(of pattern: String,
                                       with template: String,
-                                      in searchRange: Range<String.UTF16Index>,
+                                      in searchRange: Range<String.UTF16View.Index>,
                                       options: RKXRegexOptions = [],
                                       matchingOptions: RKXMatchOptions = [])
         throws -> String {
@@ -440,7 +440,7 @@ public extension String {
     /// - Returns: Returns an empty array if `pattern` fails to match in `searchRange`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func substringsMatched(by pattern: String,
-                           in searchRange: Range<String.UTF16Index>,
+                           in searchRange: Range<String.UTF16View.Index>,
                            for capture: Int = 0,
                            options: RKXRegexOptions = [],
                            matchingOptions: RKXMatchOptions = [])
@@ -480,7 +480,7 @@ public extension String {
     /// - Returns: An `Array` containing the substrings (as Strings) matched by each capture group present in `pattern` for the first match of `pattern` within `searchRange` of the receiver using `options`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func captureSubstringsMatched(by pattern: String,
-                                  in searchRange: Range<String.UTF16Index>,
+                                  in searchRange: Range<String.UTF16View.Index>,
                                   options: RKXRegexOptions = [],
                                   matchingOptions: RKXMatchOptions = [])
         throws -> [String] {
@@ -523,7 +523,7 @@ public extension String {
     /// - Returns: A `Array` object containing all the matches from the receiver by `pattern`. Each match result consists of a `Array` which contains all the capture groups present in `pattern`. Array index `0` represents all of the text matched by `pattern` and subsequent array indexes contain the text matched by their respective capture group. Will return an empty array if `pattern` fails to match.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func arrayOfCaptureSubstringsMatched(by pattern: String,
-                                         in searchRange: Range<String.UTF16Index>,
+                                         in searchRange: Range<String.UTF16View.Index>,
                                          options: RKXRegexOptions = [],
                                          matchingOptions: RKXMatchOptions = [])
         throws -> [[String]] {
@@ -572,7 +572,7 @@ public extension String {
     /// - Returns: A `Dictionary` containing the matched substrings constructed from the specified set of keys and captures.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression. Will also throw a `DictionaryError` object if the number of key-and-capture elements is larger than 32 distinct pairs (or 64 elements) and will also throw if there is an odd number of elements passed (implying that there are unpaired keys or capture groups).
     func dictionaryMatched(by pattern: String,
-                           in searchRange: Range<String.UTF16Index>,
+                           in searchRange: Range<String.UTF16View.Index>,
                            options: RKXRegexOptions = [],
                            matchingOptions: RKXMatchOptions = [],
                            keysAndCaptures: Any...)
@@ -645,7 +645,7 @@ public extension String {
     /// - Returns: A `Array` object containing all the matches from the receiver by `pattern`. Each match result consists of a `Dictionary` containing that matches substrings constructed from the specified set of keys and captures.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression. Will also throw a `DictionaryError` object if the number of key-and-capture elements is larger than 32 distinct pairs (or 64 elements) and will also throw if there is an odd number of elements passed (implying that there are unpaired keys or capture groups).
     func arrayOfDictionariesMatched(by pattern: String,
-                                    in searchRange: Range<String.UTF16Index>,
+                                    in searchRange: Range<String.UTF16View.Index>,
                                     options: RKXRegexOptions = [],
                                     matchingOptions: RKXMatchOptions = [],
                                     keysAndCaptures: Any...)
@@ -692,14 +692,14 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     ///   - block: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
-    ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
+    ///   - ranges: An array of type `Range<String.UTF16View.Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: `True` if there was no error, otherwise `false` if there were no matches.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func enumerateStringsMatched(by pattern: String,
-                                 in searchRange: Range<String.UTF16Index>,
+                                 in searchRange: Range<String.UTF16View.Index>,
                                  options: RKXRegexOptions = [],
                                  matchingOptions: RKXMatchOptions = [],
-                                 using block: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
+                                 using block: (_ strings: [String], _ ranges: [Range<String.UTF16View.Index>]) -> Void)
         throws -> Bool {
             let legacyRange = nsrange(from: searchRange)
             let matches = try regexMatches(for: pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
@@ -756,7 +756,7 @@ public extension String {
     /// - Returns: An Array containing the substrings from the receiver that have been divided by `pattern`. If there is no match, returns an Array with the receiver as the single element.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func substringsSeparatedBy(_ pattern: String,
-                               in searchRange: Range<String.UTF16Index>,
+                               in searchRange: Range<String.UTF16View.Index>,
                                options: RKXRegexOptions = [],
                                matchingOptions: RKXMatchOptions = [])
         throws -> [String] {
@@ -823,14 +823,14 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     ///   - block: The closure that is executed for each match of `pattern` in the receiver. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
-    ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
+    ///   - ranges: An array of type `Range<String.UTF16View.Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: `true` if there was no error, otherwise `false` if there were no matches.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func enumerateStringsSeparated(by pattern: String,
-                                   in searchRange: Range<String.UTF16Index>,
+                                   in searchRange: Range<String.UTF16View.Index>,
                                    options: RKXRegexOptions = [],
                                    matchingOptions: RKXMatchOptions = [],
-                                   using block: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> Void)
+                                   using block: (_ strings: [String], _ ranges: [Range<String.UTF16View.Index>]) -> Void)
         throws -> Bool {
             let target = String(self[searchRange])
             let targetRange = target.stringRange
@@ -851,7 +851,7 @@ public extension String {
                     }
 
                     remainderRange = target.rangeFrom(location: rangeCaptures.last!.location)
-                    let utf16Ranges: [Range<String.UTF16Index>] = rangeCaptures.map({ utf16Range(from: $0)! })
+                    let utf16Ranges: [Range<String.UTF16View.Index>] = rangeCaptures.map({ utf16Range(from: $0)! })
                     block(substrings, utf16Ranges)
                 }
                 else {
@@ -905,14 +905,14 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     ///   - block: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
-    ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
+    ///   - ranges: An array of type `Range<String.UTF16View.Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: A `String` created from the characters within `searchRange` of the receiver in which all matches of the regular expression `pattern` using `options` are replaced with the contents of the `String` returned by `block`. Returns the characters within `searchRange` as if `substringWithRange`: had been sent to the receiver if the substring is not matched by `pattern`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     func stringByReplacingOccurences(of pattern: String,
-                                     in searchRange: Range<String.UTF16Index>,
+                                     in searchRange: Range<String.UTF16View.Index>,
                                      options: RKXRegexOptions = [],
                                      matchingOptions: RKXMatchOptions = [],
-                                     using block: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
+                                     using block: (_ strings: [String], _ ranges: [Range<String.UTF16View.Index>]) -> String)
         throws -> String {
             var target = String(self[searchRange])
             let targetRange = (target as String).stringRange
@@ -969,7 +969,7 @@ public extension String {
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     mutating func replaceOccurrences(of pattern: String,
                                      with template: String,
-                                     in searchRange: Range<String.UTF16Index>,
+                                     in searchRange: Range<String.UTF16View.Index>,
                                      options: RKXRegexOptions = [],
                                      matchingOptions: RKXMatchOptions = [])
         throws -> Int {
@@ -1017,14 +1017,14 @@ public extension String {
     ///   - matchingOptions: An `OptionSet` specified by combining various `RKXMatchOptions`.
     ///   - block: The closure that is executed for each match of `pattern` in the receiver and returns a String. It takes two arguments:
     ///   - strings: An array containing the substrings (as Strings) matched by each capture group present in `pattern`. If a capture group did not match anything, it will contain a reference to an empty String.
-    ///   - ranges: An array of type `Range<String.UTF16Index>` containing the ranges of eatch capture group in a given match. If a capture group did not match anything, it will contain a nil.
+    ///   - ranges: An array of type `Range<String.UTF16View.Index>` containing the ranges of each capture group in a given match. If a capture group did not match anything, it will contain a nil.
     /// - Returns: Returns the number of successful substitutions of the matched `pattern`.
     /// - Throws: A `NSError` object for any issue that came up during initialization of the regular expression.
     mutating func replaceOccurrences(of pattern: String,
-                                     in searchRange: Range<String.UTF16Index>,
+                                     in searchRange: Range<String.UTF16View.Index>,
                                      options: RKXRegexOptions = [],
                                      matchingOptions: RKXMatchOptions = [],
-                                     using block: (_ strings: [String], _ ranges: [Range<String.UTF16Index>]) -> String)
+                                     using block: (_ strings: [String], _ ranges: [Range<String.UTF16View.Index>]) -> String)
         throws -> Int {
             let legacyRange = nsrange(from: searchRange)
             let matches = try regexMatches(for: pattern, in: legacyRange, options: options, matchOptions: matchingOptions)
