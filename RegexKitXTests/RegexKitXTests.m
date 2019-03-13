@@ -216,6 +216,10 @@
     NSRange secondRange = [self.candidate rangeOfRegex:regex namedCapture:@"second"];
     XCTAssertTrue(secondRange.location == 17);
     XCTAssertTrue(secondRange.length == 2);
+
+    NSRange notFoundRange = [self.candidate rangeOfRegex:regex namedCapture:@"justKidding"];
+    XCTAssertTrue(notFoundRange.location == NSNotFound);
+    XCTAssertTrue(notFoundRange.length == 0);
 }
 
 - (void)testRangeOfRegexWithCaptureAndNamedCapture

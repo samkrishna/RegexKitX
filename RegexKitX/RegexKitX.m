@@ -33,7 +33,7 @@
 
 #define RKX_EXPECTED(cond, expect) __builtin_expect((long)(cond), (expect))
 
-static NSRange NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
+NSRange const NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
 NSString *const kRKXNamedCapturePattern = @"\\?<(\\w+)>";
 NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 
