@@ -29,4 +29,13 @@
     XCTAssertTrue([testEmail isMatchedByRegex:tldHas2to6LettersRegex options:RKXCaseless]);
 }
 
+- (void)testRegexFromSection42
+{
+    NSString *phoneRegex = @"^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$";
+    NSString *phone01 = @"1234567890";
+    XCTAssertTrue([phone01 isMatchedByRegex:phoneRegex]);
+    NSString *formattedPhone = [phone01 stringByReplacingOccurrencesOfRegex:phoneRegex withTemplate:@"($1) $2-$3"];
+    XCTAssertTrue([formattedPhone isEqualToString:@"(123) 456-7890"]);
+}
+
 @end
