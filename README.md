@@ -20,18 +20,18 @@ Basically, I'm modernizing the API as a cover for [NSRegularExpression](https://
 
 I am doing this for several reasons:
 
-- How [unwieldy NSRegularExpression naturally is](http://nshipster.com/nsregularexpression/)
+- How [unwieldy NSRegularExpression naturally is](https://web.archive.org/web/20180102233205/http://nshipster.com/nsregularexpression/) 
 - The false positives that the Clang Static Analyzer flagged in *RKL4*
 - The fact that *RKL4* is **NOT** ARC-compliant
 - The fact that the low-level *RKL4* C code accessing the [ICU](http://site.icu-project.org/) regex engine spits out `OSSpinLock`-based deprecation warnings on macOS 10.12 Sierra and above
 - ~~How easy it is to forget to **ALWAYS link to the ICU library** on every project using *RKL4*~~ (Obviously CocoaPods solves this)
 - I wanted to provide cover API for named captures and backreferences, which NSRegularExpression supports
 
-My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do RegexKitX ("*RKX*").
+My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of NSRegularExpression, I'm choosing to do RegexKitX ("*RKX*").
 
 I've also added documentation that is option-clickable for all the *RKX* category methods.
 
-**NOTE:** There's an almost-pure *RKL4* API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0). This version is intended to be a drop-in replacement (with possible modifications) for the original  *RKL4* codebase.
+**NOTE:** There's an almost-pure *RKL4* API re-implementation [here](https://github.com/samkrishna/RegexKitX/releases/tag/5.0). This version is intended to be a drop-in replacement (with possible block-based modifications) for the original  *RKL4* codebase.
 
 ## A few caveats:
 
@@ -42,11 +42,11 @@ I've also added documentation that is option-clickable for all the *RKX* categor
 
 ## Swift
 
-This is a Swift 4.x implementation inspired by the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) API. It is:
+This is a Swift 5.x implementation inspired by the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) API. It is:
 
 - Yet another cover for `NSRegularExpression` and `NSTextCheckingResult`.
 - 100% pure ICU regex syntax
-- Allows the developer the ability to use either *NSRange* or *Range<String.UTF16Index>* to operate on portions of substrings.
+- Allows the developer the ability to use either *NSRange* or *Range<String.UTF16View.Index>* to operate on portions of substrings.
 
 ## Tests
 
