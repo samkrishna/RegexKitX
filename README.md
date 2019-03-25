@@ -24,7 +24,8 @@ I am doing this for several reasons:
 - The false positives that the Clang Static Analyzer flagged in *RKL4*
 - The fact that *RKL4* is **NOT** ARC-compliant
 - The fact that the low-level *RKL4* C code accessing the [ICU](http://site.icu-project.org/) regex engine spits out `OSSpinLock`-based deprecation warnings on macOS 10.12 Sierra and above
-- How easy it is to forget to **ALWAYS link to the ICU library** on every project using *RKL4*
+- ~~How easy it is to forget to **ALWAYS link to the ICU library** on every project using *RKL4*~~ (Obviously CocoaPods solves this)
+- I wanted to provide cover API for named captures and backreferences, which NSRegularExpression supports
 
 My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of `NSRegularExpression`, I'm choosing to do RegexKitX ("*RKX*").
 
