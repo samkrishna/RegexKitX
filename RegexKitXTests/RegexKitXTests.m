@@ -980,4 +980,43 @@
     }];
 }
 
+#pragma mark - NSHipster
+
+- (void)testNSHipsterCluedoRegex
+{
+    // From: https://nshipster.com/swift-regular-expressions/
+    NSString *suggestion = @"I suspect it was Professor Plum, "
+    "in the Dining Room, "
+    "with the Candlestick.";
+    NSString *pattern = @""
+    "(?xi)"
+    "(?<suspect>"
+    "((Miss|Ms\\.) \\h Scarlett?) |"
+    "((Colonel | Col\\.) \\h Mustard) |"
+    "((Reverend | Mr\\.) \\h Green) |"
+    "(Mrs\\. \\h Peacock) |"
+    "((Professor | Prof\\.) \\h Plum) |"
+    "((Mrs\\. \\h White) | ((Doctor | Dr\\.) \\h Orchid))"
+    "),?(?-x: in the )"
+    "(?<location>"
+    "Kitchen           | Ballroom | Conservatory |"
+    "Dining \\h Room   | Library  |"
+    "Lounge            | Hall     | Study"
+    "),?(?-x: with the )"
+    "(?<weapon>"
+    "Candlestick"
+    "| Knife"
+    "| (Lead(en)?\\h)? Pipe"
+    "| Revolver"
+    "| Rope"
+    "| Wrench"
+    ")"
+    "";
+
+    for (NSString *component in @[ @"suspect", @"location", @"weapon" ]) {
+        NSString *result = [suggestion stringMatchedByRegex:pattern namedCapture:component];
+        NSLog(@"%@: %@", component, result);
+    }
+}
+
 @end
