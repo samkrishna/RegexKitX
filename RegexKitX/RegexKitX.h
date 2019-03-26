@@ -734,7 +734,7 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
 
  The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
 
- NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
  @param pattern A @c NSString containing a regular expression.
  @param captureName The string matched by @c captureName from @c pattern to return. Use @c nil for the entire string that @c pattern matched.
