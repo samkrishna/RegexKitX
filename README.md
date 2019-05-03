@@ -27,7 +27,7 @@ I am doing this for several reasons:
 - ~~How easy it is to forget to **ALWAYS link to the ICU library** on every project using *RKL4*~~ (Obviously CocoaPods solves this)
 - I wanted to provide cover API for named captures and backreferences, which NSRegularExpression supports
 
-My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable in the near-future. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of NSRegularExpression, I'm choosing to do RegexKitX ("*RKX*").
+My concern is that no amount of work-arounds or modifications to all the low-level *RKL4* magic code will save it from being unbuildable or free of static analyzer warnings in a future appleOS. So rather than wait for that to happen or repeatedly deal directly with the awkwardness of NSRegularExpression, I'm choosing to do RegexKitX ("*RKX*").
 
 I've also added documentation that is option-clickable for all the *RKX* category methods.
 
