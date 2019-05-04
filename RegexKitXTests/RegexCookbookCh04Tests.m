@@ -106,4 +106,79 @@
     XCTAssertNil(reverseDateOutcome04);
 }
 
+- (void)testRegexFromSection47
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection48
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection49
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection410
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection411
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection412
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection413
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection414
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection415
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection416
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection417
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection418
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection419
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection420
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
+- (void)testRegexFromSection421
+{
+    XCTFail(@"Not Yet Implemented");
+}
+
 @end
