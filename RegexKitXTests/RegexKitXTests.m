@@ -989,7 +989,7 @@
     "in the Dining Room, "
     "with the Candlestick.";
     NSString *pattern = @""
-    "(?xi)"
+    "(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
     "(?<suspect>"
     "((Miss|Ms\\.) \\h Scarlett?) |"
     "((Colonel | Col\\.) \\h Mustard) |"
