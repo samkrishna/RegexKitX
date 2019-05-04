@@ -168,7 +168,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
             if (delta > timeoutInterval) { *stop = YES; }
         }];
 
-        if (error != NULL && !matches.count && delta > 1.0) {
+        if (error != NULL && !matches.count && delta > timeoutInterval) {
             NSString *suggestions = @"Have you tried tuning the regex? "
             "See http://userguide.icu-project.org/strings/regexp#TOC-Performance-Tips for more details.\n\n"
             "If you can't tune the regex, consider discarding it.";
