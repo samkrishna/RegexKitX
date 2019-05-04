@@ -795,6 +795,63 @@
 }
 #endif
 
+- (void)testCrazyNFAPerformanceWithNSMatchingProgressExample
+{
+    // This is from the NFA example in MRE3 chapter 4.
+    // It didn't finish after runnning about a minute or so.
+
+    NSString *equalString = @"=XX=========================================";
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"X(.+)+X" options:kNilOptions error:&error];
+    NSDate *date1 = [NSDate date];
+    __block NSDate *date2;
+
+    [regex enumerateMatchesInString:equalString options:NSMatchingReportProgress range:equalString.stringRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+        date2 = [NSDate date];
+        NSTimeInterval delta = date2.timeIntervalSince1970 - date1.timeIntervalSince1970;
+        NSLog(@"result = %@, delta = %.4f, range = %@", result, delta, NSStringFromRange(result.range));
+
+        if (delta > 1.0) {
+            *stop = YES;
+            NSLog(@"This is taking too long! Punting...");
+        }
+    }];
+
+    XCTAssertTrue(YES);
+}
+
+- (void)testCrazyNFAWithPunting
+{
+    NSString *equalString = @"=XX=========================================";
+    NSError *error;
+    NSString *pattern = @"X(.+)+X";
+    BOOL result = [equalString isMatchedByRegex:pattern
+                                          range:equalString.stringRange
+                                        options:RKXNoOptions
+                                   matchOptions:(RKXReportProgress | RKXReportCompletion)
+                                          error:&error];
+    XCTAssertFalse(result);
+    XCTAssertNotNil(error);
+    XCTAssertTrue([error.domain isEqualToString:RKXMatchingTimeoutErrorDomain]);
+    XCTAssertNotNil(error.userInfo[NSLocalizedDescriptionKey]);
+    XCTAssertNotNil(error.userInfo[NSLocalizedFailureReasonErrorKey]);
+    XCTAssertNotNil(error.userInfo[NSLocalizedRecoverySuggestionErrorKey]);
+}
+
+- (void)testNormalNFAWithPuntingOptionThatSuccessfullyMatches
+{
+    NSString *da = @"310-555-1212";
+    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSError *error;
+    BOOL result = [da isMatchedByRegex:pattern
+                                 range:da.stringRange
+                               options:RKXNoOptions
+                          matchOptions:(RKXReportProgress | RKXReportCompletion)
+                                 error:&error];
+    XCTAssertTrue(result);
+    XCTAssertNil(error);
+}
+
 #pragma mark - Apple Bugs
 
 #if TEST_APPLE_BUGS

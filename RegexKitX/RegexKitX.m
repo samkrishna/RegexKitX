@@ -36,6 +36,12 @@
 NSRange const NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
 NSString *const kRKXNamedCapturePattern = @"\\?<(\\w+)>";
 NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
+NSErrorDomain const RKXMatchingTimeoutErrorDomain = @"RegexKitX Matching Timeout Error";
+static NSTimeInterval const timeoutInterval = 1.0;
+
+static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
+    return ((options & value) == value);
+}
 
 #pragma mark -
 @interface NSArray (RangeMechanics)
@@ -148,6 +154,34 @@ NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) { return nil; }
     NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;
+
+    if (OptionsHasValue(matchOpts, NSMatchingReportProgress)) {
+        NSMutableArray *matches = [NSMutableArray array];
+        NSDate *start = [NSDate date];
+        __block NSTimeInterval delta = 0.0;
+
+        [regex enumerateMatchesInString:self options:matchOpts range:searchRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+            NSDate *now = [NSDate date];
+            delta = now.timeIntervalSince1970 - start.timeIntervalSince1970;
+            if (result && ![matches containsObject:result]) { [matches addObject:result]; }
+            if (OptionsHasValue(flags, NSMatchingCompleted) || OptionsHasValue(flags, NSMatchingHitEnd)) { *stop = YES; }
+            if (delta > timeoutInterval) { *stop = YES; }
+        }];
+
+        if (error != NULL && !matches.count && delta > 1.0) {
+            NSString *suggestions = @"Have you tried tuning the regex? "
+            "See http://userguide.icu-project.org/strings/regexp#TOC-Performance-Tips for more details.\n\n"
+            "If you can't tune the regex, consider discarding it.";
+            NSDictionary *info =
+            @{ NSLocalizedDescriptionKey : NSLocalizedString(@"Complete match was unsuccessful.", nil),
+               NSLocalizedFailureReasonErrorKey : NSLocalizedString(@"The regex match timed out.", nil),
+               NSLocalizedRecoverySuggestionErrorKey : NSLocalizedString(suggestions, nil) };
+            *error = [NSError errorWithDomain:RKXMatchingTimeoutErrorDomain code:-2857 userInfo:info];
+        }
+
+        return [matches copy];
+    }
+
     NSArray *matches = [regex matchesInString:self options:matchOpts range:searchRange];
     return matches;
 }
