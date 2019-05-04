@@ -106,6 +106,17 @@
     XCTAssertNil(reverseDateOutcome04);
 }
 
+- (void)testRegexFromSection46
+{
+    // Added seconds-precision to regex
+    NSString *ampmRegex = @"^(1[0-2]|0?[1-9]):([0-5][0-9])(:([0-5][0-9]))?( ?[AP]M)?$";
+    NSString *militaryTimeRegex = @"^(2[0-3]|[01]?[0-9]):([0-5][0-9])(:([0-5][0-9]))?$";
+    NSString *ampmTime = @"7:44:34 AM";
+    NSString *militaryTime = @"07:44:34";
+    XCTAssertTrue([ampmTime isMatchedByRegex:ampmRegex]);
+    XCTAssertTrue([militaryTime isMatchedByRegex:militaryTimeRegex]);
+}
+
 - (void)testRegexFromSection47
 {
     XCTFail(@"Not Yet Implemented");
