@@ -806,20 +806,18 @@
     NSDate *date1 = [NSDate date];
     __block NSDate *date2;
 
-    [self measureBlock:^{
-        [regex enumerateMatchesInString:equalString options:NSMatchingReportProgress range:equalString.stringRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-            date2 = [NSDate date];
-            NSTimeInterval delta = date2.timeIntervalSince1970 - date1.timeIntervalSince1970;
-            NSLog(@"result = %@, delta = %.4f, range = %@", result, delta, NSStringFromRange(result.range));
+    [regex enumerateMatchesInString:equalString options:NSMatchingReportProgress range:equalString.stringRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+        date2 = [NSDate date];
+        NSTimeInterval delta = date2.timeIntervalSince1970 - date1.timeIntervalSince1970;
+        NSLog(@"result = %@, delta = %.4f, range = %@", result, delta, NSStringFromRange(result.range));
 
-            if (delta > 1.0) {
-                *stop = YES;
-                NSLog(@"This is taking too long! Punting...");
-            }
-        }];
-
-        XCTAssertTrue(YES);
+        if (delta > 1.0) {
+            *stop = YES;
+            NSLog(@"This is taking too long! Punting...");
+        }
     }];
+
+    XCTAssertTrue(YES);
 }
 
 - (void)testCrazyNFAWithPunting
