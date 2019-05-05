@@ -107,6 +107,36 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 }
 @end
 
+@interface NSRegularExpression (RKXError)
+@property (class, readonly, strong) NSError *timeoutError;
+@end
+
+@implementation NSRegularExpression (RKXError)
+
++ (NSError *)timeoutError
+{
+    static NSError *error;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *suggestionText = @"Have you tried tuning the regex? "
+        "See http://userguide.icu-project.org/strings/regexp#TOC-Performance-Tips for more details.\n\n"
+        "If you can't tune the regex, consider discarding it.";
+        NSString *desc = NSLocalizedString(@"Complete match was unsuccessful.", nil);
+        NSString *reason = NSLocalizedString(@"The regex match timed out.", nil);
+        NSString *suggestion = NSLocalizedString(suggestionText, nil);
+        NSDictionary *info = @{ NSLocalizedDescriptionKey : desc,
+                                NSLocalizedFailureReasonErrorKey : reason,
+                                NSLocalizedRecoverySuggestionErrorKey : suggestion };
+        error = [NSError errorWithDomain:RKXMatchingTimeoutErrorDomain
+                                    code:RKXMatchingTimeoutError
+                                userInfo:info];
+    });
+
+    return error;
+}
+
+@end
+
 #pragma mark -
 @implementation NSString (RegexKitX)
 
@@ -170,16 +200,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
         }];
 
         if (error != NULL && !matches.count && delta > timeoutInterval) {
-            NSString *suggestions = @"Have you tried tuning the regex? "
-            "See http://userguide.icu-project.org/strings/regexp#TOC-Performance-Tips for more details.\n\n"
-            "If you can't tune the regex, consider discarding it.";
-            NSDictionary *info =
-            @{ NSLocalizedDescriptionKey : NSLocalizedString(@"Complete match was unsuccessful.", nil),
-               NSLocalizedFailureReasonErrorKey : NSLocalizedString(@"The regex match timed out.", nil),
-               NSLocalizedRecoverySuggestionErrorKey : NSLocalizedString(suggestions, nil) };
-            *error = [NSError errorWithDomain:RKXMatchingTimeoutErrorDomain
-                                         code:RKXMatchingTimeoutError
-                                     userInfo:info];
+            *error = NSRegularExpression.timeoutError;
         }
 
         return [matches copy];
