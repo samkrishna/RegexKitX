@@ -912,6 +912,22 @@
     }];
 }
 
+- (void)testPerformanceRegex01WithProgress
+{
+    [self measureBlock:^{
+        NSError *error;
+        NSArray *matches = [self.testCorpus substringsMatchedByRegex:@"Sherlock"
+                                                               range:self.testCorpus.stringRange
+                                                             capture:0
+                                                        namedCapture:nil
+                                                             options:RKXMultiline
+                                                        matchOptions:RKXReportProgress
+                                                               error:&error];
+        XCTAssertTrue(matches.count == 97);
+        XCTAssertNil(error);
+    }];
+}
+
 - (void)testPerformanceRegex02
 {
     // “Sherlock” at the beginning of a line
