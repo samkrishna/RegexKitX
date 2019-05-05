@@ -119,7 +119,22 @@
 
 - (void)testRegexFromSection47
 {
-    XCTFail(@"Not Yet Implemented");
+    // Uses strict dash and colon separators.
+    NSString *iso8601Regex = @"^(?<year>[0-9]{4})-(?<month>1[0-2]|0[1-9])-(?<day>3[01]|0[1-9]|[12][0-9]) "
+    "(?<hour>2[0-3]|[01][0-9]):(?<minute>[0-5][0-9]):(?<second>[0-5][0-9])$";
+    NSString *dateString = @"2019-05-05 10:52:08";
+    NSString *year = [dateString stringMatchedByRegex:iso8601Regex namedCapture:@"year"];
+    NSString *month = [dateString stringMatchedByRegex:iso8601Regex namedCapture:@"month"];
+    NSString *day = [dateString stringMatchedByRegex:iso8601Regex namedCapture:@"day"];
+    NSString *hour = [dateString stringMatchedByRegex:iso8601Regex namedCapture:@"hour"];
+    NSString *minute = [dateString stringMatchedByRegex:iso8601Regex namedCapture:@"minute"];
+    NSString *second = [dateString stringMatchedByRegex:iso8601Regex namedCapture:@"second"];
+    XCTAssertEqualObjects(year, @"2019");
+    XCTAssertEqualObjects(month, @"05");
+    XCTAssertEqualObjects(day, @"05");
+    XCTAssertEqualObjects(hour, @"10");
+    XCTAssertEqualObjects(minute, @"52");
+    XCTAssertEqualObjects(second, @"08");
 }
 
 - (void)testRegexFromSection48
