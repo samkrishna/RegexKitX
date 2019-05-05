@@ -191,13 +191,15 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
         NSDate *start = [NSDate date];
         __block NSTimeInterval delta = 0.0;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
         [regex enumerateMatchesInString:self options:matchOpts range:searchRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
             NSDate *now = [NSDate date];
             delta = now.timeIntervalSince1970 - start.timeIntervalSince1970;
             if (result && ![matches containsObject:result]) { [matches addObject:result]; }
-            if (OptionsHasValue(flags, NSMatchingCompleted) || OptionsHasValue(flags, NSMatchingHitEnd)) { *stop = YES; }
             if (delta > timeoutInterval) { *stop = YES; }
         }];
+#pragma clang diagostic pop
 
         if (error != NULL && !matches.count && delta > timeoutInterval) {
             *error = NSRegularExpression.timeoutError;
