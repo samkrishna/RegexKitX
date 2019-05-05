@@ -72,6 +72,11 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
  */
 extern const NSErrorDomain RKXMatchingTimeoutErrorDomain;
 
+/**
+ The error code indicating a matching operation failed to match and timed out.
+ */
+extern const NSInteger RKXMatchingTimeoutError;
+
 @interface NSString (RangeMechanics)
 
 /**

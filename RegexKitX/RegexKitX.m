@@ -37,6 +37,7 @@ NSRange const NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .
 NSString *const kRKXNamedCapturePattern = @"\\?<(\\w+)>";
 NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
 NSErrorDomain const RKXMatchingTimeoutErrorDomain = @"RegexKitX Matching Timeout Error";
+NSInteger const RKXMatchingTimeoutError = -2857;
 static NSTimeInterval const timeoutInterval = 1.0;
 
 static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
@@ -176,7 +177,9 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
             @{ NSLocalizedDescriptionKey : NSLocalizedString(@"Complete match was unsuccessful.", nil),
                NSLocalizedFailureReasonErrorKey : NSLocalizedString(@"The regex match timed out.", nil),
                NSLocalizedRecoverySuggestionErrorKey : NSLocalizedString(suggestions, nil) };
-            *error = [NSError errorWithDomain:RKXMatchingTimeoutErrorDomain code:-2857 userInfo:info];
+            *error = [NSError errorWithDomain:RKXMatchingTimeoutErrorDomain
+                                         code:RKXMatchingTimeoutError
+                                     userInfo:info];
         }
 
         return [matches copy];

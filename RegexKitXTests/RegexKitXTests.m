@@ -835,6 +835,7 @@
     XCTAssertFalse(result);
     XCTAssertNotNil(error);
     XCTAssertTrue([error.domain isEqualToString:RKXMatchingTimeoutErrorDomain]);
+    XCTAssertEqual(error.code, RKXMatchingTimeoutError);
     XCTAssertNotNil(error.userInfo[NSLocalizedDescriptionKey]);
     XCTAssertNotNil(error.userInfo[NSLocalizedFailureReasonErrorKey]);
     XCTAssertNotNil(error.userInfo[NSLocalizedRecoverySuggestionErrorKey]);
