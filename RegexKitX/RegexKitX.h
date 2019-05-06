@@ -231,7 +231,7 @@ extern const NSInteger RKXMatchingTimeoutError;
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of @c keys and @c captures.
@@ -249,7 +249,7 @@ extern const NSInteger RKXMatchingTimeoutError;
  @return Returns an empty array if @c pattern fails to match.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - captureCount:
 
@@ -401,7 +401,7 @@ extern const NSInteger RKXMatchingTimeoutError;
  @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options error:(NSError **)error;
 
 /**
  Creates and returns a dictionary containing the matches constructed from the specified set of @c keys and @c captures for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
@@ -419,7 +419,7 @@ extern const NSInteger RKXMatchingTimeoutError;
  @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
-- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - isMatchedByRegex:
 

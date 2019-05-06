@@ -320,12 +320,12 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return dictArray;
 }
 
-- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options error:(NSError **)error
 {
     return [self arrayOfDictionariesMatchedByRegex:pattern range:searchRange withKeys:keys forCaptures:captures options:options matchOptions:kNilOptions error:error];
 }
 
-- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError * __autoreleasing *)error
+- (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError * __autoreleasing *)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) { return nil; }
@@ -392,8 +392,8 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
 - (NSArray *)_keysForVarArgsList:(va_list)varArgsList withFirstKey:(id)firstKey indexes:(NSArray **)captureIndexes
 {
-    NSMutableArray *captureKeys = [NSMutableArray arrayWithCapacity:64];
-    NSMutableArray *captureKeyIndexes = [NSMutableArray arrayWithCapacity:64];
+    NSMutableArray *captureKeys = [NSMutableArray array];
+    NSMutableArray *captureKeyIndexes = [NSMutableArray array];
     NSUInteger captureKeysCount = 0UL;
 
     if (varArgsList != NULL) {
@@ -466,12 +466,12 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return dict;
 }
 
-- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray *)captures options:(RKXRegexOptions)options error:(NSError **)error
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options error:(NSError **)error
 {
     return [self dictionaryMatchedByRegex:pattern range:searchRange withKeys:keys forCaptures:captures options:options matchOptions:kNilOptions error:error];
 }
 
-- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+- (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) { return nil; }
