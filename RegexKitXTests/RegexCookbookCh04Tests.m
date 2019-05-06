@@ -150,8 +150,8 @@
     NSString *anyLanguagePattern = @"^[\\p{L}\\p{M}\\p{Nd}]+$";
     NSString *upperCaseBravoInGreek = @"𝛣𝛲𝛢𝛶𝛰";
     NSString *lowerCaseBravoInGreek = @"𝛽𝜌𝛂𝜐𝜊";
-    XCTAssertTrue([upperCaseBravoInGreek isMatchedByRegex:anyLanguagePattern options:RKXCaseless]);
-    XCTAssertTrue([lowerCaseBravoInGreek isMatchedByRegex:anyLanguagePattern options:RKXCaseless]);
+    XCTAssertTrue([upperCaseBravoInGreek isMatchedByRegex:anyLanguagePattern]);
+    XCTAssertTrue([lowerCaseBravoInGreek isMatchedByRegex:anyLanguagePattern]);
 }
 
 - (void)testRegexFromSection49
