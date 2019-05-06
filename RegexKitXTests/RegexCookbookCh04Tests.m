@@ -139,7 +139,19 @@
 
 - (void)testRegexFromSection48
 {
-    XCTFail(@"Not Yet Implemented");
+    // Latin Alphanumeric characters
+    NSString *pattern = @"^[A-Z0-9]+$";
+    NSString *willWork = @"ThisShouldWorkIn5Seconds";
+    NSString *willFail = @"This Will Fail in 5 Seconds";
+    XCTAssertTrue([willWork isMatchedByRegex:pattern options:RKXCaseless]);
+    XCTAssertFalse([willFail isMatchedByRegex:pattern options:RKXCaseless]);
+
+    // Alphanumeric characters in any language
+    NSString *anyLanguagePattern = @"^[\\p{L}\\p{M}\\p{Nd}]+$";
+    NSString *upperCaseBravoInGreek = @"𝛣𝛲𝛢𝛶𝛰";
+    NSString *lowerCaseBravoInGreek = @"𝛽𝜌𝛂𝜐𝜊";
+    XCTAssertTrue([upperCaseBravoInGreek isMatchedByRegex:anyLanguagePattern options:RKXCaseless]);
+    XCTAssertTrue([lowerCaseBravoInGreek isMatchedByRegex:anyLanguagePattern options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection49
