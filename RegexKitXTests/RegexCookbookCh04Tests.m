@@ -147,6 +147,9 @@
     XCTAssertFalse([willFail isMatchedByRegex:pattern options:RKXCaseless]);
 
     // Alphanumeric characters in any language
+    // \p{L} => Unicode Letter category
+    // \p{M} => Unicode Mark category
+    // \p{Nd} => Decimal Number category
     NSString *anyLanguagePattern = @"^[\\p{L}\\p{M}\\p{Nd}]+$";
     NSString *upperCaseBravoInGreek = @"𝛣𝛲𝛢𝛶𝛰";
     NSString *lowerCaseBravoInGreek = @"𝛽𝜌𝛂𝜐𝜊";
