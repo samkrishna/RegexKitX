@@ -168,7 +168,16 @@
 
 - (void)testRegexFromSection410
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *lineCountPattern = @"\\A(?>[^\\r\\n]*(?>\\r\\n?|\\n)){0,4}[^\\r\\n]*\\z";
+    NSString *lines = @"Hickory\n"
+    "Dickory\n"
+    "Dock\n"
+    "The mouse came down.";
+    XCTAssertTrue([lines isMatchedByRegex:lineCountPattern]);
+    NSString *moreLines = [lines stringByAppendingString:@"\n"
+                           "The house came down.\n"
+                           "Hickory Dickory Dock."];
+    XCTAssertFalse([moreLines isMatchedByRegex:lineCountPattern]);
 }
 
 - (void)testRegexFromSection411
