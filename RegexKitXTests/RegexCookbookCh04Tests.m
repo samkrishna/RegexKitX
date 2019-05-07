@@ -159,7 +159,11 @@
 
 - (void)testRegexFromSection49
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *testText1 = @"TRUE";
+    NSString *testText2 = @"Oh So False!";
+    NSString *pattern = @"^[A-Z]{1,10}$";
+    XCTAssertTrue([testText1 isMatchedByRegex:pattern]);
+    XCTAssertFalse([testText2 isMatchedByRegex:pattern]);
 }
 
 - (void)testRegexFromSection410
