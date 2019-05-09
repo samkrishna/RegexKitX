@@ -210,7 +210,9 @@
 
 - (void)testRegexFromSection412
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *ssnPattern = @"^(?!000|666)[0-8][0-9]{2}-?(?!00)[0-9]{2}-?(?!0000)[0-9]{4}$";
+    NSString *ssn = @"565998218";
+    XCTAssertTrue([ssn isMatchedByRegex:ssnPattern]);
 }
 
 - (void)testRegexFromSection413
