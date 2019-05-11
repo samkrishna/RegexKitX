@@ -227,7 +227,9 @@
 
 - (void)testRegexFromSection414
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *zipRegex = @"^[0-9]{5}(?:-[0-9]{4})?$";
+    XCTAssertTrue([@"12345" isMatchedByRegex:zipRegex]);
+    XCTAssertTrue([@"12345-0000" isMatchedByRegex:zipRegex]);
 }
 
 - (void)testRegexFromSection415
