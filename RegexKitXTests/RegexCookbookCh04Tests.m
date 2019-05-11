@@ -217,7 +217,12 @@
 
 - (void)testRegexFromSection413
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *isbn10Regex = @"^(?:ISBN(?:-10)?:?●)?(?=[0-9X]{10}$|(?=(?:[0-9]+[-●]){3})[-●0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
+    NSString *isbn13Regex = @"^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$";
+    NSString *isbn10Example = @"0205080057";
+    NSString *isbn13Example = @"978-3-16-148410-0";
+    XCTAssertTrue([isbn10Example isMatchedByRegex:isbn10Regex]);
+    XCTAssertTrue([isbn13Example isMatchedByRegex:isbn13Regex]);
 }
 
 - (void)testRegexFromSection414
