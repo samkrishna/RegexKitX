@@ -426,7 +426,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern.
 
- @param pattern A @c NSString containing a regular expression.
+ @param pattern A @c NSString containing a regular expression pattern.
  @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
  */
@@ -435,9 +435,9 @@ extern const NSInteger RKXMatchingTimeoutError;
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange.
 
- @param pattern A @c NSString containing a regular expression.
+ @param pattern A @c NSString containing a regular expression pattern.
  @param searchRange The range of the receiver to search.
- @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
+ @return A @c BOOL value indicating whether or not the @c pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
  */
 - (BOOL)isMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
@@ -445,7 +445,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern using @c options.
 
- @param pattern A @c NSString containing a regular expression.
+ @param pattern A @c NSString containing a regular expression pattern.
  @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @return A @c BOOL value indicating whether or not the @c pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid.
@@ -455,7 +455,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options.
 
- @param pattern A @c NSString containing a regular expression.
+ @param pattern A @c NSString containing a regular expression pattern.
  @param searchRange The range of the receiver to search.
  @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
@@ -469,12 +469,12 @@ extern const NSInteger RKXMatchingTimeoutError;
 
  @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
- @param pattern A @c NSString containing a regular expression.
+ @param pattern A @c NSString containing a regular expression pattern.
  @param searchRange The range of the receiver to search.
  @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param matchOptions A bit mask that specifies the options for reporting, completion, and matching rules. See @c RKXMatchOptions for details.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
- @return A @c BOOL value indicating whether or not the pattern has been matched in the receiver.
+ @return A @c BOOL value indicating whether or not the @c pattern has been matched in the receiver.
  @return Will return @c NO if @c pattern is invalid and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (BOOL)isMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
