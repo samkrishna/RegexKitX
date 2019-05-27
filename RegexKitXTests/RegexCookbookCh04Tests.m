@@ -263,7 +263,15 @@
 
 - (void)testRegexFromSection417
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *poBoxRegex = @"^(?:Post(?:al)? (?:Office )?|P[. ]?O\\.? )?Box\\b";
+    NSString *address1 = @"John Smith\n4303 Acme Ave.\nTexarkana, AR 71854";
+    NSString *address2 = @"John Smith\nP.O. Box 1234\nTexarkana, AR 71854";
+    NSString *address3 = @"John Smith\nPost Office Box 1234\nTexarkana, AR 71854";
+    NSString *address4 = @"John Smith\nPostal Office Box 1234\nTexarkana, AR 71854";
+    XCTAssertFalse([address1 isMatchedByRegex:poBoxRegex options:(RKXCaseless | RKXMultiline)]);
+    XCTAssertTrue([address2 isMatchedByRegex:poBoxRegex options:(RKXCaseless | RKXMultiline)]);
+    XCTAssertTrue([address3 isMatchedByRegex:poBoxRegex options:(RKXCaseless | RKXMultiline)]);
+    XCTAssertTrue([address4 isMatchedByRegex:poBoxRegex options:(RKXCaseless | RKXMultiline)]);
 }
 
 - (void)testRegexFromSection418
