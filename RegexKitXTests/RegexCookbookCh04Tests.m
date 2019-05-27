@@ -234,7 +234,20 @@
 
 - (void)testRegexFromSection415
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *caPostalCodeRegex = @"(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]";
+    NSString *caCode1 = @"T7Z 2W1";
+    NSString *caCode2 = @"E5N 5J2";
+    NSString *caCode3 = @"J5A 1H8";
+    NSString *caCode4 = @"J9H 7J7";
+    NSString *caCode5 = @"G1R 4E1";
+    NSString *caCode6 = @"V2N 6C1";
+
+    XCTAssertTrue([caCode1 isMatchedByRegex:caPostalCodeRegex]);
+    XCTAssertTrue([caCode2 isMatchedByRegex:caPostalCodeRegex]);
+    XCTAssertTrue([caCode3 isMatchedByRegex:caPostalCodeRegex]);
+    XCTAssertTrue([caCode4 isMatchedByRegex:caPostalCodeRegex]);
+    XCTAssertTrue([caCode5 isMatchedByRegex:caPostalCodeRegex]);
+    XCTAssertTrue([caCode6 isMatchedByRegex:caPostalCodeRegex]);
 }
 
 - (void)testRegexFromSection416
