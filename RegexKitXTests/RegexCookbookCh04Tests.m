@@ -252,7 +252,13 @@
 
 - (void)testRegexFromSection416
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *ukPostalCodeRegex = @"^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$";
+    NSString *london = @"WC2N 5DU";
+    NSString *birmingham = @"B4 7DA";
+    NSString *liverpool = @"L2 2DP";
+    XCTAssertTrue([london isMatchedByRegex:ukPostalCodeRegex]);
+    XCTAssertTrue([birmingham isMatchedByRegex:ukPostalCodeRegex]);
+    XCTAssertTrue([liverpool isMatchedByRegex:ukPostalCodeRegex]);
 }
 
 - (void)testRegexFromSection417
