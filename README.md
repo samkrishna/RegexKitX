@@ -8,6 +8,7 @@ I've loved regular expressions since the beginning of my programming career back
 
 Here's some follow-up reading about regexes:
 
+- [Jan Meppe: Regex for Noobs (like me)](https://www.janmeppe.com/blog/regex-for-noobs/)
 - [Patrick Triest: You Should Learn Regex](https://blog.patricktriest.com/you-should-learn-regex/)
 - [Regular Expression Matching Can Be Simple and Fast](https://swtch.com/~rsc/regexp/regexp1.html)
 - [Why are regular expressions so controversial?](https://stackoverflow.com/q/764247)
