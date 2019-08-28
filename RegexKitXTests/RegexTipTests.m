@@ -46,6 +46,7 @@
     XCTAssertFalse(isPrime(100));
     XCTAssertTrue(isPrime(101));
     XCTAssertFalse(isPrime(111));
+    XCTAssertFalse(isPrime(114));
 }
 
 @end
