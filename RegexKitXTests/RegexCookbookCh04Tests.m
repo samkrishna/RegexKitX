@@ -276,7 +276,29 @@
 
 - (void)testRegexFromSection418
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *fullNameRegex = @"^(.+?) ([^\\s,]+)(,? (?:[JS]r\\.?|III?|IV))?$";
+    NSArray *names = @[ @"Tom Jones",
+                        @"Robert Downey, Jr.",
+                        @"Jack Canfield",
+                        @"John F. Kennedy",
+                        @"Barak H. Obama, Sr.",
+                        @"Catherine Zeta-Jones",
+                        @"J.K. Rowling" ];
+
+    NSArray *testChecks = @[ @"Jones, Tom",
+                             @"Downey, Robert Jr.",
+                             @"Canfield, Jack",
+                             @"Kennedy, John F.",
+                             @"Obama, Barack H., Sr.",
+                             @"Zeta-Jones, Catherine",
+                             @"Rowling, J.K." ];
+
+    for (NSUInteger i = 0; i < names.count; i++) {
+        NSString *fullName = names[i];
+        NSString *reorderedName = [fullName stringByReplacingOccurrencesOfRegex:fullNameRegex withTemplate:@"$2, $1"];
+        NSString *check = testChecks[i];
+        XCTAssert([reorderedName isEqualToString:reorderedName], @"We have a reordering failure: attempt (%@) does not match check (%@)", reorderedName, check);
+    }
 }
 
 - (void)testRegexFromSection419
