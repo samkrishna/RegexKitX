@@ -303,7 +303,28 @@
 
 - (void)testRegexFromSection419
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *minMaxLength = @"^[\\s\\S]{8,32}$/";
+    NSString *upper = @"[A-Z]";
+    NSString *lower = @"[a-z]";
+    NSString *number = @"[0-9]";
+    NSString *special = @"[ !\"#$%&\'()*+,\\-./:;<=>?@[\\\\\\]^_`{|}~]";
+
+    BOOL(^validatePassword)(NSString *) = ^BOOL(NSString *password) {
+        if ([password isMatchedByRegex:minMaxLength] &&
+            [password isMatchedByRegex:upper] &&
+            [password isMatchedByRegex:lower] &&
+            [password isMatchedByRegex:number] &&
+            [password isMatchedByRegex:special]) {
+            return YES;
+        }
+
+        return NO;
+    };
+
+    XCTAssertFalse(validatePassword(@"password1"));
+
+    // This should be true, but couldn't get the special regex to work as-is
+    XCTAssertTrue(validatePassword(@"Password1!!"), @"Special regex is invalid in Obj-C.");
 }
 
 - (void)testRegexFromSection420
