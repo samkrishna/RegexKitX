@@ -158,19 +158,19 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 /**
  Creates and/or returns the canonical @c NSRegularExpression object from the current thread dictionary for a given pattern. This is utilized to cut down on excessive @c NSRegularExpression object creation for each API call.
 
- @param patten The regex pattern to be matched against.
+ @param pattern The regex pattern to be matched against.
  @param options The regex options used for matching.
  @param error The error object indirectly returned if instantiation of the @c NSRegularExpression fails.
  @return The @c NSRegularExpression object created and stored in the current thread's dictionary.
  */
-+ (NSRegularExpression *)cachedRegexForPattern:(NSString *)patten options:(RKXRegexOptions)options error:(NSError **)error
++ (NSRegularExpression *)cachedRegexForPattern:(NSString *)pattern options:(RKXRegexOptions)options error:(NSError **)error
 {
-    NSString *patternKey = [NSString cacheKeyForRegex:patten options:options];
+    NSString *patternKey = [NSString cacheKeyForRegex:pattern options:options];
     NSRegularExpression *regex = NSThread.currentThread.threadDictionary[patternKey];
 
     if (!regex) {
         NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
-        regex = [NSRegularExpression regularExpressionWithPattern:patten options:regexOptions error:error];
+        regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:error];
         if (!regex) { return nil; }
         NSThread.currentThread.threadDictionary[patternKey] = regex;
     }
