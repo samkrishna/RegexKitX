@@ -329,7 +329,17 @@
 
 - (void)testRegexFromSection420
 {
-    XCTFail(@"Not Yet Implemented");
+    NSString *cardRegex = @"^(?:"
+                           "(?P<visa>4[0-9]{12}(?:[0-9]{3})?) |"
+                           "(?P<mastercard>5[1-5][0-9]{14}) |"
+                           "(?P<discover>6(?:011|5[0-9]{2})[0-9]{12}) |"
+                           "(?P<amex>3[47][0-9]{13}) |"
+                           "(?P<diners>3(?:0[0-5]|[68][0-9])[0-9]{11}) |"
+                           "(?P<jcb>(?:2131|1800|35[0-9]{3})[0-9]{11})"
+                           ")$";
+    NSString *number = @"5124645845256541";
+    NSString *mcCardNumber = [number stringMatchedByRegex:cardRegex namedCapture:@"mastercard"];
+    XCTAssertNotNil(mcCardNumber);
 }
 
 - (void)testRegexFromSection421
