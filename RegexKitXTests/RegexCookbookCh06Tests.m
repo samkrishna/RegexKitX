@@ -1,5 +1,5 @@
 //
-//  RegexCookbookCh05Tests.m
+//  RegexCookbookCh06Tests.m
 //  RegexKitXTests
 //
 //  Created by Sam Krishna on 10/14/19.
@@ -9,80 +9,73 @@
 #import "RegexKitX.h"
 #import <XCTest/XCTest.h>
 
-@interface RegexCookbookCh05Tests : XCTestCase
+@interface RegexCookbookCh06Tests : XCTestCase
 
 @end
 
-@implementation RegexCookbookCh05Tests
+@implementation RegexCookbookCh06Tests
 
-
-- (void)testRegexFromSection51
-{
-    NSString *testString = @"Get me a cat and a dog!";
-    XCTAssert([testString isMatchedByRegex:@"\\bcat\\b" options:RKXCaseless]);
-}
-
-- (void)testRegexFromSection52
+- (void)testRegexFromSection61
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection53
+- (void)testRegexFromSection62
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection54
+- (void)testRegexFromSection63
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection55
+- (void)testRegexFromSection64
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection56
+- (void)testRegexFromSection65
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection57
+- (void)testRegexFromSection66
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection58
+- (void)testRegexFromSection67
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection59
+- (void)testRegexFromSection68
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection510
+- (void)testRegexFromSection69
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection511
+- (void)testRegexFromSection610
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection512
+- (void)testRegexFromSection611
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection513
+- (void)testRegexFromSection612
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection514
+- (void)testRegexFromSection613
 {
     XCTFail(@"Not filled out yet");
 }

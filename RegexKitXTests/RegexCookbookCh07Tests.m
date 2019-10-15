@@ -1,5 +1,5 @@
 //
-//  RegexCookbookCh05Tests.m
+//  RegexCookbookCh07Tests.m
 //  RegexKitXTests
 //
 //  Created by Sam Krishna on 10/14/19.
@@ -9,80 +9,78 @@
 #import "RegexKitX.h"
 #import <XCTest/XCTest.h>
 
-@interface RegexCookbookCh05Tests : XCTestCase
+@interface RegexCookbookCh07Tests : XCTestCase
 
 @end
 
-@implementation RegexCookbookCh05Tests
+@implementation RegexCookbookCh07Tests
 
-
-- (void)testRegexFromSection51
-{
-    NSString *testString = @"Get me a cat and a dog!";
-    XCTAssert([testString isMatchedByRegex:@"\\bcat\\b" options:RKXCaseless]);
-}
-
-- (void)testRegexFromSection52
+- (void)testRegexFromSection71
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection53
+- (void)testRegexFromSection72
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection54
+- (void)testRegexFromSection73
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection55
+- (void)testRegexFromSection74
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection56
+- (void)testRegexFromSection75
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection57
+- (void)testRegexFromSection76
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection58
+- (void)testRegexFromSection77
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection59
+- (void)testRegexFromSection78
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection510
+- (void)testRegexFromSection79
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection511
+- (void)testRegexFromSection710
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection512
+- (void)testRegexFromSection711
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection513
+- (void)testRegexFromSection712
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection514
+- (void)testRegexFromSection713
+{
+    XCTFail(@"Not filled out yet");
+}
+
+- (void)testRegexFromSection714
 {
     XCTFail(@"Not filled out yet");
 }
