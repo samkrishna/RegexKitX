@@ -24,7 +24,9 @@
 
 - (void)testRegexFromSection52
 {
-    XCTFail(@"Not filled out yet");
+    NSString *subject = @"One times two plus one equals three.";
+    NSString *regex = @"\\b(?:one|two|three)\\b";
+    XCTAssertTrue([subject isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection53
