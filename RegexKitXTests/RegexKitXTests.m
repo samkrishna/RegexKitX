@@ -677,13 +677,19 @@
     XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:NULL]);
 
     // ICU fails a number of perfectly good PCRE regexes.
-    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:RKXNoOptions error:NULL]);
-    XCTAssertFalse([@"\\( ( ( (?>[^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:NULL]);
-    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:NULL]);
-    
+    NSError *error;
+    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" isRegexValidWithOptions:RKXNoOptions error:&error], @"error: %@", error.localizedDescription);
+    NSLog(@"error: %@", error.localizedDescription);
+    XCTAssertFalse([@"\\( ( ( (?>[^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:&error], @"error: %@", error.localizedDescription);
+    NSLog(@"error: %@", error.localizedDescription);
+    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:&error], @"error: %@", error.localizedDescription);
+    NSLog(@"error: %@", error.localizedDescription);
+
     // These are bad PCRE regexes
-    XCTAssertFalse([@"^(Match)\\s+the\\s+((MAGIC)$" isRegexValidWithOptions:RKXNoOptions error:NULL]);
-    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&xq) )* \\) )" isRegexValidWithOptions:RKXNoOptions error:NULL]);
+    XCTAssertFalse([@"^(Match)\\s+the\\s+((MAGIC)$" isRegexValidWithOptions:RKXNoOptions error:&error], @"error: %@", error.localizedDescription);
+    NSLog(@"error: %@", error.localizedDescription);
+    XCTAssertFalse([@"(?<pn> \\( ( (?>[^()]+) | (?&xq) )* \\) )" isRegexValidWithOptions:RKXNoOptions error:&error], @"error: %@", error.localizedDescription);
+    NSLog(@"error: %@", error.localizedDescription);
 
     NSString *nilString = nil;
     XCTAssertFalse([nilString isRegexValidWithOptions:RKXNoOptions error:NULL]);
