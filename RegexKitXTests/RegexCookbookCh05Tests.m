@@ -31,7 +31,25 @@
 
 - (void)testRegexFromSection53
 {
-    XCTFail(@"Not filled out yet");
+    NSString *colorRegex = @"\\bcolou?r\\b";
+    NSString *colorTest = @"What is the colour of money?";
+    XCTAssertTrue([colorTest isMatchedByRegex:colorRegex options:RKXCaseless]);
+
+    NSString *brcatRegex = @"\\b[brc]at\\b";
+    NSString *brcatTest = @"Is it a bat, cat, or rat?";
+    NSArray<NSString *> *brcatMatches = [brcatTest substringsMatchedByRegex:brcatRegex options:RKXCaseless];
+    XCTAssertTrue(brcatMatches.count == 3);
+
+    NSString *phobiaRegex = @"\\b\\w*phobia\\b";
+    NSString *phobiaTest = @"What's the difference between agoraphobia and acrophobia?";
+    NSArray<NSString *> *phobiaMatches = [phobiaTest substringsMatchedByRegex:phobiaRegex options:RKXCaseless];
+    XCTAssertTrue(phobiaMatches.count == 2);
+
+    NSString *stevenRegex = @"\\bSte(?:ven?|phen)\\b";
+    NSString *stevenTest = @"Is it spelled Steve, Steven, or Stephen?";
+    NSArray<NSString *> *stevenMatches = [stevenTest substringsMatchedByRegex:stevenRegex options:RKXCaseless];
+    XCTAssertTrue(stevenMatches.count == 3);
+
 }
 
 - (void)testRegexFromSection54
