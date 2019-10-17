@@ -54,7 +54,11 @@
 
 - (void)testRegexFromSection54
 {
-    XCTFail(@"Not filled out yet");
+    // Negative lookbehind
+    NSString *notCatRegex = @"\\b(?!cat\\b)\\w+";
+    NSString *test = @"Catwoman, vindicate, cat";
+    NSArray *matches = [test substringsMatchedByRegex:notCatRegex options:RKXCaseless];
+    XCTAssertTrue(matches.count == 2);
 }
 
 - (void)testRegexFromSection55
