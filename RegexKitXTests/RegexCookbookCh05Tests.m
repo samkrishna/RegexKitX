@@ -54,7 +54,7 @@
 
 - (void)testRegexFromSection54
 {
-    // Negative lookbehind
+    // Negative lookahead
     NSString *notCatRegex = @"\\b(?!cat\\b)\\w+";
     NSString *test = @"Catwoman, vindicate, cat";
     NSArray *matches = [test substringsMatchedByRegex:notCatRegex options:RKXCaseless];
@@ -63,7 +63,13 @@
 
 - (void)testRegexFromSection55
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"\\b\\w+\\b(?!\\W+cat\\b)";
+    NSString *testFail = @"Catwoman finds a cat.";
+    NSString *testSucceed = @"Dogman finds a dog.";
+    NSArray *matches = [testSucceed substringsMatchedByRegex:regex options:RKXCaseless];
+    XCTAssertTrue(matches.count == 4);
+    matches = [testFail substringsMatchedByRegex:regex options:RKXCaseless];
+    XCTAssertTrue(matches.count == 3);
 }
 
 - (void)testRegexFromSection56
