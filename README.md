@@ -12,6 +12,8 @@ Here's some follow-up reading about regexes:
 - [Patrick Triest: You Should Learn Regex](https://blog.patricktriest.com/you-should-learn-regex/)
 - [Regular Expression Matching Can Be Simple and Fast](https://swtch.com/~rsc/regexp/regexp1.html)
 - [Why are regular expressions so controversial?](https://stackoverflow.com/q/764247)
+- [Regular Expressions 101](https://regex101.com)
+- [Regex Crossword](https://regexcrossword.com)
 
 ## Objective-C
 
