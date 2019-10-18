@@ -74,7 +74,13 @@
 
 - (void)testRegexFromSection56
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"(?<!\\bcat\\W{1,9})\\b\\w+";
+    NSString *testCat = @"There is no cat here.";
+    NSString *testDog = @"There is no dog here.";
+    NSArray *noCatMatches = [testCat substringsMatchedByRegex:regex options:RKXCaseless];
+    XCTAssert(noCatMatches.count == 4);
+    noCatMatches = [testDog substringsMatchedByRegex:regex options:RKXCaseless];
+    XCTAssertTrue(noCatMatches.count == 5);
 }
 
 - (void)testRegexFromSection57
