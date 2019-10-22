@@ -85,7 +85,24 @@
 
 - (void)testRegexFromSection57
 {
-    XCTFail(@"Not filled out yet");
+    NSString *pattern = @""
+    "\\b(?:"
+    "word1                      # first term\n"
+    "\\W+ (?:\\w+\\W+){0,5}?    # up to five words\n"
+    "word2                      # second term\n"
+    "|                          # or, the same pattern in reverse:\n"
+    "word2                      # second term\n"
+    "\\W+ (?:\\w+\\W+){0,5}?    # up to five words\n"
+    "word1                      # first term\n"
+    ")\\b";
+    NSString *testTrue1 = @"Is there a word1 withing five words of word2?";
+    NSString *testTrue2 = @"Is there a word2 withing five words of word1?";
+    NSString *testFalse1 = @"Word1 has too many words and excuses between itself and word2.";
+    NSString *testFalse2 = @"Word2 has too many words and excuses between itself and word1.";
+    XCTAssertTrue([testTrue1 isMatchedByRegex:pattern options:(RKXIgnoreWhitespace | RKXCaseless)]);
+    XCTAssertTrue([testTrue2 isMatchedByRegex:pattern options:(RKXIgnoreWhitespace | RKXCaseless)]);
+    XCTAssertFalse([testFalse1 isMatchedByRegex:pattern options:(RKXIgnoreWhitespace | RKXCaseless)]);
+    XCTAssertFalse([testFalse2 isMatchedByRegex:pattern options:(RKXIgnoreWhitespace | RKXCaseless)]);
 }
 
 - (void)testRegexFromSection58
