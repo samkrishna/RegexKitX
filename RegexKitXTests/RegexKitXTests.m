@@ -247,17 +247,17 @@
 
 - (void)testStringMatchedByRegex
 {
-    NSString *regexPattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
-    NSString *fullTimestamp = [self.candidate stringMatchedByRegex:regexPattern];
+    NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+))";
+    NSString *fullTimestamp = [self.candidate stringMatchedByRegex:regex];
     XCTAssertTrue([fullTimestamp isEqualToString:@"2014-05-06 17:03:17"]);
 
-    NSString *datestamp = [self.candidate stringMatchedByRegex:regexPattern capture:1];
+    NSString *datestamp = [self.candidate stringMatchedByRegex:regex capture:1];
     XCTAssertTrue([datestamp isEqualToString:@"2014-05-06"]);
 }
 
 - (void)testStringMatchedByRegexNamedCapture
 {
-    NSString *pattern = @"(?<calendardate>(?<year>\\d+)-(?<month>\\d+)-(?<day>\\d+)) ((?<hour>\\d+):(?<minute>\\d+):(?<second>\\d+))";
+    NSString *regex = @"(?<calendardate>(?<year>\\d+)-(?<month>\\d+)-(?<day>\\d+)) ((?<hour>\\d+):(?<minute>\\d+):(?<second>\\d+))";
     NSString *fullTimestamp = [self.candidate stringMatchedByRegex:pattern];
     XCTAssertTrue([fullTimestamp isEqualToString:@"2014-05-06 17:03:17"]);
 
@@ -292,10 +292,10 @@
 
 - (void)testStringByReplacingOccurrencesOfRegexRangeOptionsMatchOptionsErrorUsingBlock
 {
-    NSString *pattern = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
+    NSString *regex = @"((\\d+)-(\\d+)-(\\d+)) ((\\d+):(\\d+):(\\d+\\.\\d+))";
     NSRange entireRange = self.candidate.stringRange;
 
-    NSString *output = [self.candidate stringByReplacingOccurrencesOfRegex:pattern range:entireRange options:RKXNoOptions matchOptions:kNilOptions error:NULL usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+    NSString *output = [self.candidate stringByReplacingOccurrencesOfRegex:regex range:entireRange options:RKXNoOptions matchOptions:kNilOptions error:NULL usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSMutableString *replacement = [NSMutableString string];
         NSString *dateRegex = @"^\\d+-\\d+-\\d+$";
         NSString *timeRegex = @"^\\d+:\\d+:\\d+\\.\\d+$";
@@ -315,12 +315,12 @@
     XCTAssertTrue([output isMatchedByRegex:@"cray cray!"]);
 
     __block NSUInteger blockCount = 0;
-    pattern = @"pick(led)?";
+    regex = @"pick(led)?";
     NSString *newCandidate = @"Peter Piper picked a peck of pickled peppers;\n"
                              @"A peck of pickled peppers Peter Piper picked;\n"
                              @"If Peter Piper picked a peck of pickled peppers,\n"
                              @"Where's the peck of pickled peppers Peter Piper picked?";
-    output = [newCandidate stringByReplacingOccurrencesOfRegex:pattern range:newCandidate.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, BOOL *stop) {
+    output = [newCandidate stringByReplacingOccurrencesOfRegex:regex range:newCandidate.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL usingBlock:^NSString *(NSArray *capturedStrings, NSArray *capturedRanges, BOOL *stop) {
         blockCount++;
 
         if (blockCount == 2) {
@@ -393,9 +393,9 @@
 
 - (void)testCaptureCountWithOptionsError
 {
-    NSString *pattern = @"\\$((\\d+)(?:\\.(\\d+)|\\.?))";
+    NSString *regex = @"\\$((\\d+)(?:\\.(\\d+)|\\.?))";
     NSError *error;
-    NSUInteger captureCount = [pattern captureCountWithOptions:RKXNoOptions error:&error];
+    NSUInteger captureCount = [regex captureCountWithOptions:RKXNoOptions error:&error];
     XCTAssertTrue(captureCount == 3);
 }
 
@@ -474,7 +474,7 @@
 
 - (void)testEnumerateStringsSeparatedByRegexUsingBlock
 {
-    NSString *regexPattern = @",(\\s+)";
+    NSString *regex = @",(\\s+)";
     NSArray<NSValue *> *rangeValueChecks = @[ [NSValue valueWithRange:NSMakeRange(0, 91)],
                                               [NSValue valueWithRange:NSMakeRange(93, 30)],
                                               [NSValue valueWithRange:NSMakeRange(125, 23)],
@@ -489,7 +489,7 @@
                                               [NSValue valueWithRange:NSMakeRange(277, 15)] ];
 
     __block NSUInteger index = 0;
-    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+    BOOL result = [self.candidate enumerateStringsSeparatedByRegex:regex usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = rangeValueChecks[index].rangeValue;
         NSLog(@"Forward: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
@@ -500,7 +500,7 @@
     XCTAssertTrue(result);
     index--;
 
-    result = [self.candidate enumerateStringsSeparatedByRegex:regexPattern range:self.candidate.stringRange options:RKXNoOptions matchOptions:kNilOptions enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+    result = [self.candidate enumerateStringsSeparatedByRegex:regex range:self.candidate.stringRange options:RKXNoOptions matchOptions:kNilOptions enumerationOptions:NSEnumerationReverse error:NULL usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSRange range = capturedRanges[0].rangeValue;
         NSRange rangeCheck = rangeValueChecks[index].rangeValue;
         NSLog(@"Reverse: string = %@ and range = %@", capturedStrings[0], NSStringFromRange(range));
@@ -526,8 +526,8 @@
     // I'm noting this here for historical purposes.
 
     NSString *testString = @"I|at|ice I eat rice";
-    NSString *pattern = @"\\b\\s*";
-    NSArray<NSString *> *substrings = [testString substringsSeparatedByRegex:pattern];
+    NSString *regex = @"\\b\\s*";
+    NSArray<NSString *> *substrings = [testString substringsSeparatedByRegex:regex];
     XCTAssertFalse([substrings.firstObject isEqualToString:@"I"]);
     XCTAssertTrue([substrings.firstObject isEqualToString:@""]);
     XCTAssertTrue([substrings.lastObject isEqualToString:@"rice"]);
@@ -539,14 +539,14 @@
 {
     // da = directory assistance
     NSString *da = @"310-555-1212";
-    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
-    NSArray<NSString *> *captures = [da substringsMatchedByRegex:pattern range:da.stringRange capture:2 namedCapture:@"area" options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    NSString *regex = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSArray<NSString *> *captures = [da substringsMatchedByRegex:regex range:da.stringRange capture:2 namedCapture:@"area" options:RKXNoOptions matchOptions:kNilOptions error:NULL];
     XCTAssertTrue(captures.count == 2);
     XCTAssertTrue([captures[0] isEqualToString:@"555-1212"]);
     XCTAssertTrue([captures[1] isEqualToString:@"310"]);
 
     NSString *daOf3AreaCodes = @"310-555-1212 919-555-1212 212-555-1212";
-    captures = [daOf3AreaCodes substringsMatchedByRegex:pattern namedCapture:@"area"];
+    captures = [daOf3AreaCodes substringsMatchedByRegex:regex namedCapture:@"area"];
     XCTAssertTrue(captures.count == 3);
     XCTAssertTrue([captures[0] isEqualToString:@"310"]);
     XCTAssertTrue([captures[1] isEqualToString:@"919"]);
@@ -556,8 +556,8 @@
 - (void)testStringByReplacingOccurrencesOfRegexWithTemplateWithNamedBackreferences
 {
     NSString *daOf3AreaCodes = @"310-555-1212 919-555-1212 212-555-1212";
-    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
-    NSString *output = [daOf3AreaCodes stringByReplacingOccurrencesOfRegex:pattern withTemplate:@"${area}-666-2323 (Satan 411 in the ${area}!)"];
+    NSString *regex = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSString *output = [daOf3AreaCodes stringByReplacingOccurrencesOfRegex:regex withTemplate:@"${area}-666-2323 (Satan 411 in the ${area}!)"];
     NSArray<NSString *> *captures = [output substringsMatchedByRegex:@"\\d{3}-666-2323 \\(Satan 411 in the \\d{3}!\\)"];
     XCTAssertTrue(captures.count == 3);
     XCTAssertTrue([captures[0] substringsMatchedByRegex:@"310"].count == 2);
@@ -568,8 +568,8 @@
 - (void)testStringByReplaceOccurrencesOfRegexWithTemplateWithMixedBackreferenceTypesInTemplate
 {
     NSString *daOf3AreaCodes = @"310-555-1212 919-555-1212 212-555-1212";
-    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
-    NSString *output = [daOf3AreaCodes stringByReplacingOccurrencesOfRegex:pattern withTemplate:@"${area}-666-2323 (old number: ${area}-$2)"];
+    NSString *regex = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSString *output = [daOf3AreaCodes stringByReplacingOccurrencesOfRegex:regex withTemplate:@"${area}-666-2323 (old number: ${area}-$2)"];
     XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 310-555-1212\\)"]);
     XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 919-555-1212\\)"]);
     XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 212-555-1212\\)$"]);
@@ -744,8 +744,8 @@
     NSString *mre3Text = @"In many regular-expression flavors, parentheses can \"remember\" text matched by the subexpression they enclose. We'll use this in a partial solution to the doubled-word problem at the beginning of this chapter. If you knew the the specific doubled word to find (such as \"the\" earlier in this sentence — did you catch it?)....\n"
     "\nExcerpt From: Jeffrey E. F. Friedl. \"Mastering Regular Expressions, Third Edition.\" Apple Books.";
 
-    NSString *pattern = @"\\b([A-Za-z]+) \\1\\b";
-    XCTAssertTrue([mre3Text isMatchedByRegex:pattern]);
+    NSString *regex = @"\\b([A-Za-z]+) \\1\\b";
+    XCTAssertTrue([mre3Text isMatchedByRegex:regex]);
 }
 
 - (void)testFirstLookaheadExample
@@ -829,9 +829,9 @@
 - (void)testCrazyNFAWithPunting
 {
     NSString *equalString = @"=XX=========================================";
-    NSString *pattern = @"X(.+)+X";
+    NSString *regex = @"X(.+)+X";
     NSError *error;
-    BOOL result = [equalString isMatchedByRegex:pattern
+    BOOL result = [equalString isMatchedByRegex:regex
                                           range:equalString.stringRange
                                         options:RKXNoOptions
                                    matchOptions:(RKXReportProgress | RKXReportCompletion)
@@ -848,9 +848,9 @@
 - (void)testNormalNFAWithPuntingOptionThatSuccessfullyMatches
 {
     NSString *da = @"310-555-1212";
-    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSString *regex = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
     NSError *error;
-    BOOL result = [da isMatchedByRegex:pattern
+    BOOL result = [da isMatchedByRegex:regex
                                  range:da.stringRange
                                options:RKXNoOptions
                           matchOptions:(RKXReportProgress | RKXReportCompletion)
@@ -1068,7 +1068,7 @@
     NSString *suggestion = @"I suspect it was Professor Plum, "
     "in the Dining Room, "
     "with the Candlestick.";
-    NSString *pattern = @""
+    NSString *regex = @""
     "(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
     "(?<suspect>"
     "((Miss|Ms\\.) \\h Scarlett?) |"
@@ -1094,7 +1094,7 @@
     "";
 
     for (NSString *component in @[ @"suspect", @"location", @"weapon" ]) {
-        NSString *result = [suggestion stringMatchedByRegex:pattern namedCapture:component];
+        NSString *result = [suggestion stringMatchedByRegex:regex namedCapture:component];
         NSLog(@"%@: %@", component, result);
     }
 }

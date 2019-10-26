@@ -140,11 +140,11 @@
 - (void)testRegexFromSection48
 {
     // Latin Alphanumeric characters
-    NSString *pattern = @"^[A-Z0-9]+$";
+    NSString *regex = @"^[A-Z0-9]+$";
     NSString *willWork = @"ThisShouldWorkIn5Seconds";
     NSString *willFail = @"This Will Fail in 5 Seconds";
-    XCTAssertTrue([willWork isMatchedByRegex:pattern options:RKXCaseless]);
-    XCTAssertFalse([willFail isMatchedByRegex:pattern options:RKXCaseless]);
+    XCTAssertTrue([willWork isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([willFail isMatchedByRegex:regex options:RKXCaseless]);
 
     // Alphanumeric characters in any language
     // \p{L} => Unicode Letter category
@@ -161,9 +161,9 @@
 {
     NSString *testText1 = @"TRUE";
     NSString *testText2 = @"Oh So False!";
-    NSString *pattern = @"^[A-Z]{1,10}$";
-    XCTAssertTrue([testText1 isMatchedByRegex:pattern]);
-    XCTAssertFalse([testText2 isMatchedByRegex:pattern]);
+    NSString *regex = @"^[A-Z]{1,10}$";
+    XCTAssertTrue([testText1 isMatchedByRegex:regex]);
+    XCTAssertFalse([testText2 isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection410
@@ -182,30 +182,30 @@
 
 - (void)testRegexFromSection411
 {
-    NSString *pattern = @"^(?:1|t(?:rue)?|y(?:es)?|ok(?:ay)?)$";
-    XCTAssertTrue([@"t" isMatchedByRegex:pattern]);
-    XCTAssertTrue([@"true" isMatchedByRegex:pattern]);
-    XCTAssertTrue([@"1" isMatchedByRegex:pattern]);
-    XCTAssertTrue([@"y" isMatchedByRegex:pattern]);
-    XCTAssertTrue([@"yes" isMatchedByRegex:pattern]);
-    XCTAssertTrue([@"ok" isMatchedByRegex:pattern]);
-    XCTAssertTrue([@"okay" isMatchedByRegex:pattern]);
+    NSString *regex = @"^(?:1|t(?:rue)?|y(?:es)?|ok(?:ay)?)$";
+    XCTAssertTrue([@"t" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"true" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"1" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"y" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"yes" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"ok" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"okay" isMatchedByRegex:regex]);
 
-    XCTAssertTrue([@"T" isMatchedByRegex:pattern options:RKXCaseless]);
-    XCTAssertTrue([@"TRUE" isMatchedByRegex:pattern options:RKXCaseless]);
-    XCTAssertTrue([@"1" isMatchedByRegex:pattern options:RKXCaseless]);
-    XCTAssertTrue([@"Y" isMatchedByRegex:pattern options:RKXCaseless]);
-    XCTAssertTrue([@"YES" isMatchedByRegex:pattern options:RKXCaseless]);
-    XCTAssertTrue([@"OK" isMatchedByRegex:pattern options:RKXCaseless]);
-    XCTAssertTrue([@"OKAY" isMatchedByRegex:pattern options:RKXCaseless]);
+    XCTAssertTrue([@"T" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"TRUE" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"1" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"Y" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"YES" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"OK" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"OKAY" isMatchedByRegex:regex options:RKXCaseless]);
 
-    XCTAssertFalse([@"f" isMatchedByRegex:pattern]);
-    XCTAssertFalse([@"false" isMatchedByRegex:pattern]);
-    XCTAssertFalse([@"7" isMatchedByRegex:pattern]);
-    XCTAssertFalse([@"n" isMatchedByRegex:pattern]);
-    XCTAssertFalse([@"no" isMatchedByRegex:pattern]);
-    XCTAssertFalse([@"not ok" isMatchedByRegex:pattern]);
-    XCTAssertFalse([@"not okay" isMatchedByRegex:pattern]);
+    XCTAssertFalse([@"f" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"false" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"7" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"n" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"no" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"not ok" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"not okay" isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection412

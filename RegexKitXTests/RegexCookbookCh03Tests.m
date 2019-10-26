@@ -206,7 +206,7 @@
 
 - (void)testRegexFromSection322
 {
-    NSString *pattern = @"\\b(?<keyword>table|row|cell)\\b"
+    NSString *regex = @"\\b(?<keyword>table|row|cell)\\b"
                          "| %(?<string>[^%]*(?:%%[^%]*)*)%"
                          "| (?<error>\\S+)";
 
@@ -225,7 +225,7 @@
                         "cell %%%%\n"
                         "cell %%%%%%\n";
 
-    NSParameterAssert([pattern isRegexValid]);
+    NSParameterAssert([regex isRegexValid]);
     RKXRegexOptions options = (RKXCaseless | RKXIgnoreWhitespace);
     __block NSMutableArray *table;
 
@@ -237,9 +237,9 @@
     // I do think however, that learning how to tokenize effectively will be a critical skill to learn.
     // I just wasn't willing to put in the cycles to have this code match the functional output of the
     // Cookbook intention.
-    [sample enumerateStringsMatchedByRegex:pattern options:options usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+    [sample enumerateStringsMatchedByRegex:regex options:options usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSLog(@"captured string = %@", capturedStrings.firstObject);
-        NSString *keyword = [capturedStrings.firstObject stringMatchedByRegex:pattern capture:NSNotFound namedCapture:@"keyword" options:options];
+        NSString *keyword = [capturedStrings.firstObject stringMatchedByRegex:regex capture:NSNotFound namedCapture:@"keyword" options:options];
 
         if ([keyword isMatchedByRegex:@"table" options:options]) {
             table = [NSMutableArray array];
@@ -251,7 +251,7 @@
             return;
         }
         else {
-            NSString *cellString = [capturedStrings.firstObject stringMatchedByRegex:pattern capture:NSNotFound namedCapture:@"string" options:options];
+            NSString *cellString = [capturedStrings.firstObject stringMatchedByRegex:regex capture:NSNotFound namedCapture:@"string" options:options];
 
             if (cellString) {
                 [table.lastObject addObject:cellString];

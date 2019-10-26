@@ -85,7 +85,7 @@
 
 - (void)testRegexFromSection57
 {
-    NSString *pattern = @""
+    NSString *regex = @""
     "\\b(?:"
     "word1                      # first term\n"
     "\\W+ (?:\\w+\\W+){0,5}?    # up to five words\n"
@@ -99,10 +99,10 @@
     NSString *testTrue2 = @"Is there a word2 withing five words of word1?";
     NSString *testFalse1 = @"Word1 has too many words and excuses between itself and word2.";
     NSString *testFalse2 = @"Word2 has too many words and excuses between itself and word1.";
-    XCTAssertTrue([testTrue1 isMatchedByRegex:pattern options:(RKXIgnoreWhitespace | RKXCaseless)]);
-    XCTAssertTrue([testTrue2 isMatchedByRegex:pattern options:(RKXIgnoreWhitespace | RKXCaseless)]);
-    XCTAssertFalse([testFalse1 isMatchedByRegex:pattern options:(RKXIgnoreWhitespace | RKXCaseless)]);
-    XCTAssertFalse([testFalse2 isMatchedByRegex:pattern options:(RKXIgnoreWhitespace | RKXCaseless)]);
+    XCTAssertTrue([testTrue1 isMatchedByRegex:regex options:(RKXIgnoreWhitespace | RKXCaseless)]);
+    XCTAssertTrue([testTrue2 isMatchedByRegex:regex options:(RKXIgnoreWhitespace | RKXCaseless)]);
+    XCTAssertFalse([testFalse1 isMatchedByRegex:regex options:(RKXIgnoreWhitespace | RKXCaseless)]);
+    XCTAssertFalse([testFalse2 isMatchedByRegex:regex options:(RKXIgnoreWhitespace | RKXCaseless)]);
 }
 
 - (void)testRegexFromSection58
