@@ -117,7 +117,14 @@
 
 - (void)testRegexFromSection59
 {
-    XCTFail(@"Not filled out yet");
+    NSString *logLines = @""
+    "2019-10-23 23:10:27.252 TickStreamer INFO SFXStreamer.m:107 Hello, World!\n"
+    "2019-10-23 23:10:28.032 TickStreamer VERBOSE SFXStreamer.m:210 -[SFXStreamer registerForDistributedNotifications]\n"
+    "2019-10-23 23:10:28.032 TickStreamer VERBOSE SFXStreamer.m:210 -[SFXStreamer registerForDistributedNotifications]\n"
+    "2019-10-23 23:10:30.209 TickStreamer VERBOSE SFXStreamer.m:1793 -[SFXStreamer getDayOf15MinBarsWithEndDate:forCurrencyPair:]_block_invoke Get 15m AUDJPY bars for day ending 2019-10-23 14:00:01 -0700";
+    NSString *regex = @"^(.*)(?:(?:\\r?\\n|\\r|\\n)\\1)+$";
+    NSString *output = [logLines stringByReplacingOccurrencesOfRegex:regex withTemplate:@"$1" options:RKXMultiline];
+    XCTAssertFalse([output isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection510
