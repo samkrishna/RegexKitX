@@ -107,7 +107,12 @@
 
 - (void)testRegexFromSection58
 {
-    XCTFail(@"Not filled out yet");
+    // Finds repeated words
+    NSString *regex = @"\\b([A-Z]+)\\s+\\1\\b";
+    NSString *successCase = @"The the april rains fall mainly on the plain.";
+    NSString *failureCase = @"This thistle is no good for a whistle.";
+    XCTAssertTrue([successCase isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([failureCase isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection59
