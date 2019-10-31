@@ -954,7 +954,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
         if (match) {
             NSMutableArray *captures = [NSMutableArray array];
-            NSMutableArray<NSValue *> *rangeCaptures = [@[[NSValue valueWithRange:topStringRange]] mutableCopy];
+            NSMutableArray<NSValue *> *rangeCaptures = [@[ [NSValue valueWithRange:topStringRange] ] mutableCopy];
             [captures addObject:topString];
             [rangeCaptures addObjectsFromArray:match.ranges];
             [captures addObjectsFromArray:[match substringsFromString:self]];
