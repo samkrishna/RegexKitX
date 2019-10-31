@@ -168,7 +168,12 @@
 
 - (void)testRegexFromSection513
 {
-    XCTFail(@"Not filled out yet");
+    NSString *test = @"Lorem    ipsum dolor sit amet,   consectetur  adipiscing elit. Donec  ac  nisi  in    elit\n"
+    "hendrerit dapibus et sed lectus. Vivamus tempor diam vestibulum, suscipit   before  aliquam,   varius urna.\n";
+    NSString *output = [test stringByReplacingOccurrencesOfRegex:@"\\s+" withTemplate:@" "];
+    NSString *control = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac nisi in elit "
+    "hendrerit dapibus et sed lectus. Vivamus tempor diam vestibulum, suscipit before aliquam, varius urna. ";
+    XCTAssertTrue([output isEqualToString:control]);
 }
 
 - (void)testRegexFromSection514
