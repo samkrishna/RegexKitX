@@ -153,7 +153,17 @@
 
 - (void)testRegexFromSection512
 {
-    XCTFail(@"Not filled out yet");
+    NSString *line1 = @"     Simply replace matches found using one of the \"leading whitespace\" regexes and one    ";
+    NSString *line2 = @"   of the \"trailing whitespace\" regexes with the empty string. Follow the code in    ";
+    NSString *output1 = [line1 stringByReplacingOccurrencesOfRegex:@"^\\s+" withTemplate:@""];
+    NSString *output2 = [line2 stringByReplacingOccurrencesOfRegex:@"^\\s+" withTemplate:@""];
+    XCTAssertTrue([output1 isMatchedByRegex:@"^Simply"]);
+    XCTAssertTrue([output2 isMatchedByRegex:@"^of the"]);
+
+    output1 = [output1 stringByReplacingOccurrencesOfRegex:@"\\s+$" withTemplate:@""];
+    output2 = [output2 stringByReplacingOccurrencesOfRegex:@"\\s+$" withTemplate:@""];
+    XCTAssertTrue([output1 isMatchedByRegex:@"and one$"]);
+    XCTAssertTrue([output2 isMatchedByRegex:@"code in$"]);
 }
 
 - (void)testRegexFromSection513
