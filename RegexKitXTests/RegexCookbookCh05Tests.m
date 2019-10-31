@@ -178,7 +178,11 @@
 
 - (void)testRegexFromSection514
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"[[\\]{}()*+?.\\\\|^$\\-,&#\\s]]";
+    NSString *testCase = @"<Hello World.>";
+    NSString *escapedString = [testCase stringByReplacingOccurrencesOfRegex:regex withTemplate:@"\\\\$0"];
+    NSString *control = @"<Hello\\ World\\.>";
+    XCTAssertTrue([escapedString isEqualToString:control]);
 }
 
 @end
