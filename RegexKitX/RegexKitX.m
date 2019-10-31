@@ -683,30 +683,30 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
 #pragma mark - stringByReplacincOccurrencesOfRegex:withTemplate:
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:templ range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ range:(NSRange)searchRange
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:templ range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ options:(RKXRegexOptions)options
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:templ range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:template range:searchRange options:options matchOptions:kNilOptions error:error];
+    return [self stringByReplacingOccurrencesOfRegex:pattern withTemplate:templ range:searchRange options:options matchOptions:kNilOptions error:error];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSMutableString *target = [self mutableCopy];
-    NSUInteger swapCount = [target replaceOccurrencesOfRegex:pattern withTemplate:template range:searchRange options:options matchOptions:matchOptions error:error];
+    NSUInteger swapCount = [target replaceOccurrencesOfRegex:pattern withTemplate:templ range:searchRange options:options matchOptions:matchOptions error:error];
     if (swapCount == NSNotFound) { return [self substringWithRange:searchRange]; }
     return [target copy];
 }
@@ -1017,27 +1017,27 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
 #pragma mark - replaceOccurrencesOfRegex:withTemplate:
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ
 {
-    return [self replaceOccurrencesOfRegex:pattern withTemplate:template range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    return [self replaceOccurrencesOfRegex:pattern withTemplate:templ range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ range:(NSRange)searchRange
 {
-    return [self replaceOccurrencesOfRegex:pattern withTemplate:template range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+    return [self replaceOccurrencesOfRegex:pattern withTemplate:templ range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template options:(RKXRegexOptions)options
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ options:(RKXRegexOptions)options
 {
-    return [self replaceOccurrencesOfRegex:pattern withTemplate:template range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
+    return [self replaceOccurrencesOfRegex:pattern withTemplate:templ range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
 }
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
-    return [self replaceOccurrencesOfRegex:pattern withTemplate:template range:searchRange options:options matchOptions:kNilOptions error:error];
+    return [self replaceOccurrencesOfRegex:pattern withTemplate:templ range:searchRange options:options matchOptions:kNilOptions error:error];
 }
 
-- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)template range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+- (NSUInteger)replaceOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
     if (!matches || matches.count == 0) { return NSNotFound; }
@@ -1046,7 +1046,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
     void(^performRegularSwap)(void) = ^(void) {
         for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-            NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:template];
+            NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:templ];
             [self replaceCharactersInRange:match.range withString:swap];
             count++;
         }
@@ -1054,7 +1054,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
     if (@available(macOS 10.13, *)) {
         NSArray *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
-        NSArray *backreferenceNames = [template _captureNamesWithMetaPattern:kRKXNamedReferencePattern];
+        NSArray *backreferenceNames = [templ _captureNamesWithMetaPattern:kRKXNamedReferencePattern];
 
         if (!captureNames || !backreferenceNames) {
             performRegularSwap();
@@ -1073,8 +1073,8 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
                 NSRange namedGroupRange = [match rangeWithName:groupName];
                 NSString *namedGroupCapture = [self substringWithRange:namedGroupRange];
                 NSString *templateCapturePattern = [NSString stringWithFormat:@"\\$\\{%@\\}", groupName];
-                NSArray<NSValue *> *templateRanges = [template rangesOfRegex:templateCapturePattern];
-                NSMutableString *templateM = [template mutableCopy];
+                NSArray<NSValue *> *templateRanges = [templ rangesOfRegex:templateCapturePattern];
+                NSMutableString *templateM = [templ mutableCopy];
 
                 for (NSValue *range in [templateRanges reverseObjectEnumerator]) {
                     [templateM replaceCharactersInRange:range.rangeValue withString:namedGroupCapture];
