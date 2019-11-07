@@ -15,9 +15,35 @@
 
 @implementation RegexCookbookCh06Tests
 
-- (void)testRegexFromSection61
+- (void)testRegexFromSection61ForAnyPositiveIntegerInLargerBodyOfText
 {
-    XCTFail(@"Not filled out yet");
+/*
+    // Positive integer decimal numbers
+    NSArray *regexes = @[ // Standing alone in a larger body of text
+                          @"\\b[0-9]+\\b",
+                          // Just a number
+                          @"^[0-9]+$",
+                          // Standing alone in larger body of text
+                          @"(?<=^|\\s)[0-9]+(?=$|\\s)",
+                          // Standing alone, leading whitespace to be included in match
+                          @"(^|\\s)([0-9]+)(?=$|\\s)",
+                          // Optional leading plus or minus sign
+                          @"[+-]?\\b[0-9]+\\b",
+                          // Exclusively number, with an optional leading plus or minussign?
+                          @"^[+-]?[0-9]+$",
+                          // Optional sign, allowing whitespace between the number and the sign,
+                          // but no leading whitespaces without the sign
+                          @"([+-] *)?\\b[0-9]+\\b" ];
+*/
+
+    // Impressive Regex: \[(\w+)(?<!\[NSDate date\]) usPacificTimestamp\]
+
+    NSString *numberInLargerBodyRegex = @"\\b[0-9]+\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 077 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"077";
+
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:numberInLargerBodyRegex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:numberInLargerBodyRegex]);
 }
 
 - (void)testRegexFromSection62
