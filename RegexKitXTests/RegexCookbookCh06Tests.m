@@ -46,9 +46,15 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:numberInLargerBodyRegex]);
 }
 
-- (void)testRegexFromSection62
+- (void)testRegexFromSection61ForJustAPositiveIntegerDecimalNumber
 {
-    XCTFail(@"Not filled out yet");
+    // Just a number
+    NSString *regex = @"^[0-9]+$";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 077 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"077";
+
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection63
