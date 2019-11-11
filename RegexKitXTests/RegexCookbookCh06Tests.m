@@ -57,9 +57,17 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection63
+- (void)testRegexFromSection61AltStandingAloneInALargerBodyOfText
 {
-    XCTFail(@"Not filled out yet");
+    // Alternative standing alone in larger body of text
+    NSString *regex = @"(?<=^|\\s)[0-9]+(?=$|\\s)";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 077 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithBogusNumber = @"Lorem ipsum dolor sit amet, 077consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"077";
+
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithBogusNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection64
