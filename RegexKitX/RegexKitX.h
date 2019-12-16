@@ -251,7 +251,7 @@ extern const NSInteger RKXMatchingTimeoutError;
  */
 - (NSArray<NSDictionary *> *)arrayOfDictionariesMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
-#pragma mark - captureCount:
+#pragma mark - captureCount
 
 /**
  Returns the number of captures that the regex receiver contains.
