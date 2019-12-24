@@ -34,7 +34,7 @@
 /** The constants that define the regular expression options. */
 typedef NS_OPTIONS(NSUInteger, RKXRegexOptions) {
     /** No regular expression options specified. */
-    RKXNoOptions                = 0,
+    RKXNoOptions                = kNilOptions,
     /** Match letters in the pattern independent of case. */
     RKXCaseless                 = NSRegularExpressionCaseInsensitive,
     /** Ignore whitespace and #-prefixed comments in the pattern. */
