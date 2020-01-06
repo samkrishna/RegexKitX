@@ -96,9 +96,21 @@
     XCTAssertTrue([shortLipsumWithNegativeSignedNumber isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection66
+- (void)testRegexFromSection10ExclusivelyNumberWithOptionalPlusMinusSign
 {
-    XCTFail(@"Not filled out yet");
+    // Exclusively number, with an optional leading plus or minussign?
+    NSString *regex = @"^[+-]?[0-9]+$";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 077 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithPositiveSignedNumber = @"Lorem ipsum dolor sit amet, +077 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNegativeSignedNumber = @"Lorem ipsum dolor sit amet, -077 consectetur adipiscing elit. Nulla felis.";
+
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithPositiveSignedNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithNegativeSignedNumber isMatchedByRegex:regex]);
+
+    XCTAssertTrue([@"077" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"+077" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"-077" isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection67
