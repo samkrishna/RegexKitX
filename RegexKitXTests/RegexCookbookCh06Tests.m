@@ -156,8 +156,15 @@
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection610
+- (void)testRegexFromSection64OctalNumbers
 {
+    // All case-insensitive
+    // Find an octal number in a larger body of text:
+    // \b0[0-7]*\b
+    // Check whether a text string holds just an octal number:
+    // ^0[0-7]*$
+    // Find an octal number with a 0o prefix:
+    // \b0o[0-7]+\b
     XCTFail(@"Not filled out yet");
 }
 
