@@ -168,8 +168,12 @@
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection611
+- (void)testRegexFromSection65DecimalNumbers
 {
+    // Find any positive integer decimal number without a leading zero in a larger body of text:
+    // \b(0|[1-9][0-9]*)\b
+    // Check whether a text string holds just a positive integer decimal number without a leading zero:
+    // ^(0|[1-9][0-9]*)$
     XCTFail(@"Not filled out yet");
 }
 
