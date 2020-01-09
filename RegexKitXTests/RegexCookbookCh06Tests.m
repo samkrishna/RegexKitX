@@ -110,8 +110,29 @@
     XCTAssertTrue([@"- 077" isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection68
+- (void)testRegexFromSection62Hexadecimals
 {
+    // NOTE: All case-insensitive
+    // Find any hex number in a larger body of text
+    // \b[0-9A-F]+\b
+    // Check whether a text string holds just a hexadecimal number:
+    // \A[0-9A-F]+\Z
+    // Find a hexadecimal number with a 0x prefix:
+    // \b0x[0-9A-F]+\b
+    // Find a hexadecimal number with an &H prefix:
+    // &H[0-9A-F]+\b
+    // Find a hexadecimal number with an H suffix:
+    // \b[0-9A-F]+H\b
+    // Find a hexadecimal byte value or 8-bit number:
+    // \b[0-9A-F]{2}\b
+    // Find a hexadecimal word value or 16-bit number:
+    // \b[0-9A-F]{4}\b
+    // Find a hexadecimal double word value or 32-bit number:
+    // \b[0-9A-F]{8}\b
+    // Find a hexadecimal quad word value or 64-bit number:
+    // \b[0-9A-F]{16}\b
+    // Find a string of hexadecimal bytes (i.e., an even number of hexadecimal digits):
+    // \b(?:[0-9A-F]{2})+\b
     XCTFail(@"Not filled out yet");
 }
 
