@@ -136,8 +136,23 @@
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection69
+- (void)testRegexFromSection63BinaryNumbers
 {
+    // NOTE: All case-insensitive
+    // Find a binary number in a larger body of text:
+    // \b[01]+\b
+    // Check whether a text string holds just a binary number
+    // ^[01]+$
+    // Find a binary number with a 0b prefix:
+    // \b0b[01]+\b
+    // Find a binary number with a B suffix:
+    // \b[01]+B\b
+    // Find a binary byte value or 8-bit number:
+    // \b[01]{8}\b
+    // Find a binary word value or 16-bit number:
+    // \b[01]{16}\b
+    // Find a string of bytes (i.e., a multiple of eight bits):
+    // \b(?:[01]{8})+\b
     XCTFail(@"Not filled out yet");
 }
 
