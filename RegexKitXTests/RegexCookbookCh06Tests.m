@@ -15,6 +15,8 @@
 
 @implementation RegexCookbookCh06Tests
 
+#pragma mark - Decimal Number Tests
+
 - (void)testRegexFromSection61ForAnyPositiveIntegerInLargerBodyOfText
 {
     NSString *numberInLargerBodyRegex = @"\\b[0-9]+\\b";
@@ -110,7 +112,7 @@
     XCTAssertTrue([@"- 077" isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62Hexadecimals
+#pragma mark - Hexadecimal Number Tests
 {
     // NOTE: All case-insensitive
     // Find any hex number in a larger body of text
@@ -136,6 +138,8 @@
     XCTFail(@"Not filled out yet");
 }
 
+#pragma mark - Binary Number Tests
+
 - (void)testRegexFromSection63BinaryNumbers
 {
     // NOTE: All case-insensitive
@@ -155,6 +159,8 @@
     // \b(?:[01]{8})+\b
     XCTFail(@"Not filled out yet");
 }
+
+#pragma mark - Octal Number Tests
 
 - (void)testRegexFromSection64OctalNumbers
 {
