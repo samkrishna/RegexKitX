@@ -113,12 +113,11 @@
 }
 
 #pragma mark - Hexadecimal Number Tests
+
+- (void)testRegexFromSection62AnyHexNumber
 {
     // NOTE: All case-insensitive
-    // Find any hex number in a larger body of text
-    // \b[0-9A-F]+\b
-    // Check whether a text string holds just a hexadecimal number:
-    // \A[0-9A-F]+\Z
+
     // Find a hexadecimal number with a 0x prefix:
     // \b0x[0-9A-F]+\b
     // Find a hexadecimal number with an &H prefix:
@@ -135,7 +134,44 @@
     // \b[0-9A-F]{16}\b
     // Find a string of hexadecimal bytes (i.e., an even number of hexadecimal digits):
     // \b(?:[0-9A-F]{2})+\b
-    XCTFail(@"Not filled out yet");
+
+    // Find any hex number in a larger body of text
+    // \b[0-9A-F]+\b
+    NSString *regex = @"\\b[0-9A-F]+\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"BADF00D";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testRegexFromSection62JustAHexNumber
+{
+    // NOTE: All case-insensitive
+    // Check whether a text string holds just a hexadecimal number:
+    // ^[0-9A-F]+$
+
+    // Find any hex number in a larger body of text
+    // \b[0-9A-F]+\b
+    NSString *regex = @"^[0-9A-F]+$";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"BADF00D";
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testRegexFromSection62HexNumberWith0xPrefix
+{
+    // NOTE: All case-insensitive
+    // Find a hexadecimal number with a 0x prefix:
+    // \b0x[0-9A-F]+\b
+
+    NSString *regex = @"\\b0x[0-9A-F]+\\b";
+    NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, 0xBADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"0xBADF00D";
+    XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
 #pragma mark - Binary Number Tests
