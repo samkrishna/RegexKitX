@@ -174,6 +174,8 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
+<#add more hex tests#>
+
 #pragma mark - Binary Number Tests
 
 - (void)testRegexFromSection63BinaryNumbers
@@ -194,6 +196,17 @@
     // Find a string of bytes (i.e., a multiple of eight bits):
     // \b(?:[01]{8})+\b
     XCTFail(@"Not filled out yet");
+}
+
+- (void)testBinaryRegexInLargerBodyOfText
+{
+    NSString *regex = @"\\b[01]+\\b";
+    NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, 0b11001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 11001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"11001001";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
 #pragma mark - Octal Number Tests
