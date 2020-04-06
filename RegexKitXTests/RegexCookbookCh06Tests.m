@@ -118,10 +118,6 @@
 {
     // NOTE: All case-insensitive
 
-    // Find a hexadecimal number with a 0x prefix:
-    // \b0x[0-9A-F]+\b
-    // Find a hexadecimal number with an &H prefix:
-    // &H[0-9A-F]+\b
     // Find a hexadecimal number with an H suffix:
     // \b[0-9A-F]+H\b
     // Find a hexadecimal byte value or 8-bit number:
@@ -174,7 +170,19 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-<#add more hex tests#>
+- (void)testRegexFromSection62HexNumberWithAmpersandHPrefix
+{
+    // Find a hexadecimal number with an &H prefix:
+    // &H[0-9A-F]+\b
+
+    NSString *regex = @"&H[0-9A-F]+\\b";
+    NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, &HBADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"&HBADF00D";
+    XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
 
 #pragma mark - Binary Number Tests
 
