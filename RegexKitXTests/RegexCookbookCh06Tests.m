@@ -131,7 +131,7 @@
 
     // Find any hex number in a larger body of text
     // \b[0-9A-F]+\b
-    NSString *regex = @"\\b[0-9A-F]+\\b";
+    NSString *regex = @"\\b[0-9A-Fa-f]+\\b";
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"BADF00D";
     XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
@@ -146,7 +146,7 @@
 
     // Find any hex number in a larger body of text
     // \b[0-9A-F]+\b
-    NSString *regex = @"^[0-9A-F]+$";
+    NSString *regex = @"^[0-9A-Fa-f]+$";
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"BADF00D";
     XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
@@ -159,7 +159,7 @@
     // Find a hexadecimal number with a 0x prefix:
     // \b0x[0-9A-F]+\b
 
-    NSString *regex = @"\\b0x[0-9A-F]+\\b";
+    NSString *regex = @"\\b0x[0-9A-Fa-f]+\\b";
     NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, 0xBADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"0xBADF00D";
@@ -173,11 +173,11 @@
     // Find a hexadecimal number with an &H prefix:
     // &H[0-9A-F]+\b
 
-    NSString *regex = @"&H[0-9A-F]+\\b";
+    NSString *regex = @"&H[0-9A-Fa-f]+\\b";
     NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, &HBADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"&HBADF00D";
-    XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
     XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
@@ -188,11 +188,14 @@
     // Find a hexadecimal number with an H suffix:
     // \b[0-9A-F]+H\b
 
-    NSString *regex = @"\\b[0-9A-F]+H\\b";
+    NSString *regex = @"\\b[0-9A-Fa-f]+H\\b";
     NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, BADF00DH consectetur adipiscing elit. Nulla felis.";
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"BADF00DH";
-    XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
     XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
