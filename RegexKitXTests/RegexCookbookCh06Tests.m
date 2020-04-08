@@ -118,8 +118,6 @@
 {
     // NOTE: All case-insensitive
 
-    // Find a hexadecimal byte value or 8-bit number:
-    // \b[0-9A-F]{2}\b
     // Find a hexadecimal word value or 16-bit number:
     // \b[0-9A-F]{4}\b
     // Find a hexadecimal double word value or 32-bit number:
@@ -196,6 +194,17 @@
     XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
+
+- (void)testRegexFromSection62HexByteOr8BitNumber
+{
+    // Find a hexadecimal byte value or 8-bit number:
+    // \b[0-9A-F]{2}\b
+
+    NSString *regex = @"\\b[0-9A-Fa-f]{2}\\b";
+    NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, BA consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"BA";
+    XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
     XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
