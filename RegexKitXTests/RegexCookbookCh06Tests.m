@@ -118,8 +118,6 @@
 {
     // NOTE: All case-insensitive
 
-    // Find a hexadecimal double word value or 32-bit number:
-    // \b[0-9A-F]{8}\b
     // Find a hexadecimal quad word value or 64-bit number:
     // \b[0-9A-F]{16}\b
     // Find a string of hexadecimal bytes (i.e., an even number of hexadecimal digits):
@@ -221,6 +219,19 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
+- (void)testRegexFromSection62HexDoubleWordValueOr32BitNumber
+{
+    // Find a hexadecimal double word value or 32-bit number:
+    // \b[0-9A-Fa-f]{8}\b
+
+    NSString *regex = @"\\b[0-9A-Fa-f]{8}\\b";
+    NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, 1BADF00d consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"1BADF00d";
+    XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
 
 #pragma mark - Binary Number Tests
 
