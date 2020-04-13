@@ -116,11 +116,6 @@
 
 - (void)testRegexFromSection62AnyHexNumber
 {
-    // NOTE: All case-insensitive
-
-    // Find a string of hexadecimal bytes (i.e., an even number of hexadecimal digits):
-    // \b(?:[0-9A-F]{2})+\b
-
     // Find any hex number in a larger body of text
     // \b[0-9A-F]+\b
     NSString *regex = @"\\b[0-9A-Fa-f]+\\b";
@@ -244,6 +239,23 @@
     XCTAssertFalse([anotherLipsumWithoutNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
+
+- (void)testRegexFromSection62StringOfHexadecimalBytes
+{
+    // Find a string of hexadecimal bytes (i.e., an even number of hexadecimal digits):
+    // \b(?:[0-9A-F]{2})+\b
+
+    NSString *regex = @"\\b(?:[0-9A-Fa-f]{2})+\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 1BADF00d2BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *anotherLipsumWithNumber = @"Lorem ipsum dolor sit amet, 1BADF00d consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"1BADF00d2BADF00D";
+    NSString *oddNumberOfHexadecimalDigits = @"1BADF00d2BADF00";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([anotherLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+    XCTAssertFalse([oddNumberOfHexadecimalDigits isMatchedByRegex:regex]);
+}
+
 
 #pragma mark - Binary Number Tests
 
