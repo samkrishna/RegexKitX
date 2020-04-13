@@ -112,9 +112,9 @@
     XCTAssertTrue([@"- 077" isMatchedByRegex:regex]);
 }
 
-#pragma mark - Hexadecimal Number Tests
+#pragma mark - Exercise 6.2: Hexadecimal Number Tests
 
-- (void)testRegexFromSection62AnyHexNumber
+- (void)testRegexWithAnyHexNumber
 {
     // Find any hex number in a larger body of text
     // \b[0-9A-F]+\b
@@ -125,7 +125,7 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62JustAHexNumber
+- (void)testRegexWithJustAHexNumber
 {
     // NOTE: All case-insensitive
     // Check whether a text string holds just a hexadecimal number:
@@ -140,7 +140,7 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62HexNumberWith0xPrefix
+- (void)testRegexWithHexNumberWith0xPrefix
 {
     // NOTE: All case-insensitive
     // Find a hexadecimal number with a 0x prefix:
@@ -155,7 +155,7 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62HexNumberWithAmpersandHPrefix
+- (void)testRegexWithHexNumberWithAmpersandHPrefix
 {
     // Find a hexadecimal number with an &H prefix:
     // &H[0-9A-F]+\b
@@ -170,7 +170,7 @@
 }
 
 
-- (void)testRegexFromSection62HexNumberWithAnHSuffix
+- (void)testRegexWithHexNumberWithAnHSuffix
 {
     // Find a hexadecimal number with an H suffix:
     // \b[0-9A-F]+H\b
@@ -184,7 +184,7 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62HexByteOr8BitNumber
+- (void)testRegexWithHexByteOr8BitNumber
 {
     // Find a hexadecimal byte value or 8-bit number:
     // \b[0-9A-F]{2}\b
@@ -198,7 +198,7 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62HexWordValueOr16BitNumber
+- (void)testRegexWithHexWordValueOr16BitNumber
 {
     // Find a hexadecimal word value or 16-bit number:
     // \b[0-9A-F]{4}\b
@@ -212,7 +212,7 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62HexDoubleWordValueOr32BitNumber
+- (void)testRegexWithHexDoubleWordValueOr32BitNumber
 {
     // Find a hexadecimal double word value or 32-bit number:
     // \b[0-9A-Fa-f]{8}\b
@@ -226,7 +226,7 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62HexQuadWordValueOr64BitNumber
+- (void)testRegexWithHexQuadWordValueOr64BitNumber
 {
     // Find a hexadecimal quad word value or 64-bit number:
     // \b[0-9A-Fa-f]{16}\b
@@ -240,7 +240,7 @@
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection62StringOfHexadecimalBytes
+- (void)testRegexWithStringOfHexadecimalBytes
 {
     // Find a string of hexadecimal bytes (i.e., an even number of hexadecimal digits):
     // \b(?:[0-9A-F]{2})+\b
