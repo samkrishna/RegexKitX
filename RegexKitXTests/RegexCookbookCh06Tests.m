@@ -257,15 +257,11 @@
 }
 
 
-#pragma mark - Binary Number Tests
+#pragma mark - Exercise 6.3: Binary Number Tests
 
 - (void)testRegexFromSection63BinaryNumbers
 {
     // NOTE: All case-insensitive
-    // Find a binary number in a larger body of text:
-    // \b[01]+\b
-    // Check whether a text string holds just a binary number
-    // ^[01]+$
     // Find a binary number with a 0b prefix:
     // \b0b[01]+\b
     // Find a binary number with a B suffix:
@@ -286,6 +282,19 @@
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 11001001 consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"11001001";
     XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testBinaryRegexForJustABinaryNumber
+{
+    // Check whether a text string holds just a binary number
+    // ^[01]+$
+    NSString *regex = @"^[01]+$";
+    NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, 0b11001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 11001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"11001001";
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertFalse([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
