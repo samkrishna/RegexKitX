@@ -118,8 +118,6 @@
 {
     // NOTE: All case-insensitive
 
-    // Find a hexadecimal quad word value or 64-bit number:
-    // \b[0-9A-F]{16}\b
     // Find a string of hexadecimal bytes (i.e., an even number of hexadecimal digits):
     // \b(?:[0-9A-F]{2})+\b
 
@@ -226,10 +224,24 @@
 
     NSString *regex = @"\\b[0-9A-Fa-f]{8}\\b";
     NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, 1BADF00d consectetur adipiscing elit. Nulla felis.";
-    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithoutNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"1BADF00d";
     XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
-    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithoutNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testRegexFromSection62HexQuadWordValueOr64BitNumber
+{
+    // Find a hexadecimal quad word value or 64-bit number:
+    // \b[0-9A-Fa-f]{16}\b
+
+    NSString *regex = @"\\b[0-9A-Fa-f]{16}\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 1BADF00d2BADF00D consectetur adipiscing elit. Nulla felis.";
+    NSString *anotherLipsumWithoutNumber = @"Lorem ipsum dolor sit amet, 1BADF00d consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"1BADF00d2BADF00D";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([anotherLipsumWithoutNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
