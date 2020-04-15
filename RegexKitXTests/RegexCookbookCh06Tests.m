@@ -262,8 +262,6 @@
 - (void)testRegexFromSection63BinaryNumbers
 {
     // NOTE: All case-insensitive
-    // Find a binary number with a B suffix:
-    // \b[01]+B\b
     // Find a binary byte value or 8-bit number:
     // \b[01]{8}\b
     // Find a binary word value or 16-bit number:
@@ -307,6 +305,20 @@
     NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, 0b11001001 consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"0b11001001";
     XCTAssertTrue([shortLipsumWithPrefixedNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testBinaryRegexWithSuffix
+{
+    // Find a binary number with a B suffix:
+    // \b[01]+B\b
+
+    NSString *regex = @"\\b[01]+B\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 11001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithSuffixedNumber = @"Lorem ipsum dolor sit amet, 11001001B consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"11001001B";
+    XCTAssertTrue([shortLipsumWithSuffixedNumber isMatchedByRegex:regex]);
     XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
