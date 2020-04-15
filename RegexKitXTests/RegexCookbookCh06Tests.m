@@ -262,8 +262,6 @@
 - (void)testRegexFromSection63BinaryNumbers
 {
     // NOTE: All case-insensitive
-    // Find a binary byte value or 8-bit number:
-    // \b[01]{8}\b
     // Find a binary word value or 16-bit number:
     // \b[01]{16}\b
     // Find a string of bytes (i.e., a multiple of eight bits):
@@ -322,6 +320,21 @@
     XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
+
+- (void)testBinaryRegexWith8BitNumber
+{
+    // Find a binary byte value or 8-bit number:
+    // \b[01]{8}\b
+
+    NSString *regex = @"\\b[01]{8}\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 11001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithSuffixedNumber = @"Lorem ipsum dolor sit amet, 11001001B consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"11001001B";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithSuffixedNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([numberOnly isMatchedByRegex:regex]);
+}
+
 
 #pragma mark - Octal Number Tests
 
