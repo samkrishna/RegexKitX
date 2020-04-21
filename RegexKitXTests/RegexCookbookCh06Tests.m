@@ -359,14 +359,31 @@
     XCTFail(@"Not filled out yet");
 }
 
+#pragma mark - Strip Leading Zeros
+
 - (void)testRegexFromSection612
 {
     XCTFail(@"Not filled out yet");
 }
 
+#pragma mark - Numbers Within a Certain Range
+
 - (void)testRegexFromSection613
 {
     XCTFail(@"Not filled out yet");
 }
+
+#pragma mark - Hexadecimal Numbers Within a Certain Range
+
+#pragma mark - Integer Numbers with Separators
+
+#pragma mark - Floating Point Numbers
+
+#pragma mark - Numbers with Thousand Separators
+
+#pragma mark - Add Thousand Separators to Numbers
+
+#pragma mark - Roman Numerals
+
 
 @end
