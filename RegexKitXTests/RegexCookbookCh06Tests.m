@@ -259,16 +259,6 @@
 
 #pragma mark - Exercise 6.3: Binary Number Tests
 
-- (void)testRegexFromSection63BinaryNumbers
-{
-    // NOTE: All case-insensitive
-    // Find a binary word value or 16-bit number:
-    // \b[01]{16}\b
-    // Find a string of bytes (i.e., a multiple of eight bits):
-    // \b(?:[01]{8})+\b
-    XCTFail(@"Not filled out yet");
-}
-
 - (void)testBinaryRegexInLargerBodyOfText
 {
     NSString *regex = @"\\b[01]+\\b";
@@ -333,6 +323,36 @@
     XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertFalse([shortLipsumWithSuffixedNumber isMatchedByRegex:regex]);
     XCTAssertFalse([numberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testBinaryRegexWith16BitNumber
+{
+    // Find a binary word value or 16-bit number:
+    // \b[01]{16}\b
+
+    NSString *regex = @"\\b[01]{16}\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 1100100111001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithSuffixedNumber = @"Lorem ipsum dolor sit amet, 1100100111001001B consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"1100100111001001";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithSuffixedNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testBinaryRegexWithMultipleBytes
+{
+    // Find a string of bytes (i.e., a multiple of eight bits):
+    // \b(?:[01]{8})+\b
+
+    NSString *regex = @"\\b(?:[01]{8})+\\b";
+    NSString *shortLipsumWith2ByteNumber = @"Lorem ipsum dolor sit amet, 1100100111001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWith3ByteNumber = @"Lorem ipsum dolor sit amet, 110010011100100111001001 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithSuffixedNumber = @"Lorem ipsum dolor sit amet, 1100100111001001B consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"1100100111001001";
+    XCTAssertTrue([shortLipsumWith2ByteNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([shortLipsumWith3ByteNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithSuffixedNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
 }
 
 
