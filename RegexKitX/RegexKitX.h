@@ -421,6 +421,8 @@ extern const NSInteger RKXMatchingTimeoutError;
  */
 - (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
+// -dictionaryMatchedByRegex:range:withCaptureNameKeys:options:matchOptions:error:
+
 #pragma mark - isMatchedByRegex:
 
 /**
