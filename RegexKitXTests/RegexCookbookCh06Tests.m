@@ -370,6 +370,8 @@
     XCTFail(@"Not filled out yet");
 }
 
+#pragma mark - Decimal Number Tests
+
 - (void)testRegexFromSection65DecimalNumbers
 {
     // Find any positive integer decimal number without a leading zero in a larger body of text:
