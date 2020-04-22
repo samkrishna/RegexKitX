@@ -361,13 +361,25 @@
 - (void)testRegexFromSection64OctalNumbers
 {
     // All case-insensitive
-    // Find an octal number in a larger body of text:
-    // \b0[0-7]*\b
     // Check whether a text string holds just an octal number:
     // ^0[0-7]*$
     // Find an octal number with a 0o prefix:
     // \b0o[0-7]+\b
     XCTFail(@"Not filled out yet");
+}
+
+- (void)testOctalRegex
+{
+    // Find an octal number in a larger body of text:
+    // \b0[0-7]*\b
+
+    NSString *regex = @"\\b0[0-7]*\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 01253 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"01253";
+    NSString *failedNumberOnly = @"01258";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+    XCTAssertFalse([failedNumberOnly isMatchedByRegex:regex]);
 }
 
 #pragma mark - Decimal Number Tests
