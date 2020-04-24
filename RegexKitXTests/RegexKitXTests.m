@@ -491,7 +491,13 @@
 
     NSString *emptyNamedCaptureRegex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), time:(\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
     NSDictionary *emptyDict = [self.candidate dictionaryWithNamedCaptureKeysMatchedByRegex:emptyNamedCaptureRegex];
+    XCTAssertNotNil(emptyDict);
     XCTAssertTrue(emptyDict.count == 0);
+
+    NSError *error;
+    NSDictionary *nilDict = [self.candidate dictionaryWithNamedCaptureKeysMatchedByRegex:@"(?<pn> \\( ( (?>[^()]+) | (?&pn) )* \\) )" range:self.candidate.stringRange options:RKXNoOptions error:&error];
+    XCTAssertNil(nilDict);
+    XCTAssertNotNil(error);
 }
 
 - (void)testEnumerateStringsSeparatedByRegexUsingBlock

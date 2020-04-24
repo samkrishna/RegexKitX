@@ -511,6 +511,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
 - (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
+    if (![pattern isRegexValidWithOptions:options error:error]) { return nil; }
     NSRange captureNameRange = NSNotFoundRange;
     NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
