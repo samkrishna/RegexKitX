@@ -34,11 +34,11 @@
 #define RKX_EXPECTED(cond, expect) __builtin_expect((long)(cond), (expect))
 
 NSRange const NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
-NSString *const kRKXNamedCapturePattern = @"\\?<(\\w+)>";
-NSString *const kRKXNamedReferencePattern = @"\\{(\\w+)\\}";
+NSString *const RKXNamedCapturePattern = @"\\?<(\\w+)>";
+NSString *const RKXNamedReferencePattern = @"\\{(\\w+)\\}";
 NSErrorDomain const RKXMatchingTimeoutErrorDomain = @"RegexKitX Matching Timeout Error";
 NSInteger const RKXMatchingTimeoutError = -2857;
-static NSTimeInterval const timeoutInterval = 1.0;
+static NSTimeInterval const RKXTimeoutInterval = 1.0;
 
 static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return ((options & value) == value);
@@ -195,13 +195,13 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 #pragma clang diagnostic ignored "-Wunused-parameter"
         [regex enumerateMatchesInString:self options:matchOpts range:searchRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
             NSDate *now = [NSDate date];
-            delta = now.timeIntervalSince1970 - start.timeIntervalSince1970;
+            delta = [now timeIntervalSinceDate:start];
             if (result && ![matches containsObject:result]) { [matches addObject:result]; }
-            if (delta > timeoutInterval) { *stop = YES; }
+            if (delta > RKXTimeoutInterval) { *stop = YES; }
         }];
 #pragma clang diagostic pop
 
-        if (error != NULL && !matches.count && delta > timeoutInterval) {
+        if (error != NULL && !matches.count && delta > RKXTimeoutInterval) {
             *error = NSRegularExpression.timeoutError;
         }
 
@@ -512,7 +512,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 - (NSDictionary *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSRange captureNameRange = NSNotFoundRange;
-    NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
+    NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
     for (NSString *captureName in captureNames) {
@@ -619,7 +619,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
     if (captureName) {
         NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
-        NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
+        NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
         NSUInteger index = [captureNames indexOfObjectPassingTest:^BOOL(NSString * _Nonnull name, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -852,7 +852,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     }
 
     if (!captureName) { return [captures copy]; }
-    NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
+    NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
     if (!captureNames) { return [captures copy]; }
     NSUInteger index = NSNotFound;
 
@@ -1091,8 +1091,8 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     };
 
     if (@available(macOS 10.13, *)) {
-        NSArray *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
-        NSArray *backreferenceNames = [templ _captureNamesWithMetaPattern:kRKXNamedReferencePattern];
+        NSArray *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
+        NSArray *backreferenceNames = [templ _captureNamesWithMetaPattern:RKXNamedReferencePattern];
 
         if (!captureNames || !backreferenceNames) {
             performRegularSwap();
