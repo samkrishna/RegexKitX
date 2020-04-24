@@ -33,7 +33,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.candidate = @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU275587, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
+    self.candidate = @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU164476, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
 
     const char *unicodeCStrings[] = {
         /* 0 */ "pi \xE2\x89\x85 3 (apx eq)",
@@ -442,7 +442,7 @@
     XCTAssertTrue([executionDict[@"clientID"] isEqualToString:@"75018"]);
     XCTAssertTrue([executionDict[@"executionID"] isEqualToString:@"0001f4e8.536956da.01.01"]);
     XCTAssertTrue([executionDict[@"canonicalExecutionDate"] isEqualToString:@"20140506  17:03:18"]);
-    XCTAssertTrue([executionDict[@"accountID"] isEqualToString:@"DU275587"]);
+    XCTAssertTrue([executionDict[@"accountID"] isEqualToString:@"DU164476"]);
     XCTAssertTrue([executionDict[@"orderSide"] isEqualToString:@"SLD"]);
     XCTAssertTrue([executionDict[@"orderVolume"] isEqualToString:@"141500"]);
     XCTAssertTrue([executionDict[@"executionPrice"] isEqualToString:@"141.73"]);
@@ -472,10 +472,10 @@
     XCTAssertTrue(failureResult.count == 0);
 }
 
-- (void)testDectionaryWithCaptureNameKeys
+- (void)testDictionaryWithCaptureKeys
 {
     NSString *execRegex = @"(?<executionDate>.*) EXECUTION_DATA: .* (?<currencyPair>\\w{3}.\\w{3}) .* orderId:(?<orderID>\\d+): clientId:(?<clientID>\\w+), execId:(?<executionID>.*.01), time:(?<canonicalExecutionDate>\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(?<accountID>\\w+).*, side:(?<orderSide>\\w+), shares:(?<orderVolume>\\d+), price:(?<executionPrice>.*), permId:(?<permanentID>\\d+).*";
-    NSDictionary *executionDict = [self.candidate dictionaryWithCaptureNameKeysMatchedByRegex:execRegex];
+    NSDictionary *executionDict = [self.candidate dictionaryWithCaptureKeysMatchedByRegex:execRegex];
     XCTAssertTrue(executionDict.count == 11);
     XCTAssertTrue([executionDict[@"executionDate"] isEqualToString:@"2014-05-06 17:03:17.967"]);
     XCTAssertTrue([executionDict[@"currencyPair"] isEqualToString:@"EUR.JPY"]);
@@ -483,11 +483,15 @@
     XCTAssertTrue([executionDict[@"clientID"] isEqualToString:@"75018"]);
     XCTAssertTrue([executionDict[@"executionID"] isEqualToString:@"0001f4e8.536956da.01.01"]);
     XCTAssertTrue([executionDict[@"canonicalExecutionDate"] isEqualToString:@"20140506  17:03:18"]);
-    XCTAssertTrue([executionDict[@"accountID"] isEqualToString:@"DU275587"]);
+    XCTAssertTrue([executionDict[@"accountID"] isEqualToString:@"DU164476"]);
     XCTAssertTrue([executionDict[@"orderSide"] isEqualToString:@"SLD"]);
     XCTAssertTrue([executionDict[@"orderVolume"] isEqualToString:@"141500"]);
     XCTAssertTrue([executionDict[@"executionPrice"] isEqualToString:@"141.73"]);
     XCTAssertTrue([executionDict[@"permanentID"] isEqualToString:@"825657452"]);
+
+    NSString *emptyNamedCaptureRegex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), time:(\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
+    NSDictionary *emptyDict = [self.candidate dictionaryWithCaptureKeysMatchedByRegex:emptyNamedCaptureRegex];
+    XCTAssertTrue(emptyDict.count == 0);
 }
 
 - (void)testEnumerateStringsSeparatedByRegexUsingBlock
@@ -830,11 +834,13 @@
     NSDate *date1 = [NSDate date];
     __block NSDate *date2;
     __block BOOL didExitOnPunt = NO;
+    NSRange zeroRange = NSMakeRange(0, 0);
 
     [regex enumerateMatchesInString:equalString options:NSMatchingReportProgress range:equalString.stringRange usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
         date2 = [NSDate date];
-        NSTimeInterval delta = date2.timeIntervalSince1970 - date1.timeIntervalSince1970;
-        NSLog(@"result = %@, delta = %.4f, range = %@", result, delta, NSStringFromRange(result.range));
+        NSTimeInterval delta = [date2 timeIntervalSinceDate:date1];
+        XCTAssertNil(result);
+        XCTAssertTrue(NSEqualRanges(result.range, zeroRange));
 
         if (delta > 1.0) {
             *stop = YES;
