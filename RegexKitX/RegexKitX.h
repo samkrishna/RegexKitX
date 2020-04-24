@@ -366,7 +366,7 @@ extern const NSInteger RKXMatchingTimeoutError;
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a @c nil-terminated list of alternating keys and captures. Captures are specified using @c NSUInteger values.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
- @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
+ @return Returns an empty dictionary if @c pattern fails to match within @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
@@ -383,7 +383,7 @@ extern const NSInteger RKXMatchingTimeoutError;
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @param firstKey The first key to add to the new dictionary, followed with the @c capture for @c firstKey, then a @c nil-terminated list of alternating keys and captures. Captures are specified using @c NSUInteger values.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
- @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
+ @return Returns an empty dictionary if @c pattern fails to match within @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error withKeysAndCaptures:(id)firstKey, ... NS_REQUIRES_NIL_TERMINATION;
@@ -398,7 +398,7 @@ extern const NSInteger RKXMatchingTimeoutError;
  @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
- @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
+ @return Returns an empty dictionary if @c pattern fails to match within @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options error:(NSError **)error;
@@ -416,22 +416,68 @@ extern const NSInteger RKXMatchingTimeoutError;
  @param matchOptions A bit mask that specifies the options for reporting, completion, and matching rules. See @c RKXMatchOptions for details.
  @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
  @return A @c NSDictionary containing the matched substrings constructed from the specified set of keys and captures.
- @return Returns an empty dictionary if @c pattern fails to match withing @c searchRange.
+ @return Returns an empty dictionary if @c pattern fails to match within @c searchRange.
  @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSDictionary<NSString *, NSString *> *)dictionaryMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange withKeys:(NSArray<NSString *> *)keys forCaptures:(NSArray<NSNumber *> *)captures options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - -dictionaryWithCaptureNameKeysMatchedByRegex:
 
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern.
+/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
+/// @param pattern A @c NSString containing a regular expression.
+/// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
+/// @return Returns an empty dictionary if @c pattern fails to match.
 - (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern;
 
-- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)range;
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange.
+/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
+/// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+/// @param pattern A @c NSString containing a regular expression.
+/// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
+/// @return Returns an empty dictionary if @c pattern fails to match.
+/// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within the receiver using @c options.
+/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
+/// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+/// @param pattern A @c NSString containing a regular expression.
+/// @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
+/// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
+/// @return Returns an empty dictionary if @c pattern fails to match.
+/// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
 - (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
 
-- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)range options:(RKXRegexOptions)options error:(NSError **)error;
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options.
+/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
+/// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+/// @param pattern A @c NSString containing a regular expression.
+/// @param searchRange The range of the receiver to search.
+/// @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
+/// @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
+/// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
+/// @return Returns an empty dictionary if @c pattern fails to match within @c searchRange.
+/// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
-- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)range options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
+/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
+/// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+/// @param pattern A @c NSString containing a regular expression.
+/// @param searchRange The range of the receiver to search.
+/// @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
+/// @param matchOptions A bit mask that specifies the options for reporting, completion, and matching rules. See @c RKXMatchOptions for details.
+/// @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
+/// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
+/// @return Returns an empty dictionary if @c pattern fails to match within @c searchRange.
+/// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - isMatchedByRegex:
 
