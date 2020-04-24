@@ -472,6 +472,24 @@
     XCTAssertTrue(failureResult.count == 0);
 }
 
+- (void)testDectionaryWithCaptureNameKeys
+{
+    NSString *execRegex = @"(?<executionDate>.*) EXECUTION_DATA: .* (?<currencyPair>\\w{3}.\\w{3}) .* orderId:(?<orderID>\\d+): clientId:(?<clientID>\\w+), execId:(?<executionID>.*.01), time:(?<canonicalExecutionDate>\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(?<accountID>\\w+).*, side:(?<orderSide>\\w+), shares:(?<orderVolume>\\d+), price:(?<executionPrice>.*), permId:(?<permanentID>\\d+).*";
+    NSDictionary *executionDict = [self.candidate dictionaryWithCaptureNameKeysMatchedByRegex:execRegex];
+    XCTAssertTrue(executionDict.count == 11);
+    XCTAssertTrue([executionDict[@"executionDate"] isEqualToString:@"2014-05-06 17:03:17.967"]);
+    XCTAssertTrue([executionDict[@"currencyPair"] isEqualToString:@"EUR.JPY"]);
+    XCTAssertTrue([executionDict[@"orderID"] isEqualToString:@"439"]);
+    XCTAssertTrue([executionDict[@"clientID"] isEqualToString:@"75018"]);
+    XCTAssertTrue([executionDict[@"executionID"] isEqualToString:@"0001f4e8.536956da.01.01"]);
+    XCTAssertTrue([executionDict[@"canonicalExecutionDate"] isEqualToString:@"20140506  17:03:18"]);
+    XCTAssertTrue([executionDict[@"accountID"] isEqualToString:@"DU275587"]);
+    XCTAssertTrue([executionDict[@"orderSide"] isEqualToString:@"SLD"]);
+    XCTAssertTrue([executionDict[@"orderVolume"] isEqualToString:@"141500"]);
+    XCTAssertTrue([executionDict[@"executionPrice"] isEqualToString:@"141.73"]);
+    XCTAssertTrue([executionDict[@"permanentID"] isEqualToString:@"825657452"]);
+}
+
 - (void)testEnumerateStringsSeparatedByRegexUsingBlock
 {
     NSString *regex = @",(\\s+)";

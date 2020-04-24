@@ -478,10 +478,48 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
     for (NSUInteger i = 0; i < keys.count; i++) {
-        id key = keys[i];
+        NSString *key = keys[i];
         NSUInteger capture = captures[i].unsignedIntegerValue;
         NSRange captureRange = [self rangeOfRegex:pattern range:searchRange capture:capture namedCapture:nil options:options matchOptions:matchOptions error:error];
         dict[key] = (captureRange.length > 0) ? [self substringWithRange:captureRange] : @"";
+    }
+
+    return [dict copy];
+}
+
+#pragma mark - dictionaryWithCaptureNameKeysMatchedByRegex:
+
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern
+{
+    return [self dictionaryWithCaptureNameKeysMatchedByRegex:pattern range:self.stringRange options:kNilOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
+{
+    return [self dictionaryWithCaptureNameKeysMatchedByRegex:pattern range:searchRange options:kNilOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options
+{
+    return [self dictionaryWithCaptureNameKeysMatchedByRegex:pattern range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
+}
+
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
+{
+    return [self dictionaryWithCaptureNameKeysMatchedByRegex:pattern range:searchRange options:options matchOptions:kNilOptions error:error];
+}
+
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+{
+    NSRange captureNameRange = NSNotFoundRange;
+    NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:kRKXNamedCapturePattern];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+    for (NSString *captureName in captureNames) {
+        captureNameRange = [self rangeOfRegex:pattern range:searchRange capture:NSNotFound namedCapture:captureName options:options matchOptions:matchOptions error:error];
+        if (NSEqualRanges(captureNameRange, NSNotFoundRange)) { continue; }
+        NSString *outcome = [self substringWithRange:captureNameRange];
+        dict[captureName] = outcome;
     }
 
     return [dict copy];
