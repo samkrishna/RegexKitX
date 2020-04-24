@@ -423,16 +423,16 @@ extern const NSInteger RKXMatchingTimeoutError;
 
 #pragma mark - -dictionaryWithCaptureNameKeysMatchedByRegex:
 
-/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern.
-/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern. The name of the capture group is the 'key' and the captured match is the value.
+/// @discussion The pattern must have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex). A pattern with ZERO named capture groups will return an empty dictionary.
 /// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
 /// @param pattern A @c NSString containing a regular expression.
 /// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
 /// @return Returns an empty dictionary if @c pattern fails to match.
 - (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern;
 
-/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange.
-/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange. The name of the capture group is the 'key' and the captured match is the value.
+/// @discussion The pattern must have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex). A pattern with ZERO named capture groups will return an empty dictionary.
 /// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
 /// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 /// @param pattern A @c NSString containing a regular expression.
@@ -441,8 +441,8 @@ extern const NSInteger RKXMatchingTimeoutError;
 /// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
 - (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
-/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within the receiver using @c options.
-/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within the receiver using @c options. The name of the capture group is the 'key' and the captured match is the value.
+/// @discussion The pattern must have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex). A pattern with ZERO named capture groups will return an empty dictionary.
 /// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
 /// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 /// @param pattern A @c NSString containing a regular expression.
@@ -452,8 +452,8 @@ extern const NSInteger RKXMatchingTimeoutError;
 /// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
 - (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
 
-/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options.
-/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options. The name of the capture group is the 'key' and the captured match is the value.
+/// @discussion The pattern must have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex). A pattern with ZERO named capture groups will return an empty dictionary.
 /// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
 /// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 /// @param pattern A @c NSString containing a regular expression.
@@ -465,8 +465,8 @@ extern const NSInteger RKXMatchingTimeoutError;
 /// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
 - (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
-/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
-/// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
+/// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions. The name of the capture group is the 'key' and the captured match is the value.
+/// @discussion The pattern must have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex). A pattern with ZERO named capture groups will return an empty dictionary.
 /// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
 /// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 /// @param pattern A @c NSString containing a regular expression.
