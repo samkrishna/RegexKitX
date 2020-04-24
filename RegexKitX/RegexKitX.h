@@ -429,7 +429,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /// @param pattern A @c NSString containing a regular expression.
 /// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
 /// @return Returns an empty dictionary if @c pattern fails to match.
-- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern;
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern;
 
 /// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange.
 /// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
@@ -439,7 +439,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
 /// @return Returns an empty dictionary if @c pattern fails to match.
 /// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
-- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
 
 /// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within the receiver using @c options.
 /// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
@@ -450,7 +450,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
 /// @return Returns an empty dictionary if @c pattern fails to match.
 /// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
-- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
 
 /// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options.
 /// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
@@ -463,7 +463,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
 /// @return Returns an empty dictionary if @c pattern fails to match within @c searchRange.
 /// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
-- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
 
 /// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
 /// @discussion The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
@@ -477,7 +477,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
 /// @return Returns an empty dictionary if @c pattern fails to match within @c searchRange.
 /// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
-- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureNameKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
 #pragma mark - isMatchedByRegex:
 
