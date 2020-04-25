@@ -358,14 +358,6 @@
 
 #pragma mark - Octal Number Tests
 
-- (void)testRegexFromSection64OctalNumbers
-{
-    // All case-insensitive
-    // Find an octal number with a 0o prefix:
-    // \b0o[0-7]+\b
-    XCTFail(@"Not filled out yet");
-}
-
 - (void)testOctalRegex
 {
     // Find an octal number in a larger body of text:
@@ -390,6 +382,20 @@
     NSString *numberOnly = @"01253";
     NSString *failedNumberOnly = @"01258";
     XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+    XCTAssertFalse([failedNumberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testOctalRegexWith0oPrefix
+{
+    // Find an octal number with a 0o prefix:
+    // \b0o[0-7]+\b
+
+    NSString *regex = @"\\b0o[0-7]+\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 0o01253 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"0o01253";
+    NSString *failedNumberOnly = @"01258";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
     XCTAssertFalse([failedNumberOnly isMatchedByRegex:regex]);
 }
