@@ -402,13 +402,32 @@
 
 #pragma mark - Decimal Number Tests
 
-- (void)testRegexFromSection65DecimalNumbers
+- (void)testRegexFindingAnyPositiveDecimalIntegerNumberWithoutALeadingZero
 {
     // Find any positive integer decimal number without a leading zero in a larger body of text:
     // \b(0|[1-9][0-9]*)\b
+
+    NSString *regex = @"\\b(0|[1-9][0-9]*)\\b";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 1253 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"0";
+    NSString *failedNumberOnly = @"01258";
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+    XCTAssertFalse([failedNumberOnly isMatchedByRegex:regex]);
+}
+
+- (void)testRegexFindingJustAnyPositiveDecimalIntegerNumberWithoutALeadingZero
+{
     // Check whether a text string holds just a positive integer decimal number without a leading zero:
     // ^(0|[1-9][0-9]*)$
-    XCTFail(@"Not filled out yet");
+
+    NSString *regex = @"^(0|[1-9][0-9]*)$";
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 1253 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"0";
+    NSString *failedNumberOnly = @"01258";
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([numberOnly isMatchedByRegex:regex]);
+    XCTAssertFalse([failedNumberOnly isMatchedByRegex:regex]);
 }
 
 #pragma mark - Strip Leading Zeros
