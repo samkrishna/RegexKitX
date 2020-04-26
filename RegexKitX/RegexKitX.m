@@ -120,7 +120,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     dispatch_once(&onceToken, ^{
         NSString *suggestionText = @"Have you tried tuning the regex? "
         "See http://userguide.icu-project.org/strings/regexp#TOC-Performance-Tips for more details.\n\n"
-        "If you can't tune the regex, consider discarding it.";
+        "If you can't tune the regex, consider discarding it. Some patterns may only be matchable using a DFA matching engine and NSRegularExpression is an NFA matching engine.";
         NSString *desc = NSLocalizedString(@"Complete match was unsuccessful.", nil);
         NSString *reason = NSLocalizedString(@"The regex match timed out.", nil);
         NSString *suggestion = NSLocalizedString(suggestionText, nil);
