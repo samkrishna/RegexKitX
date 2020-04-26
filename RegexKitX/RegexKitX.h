@@ -77,6 +77,11 @@ extern const NSErrorDomain RKXMatchingTimeoutErrorDomain;
  */
 extern const NSInteger RKXMatchingTimeoutError;
 
+/**
+ The empty string, represented by @@"".
+ */
+extern NSString *const kEmptyString;
+
 @interface NSString (RangeMechanics)
 
 /**
