@@ -36,6 +36,7 @@
 NSRange const NSNotFoundRange = ((NSRange){.location = (NSUInteger)NSNotFound, .length = 0UL});
 NSString *const RKXNamedCapturePattern = @"\\?<(\\w+)>";
 NSString *const RKXNamedReferencePattern = @"\\{(\\w+)\\}";
+NSString *const kEmptyString = @"";
 NSErrorDomain const RKXMatchingTimeoutErrorDomain = @"RegexKitX Matching Timeout Error";
 NSInteger const RKXMatchingTimeoutError = -2857;
 static NSTimeInterval const RKXTimeoutInterval = 1.0;
@@ -86,7 +87,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     NSMutableArray *substringArray = [NSMutableArray array];
 
     for (NSValue *subrange in self.ranges) {
-        NSString *matchString = (subrange.rangeValue.location != NSNotFound) ? [string substringWithRange:subrange.rangeValue] : @"";
+        NSString *matchString = (subrange.rangeValue.location != NSNotFound) ? [string substringWithRange:subrange.rangeValue] : kEmptyString;
         [substringArray addObject:matchString];
     }
 
@@ -492,7 +493,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
         NSString *key = keys[i];
         NSUInteger capture = captures[i].unsignedIntegerValue;
         NSRange captureRange = [self rangeOfRegex:pattern range:searchRange capture:capture namedCapture:nil options:options matchOptions:matchOptions error:error];
-        dict[key] = (captureRange.length > 0) ? [self substringWithRange:captureRange] : @"";
+        dict[key] = (captureRange.length > 0) ? [self substringWithRange:captureRange] : kEmptyString;
     }
 
     return [dict copy];
@@ -858,7 +859,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     if (capture != NSNotFound) {
         for (NSTextCheckingResult *match in matches) {
             NSRange matchRange = [match rangeAtIndex:capture];
-            NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : @"";
+            NSString *matchString = (matchRange.location != NSNotFound) ? [self substringWithRange:matchRange] : kEmptyString;
             [captures addObject:matchString];
         }
     }
