@@ -474,7 +474,7 @@
 
 - (void)testDictionaryWithCaptureKeys
 {
-    NSString *execRegex = @"(?<executionDate>.*) EXECUTION_DATA: .* (?<currencyPair>\\w{3}.\\w{3}) .* orderId:(?<orderID>\\d+): clientId:(?<clientID>\\w+), execId:(?<executionID>.*.01), time:(?<canonicalExecutionDate>\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(?<accountID>\\w+).*, side:(?<orderSide>\\w+), shares:(?<orderVolume>\\d+), price:(?<executionPrice>.*), permId:(?<permanentID>\\d+).*";
+    NSString *execRegex = @"(?<executionDate>.*) EXECUTION_DATA: .* (?<currencyPair>\\w{3}.\\w{3}) .* orderId:(?<orderID>-?\\d+): clientId:(?<clientID>\\w+), execId:(?<executionID>.*.01), time:(?<canonicalExecutionDate>\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(?<accountID>\\w+).*, side:(?<orderSide>\\w+), shares:(?<orderVolume>\\d+), price:(?<executionPrice>.*), permId:(?<permanentID>\\d+).*";
     NSDictionary *executionDict = [self.candidate dictionaryWithNamedCaptureKeysMatchedByRegex:execRegex];
     XCTAssertTrue(executionDict.count == 11);
     XCTAssertTrue([executionDict[@"executionDate"] isEqualToString:@"2014-05-06 17:03:17.967"]);
