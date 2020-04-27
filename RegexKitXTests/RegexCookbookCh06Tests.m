@@ -432,9 +432,17 @@
 
 #pragma mark - Strip Leading Zeros
 
-- (void)testRegexFromSection612
+- (void)testRegexForStrippingLeadingZeros
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"\\b0*([1-9][0-9]*|0)\\b";
+    NSString *postProcessRegex = @"\\b([1-9][0-9]*|0)\\b";
+
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 0781253 consectetur adipiscing elit. Nulla felis.";
+    NSString *numberOnly = @"0781253";
+    NSString *lipsumOutput = [shortLipsumWithNumber stringByReplacingOccurrencesOfRegex:regex withTemplate:@"$1"];
+    NSString *processedNumber = [numberOnly stringByReplacingOccurrencesOfRegex:regex withTemplate:@"$1"];
+    XCTAssertTrue([lipsumOutput isMatchedByRegex:postProcessRegex]);
+    XCTAssertTrue([processedNumber isMatchedByRegex:postProcessRegex]);
 }
 
 #pragma mark - Numbers Within a Certain Range
