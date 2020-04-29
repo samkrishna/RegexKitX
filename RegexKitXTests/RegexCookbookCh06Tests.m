@@ -511,6 +511,23 @@
     XCTAssertFalse([negativeOne isMatchedByRegex:regex]);
 }
 
+- (void)testRegexFor24Hour
+{
+    // 1 to 24 (hour):
+    // ^(2[0-4]|1[0-9]|[1-9])$
+
+    NSString *regex = @"^(2[0-4]|1[0-9]|[1-9])$";
+    NSString *ten = @"10";
+    NSString *seven = @"7";
+    NSString *twentyFive = @"25";
+    NSString *twentyFour = @"24";
+
+    XCTAssertTrue([ten isMatchedByRegex:regex]);
+    XCTAssertTrue([seven isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
+    XCTAssertFalse([twentyFive isMatchedByRegex:regex]);
+}
+
 #pragma mark - Hexadecimal Numbers Within a Certain Range
 
 #pragma mark - Integer Numbers with Separators
