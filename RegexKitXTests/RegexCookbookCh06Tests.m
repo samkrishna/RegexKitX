@@ -497,6 +497,20 @@
     XCTFail(@"Not filled out yet");
 }
 
+- (void)testRegexForHourOrMonth
+{
+    // 1 to 12 (hour or month):
+    // ^(1[0-2]|[1-9])$
+    NSString *regex = @"^(1[0-2]|[1-9])$";
+    NSString *ten = @"10";
+    NSString *seven = @"7";
+    NSString *negativeOne = @"-1";
+
+    XCTAssertTrue([ten isMatchedByRegex:regex]);
+    XCTAssertTrue([seven isMatchedByRegex:regex]);
+    XCTAssertFalse([negativeOne isMatchedByRegex:regex]);
+}
+
 #pragma mark - Hexadecimal Numbers Within a Certain Range
 
 #pragma mark - Integer Numbers with Separators
