@@ -182,7 +182,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 #pragma mark - DRY Utility Methods
 
 
-/// The fundamental matching methed of RegexKitX. It invokes @c -enumerateMatchesInString:options:range:usingBlock: on @c NSRegularExpression. The default timeout interval is 1.0 seconds.
+/// The fundamental matching method of RegexKitX. It invokes @c -enumerateMatchesInString:options:range:usingBlock: on @c NSRegularExpression. The default timeout interval is 1.0 seconds.
 /// @discussion If a timeout occurs and @c error is not @c NULL, a @c NSError object is returned with the timeout information.
 /// @discussion If something deeper-in-the-weeds regarding the use of @c -enumerateMatchesInString:options:range:usingBlock: comes up, it is *strongly* recommended that the developer use THAT API directly or consider changing some other course of matching action.
 /// @param pattern A @c NSString containing a regular expression.
