@@ -449,9 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-    // 1 to 31 (day of the month):
-    // ^(3[01]|[12][0-9]|[1-9])$
-
     // 1 to 53 (week of the year):
     // ^(5[0-3]|[1-4][0-9]|[1-9])$
 
@@ -526,6 +523,26 @@
     XCTAssertTrue([seven isMatchedByRegex:regex]);
     XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
     XCTAssertFalse([twentyFive isMatchedByRegex:regex]);
+}
+
+
+- (void)testRegexForDayOfMonth
+{
+    // 1 to 31 (day of the month):
+    // ^(3[01]|[12][0-9]|[1-9])$
+
+    NSString *regex = @"^(3[01]|[12][0-9]|[1-9])$";
+    NSString *ten = @"10";
+    NSString *seven = @"7";
+    NSString *twentyFive = @"25";
+    NSString *twentyFour = @"24";
+    NSString *thirtyTwo = @"32";
+
+    XCTAssertTrue([ten isMatchedByRegex:regex]);
+    XCTAssertTrue([seven isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
+    XCTAssertFalse([thirtyTwo isMatchedByRegex:regex]);
 }
 
 #pragma mark - Hexadecimal Numbers Within a Certain Range
