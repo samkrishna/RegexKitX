@@ -449,9 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-    // 1 to 53 (week of the year):
-    // ^(5[0-3]|[1-4][0-9]|[1-9])$
-
     // 0 to 59 (minute or second):
     // ^[1-5]?[0-9]$
 
@@ -543,6 +540,26 @@
     XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
     XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
     XCTAssertFalse([thirtyTwo isMatchedByRegex:regex]);
+}
+
+- (void)testRegexForWeekOFYear
+{
+    // 1 to 53 (week of the year):
+    // ^(5[0-3]|[1-4][0-9]|[1-9])$
+    NSString *regex = @"^(3[01]|[12][0-9]|[1-9])$";
+    NSString *ten = @"10";
+    NSString *seven = @"7";
+    NSString *twentyFive = @"25";
+    NSString *twentyFour = @"24";
+    NSString *fiftyTwo = @"52";
+    NSString *fiftyFour = @"54";
+
+    XCTAssertTrue([ten isMatchedByRegex:regex]);
+    XCTAssertTrue([seven isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
+    XCTAssertTrue([fiftyTwo isMatchedByRegex:regex]);
+    XCTAssertFalse([fiftyFour isMatchedByRegex:regex]);
 }
 
 #pragma mark - Hexadecimal Numbers Within a Certain Range
