@@ -502,12 +502,12 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
 - (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern
 {
-    return [self dictionaryWithNamedCaptureKeysMatchedByRegex:pattern range:self.stringRange options:kNilOptions matchOptions:kNilOptions error:NULL];
+    return [self dictionaryWithNamedCaptureKeysMatchedByRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
 - (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
 {
-    return [self dictionaryWithNamedCaptureKeysMatchedByRegex:pattern range:searchRange options:kNilOptions matchOptions:kNilOptions error:NULL];
+    return [self dictionaryWithNamedCaptureKeysMatchedByRegex:pattern range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
 - (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options
