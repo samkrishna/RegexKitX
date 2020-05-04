@@ -449,9 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-    // 1 to 100:
-    // ^(100|[1-9][0-9]?)$
-
     // 32 to 126 (printable ASCII codes):
     // ^(12[0-6]|1[01][0-9]|[4-9][0-9]|3[2-9])$
 
@@ -602,6 +599,29 @@
 
 }
 
+- (void)testRegexFor1to100Range
+{
+    // 1 to 100:
+    // ^(100|[1-9][0-9]?)$
+
+    NSString *regex = @"^(100|[1-9][0-9]?)$";
+    NSString *zero = @"0";
+    NSString *seven = @"7";
+    NSString *twentyFive = @"25";
+    NSString *twentyFour = @"24";
+    NSString *fiftyTwo = @"52";
+    NSString *fiftyFour = @"54";
+    NSString *oneHundredOne = @"101";
+
+    XCTAssertFalse([zero isMatchedByRegex:regex]);
+    XCTAssertTrue([seven isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
+    XCTAssertTrue([fiftyTwo isMatchedByRegex:regex]);
+    XCTAssertTrue([fiftyFour isMatchedByRegex:regex]);
+    XCTAssertFalse([oneHundredOne isMatchedByRegex:regex]);
+
+}
 #pragma mark - Hexadecimal Numbers Within a Certain Range
 
 #pragma mark - Integer Numbers with Separators
