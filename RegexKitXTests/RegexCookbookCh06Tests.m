@@ -449,9 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-    // 0 to 100 (percentage):
-    // ^(100|[1-9]?[0-9])$
-
     // 1 to 100:
     // ^(100|[1-9][0-9]?)$
 
@@ -579,6 +576,30 @@
     XCTAssertTrue([fiftyTwo isMatchedByRegex:regex]);
     XCTAssertTrue([fiftyFour isMatchedByRegex:regex]);
     XCTAssertFalse([sixty isMatchedByRegex:regex]);
+}
+
+- (void)testRegexFor0to100Percentage
+{
+    // 0 to 100 (percentage):
+    // ^(100|[1-9]?[0-9])$
+
+    NSString *regex = @"^(100|[1-9]?[0-9])$";
+    NSString *zero = @"0";
+    NSString *seven = @"7";
+    NSString *twentyFive = @"25";
+    NSString *twentyFour = @"24";
+    NSString *fiftyTwo = @"52";
+    NSString *fiftyFour = @"54";
+    NSString *oneHundredOne = @"101";
+
+    XCTAssertTrue([zero isMatchedByRegex:regex]);
+    XCTAssertTrue([seven isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
+    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
+    XCTAssertTrue([fiftyTwo isMatchedByRegex:regex]);
+    XCTAssertTrue([fiftyFour isMatchedByRegex:regex]);
+    XCTAssertFalse([oneHundredOne isMatchedByRegex:regex]);
+
 }
 
 #pragma mark - Hexadecimal Numbers Within a Certain Range
