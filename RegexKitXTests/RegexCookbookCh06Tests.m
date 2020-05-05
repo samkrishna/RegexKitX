@@ -449,9 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-    // 32 to 126 (printable ASCII codes):
-    // ^(12[0-6]|1[01][0-9]|[4-9][0-9]|3[2-9])$
-
     // 0 to 127 (nonnegative signed byte):
     // ^(12[0-7]|1[01][0-9]|[1-9]?[0-9])$
 
@@ -622,6 +619,23 @@
     XCTAssertFalse([oneHundredOne isMatchedByRegex:regex]);
 
 }
+
+- (void)testRegexForPrintableASCIICodes
+{
+    // 32 to 126 (printable ASCII codes):
+    // ^(12[0-6]|1[01][0-9]|[4-9][0-9]|3[2-9])$
+    NSString *regex = @"^(12[0-6]|1[01][0-9]|[4-9][0-9]|3[2-9])$";
+
+    XCTAssertFalse([@"0" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"7" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"24" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"25" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"101" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"127" isMatchedByRegex:regex]);
+}
+
 #pragma mark - Hexadecimal Numbers Within a Certain Range
 
 #pragma mark - Integer Numbers with Separators
