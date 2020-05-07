@@ -449,9 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-    // 0 to 127 (nonnegative signed byte):
-    // ^(12[0-7]|1[01][0-9]|[1-9]?[0-9])$
-
     // –128 to 127 (signed byte):
     // ^(12[0-7]|1[01][0-9]|[1-9]?[0-9]|-(12[0-8]|1[01][0-9]|[1-9]?[0-9]))$
 
@@ -627,6 +624,22 @@
     XCTAssertFalse([@"127" isMatchedByRegex:regex]);
 }
 
+- (void)testRegexForNonnegativeSignedBytes
+{
+    // 0 to 127 (nonnegative signed byte):
+    // ^(12[0-7]|1[01][0-9]|[1-9]?[0-9])$
+    NSString *regex = @"^(12[0-7]|1[01][0-9]|[1-9]?[0-9])$";
+
+    XCTAssertFalse([@"-1" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"101" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"127" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"128" isMatchedByRegex:regex]);
+}
 #pragma mark - Hexadecimal Numbers Within a Certain Range
 
 #pragma mark - Integer Numbers with Separators
