@@ -600,24 +600,15 @@
 {
     // 1 to 100:
     // ^(100|[1-9][0-9]?)$
-
     NSString *regex = @"^(100|[1-9][0-9]?)$";
-    NSString *zero = @"0";
-    NSString *seven = @"7";
-    NSString *twentyFive = @"25";
-    NSString *twentyFour = @"24";
-    NSString *fiftyTwo = @"52";
-    NSString *fiftyFour = @"54";
-    NSString *oneHundredOne = @"101";
 
-    XCTAssertFalse([zero isMatchedByRegex:regex]);
-    XCTAssertTrue([seven isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
-    XCTAssertTrue([fiftyTwo isMatchedByRegex:regex]);
-    XCTAssertTrue([fiftyFour isMatchedByRegex:regex]);
-    XCTAssertFalse([oneHundredOne isMatchedByRegex:regex]);
-
+    XCTAssertFalse([@"0" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"101" isMatchedByRegex:regex]);
 }
 
 - (void)testRegexForPrintableASCIICodes
