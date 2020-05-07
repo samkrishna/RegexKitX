@@ -478,13 +478,10 @@
     // 1 to 12 (hour or month):
     // ^(1[0-2]|[1-9])$
     NSString *regex = @"^(1[0-2]|[1-9])$";
-    NSString *ten = @"10";
-    NSString *seven = @"7";
-    NSString *negativeOne = @"-1";
 
-    XCTAssertTrue([ten isMatchedByRegex:regex]);
-    XCTAssertTrue([seven isMatchedByRegex:regex]);
-    XCTAssertFalse([negativeOne isMatchedByRegex:regex]);
+    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"-1" isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFor24Hour
@@ -493,15 +490,11 @@
     // ^(2[0-4]|1[0-9]|[1-9])$
 
     NSString *regex = @"^(2[0-4]|1[0-9]|[1-9])$";
-    NSString *ten = @"10";
-    NSString *seven = @"7";
-    NSString *twentyFive = @"25";
-    NSString *twentyFour = @"24";
 
-    XCTAssertTrue([ten isMatchedByRegex:regex]);
-    XCTAssertTrue([seven isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
-    XCTAssertFalse([twentyFive isMatchedByRegex:regex]);
+    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"25" isMatchedByRegex:regex]);
 }
 
 
@@ -511,37 +504,26 @@
     // ^(3[01]|[12][0-9]|[1-9])$
 
     NSString *regex = @"^(3[01]|[12][0-9]|[1-9])$";
-    NSString *ten = @"10";
-    NSString *seven = @"7";
-    NSString *twentyFive = @"25";
-    NSString *twentyFour = @"24";
-    NSString *thirtyTwo = @"32";
 
-    XCTAssertTrue([ten isMatchedByRegex:regex]);
-    XCTAssertTrue([seven isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
-    XCTAssertFalse([thirtyTwo isMatchedByRegex:regex]);
+    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"32" isMatchedByRegex:regex]);
 }
 
 - (void)testRegexForWeekOFYear
 {
     // 1 to 53 (week of the year):
     // ^(5[0-3]|[1-4][0-9]|[1-9])$
-    NSString *regex = @"^(3[01]|[12][0-9]|[1-9])$";
-    NSString *ten = @"10";
-    NSString *seven = @"7";
-    NSString *twentyFive = @"25";
-    NSString *twentyFour = @"24";
-    NSString *fiftyTwo = @"52";
-    NSString *fiftyFour = @"54";
+    NSString *regex = @"^(5[0-3]|[1-4][0-9]|[1-9])$";
 
-    XCTAssertTrue([ten isMatchedByRegex:regex]);
-    XCTAssertTrue([seven isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
-    XCTAssertTrue([fiftyTwo isMatchedByRegex:regex]);
-    XCTAssertFalse([fiftyFour isMatchedByRegex:regex]);
+    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"54" isMatchedByRegex:regex]);
 }
 
 - (void)testRegexForMinuteOrSecond
@@ -549,21 +531,14 @@
     // 0 to 59 (minute or second):
     // ^[1-5]?[0-9]$
     NSString *regex = @"^[1-5]?[0-9]$";
-    NSString *ten = @"10";
-    NSString *seven = @"7";
-    NSString *twentyFive = @"25";
-    NSString *twentyFour = @"24";
-    NSString *fiftyTwo = @"52";
-    NSString *fiftyFour = @"54";
-    NSString *sixty = @"60";
 
-    XCTAssertTrue([ten isMatchedByRegex:regex]);
-    XCTAssertTrue([seven isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
-    XCTAssertTrue([fiftyTwo isMatchedByRegex:regex]);
-    XCTAssertTrue([fiftyFour isMatchedByRegex:regex]);
-    XCTAssertFalse([sixty isMatchedByRegex:regex]);
+    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"60" isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFor0to100Percentage
@@ -572,21 +547,14 @@
     // ^(100|[1-9]?[0-9])$
 
     NSString *regex = @"^(100|[1-9]?[0-9])$";
-    NSString *zero = @"0";
-    NSString *seven = @"7";
-    NSString *twentyFive = @"25";
-    NSString *twentyFour = @"24";
-    NSString *fiftyTwo = @"52";
-    NSString *fiftyFour = @"54";
-    NSString *oneHundredOne = @"101";
 
-    XCTAssertTrue([zero isMatchedByRegex:regex]);
-    XCTAssertTrue([seven isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFour isMatchedByRegex:regex]);
-    XCTAssertTrue([twentyFive isMatchedByRegex:regex]);
-    XCTAssertTrue([fiftyTwo isMatchedByRegex:regex]);
-    XCTAssertTrue([fiftyFour isMatchedByRegex:regex]);
-    XCTAssertFalse([oneHundredOne isMatchedByRegex:regex]);
+    XCTAssertTrue([@"0" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"21" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"101" isMatchedByRegex:regex]);
 
 }
 
