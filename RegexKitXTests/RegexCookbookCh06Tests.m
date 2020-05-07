@@ -449,9 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-    // –128 to 127 (signed byte):
-    // ^(12[0-7]|1[01][0-9]|[1-9]?[0-9]|-(12[0-8]|1[01][0-9]|[1-9]?[0-9]))$
-
     // 0 to 255 (unsigned byte):
     // ^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$
 
@@ -640,6 +637,27 @@
     XCTAssertTrue([@"127" isMatchedByRegex:regex]);
     XCTAssertFalse([@"128" isMatchedByRegex:regex]);
 }
+
+- (void)testRegexForSignedBytes
+{
+    // –128 to 127 (signed byte):
+    // ^(12[0-7]|1[01][0-9]|[1-9]?[0-9]|-(12[0-8]|1[01][0-9]|[1-9]?[0-9]))$
+    NSString *regex = @"^(12[0-7]|1[01][0-9]|[1-9]?[0-9]|-(12[0-8]|1[01][0-9]|[1-9]?[0-9]))$";
+
+    XCTAssertFalse([@"-129" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"-1" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"-128" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"0" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"101" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"127" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"128" isMatchedByRegex:regex]);
+}
+
 #pragma mark - Hexadecimal Numbers Within a Certain Range
 
 #pragma mark - Integer Numbers with Separators
