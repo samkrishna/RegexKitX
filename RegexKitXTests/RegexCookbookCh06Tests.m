@@ -609,18 +609,14 @@
     // ^(12[0-7]|1[01][0-9]|[1-9]?[0-9]|-(12[0-8]|1[01][0-9]|[1-9]?[0-9]))$
     NSString *regex = @"^(12[0-7]|1[01][0-9]|[1-9]?[0-9]|-(12[0-8]|1[01][0-9]|[1-9]?[0-9]))$";
 
-    XCTAssertFalse([@"-129" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"-1" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"-128" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"0" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"101" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"127" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"128" isMatchedByRegex:regex]);
+    for (NSInteger i = -150; i < 200; i++) {
+        if (i < -128 || i > 127) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexForUnsignedBytes
@@ -629,19 +625,15 @@
     // ^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$
     NSString *regex = @"^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$";
 
-    XCTAssertFalse([@"-129" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"-1" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"-128" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"0" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"101" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"127" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"255" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"256" isMatchedByRegex:regex]);
+    for (NSInteger i = -129; i < 300; i++) {
+        if (i < 0 || i > 255) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
+}
 }
 
 #pragma mark - Hexadecimal Numbers Within a Certain Range
