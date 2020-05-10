@@ -15,7 +15,7 @@
 
 @implementation RegexCookbookCh06Tests
 
-#pragma mark - Decimal Number Tests
+#pragma mark - 6.1: Decimal Number Tests
 
 - (void)testRegexFromSection61ForAnyPositiveIntegerInLargerBodyOfText
 {
@@ -112,7 +112,7 @@
     XCTAssertTrue([@"- 077" isMatchedByRegex:regex]);
 }
 
-#pragma mark - Exercise 6.2: Hexadecimal Number Tests
+#pragma mark - 6.2: Hexadecimal Number Tests
 
 - (void)testRegexWithAnyHexNumber
 {
@@ -257,7 +257,7 @@
 }
 
 
-#pragma mark - Exercise 6.3: Binary Number Tests
+#pragma mark - 6.3: Binary Number Tests
 
 - (void)testBinaryRegexInLargerBodyOfText
 {
@@ -356,7 +356,7 @@
 }
 
 
-#pragma mark - Octal Number Tests
+#pragma mark - 6.4: Octal Number Tests
 
 - (void)testOctalRegex
 {
@@ -400,7 +400,7 @@
     XCTAssertFalse([failedNumberOnly isMatchedByRegex:regex]);
 }
 
-#pragma mark - Decimal Number Tests
+#pragma mark - 6.5: Decimal Number Tests
 
 - (void)testRegexFindingAnyPositiveDecimalIntegerNumberWithoutALeadingZero
 {
@@ -430,7 +430,7 @@
     XCTAssertFalse([failedNumberOnly isMatchedByRegex:regex]);
 }
 
-#pragma mark - Strip Leading Zeros
+#pragma mark - 6.6: Strip Leading Zeros
 
 - (void)testRegexForStrippingLeadingZeros
 {
@@ -445,24 +445,7 @@
     XCTAssertTrue([processedNumber isMatchedByRegex:postProcessRegex]);
 }
 
-#pragma mark - Numbers Within a Certain Range
-
-- (void)testRegexFromSection67
-{
-    // 0 to 32767 (nonnegative signed word):
-    // ^(3276[0-7]|327[0-5][0-9]|32[0-6][0-9]{2}|3[01][0-9]{3}|[12][0-9]{4}|↵
-    // [1-9][0-9]{1,3}|[0-9])$
-
-    // –32768 to 32767 (signed word):
-    // ^(3276[0-7]|327[0-5][0-9]|32[0-6][0-9]{2}|3[01][0-9]{3}|[12][0-9]{4}|↵
-    // [1-9][0-9]{1,3}|[0-9]|-(3276[0-8]|327[0-5][0-9]|32[0-6][0-9]{2}|↵
-    // 3[01][0-9]{3}|[12][0-9]{4}|[1-9][0-9]{1,3}|[0-9]))$
-
-    // 0 to 65535 (unsigned word):
-    // ^(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|↵
-    // [1-9][0-9]{1,3}|[0-9])$
-    XCTFail(@"Not filled out yet");
-}
+#pragma mark - 6.7: Numbers Within a Certain Range
 
 - (void)testRegexForHourOrMonth
 {
@@ -677,16 +660,17 @@
 }
 
 #pragma mark - Hexadecimal Numbers Within a Certain Range
+#pragma mark - 6.8: Hexadecimal Numbers Within a Certain Range
 
-#pragma mark - Integer Numbers with Separators
+#pragma mark - 6.9: Integer Numbers with Separators
 
-#pragma mark - Floating Point Numbers
+#pragma mark - 6.10: Floating Point Numbers
 
-#pragma mark - Numbers with Thousand Separators
+#pragma mark - 6.11: Numbers with Thousand Separators
 
-#pragma mark - Add Thousand Separators to Numbers
+#pragma mark - 6.12: Add Thousand Separators to Numbers
 
-#pragma mark - Roman Numerals
+#pragma mark - 6.13: Roman Numerals
 
 
 @end
