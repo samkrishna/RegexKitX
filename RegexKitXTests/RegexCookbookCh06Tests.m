@@ -449,10 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-
-    // 1900 to 2099 (year):
-    // ^(19|20)[0-9]{2}$
-
     // 0 to 32767 (nonnegative signed word):
     // ^(3276[0-7]|327[0-5][0-9]|32[0-6][0-9]{2}|3[01][0-9]{3}|[12][0-9]{4}|↵
     // [1-9][0-9]{1,3}|[0-9])$
@@ -648,6 +644,21 @@
         }
     }
 }
+
+- (void)testRegexFor20thAnd21stCenturies
+{
+    // 1900 to 2099 (year):
+    // ^(19|20)[0-9]{2}$
+    NSString *regex = @"^(19|20)[0-9]{2}$";
+
+    for (NSInteger i = 1850; i < 2205; i++) {
+        if (i < 1900 || i > 2099) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 #pragma mark - Hexadecimal Numbers Within a Certain Range
