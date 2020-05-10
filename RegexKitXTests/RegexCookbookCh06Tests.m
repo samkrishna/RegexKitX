@@ -659,7 +659,22 @@
     }
 }
 
-#pragma mark - Hexadecimal Numbers Within a Certain Range
+- (void)testRegexForNonnegativeSignedWord
+{
+    // 0 to 32767 (nonnegative signed word):
+    // ^(3276[0-7]|327[0-5][0-9]|32[0-6][0-9]{2}|3[01][0-9]{3}|[12][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$
+    NSString *regex = @"^(3276[0-7]|327[0-5][0-9]|32[0-6][0-9]{2}|3[01][0-9]{3}|"
+    "[12][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$";
+
+    for (NSInteger i = -50; i < 35000; i++) {
+        if (i < 0 || i > 32767) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
+}
 #pragma mark - 6.8: Hexadecimal Numbers Within a Certain Range
 
 #pragma mark - 6.9: Integer Numbers with Separators
