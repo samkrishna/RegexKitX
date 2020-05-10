@@ -449,8 +449,6 @@
 
 - (void)testRegexFromSection67
 {
-    // :1 to 366 (day of the year):
-    // ^(36[0-6]|3[0-5][0-9]|[12][0-9]{2}|[1-9][0-9]?)$
 
     // 1900 to 2099 (year):
     // ^(19|20)[0-9]{2}$
@@ -627,6 +625,22 @@
 
     for (NSInteger i = -129; i < 300; i++) {
         if (i < 0 || i > 255) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
+}
+
+- (void)testRegexForDaysOfYear
+{
+    // :1 to 366 (day of the year):
+    // ^(36[0-6]|3[0-5][0-9]|[12][0-9]{2}|[1-9][0-9]?)$
+    NSString *regex = @"^(36[0-6]|3[0-5][0-9]|[12][0-9]{2}|[1-9][0-9]?)$";
+
+    for (NSInteger i = -5; i < 371; i++) {
+        if (i < 1 || i > 366) {
             XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
         }
         else {
