@@ -695,6 +695,25 @@
         }
     }
 }
+
+- (void)testRegexForUnsignedWord
+{
+    // 0 to 65535 (unsigned word):
+    // ^(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|↵
+    // [1-9][0-9]{1,3}|[0-9])$
+    NSString *regex = @"^(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|"
+    "[1-9][0-9]{1,3}|[0-9])$";
+
+    for (NSInteger i = -1000; i < 70000; i++) {
+        if (i < 0 || i > 65535) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
+}
+
 #pragma mark - 6.8: Hexadecimal Numbers Within a Certain Range
 
 #pragma mark - 6.9: Integer Numbers with Separators
