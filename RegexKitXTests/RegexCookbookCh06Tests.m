@@ -470,9 +470,14 @@
     // ^(1[0-2]|[1-9])$
     NSString *regex = @"^(1[0-2]|[1-9])$";
 
-    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"-1" isMatchedByRegex:regex]);
+    for (NSInteger i = -5; i < 20; i++) {
+        if (i < 1 || i > 12) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexFor24Hour
@@ -482,10 +487,14 @@
 
     NSString *regex = @"^(2[0-4]|1[0-9]|[1-9])$";
 
-    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"25" isMatchedByRegex:regex]);
+    for (NSInteger i = -20; i < 40; i++) {
+        if (i < 1 || i > 24) {
+            XCTAssertFalse([[@(i) description] isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([[@(i) description] isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 
@@ -496,11 +505,14 @@
 
     NSString *regex = @"^(3[01]|[12][0-9]|[1-9])$";
 
-    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"32" isMatchedByRegex:regex]);
+    for (NSInteger i = -129; i < 300; i++) {
+        if (i < 1 || i > 31) {
+            XCTAssertFalse([[@(i) description] isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([[@(i) description] isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexForWeekOFYear
@@ -509,12 +521,14 @@
     // ^(5[0-3]|[1-4][0-9]|[1-9])$
     NSString *regex = @"^(5[0-3]|[1-4][0-9]|[1-9])$";
 
-    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"54" isMatchedByRegex:regex]);
+    for (NSInteger i = -25; i < 60; i++) {
+        if (i < 1 || i > 53) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexForMinuteOrSecond
@@ -523,13 +537,14 @@
     // ^[1-5]?[0-9]$
     NSString *regex = @"^[1-5]?[0-9]$";
 
-    XCTAssertTrue([@"10" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"60" isMatchedByRegex:regex]);
+    for (NSInteger i = -25; i < 200; i++) {
+        if (i < 0 || i > 59) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexFor0to100Percentage
@@ -539,14 +554,14 @@
 
     NSString *regex = @"^(100|[1-9]?[0-9])$";
 
-    XCTAssertTrue([@"0" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"21" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"101" isMatchedByRegex:regex]);
-
+    for (NSInteger i = -25; i < 300; i++) {
+        if (i < 0 || i > 100) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexFor1to100Range
@@ -555,13 +570,14 @@
     // ^(100|[1-9][0-9]?)$
     NSString *regex = @"^(100|[1-9][0-9]?)$";
 
-    XCTAssertFalse([@"0" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"101" isMatchedByRegex:regex]);
+    for (NSInteger i = -25; i < 300; i++) {
+        if (i < 1 || i > 100) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexForPrintableASCIICodes
@@ -570,14 +586,14 @@
     // ^(12[0-6]|1[01][0-9]|[4-9][0-9]|3[2-9])$
     NSString *regex = @"^(12[0-6]|1[01][0-9]|[4-9][0-9]|3[2-9])$";
 
-    XCTAssertFalse([@"0" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"7" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"24" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"25" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"101" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"127" isMatchedByRegex:regex]);
+    for (NSInteger i = -25; i < 300; i++) {
+        if (i < 32 || i > 126) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexForNonnegativeSignedBytes
@@ -586,15 +602,14 @@
     // ^(12[0-7]|1[01][0-9]|[1-9]?[0-9])$
     NSString *regex = @"^(12[0-7]|1[01][0-9]|[1-9]?[0-9])$";
 
-    XCTAssertFalse([@"-1" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"24" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"25" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"52" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"54" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"101" isMatchedByRegex:regex]);
-    XCTAssertTrue([@"127" isMatchedByRegex:regex]);
-    XCTAssertFalse([@"128" isMatchedByRegex:regex]);
+    for (NSInteger i = -25; i < 300; i++) {
+        if (i < 0 || i > 127) {
+            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
 }
 
 - (void)testRegexForSignedBytes
