@@ -791,20 +791,19 @@
     // Use this link to elucidate hex printing with the 'z' or 't' 
     // https://useyourloaf.com/blog/format-string-issue-using-nsinteger/
 
-    for (NSInteger i = -10; i < 20; i++) {
-        NSLog(@"i = %2zx", i);
-    }
-
     NSString *regex = @"^[1-9a-c]$";
 
     for (NSInteger i = -10; i < 0xf; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
         if (i < 1  || i > 0xc) {
-            XCTAssertFalse([@(i).description isMatchedByRegex:regex], @"%zx IS matching somehow", i);
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
         }
         else {
-            XCTAssertTrue([@(i).description isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
         }
     }
+}
 
 }
 
