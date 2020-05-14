@@ -741,9 +741,6 @@
 
 - (void)testHexRangesFromSection68
 {
-    // 1 to 35 (1 to 53: week of the year):
-    // ^(3[0-5]|[12][0-9a-f]|[1-9a-f])$
-    //
     // 0 to 3B (0 to 59: minute or second):
     // ^(3[0-9a-b]|[12]?[0-9a-f])$
     //
@@ -829,6 +826,24 @@
         NSString *testString = [NSString stringWithFormat:@"%zx", i];
 
         if (i < 1 || i > 31) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
+}
+
+- (void)testRegexForHexWeekOFYear
+{
+    // 1 to 35 (1 to 53: week of the year):
+    // ^(3[0-5]|[12][0-9a-f]|[1-9a-f])$
+    NSString *regex = @"^(3[0-5]|[12][0-9a-f]|[1-9a-f])$";
+
+    for (NSInteger i = -25; i < 60; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 1 || i > 53) {
             XCTAssertFalse([testString isMatchedByRegex:regex], @"%ld IS matching somehow", i);
         }
         else {
