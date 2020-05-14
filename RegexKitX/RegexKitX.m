@@ -193,6 +193,11 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 /// @return Will return @c nil if an error occurs and indirectly returns a @c NSError object if @c error is not @c NULL.
 - (NSArray<NSTextCheckingResult *> *)_matchesForRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
+    NSCParameterAssert(pattern);
+    NSCAssert(!NSEqualRanges(searchRange, NSNotFoundRange), @"searchRange is the \"not found\" range: %@", NSStringFromRange(searchRange));
+    NSCAssert(searchRange.length <= self.length, @"searchRange.length (%lu) is greater than string length (%lu)", searchRange.length, self.length);
+    NSCAssert(searchRange.location <= (self.length - 1), @"searchRange.location (%lu) is invalid and past the string length", searchRange.location);
+    
     NSRegularExpression *regex = [NSString cachedRegexForPattern:pattern options:options error:error];
     if (!regex) { return nil; }
     NSMatchingOptions matchOpts = (NSMatchingOptions)matchOptions;

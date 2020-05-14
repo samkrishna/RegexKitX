@@ -1158,4 +1158,19 @@
     }
 }
 
+#pragma mark - Test Internal Assertions
+
+- (void)testNilRegex
+{
+    XCTAssertThrows([self.candidate isMatchedByRegex:nil], @"This should have raised on a nil pattern");
+}
+
+- (void)testInvalidRanges
+{
+    NSString *execRegex = @"(.*) EXECUTION_DATA: .* (\\w{3}.\\w{3}) .* orderId:(\\d+): clientId:(\\w+), execId:(.*.01), time:(\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(\\w+).*, side:(\\w+), shares:(\\d+), price:(.*), permId:(\\d+).*";
+    XCTAssertThrows([self.candidate isMatchedByRegex:execRegex range:NSMakeRange(0, NSNotFound)]);
+    XCTAssertThrows([self.candidate isMatchedByRegex:execRegex range:NSMakeRange(NSNotFound, 0)]);
+    XCTAssertThrows([self.candidate isMatchedByRegex:execRegex range:NSMakeRange(NSNotFound, self.candidate.stringRange.length)]);
+}
+
 @end
