@@ -741,9 +741,6 @@
 
 - (void)testHexRangesFromSection68
 {
-    // 1 to 1F (1 to 31: day of the month):
-    // ^(1[0-9a-f]|[1-9a-f])$
-    //
     // 1 to 35 (1 to 53: week of the year):
     // ^(3[0-5]|[12][0-9a-f]|[1-9a-f])$
     //
@@ -821,6 +818,24 @@
     }
 }
 
+- (void)testRegexForHexDayOfMonth
+{
+    // 1 to 1F (1 to 31: day of the month):
+    // ^(1[0-9a-f]|[1-9a-f])$
+
+    NSString *regex = @"^(1[0-9a-f]|[1-9a-f])$";
+
+    for (NSInteger i = -129; i < 300; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 1 || i > 31) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+        }
+    }
+}
 
 #pragma mark - 6.9: Integer Numbers with Separators
 
