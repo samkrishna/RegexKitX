@@ -739,32 +739,12 @@
 
 #pragma mark - 6.8: Hexadecimal Numbers Within a Certain Range
 
-- (void)testHexRangesFromSection68
-{
-    // 0 to FF (0 to 255: 8-bit number):
-    // ^[1-9a-f]?[0-9a-f]$
-    //
-    // 1 to 16E (1 to 366: day of the year):
-    // ^(16[0-9a-e]|1[0-5][0-9a-f]|[1-9a-f][0-9a-f]?)$
-    //
-    // 76C to 833 (1900 to 2099: year):
-    // ^(83[0-3]|8[0-2][0-9a-f]|7[7-9a-f][0-9a-f]|76[c-f])$
-    //
-    // 0 to 7FFF: (0 to 32767: 15-bit number):
-    // ^([1-7][0-9a-f]{3}|[1-9a-f][0-9a-f]{1,2}|[0-9a-f])$
-    //
-    // 0 to FFFF: (0 to 65535: 16-bit number):
-    // ^([1-9a-f][0-9a-f]{1,3}|[0-9a-f])$
-
-    XCTAssertTrue(NO, @"Not implemented yet");
-}
-
 - (void)testHexIteration
 {
     // 1 to C (1 to 12: hour or month):
     // ^[1-9a-c]$
 
-    // Use this link to elucidate hex printing with the 'z' or 't' 
+    // Use this link to elucidate hex printing with the 'z' or 't'
     // https://useyourloaf.com/blog/format-string-issue-using-nsinteger/
     NSString *regex = @"^[1-9a-c]$";
 
@@ -916,6 +896,24 @@
         NSString *testString = [NSString stringWithFormat:@"%zx", i];
 
         if (i < 0x0 || i > 0x7f) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
+        }
+    }
+}
+
+- (void)testRegexForHexUnsignedBytes
+{
+    // 0 to FF (0 to 255: 8-bit number):
+    // ^[1-9a-f]?[0-9a-f]$
+    NSString *regex = @"^[1-9a-f]?[0-9a-f]$";
+
+    for (NSInteger i = -129; i < 300; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 0x0 || i > 0xff) {
             XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
         }
         else {
