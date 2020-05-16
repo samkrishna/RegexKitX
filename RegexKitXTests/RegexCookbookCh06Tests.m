@@ -741,9 +741,6 @@
 
 - (void)testHexRangesFromSection68
 {
-    // 0 to 64 (0 to 100: percentage):
-    // ^(6[0-4]|[1-5]?[0-9a-f])$
-    //
     // 1 to 64 (1 to 100):
     // ^(6[0-4]|[1-5][0-9a-f]|[1-9a-f])$
     //
@@ -856,6 +853,24 @@
         NSString *testString = [NSString stringWithFormat:@"%zx", i];
 
         if (i < 0x0 || i > 0x3b) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
+        }
+    }
+}
+
+- (void)testRegexForHex0to100Percentage
+{
+    // 0 to 64 (0 to 100: percentage):
+    // ^(6[0-4]|[1-5]?[0-9a-f])$
+    NSString *regex = @"^(6[0-4]|[1-5]?[0-9a-f])$";
+
+    for (NSInteger i = -25; i < 300; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 0x0 || i > 0x64) {
             XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
         }
         else {
