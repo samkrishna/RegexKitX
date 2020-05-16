@@ -957,6 +957,24 @@
         }
     }
 }
+
+- (void)testRegexForHex15BitNumber
+{
+    // 0 to 7FFF: (0 to 32767: 15-bit number):
+    // ^([1-7][0-9a-f]{3}|[1-9a-f][0-9a-f]{1,2}|[0-9a-f])$
+    NSString *regex = @"^([1-7][0-9a-f]{3}|[1-9a-f][0-9a-f]{1,2}|[0-9a-f])$";
+
+    for (NSInteger i = -50; i < 35000; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 0x0 || i > 0x7fff) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
+        }
+    }
+}
 #pragma mark - 6.9: Integer Numbers with Separators
 
 #pragma mark - 6.10: Floating Point Numbers
