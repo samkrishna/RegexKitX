@@ -996,6 +996,27 @@
 
 #pragma mark - 6.9: Integer Numbers with Separators
 
+- (void)testSanpleRegexesFromSection69
+{
+    // Find any decimal or octal integer with optional underscores in a larger body of text:
+    // \b[0-9]+(_+[0-9]+)*\b
+
+    // Find any hexadecimal integer with optional underscores in a larger body of text:
+    // \b0x[0-9A-F]+(_+[0-9A-F]+)*\b
+
+    // Find any binary integer with optional underscores in a larger body of text:
+    // \b0b[01]+(_+[01]+)*\b
+
+    // Find any decimal, octal, hexadecimal, or binary integer with optional underscores in a larger body of text:
+    // \b([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)\b
+
+    // Check whether a text string holds just a decimal, octal, hexadecimal, or binary integer with optional underscores:
+    // \A([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)\Z
+    // ^([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)$
+
+    XCTAssertTrue(NO, @"Not implemented yet.");
+}
+
 #pragma mark - 6.10: Floating Point Numbers
 
 #pragma mark - 6.11: Numbers with Thousand Separators
