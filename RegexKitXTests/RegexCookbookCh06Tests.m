@@ -778,13 +778,12 @@
 
     // Use this link to elucidate hex printing with the 'z' or 't' 
     // https://useyourloaf.com/blog/format-string-issue-using-nsinteger/
-
     NSString *regex = @"^[1-9a-c]$";
 
     for (NSInteger i = -10; i < 0xf; i++) {
         NSString *testString = [NSString stringWithFormat:@"%zx", i];
 
-        if (i < 1  || i > 0xc) {
+        if (i < 0x1  || i > 0xc) {
             XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
         }
         else {
@@ -797,13 +796,12 @@
 {
     // 1 to 18 (1 to 24: hour):
     // ^(1[0-8]|[1-9a-f])$
-
     NSString *regex = @"^(1[0-8]|[1-9a-f])$";
 
     for (NSInteger i = -20; i < 40; i++) {
         NSString *testString = [NSString stringWithFormat:@"%zx", i];
 
-        if (i < 1 || i > 24) {
+        if (i < 0x1 || i > 0x18) {
             XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
         }
         else {
@@ -821,11 +819,11 @@
     for (NSInteger i = -129; i < 300; i++) {
         NSString *testString = [NSString stringWithFormat:@"%zx", i];
 
-        if (i < 1 || i > 31) {
-            XCTAssertFalse([testString isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        if (i < 0x1 || i > 0x1f) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
         }
         else {
-            XCTAssertTrue([testString isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
         }
     }
 }
@@ -839,11 +837,11 @@
     for (NSInteger i = -25; i < 60; i++) {
         NSString *testString = [NSString stringWithFormat:@"%zx", i];
 
-        if (i < 1 || i > 53) {
-            XCTAssertFalse([testString isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        if (i < 0x1 || i > 0x35) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
         }
         else {
-            XCTAssertTrue([testString isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
         }
     }
 }
@@ -857,11 +855,14 @@
     for (NSInteger i = -25; i < 200; i++) {
         NSString *testString = [NSString stringWithFormat:@"%zx", i];
 
-        if (i < 0 || i > 59) {
-            XCTAssertFalse([testString isMatchedByRegex:regex], @"%ld IS matching somehow", i);
+        if (i < 0x0 || i > 0x3b) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
         }
         else {
-            XCTAssertTrue([testString isMatchedByRegex:regex], @"%ld IS NOT matching somehow", i);
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
+        }
+    }
+}
         }
     }
 }
