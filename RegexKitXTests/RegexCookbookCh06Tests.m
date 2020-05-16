@@ -741,9 +741,6 @@
 
 - (void)testHexRangesFromSection68
 {
-    // 20 to 7E (32 to 126: printable ASCII codes):
-    // ^(7[0-9a-e]|[2-6][0-9a-f])$
-    //
     // 0 to 7F (0 to 127: 7-bit number):
     // ^[1-7]?[0-9a-f]$
     //
@@ -893,6 +890,21 @@
         }
     }
 }
+
+- (void)testRegexForHexPrintableASCIICodes
+{
+    // 20 to 7E (32 to 126: printable ASCII codes):
+    // ^(7[0-9a-e]|[2-6][0-9a-f])$
+    NSString *regex = @"^(7[0-9a-e]|[2-6][0-9a-f])$";
+
+    for (NSInteger i = -25; i < 300; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 0x20 || i > 0x7e) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
         }
     }
 }
