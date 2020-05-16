@@ -939,6 +939,24 @@
         }
     }
 }
+
+- (void)testRegexForHex20thAnd21stCenturies
+{
+    // 76C to 833 (1900 to 2099: year):
+    // ^(83[0-3]|8[0-2][0-9a-f]|7[7-9a-f][0-9a-f]|76[c-f])$
+    NSString *regex = @"^(83[0-3]|8[0-2][0-9a-f]|7[7-9a-f][0-9a-f]|76[c-f])$";
+
+    for (NSInteger i = 1850; i < 2205; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 0x76c || i > 0x833) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
+        }
+    }
+}
 #pragma mark - 6.9: Integer Numbers with Separators
 
 #pragma mark - 6.10: Floating Point Numbers
