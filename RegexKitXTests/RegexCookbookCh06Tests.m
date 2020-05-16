@@ -741,9 +741,6 @@
 
 - (void)testHexRangesFromSection68
 {
-    // 0 to 7F (0 to 127: 7-bit number):
-    // ^[1-7]?[0-9a-f]$
-    //
     // 0 to FF (0 to 255: 8-bit number):
     // ^[1-9a-f]?[0-9a-f]$
     //
@@ -909,6 +906,23 @@
     }
 }
 
+- (void)testRegexForHex7BitNumber
+{
+    // 0 to 7F (0 to 127: 7-bit number):
+    // ^[1-7]?[0-9a-f]$
+    NSString *regex = @"^[1-7]?[0-9a-f]$";
+
+    for (NSInteger i = -25; i < 300; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 0x0 || i > 0x7f) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
+        }
+    }
+}
 #pragma mark - 6.9: Integer Numbers with Separators
 
 #pragma mark - 6.10: Floating Point Numbers
