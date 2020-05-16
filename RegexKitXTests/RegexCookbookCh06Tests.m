@@ -921,6 +921,24 @@
         }
     }
 }
+
+- (void)testRegexForHexDaysOfYear
+{
+    // 1 to 16E (1 to 366: day of the year):
+    // ^(16[0-9a-e]|1[0-5][0-9a-f]|[1-9a-f][0-9a-f]?)$
+    NSString *regex = @"^(16[0-9a-e]|1[0-5][0-9a-f]|[1-9a-f][0-9a-f]?)$";
+
+    for (NSInteger i = -5; i < 371; i++) {
+        NSString *testString = [NSString stringWithFormat:@"%zx", i];
+
+        if (i < 0x1 || i > 0x16e) {
+            XCTAssertFalse([testString isMatchedByRegex:regex], @"%zx IS matching somehow", i);
+        }
+        else {
+            XCTAssertTrue([testString isMatchedByRegex:regex], @"%zx IS NOT matching somehow", i);
+        }
+    }
+}
 #pragma mark - 6.9: Integer Numbers with Separators
 
 #pragma mark - 6.10: Floating Point Numbers
