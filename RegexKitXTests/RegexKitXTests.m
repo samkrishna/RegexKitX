@@ -499,7 +499,7 @@
     XCTAssertTrue(failureResult.count == 0);
 }
 
-- (void)testDictionaryWithCaptureKeys
+- (void)testDictionaryWithNamedCaptureKeysMatchedByRegex
 {
     NSString *execRegex = @"(?<executionDate>.*) EXECUTION_DATA: .* (?<currencyPair>\\w{3}.\\w{3}) .* orderId:(?<orderID>-?\\d+): clientId:(?<clientID>\\w+), execId:(?<executionID>.*.01), time:(?<canonicalExecutionDate>\\d+\\s+\\d+:\\d+:\\d+), acctNumber:(?<accountID>\\w+).*, side:(?<orderSide>\\w+), shares:(?<orderVolume>\\d+), price:(?<executionPrice>.*), permId:(?<permanentID>\\d+).*";
     NSDictionary *executionDict = [self.candidate dictionaryWithNamedCaptureKeysMatchedByRegex:execRegex];
