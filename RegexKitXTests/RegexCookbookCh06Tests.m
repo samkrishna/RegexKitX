@@ -998,9 +998,6 @@
 
 - (void)testSanpleRegexesFromSection69
 {
-    // Find any decimal or octal integer with optional underscores in a larger body of text:
-    // \b[0-9]+(_+[0-9]+)*\b
-
     // Find any hexadecimal integer with optional underscores in a larger body of text:
     // \b0x[0-9A-F]+(_+[0-9A-F]+)*\b
 
@@ -1015,6 +1012,21 @@
     // ^([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)$
 
     XCTAssertTrue(NO, @"Not implemented yet.");
+}
+
+- (void)testRegexWithOptionalUnderscores
+{
+    // Find any decimal or octal integer with optional underscores in a larger body of text:
+    // \b[0-9]+(_+[0-9]+)*\b
+    NSString *regex = @"\\b[0-9]+(_+[0-9]+)*\\b";
+
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 077 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithPositiveSignedNumber = @"Lorem ipsum dolor sit amet, +077 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNegativeSignedNumber = @"Lorem ipsum dolor sit amet, -00_77 consectetur adipiscing elit. Nulla felis.";
+
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([shortLipsumWithPositiveSignedNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([shortLipsumWithNegativeSignedNumber isMatchedByRegex:regex]);
 }
 
 #pragma mark - 6.10: Floating Point Numbers
