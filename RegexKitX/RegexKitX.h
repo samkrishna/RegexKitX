@@ -67,6 +67,8 @@ typedef NS_OPTIONS(NSUInteger, RKXMatchOptions) {
     RKXWithoutAnchoringBounds  = NSMatchingWithoutAnchoringBounds
 };
 
+#pragma mark - Constants
+
 /**
  The error domain indicating a matching operation failed to match and timed out.
  */
