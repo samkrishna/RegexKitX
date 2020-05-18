@@ -196,7 +196,6 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 - (NSArray<NSTextCheckingResult *> *)_matchesForRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     NSCParameterAssert(pattern);
-    NSCAssert(!NSEqualRanges(searchRange, NSNotFoundRange), @"searchRange is the \"not found\" range: %@", NSStringFromRange(searchRange));
     NSCAssert(searchRange.length <= self.length, @"searchRange.length (%lu) is greater than string length (%lu)", searchRange.length, self.length);
     NSCAssert(searchRange.location <= (self.length - 1), @"searchRange.location (%lu) is invalid and past the string length", searchRange.location);
     
