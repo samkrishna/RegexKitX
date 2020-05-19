@@ -606,6 +606,15 @@
     XCTAssertTrue([captures[0] isEqualToString:@"310"]);
     XCTAssertTrue([captures[1] isEqualToString:@"919"]);
     XCTAssertTrue([captures[2] isEqualToString:@"212"]);
+
+    NSString *markup = @"<strong><b>Hello</b></strong>, <em>World</em>";
+    NSString *markupRegex = @"<(?<tag>\\w+)[^>]*>(?<content>.*?)</\\k<tag>>";
+    captures = [markup substringsMatchedByRegex:markupRegex options:RKXCaseless];
+    XCTAssertTrue(captures.count == 2);
+    XCTAssertTrue([captures[0] isMatchedByRegex:@"<strong>"]);
+    XCTAssertTrue([captures[0] isMatchedByRegex:@"</strong>"]);
+    XCTAssertTrue([captures[1] isMatchedByRegex:@"<em>"]);
+    XCTAssertTrue([captures[1] isMatchedByRegex:@"</em>"]);
 }
 
 - (void)testStringByReplacingOccurrencesOfRegexWithTemplateWithNamedBackreferences
