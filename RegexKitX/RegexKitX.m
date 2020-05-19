@@ -1100,20 +1100,12 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     __block NSUInteger count = 0;
     NSRegularExpression *regex = matches.firstObject.regularExpression;
 
-    void(^performRegularSwap)(void) = ^(void) {
-        for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-            NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:templ];
-            [self replaceCharactersInRange:match.range withString:swap];
-            count++;
-        }
-    };
-
     if (@available(macOS 10.13, *)) {
         NSArray *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
         NSArray *backreferenceNames = [templ _captureNamesWithMetaPattern:RKXNamedReferencePattern];
 
         if (!captureNames || !backreferenceNames) {
-            performRegularSwap();
+            count = [regex replaceMatchesInString:self options:(NSMatchingOptions)matchOptions range:searchRange withTemplate:templ];
             return count;
         }
 
@@ -1143,7 +1135,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
         }
     }
     else {
-        performRegularSwap();
+        count = [regex replaceMatchesInString:self options:(NSMatchingOptions)matchOptions range:searchRange withTemplate:templ];
     }
 
     return count;
