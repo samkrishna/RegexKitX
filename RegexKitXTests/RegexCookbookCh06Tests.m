@@ -998,8 +998,6 @@
 
 - (void)testSanpleRegexesFromSection69
 {
-    // Find any hexadecimal integer with optional underscores in a larger body of text:
-    // \b0x[0-9A-F]+(_+[0-9A-F]+)*\b
 
     // Find any binary integer with optional underscores in a larger body of text:
     // \b0b[01]+(_+[01]+)*\b
@@ -1028,6 +1026,22 @@
     XCTAssertTrue([shortLipsumWithPositiveSignedNumber isMatchedByRegex:regex]);
     XCTAssertTrue([shortLipsumWithNegativeSignedNumber isMatchedByRegex:regex]);
 }
+
+- (void)testRegexForHexIntegersWithOptionalUnderscores
+{
+    // Find any hexadecimal integer with optional underscores in a larger body of text:
+    // \b0x[0-9A-F]+(_+[0-9A-F]+)*\b
+    NSString *regex = @"\\b0x[0-9A-F]+(_+[0-9A-F]+)*\\b";
+
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 0x077 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithPositiveSignedNumber = @"Lorem ipsum dolor sit amet, 0x0_77 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNegativeSignedNumber = @"Lorem ipsum dolor sit amet, 0x00_77 consectetur adipiscing elit. Nulla felis.";
+
+    XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([shortLipsumWithPositiveSignedNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([shortLipsumWithNegativeSignedNumber isMatchedByRegex:regex]);
+}
+
 
 #pragma mark - 6.10: Floating Point Numbers
 
