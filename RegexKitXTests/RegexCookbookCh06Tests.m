@@ -998,10 +998,6 @@
 
 - (void)testSanpleRegexesFromSection69
 {
-
-    // Find any binary integer with optional underscores in a larger body of text:
-    // \b0b[01]+(_+[01]+)*\b
-
     // Find any decimal, octal, hexadecimal, or binary integer with optional underscores in a larger body of text:
     // \b([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)\b
 
@@ -1040,6 +1036,21 @@
     XCTAssertTrue([shortLipsumWithNumber isMatchedByRegex:regex]);
     XCTAssertTrue([shortLipsumWithPositiveSignedNumber isMatchedByRegex:regex]);
     XCTAssertTrue([shortLipsumWithNegativeSignedNumber isMatchedByRegex:regex]);
+}
+
+- (void)testRegexForBinaryIntegersWithOptionalUnderscores
+{
+    // Find any binary integer with optional underscores in a larger body of text:
+    // \b0b[01]+(_+[01]+)*\b
+    NSString *regex = @"\\b0b[01]+(_+[01]+)*\\b";
+
+    NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 0b077 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithPositiveSignedNumber = @"Lorem ipsum dolor sit amet, 0b0_110010010_110_01 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithNegativeSignedNumber = @"Lorem ipsum dolor sit amet, 0x00_77 consectetur adipiscing elit. Nulla felis.";
+
+    XCTAssertFalse([shortLipsumWithNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([shortLipsumWithPositiveSignedNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithNegativeSignedNumber isMatchedByRegex:regex]);
 }
 
 
