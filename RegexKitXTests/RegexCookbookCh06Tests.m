@@ -996,11 +996,6 @@
 
 #pragma mark - 6.9: Integer Numbers with Separators
 
-- (void)testSanpleRegexesFromSection69
-{
-    XCTAssertTrue(NO, @"Not implemented yet.");
-}
-
 - (void)testRegexWithOptionalUnderscores
 {
     // Find any decimal or octal integer with optional underscores in a larger body of text:
@@ -1080,8 +1075,42 @@
     XCTAssertFalse([shortLipsumWithoutNumber isMatchedByRegex:regex]);
 }
 
-
 #pragma mark - 6.10: Floating Point Numbers
+
+- (void)testSampleFloatingPointRegexesFrom610
+{
+    // Mandatory sign, integer, fraction, and exponent:
+    // ^[-+][0-9]+\.[0-9]+[eE][-+]?[0-9]+$
+
+    // Mandatory sign, integer, and fraction, but no exponent:
+    // ^[-+][0-9]+\.[0-9]+$
+
+    // Optional sign, mandatory integer and fraction, and no exponent:
+    // ^[-+]?[0-9]+\.[0-9]+$
+
+    // Optional sign and integer, mandatory fraction, and no exponent:
+    // ^[-+]?[0-9]*\.[0-9]+$
+
+    // Optional sign, integer, and fraction. If the integer part is omitted, the fraction is mandatory.
+    // If the fraction is omitted, the decimal dot must be omitted, too. No exponent.
+    // ^[-+]?([0-9]+(\.[0-9]+)?|\.[0-9]+)$
+
+    // Optional sign, integer, and fraction. If the integer part is omitted, the fraction is mandatory.
+    // If the fraction is omitted, the decimal dot is optional. No exponent.
+    // ^[-+]?([0-9]+(\.[0-9]*)?|\.[0-9]+)$
+
+    // Optional sign, integer, and fraction. If the integer part is omitted, the fraction is mandatory.
+    // If the fraction is omitted, the decimal dot must be omitted, too. Optional
+    // exponent.
+    // ^[-+]?([0-9]+(\.[0-9]+)?|\.[0-9]+)([eE][-+]?[0-9]+)?$
+
+    // Optional sign, integer, and fraction. If the integer part is omitted, the fraction is mandatory.
+    // If the fraction is omitted, the decimal dot is optional. Optional exponent.
+    // ^[-+]?([0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][-+]?[0-9]+)?$
+
+    // The preceding regex, edited to find the number in a larger body of text:
+    // [-+]?(\b[0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][-+]?[0-9]+\b)?
+}
 
 #pragma mark - 6.11: Numbers with Thousand Separators
 
