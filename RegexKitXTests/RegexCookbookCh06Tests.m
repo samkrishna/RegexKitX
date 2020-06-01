@@ -998,10 +998,6 @@
 
 - (void)testSanpleRegexesFromSection69
 {
-    // Check whether a text string holds just a decimal, octal, hexadecimal, or binary integer with optional underscores:
-    // \A([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)\Z
-    // ^([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)$
-
     XCTAssertTrue(NO, @"Not implemented yet.");
 }
 
@@ -1064,6 +1060,23 @@
     XCTAssertFalse([shortLipsumWithBadNumber isMatchedByRegex:regex]);
     XCTAssertTrue([shortLipsumWithBinaryNumber isMatchedByRegex:regex]);
     XCTAssertTrue([shortLipsumWithHexNumber isMatchedByRegex:regex]);
+    XCTAssertFalse([shortLipsumWithoutNumber isMatchedByRegex:regex]);
+}
+
+- (void)testRegexForJustDecimalOctalHexadecimalOrBinaryIntegersWithOptionalUnderscores
+{
+    // Check whether a text string holds just a decimal, octal, hexadecimal, or binary integer with optional underscores:
+    // ^([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)$
+    NSString *regex = @"^([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)$";
+
+    NSString *shortLipsumWithBadNumber = @"Lorem ipsum dolor sit amet, 0b077 consectetur adipiscing elit. Nulla felis.";
+    NSString *binaryNumber = @"0b0_110010010_110_01";
+    NSString *hexNumber = @"0x00_77";
+    NSString *shortLipsumWithoutNumber = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla felis.";
+
+    XCTAssertFalse([shortLipsumWithBadNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([binaryNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([hexNumber isMatchedByRegex:regex]);
     XCTAssertFalse([shortLipsumWithoutNumber isMatchedByRegex:regex]);
 }
 
