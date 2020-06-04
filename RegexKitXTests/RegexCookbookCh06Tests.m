@@ -1079,9 +1079,6 @@
 
 - (void)testSampleFloatingPointRegexesFrom610
 {
-    // Optional sign, mandatory integer and fraction, and no exponent:
-    // ^[-+]?[0-9]+\.[0-9]+$
-
     // Optional sign and integer, mandatory fraction, and no exponent:
     // ^[-+]?[0-9]*\.[0-9]+$
 
@@ -1121,6 +1118,17 @@
     // Mandatory sign, integer, and fraction, but no exponent:
     // ^[-+][0-9]+\.[0-9]+$
     NSString *regex = @"^[-+][0-9]+\\.[0-9]+$";
+
+    XCTAssertFalse([@"+4.9e9" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"+7.65" isMatchedByRegex:regex]);
+}
+
+- (void)testRegexForOptionalSignMandatoryIntegerAndFractionButNoExponent
+{
+    // Optional sign, mandatory integer and fraction, and no exponent:
+    // ^[-+]?[0-9]+\.[0-9]+$
+    NSString *regex = @"^[-+]?[0-9]+\\.[0-9]+$";
 
     XCTAssertFalse([@"+4.9e9" isMatchedByRegex:regex]);
     XCTAssertFalse([@"7" isMatchedByRegex:regex]);
