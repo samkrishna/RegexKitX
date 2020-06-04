@@ -1079,8 +1079,6 @@
 
 - (void)testSampleFloatingPointRegexesFrom610
 {
-    // Mandatory sign, integer, fraction, and exponent:
-    // ^[-+][0-9]+\.[0-9]+[eE][-+]?[0-9]+$
 
     // Mandatory sign, integer, and fraction, but no exponent:
     // ^[-+][0-9]+\.[0-9]+$
@@ -1112,6 +1110,15 @@
     // [-+]?(\b[0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][-+]?[0-9]+\b)?
 }
 
+- (void)testRegexForMandatorySignIntegerFractionAndExponent
+{
+    // Mandatory sign, integer, fraction, and exponent:
+    // ^[-+][0-9]+\.[0-9]+[eE][-+]?[0-9]+$
+    NSString *regex = @"^[-+][0-9]+\\.[0-9]+[eE][-+]?[0-9]+$";
+
+    XCTAssertTrue([@"+4.9e9" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"7E2" isMatchedByRegex:regex]);
+}
 #pragma mark - 6.11: Numbers with Thousand Separators
 
 #pragma mark - 6.12: Add Thousand Separators to Numbers
