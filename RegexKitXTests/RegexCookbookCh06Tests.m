@@ -1079,9 +1079,6 @@
 
 - (void)testSampleFloatingPointRegexesFrom610
 {
-
-    // The preceding regex, edited to find the number in a larger body of text:
-    // [-+]?(\b[0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][-+]?[0-9]+\b)?
 }
 
 - (void)testRegexForMandatorySignIntegerFractionAndExponent
@@ -1190,6 +1187,35 @@
     XCTAssertTrue([@"+.65" isMatchedByRegex:regex]);
     XCTAssertTrue([@".65" isMatchedByRegex:regex]);
 }
+
+- (void)testRegexForOptionalSignIntegerAndFractionWithExceptionsPart4WithinText
+{
+    // The preceding regex, edited to find the number in a larger body of text:
+    // [-+]?(\b[0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][-+]?[0-9]+\b)?
+    NSString *regex = @"[-+]?(\\b[0-9]+(\\.[0-9]*)?|\\.[0-9]+)([eE][-+]?[0-9]+\\b)?";
+
+    NSString *shortLipsumWithBinaryNumberFormat = @"Lorem ipsum dolor sit amet, %@ consectetur adipiscing elit. Nulla felis.";
+    NSArray<NSString *> *numberStrings = @[
+        @"+4.9e9",
+        @"7",
+        @"7.",
+        @"+7.65",
+        @"7.65e", // This one shouldn't match, but it does.
+        @"+.65",
+        @".65" ];
+
+    // Use prior regex to filter out the invalid regex
+    NSString *oldRegex = @"^[-+]?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)([eE][-+]?[0-9]+)?$";
+    NSArray<NSString *> *validNumberStrings = [numberStrings filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * _Nullable string, NSDictionary<NSString *,id> * _Nullable bindings) {
+        return [string isMatchedByRegex:oldRegex];
+    }]];
+
+    for (NSUInteger i = 0; i < validNumberStrings.count; i++) {
+        NSString *testString = [NSString stringWithFormat:shortLipsumWithBinaryNumberFormat, numberStrings[i]];
+        XCTAssertTrue([testString isMatchedByRegex:regex]);
+    }
+}
+
 #pragma mark - 6.11: Numbers with Thousand Separators
 
 #pragma mark - 6.12: Add Thousand Separators to Numbers
