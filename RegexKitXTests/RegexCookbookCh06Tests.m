@@ -1077,10 +1077,6 @@
 
 #pragma mark - 6.10: Floating Point Numbers
 
-- (void)testSampleFloatingPointRegexesFrom610
-{
-}
-
 - (void)testRegexForMandatorySignIntegerFractionAndExponent
 {
     // Mandatory sign, integer, fraction, and exponent:
@@ -1217,6 +1213,23 @@
 }
 
 #pragma mark - 6.11: Numbers with Thousand Separators
+
+- (void)testSampleThousandsSeparatorsRegexesFrom611
+{
+    // Mandatory integer and fraction:
+    // ^[0-9]{1,3}(,[0-9]{3})*\.[0-9]+$
+    //
+    // Mandatory integer and optional fraction. Decimal dot must be omitted if the fraction
+    // is omitted.
+    // ^[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?$
+    //
+    // Optional integer and optional fraction. Decimal dot must be omitted if the fraction is
+    // omitted.
+    // ^([0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?|\.[0-9]+)$
+    //
+    // The preceding regex, edited to find the number in a larger body of text:
+    // \b[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?\b|\.[0-9]+\b
+}
 
 #pragma mark - 6.12: Add Thousand Separators to Numbers
 
