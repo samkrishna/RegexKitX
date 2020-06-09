@@ -1079,8 +1079,6 @@
 
 - (void)testSampleFloatingPointRegexesFrom610
 {
-    // Optional sign and integer, mandatory fraction, and no exponent:
-    // ^[-+]?[0-9]*\.[0-9]+$
 
     // Optional sign, integer, and fraction. If the integer part is omitted, the fraction is mandatory.
     // If the fraction is omitted, the decimal dot must be omitted, too. No exponent.
@@ -1133,6 +1131,19 @@
     XCTAssertFalse([@"+4.9e9" isMatchedByRegex:regex]);
     XCTAssertFalse([@"7" isMatchedByRegex:regex]);
     XCTAssertTrue([@"+7.65" isMatchedByRegex:regex]);
+}
+
+- (void)testRegexForOptionalSignAndIntegerMandatoryFractionAndNoExponent
+{
+    // Optional sign and integer, mandatory fraction, and no exponent:
+    // ^[-+]?[0-9]*\.[0-9]+$
+    NSString *regex = @"^[-+]?[0-9]*\\.[0-9]+$";
+
+    XCTAssertFalse([@"+4.9e9" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"+7.65" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"+.65" isMatchedByRegex:regex]);
+    XCTAssertTrue([@".65" isMatchedByRegex:regex]);
 }
 
 #pragma mark - 6.11: Numbers with Thousand Separators
