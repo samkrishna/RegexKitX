@@ -1080,10 +1080,6 @@
 - (void)testSampleFloatingPointRegexesFrom610
 {
 
-    // Optional sign, integer, and fraction. If the integer part is omitted, the fraction is mandatory.
-    // If the fraction is omitted, the decimal dot is optional. Optional exponent.
-    // ^[-+]?([0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][-+]?[0-9]+)?$
-
     // The preceding regex, edited to find the number in a larger body of text:
     // [-+]?(\b[0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][-+]?[0-9]+\b)?
 }
@@ -1173,6 +1169,22 @@
     XCTAssertTrue([@"+4.9e9" isMatchedByRegex:regex]);
     XCTAssertTrue([@"7" isMatchedByRegex:regex]);
     XCTAssertFalse([@"7." isMatchedByRegex:regex]);
+    XCTAssertTrue([@"+7.65" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"+7.65e" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"+.65" isMatchedByRegex:regex]);
+    XCTAssertTrue([@".65" isMatchedByRegex:regex]);
+}
+
+- (void)testRegexForOptionalSignIntegerAndFractionWithExceptionsPart4
+{
+    // Optional sign, integer, and fraction. If the integer part is omitted, the fraction is mandatory.
+    // If the fraction is omitted, the decimal dot is optional. Optional exponent.
+    // ^[-+]?([0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][-+]?[0-9]+)?$
+    NSString *regex = @"^[-+]?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)([eE][-+]?[0-9]+)?$";
+
+    XCTAssertTrue([@"+4.9e9" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7." isMatchedByRegex:regex]);
     XCTAssertTrue([@"+7.65" isMatchedByRegex:regex]);
     XCTAssertFalse([@"+7.65e" isMatchedByRegex:regex]);
     XCTAssertTrue([@"+.65" isMatchedByRegex:regex]);
