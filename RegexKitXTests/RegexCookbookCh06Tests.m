@@ -1214,11 +1214,18 @@
 
 #pragma mark - 6.11: Numbers with Thousand Separators
 
-- (void)testSampleThousandsSeparatorsRegexesFrom611
+- (void)testMandatoryIntegerAndFraction
 {
     // Mandatory integer and fraction:
     // ^[0-9]{1,3}(,[0-9]{3})*\.[0-9]+$
-    //
+    NSString *regex = @"^[0-9]{1,3}(,[0-9]{3})*\\.[0-9]+$";
+
+    XCTAssertFalse([@"+4.9e9" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7,000.45" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"700" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"7,000" isMatchedByRegex:regex]);
+}
+
     // Mandatory integer and optional fraction. Decimal dot must be omitted if the fraction
     // is omitted.
     // ^[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?$
