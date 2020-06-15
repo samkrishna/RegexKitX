@@ -1286,6 +1286,19 @@
     XCTAssertTrue([output isEqualToString:control]);
 }
 
+- (void)testDontAddCommasAfterADecimalPoint
+{
+    // Don’t add commas after a decimal point
+    // [0-9](?=(?:[0-9]{3})+(?![0-9]))(?<!\.)[0-9]+
+    NSString *regex = @"[0-9](?=(?:[0-9]{3})+(?![0-9]))(?<!\\.)[0-9]+";
+
+    NSString *output = [@"700854200" stringByReplacingOccurrencesOfRegex:regex withTemplate:@","];
+    NSString *control = @"700,854,200";
+    // This is going to fail. Couldn't get original regex or variations to work.
+    XCTAssertTrue([output isEqualToString:control]);
+}
+
+
 #pragma mark - 6.12: Add Thousand Separators to Numbers
 
 #pragma mark - 6.13: Roman Numerals
