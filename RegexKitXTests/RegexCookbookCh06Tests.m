@@ -1326,5 +1326,19 @@
     XCTAssertFalse([@"MCMXXXXVI" isMatchedByRegex:regex options:RKXCaseless]);
 }
 
+- (void)testValidatedModernRomanNumerals
+{
+    // Modern Roman numerals, flexible:
+    // ^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$
+    // Regex options: Case insensitive
+    NSString *regex = @"^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$";
+
+    XCTAssertTrue([@"MCMXXVI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"mCmXXvI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"MCMXXXXVI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"DCC" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"XXXXX" isMatchedByRegex:regex options:RKXCaseless]);
+}
+
 
 @end
