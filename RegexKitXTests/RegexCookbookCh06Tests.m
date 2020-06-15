@@ -1251,9 +1251,18 @@
     XCTAssertTrue([@"0.45" isMatchedByRegex:regex]);
 }
 
+- (void)testOptionalIntegerAndOptionalFractionInText
+{
     // The preceding regex, edited to find the number in a larger body of text:
     // \b[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?\b|\.[0-9]+\b
+    NSString *regex = @"\\b[0-9]{1,3}(,[0-9]{3})*(\\.[0-9]+)?\\b|\\.[0-9]+\\b";
+    NSString *shortLipsumWithBadNumber = @"Lorem ipsum dolor sit amet, 7000 consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithGoodNumber = @"Lorem ipsum dolor sit amet, 7,000.45 elit. Nulla felis.";
+
+    XCTAssertFalse([shortLipsumWithBadNumber isMatchedByRegex:regex]);
+    XCTAssertTrue([shortLipsumWithGoodNumber isMatchedByRegex:regex]);
 }
+
 
 #pragma mark - 6.12: Add Thousand Separators to Numbers
 
