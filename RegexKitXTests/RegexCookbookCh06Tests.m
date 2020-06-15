@@ -1226,12 +1226,18 @@
     XCTAssertFalse([@"7,000" isMatchedByRegex:regex]);
 }
 
+- (void)testMandatoryIntegerAndOptionalFraction
+{
     // Mandatory integer and optional fraction. Decimal dot must be omitted if the fraction
     // is omitted.
     // ^[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?$
-    //
-    // Optional integer and optional fraction. Decimal dot must be omitted if the fraction is
-    // omitted.
+    NSString *regex = @"^[0-9]{1,3}(,[0-9]{3})*(\\.[0-9]+)?$";
+
+    XCTAssertFalse([@"+4.9e9" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7,000.45" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"700" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"7,000" isMatchedByRegex:regex]);
+}
     // ^([0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?|\.[0-9]+)$
     //
     // The preceding regex, edited to find the number in a larger body of text:
