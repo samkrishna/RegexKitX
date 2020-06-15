@@ -1263,13 +1263,15 @@
     XCTAssertTrue([shortLipsumWithGoodNumber isMatchedByRegex:regex]);
 }
 
-- (void)testSection612
+- (void)testCommasAsThousandsSeparatorsToNumbersWith4OrMoreDigits
 {
-    // Match separator positions only, using lookbehind
-    // (?<=[0-9])(?=(?:[0-9]{3})+(?![0-9]))
+    // Add commas as thousands separators to numbers with 4 or more digits
+    // [0-9](?=(?:[0-9]{3})+(?![0-9]))
+    NSString *regex = @"[0-9](?=(?:[0-9]{3})+(?![0-9]))";
 
-    // Don’t add commas after a decimal point
-    // [0-9](?=(?:[0-9]{3})+(?![0-9]))(?<!\.)[0-9]+
+    NSString *output = [@"700854200" stringByReplacingOccurrencesOfRegex:regex withTemplate:@"$0,"];
+    NSString *control = @"700,854,200";
+    XCTAssertTrue([output isEqualToString:control]);
 }
 
 - (void)testCommasAsThousandsSeparatorsToNumbersWith4OrMoreDigits
