@@ -1263,6 +1263,8 @@
     XCTAssertTrue([shortLipsumWithGoodNumber isMatchedByRegex:regex]);
 }
 
+#pragma mark - 6.12: Add Thousand Separators to Numbers
+
 - (void)testCommasAsThousandsSeparatorsToNumbersWith4OrMoreDigits
 {
     // Add commas as thousands separators to numbers with 4 or more digits
@@ -1298,10 +1300,19 @@
     XCTAssertTrue([output isEqualToString:control]);
 }
 
-
-#pragma mark - 6.12: Add Thousand Separators to Numbers
-
 #pragma mark - 6.13: Roman Numerals
+
+- (void)testRomanNumeralsWithoutValidation
+{
+    // Roman numerals without validation:
+    // ^[MDCLXVI]+$
+    // Regex options: Case insensitive
+    NSString *regex = @"^[MDCLXVI]+$";
+
+    XCTAssertTrue([@"MCMXXVI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"mCmXXvI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([@"MCMXXVIYY" isMatchedByRegex:regex options:RKXCaseless]);
+}
 
 
 @end
