@@ -1319,11 +1319,11 @@
     // Modern Roman numerals, strict:
     // ^(?=[MDCLXVI])M*(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$
     // Regex options: Case insensitive
-    NSString *regex = @"^(?=[MDCLXVI])M*(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$";
+    NSString *regex = @"(?i)^(?=[MDCLXVI])M*(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$";
 
-    XCTAssertTrue([@"MCMXXVI" isMatchedByRegex:regex options:RKXCaseless]);
-    XCTAssertTrue([@"mCmXXvI" isMatchedByRegex:regex options:RKXCaseless]);
-    XCTAssertFalse([@"MCMXXXXVI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"MCMXXVI" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"mCmXXvI" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"MCMXXXXVI" isMatchedByRegex:regex]);
 }
 
 - (void)testValidatedModernRomanNumerals
