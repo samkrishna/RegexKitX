@@ -1263,6 +1263,14 @@
     XCTAssertTrue([shortLipsumWithGoodNumber isMatchedByRegex:regex]);
 }
 
+- (void)testSection612
+{
+    // Match separator positions only, using lookbehind
+    // (?<=[0-9])(?=(?:[0-9]{3})+(?![0-9]))
+
+    // Don’t add commas after a decimal point
+    // [0-9](?=(?:[0-9]{3})+(?![0-9]))(?<!\.)[0-9]+
+}
 
 #pragma mark - 6.12: Add Thousand Separators to Numbers
 
