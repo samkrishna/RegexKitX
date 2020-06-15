@@ -1340,5 +1340,18 @@
     XCTAssertTrue([@"XXXXX" isMatchedByRegex:regex options:RKXCaseless]);
 }
 
+- (void)testValidatedSimpleRomanNumerals
+{
+    // Simple Roman numerals:
+    // ^(?=[MDCLXVI])M*D?C{0,4}L?X{0,4}V?I{0,4}$
+    // Regex options: Case insensitive
+    NSString *regex = @"^(?=[MDCLXVI])M*D?C{0,4}L?X{0,4}V?I{0,4}$";
+
+    XCTAssertFalse([@"MCMXXVI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([@"mCmXXvI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([@"MCMXXXXVI" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"DCC" isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertTrue([@"XXXX" isMatchedByRegex:regex options:RKXCaseless]);
+}
 
 @end
