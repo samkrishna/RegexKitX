@@ -1274,9 +1274,10 @@
     XCTAssertTrue([output isEqualToString:control]);
 }
 
-- (void)testCommasAsThousandsSeparatorsToNumbersWith4OrMoreDigits
+
+- (void)testMatchSeparatorsOnlyUsingLookbehind
 {
-    // Add commas as thousands separators to numbers with 4 or more digits
+    // Match separator positions only, using lookbehind
     // (?<=[0-9])(?=(?:[0-9]{3})+(?![0-9]))
     NSString *regex = @"(?<=[0-9])(?=(?:[0-9]{3})+(?![0-9]))";
 
