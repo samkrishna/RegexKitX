@@ -1272,6 +1272,17 @@
     // [0-9](?=(?:[0-9]{3})+(?![0-9]))(?<!\.)[0-9]+
 }
 
+- (void)testCommasAsThousandsSeparatorsToNumbersWith4OrMoreDigits
+{
+    // Add commas as thousands separators to numbers with 4 or more digits
+    // (?<=[0-9])(?=(?:[0-9]{3})+(?![0-9]))
+    NSString *regex = @"(?<=[0-9])(?=(?:[0-9]{3})+(?![0-9]))";
+
+    NSString *output = [@"700854200" stringByReplacingOccurrencesOfRegex:regex withTemplate:@","];
+    NSString *control = @"700,854,200";
+    XCTAssertTrue([output isEqualToString:control]);
+}
+
 #pragma mark - 6.12: Add Thousand Separators to Numbers
 
 #pragma mark - 6.13: Roman Numerals
