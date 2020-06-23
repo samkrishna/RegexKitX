@@ -15,9 +15,18 @@
 
 @implementation RegexCookbookCh07Tests
 
-- (void)testRegexFromSection71
+- (void)testNaiveRegexForKeywords
 {
-    XCTFail(@"Not filled out yet");
+    // Keywords
+    // \b(?:end|in|inline|inherited|item|object)\b
+    NSString *regex = @"(?i)\\b(?:end|in|inline|inherited|item|object)\\b";
+
+    NSString *shortLipsum = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla felis.";
+    NSString *shortLipsumWithKeyword = @"Lorem ipsum dolor sit amet, in consectetur inline adipiscing elit. Nulla felis. end";
+
+    XCTAssertFalse([shortLipsum isMatchedByRegex:regex]);
+    XCTAssertTrue([shortLipsumWithKeyword isMatchedByRegex:regex]);
+}
 }
 
 - (void)testRegexFromSection72
