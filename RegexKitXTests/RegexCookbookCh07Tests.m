@@ -27,7 +27,18 @@
     XCTAssertFalse([shortLipsum isMatchedByRegex:regex]);
     XCTAssertTrue([shortLipsumWithKeyword isMatchedByRegex:regex]);
 }
+
+- (void)testBetterRegexForKeywords
+{
+    // Keywords
+    // \b(end|in|inline|inherited|item|object)\b|'[^'\r\n]*(?:''[^'\r\n]*)*'
+    NSString *regex = @"(?i)\\b(end|in|inline|inherited|item|object)\\b|'[^'\\r\\n]*(?:''[^'\\r\\n]*)*'";
+
+    NSString *shortLipsumWithKeywordInQuote = @"Lorem ipsum dolor sit amet, \'in\' consectetur adipiscing elit. Nulla felis.";
+    NSString *outcome = [shortLipsumWithKeywordInQuote stringMatchedByRegex:regex];
+    XCTAssertTrue([outcome isEqualToString:@"\'in\'"]);
 }
+
 
 - (void)testRegexFromSection72
 {
