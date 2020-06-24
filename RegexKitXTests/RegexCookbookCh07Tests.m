@@ -40,9 +40,15 @@
 }
 
 
-- (void)testRegexFromSection72
+- (void)testRegexForIdentifiers
 {
-    XCTFail(@"Not filled out yet");
+    // \b[a-z_][0-9a-z_]{0,31}\b
+    NSString *regex = @"(?i)\\b[a-z_][0-9a-z_]{0,31}\\b";
+
+    NSString *lipsumIdentifier = @"_Lorem ipsum dolor sit amet, in consectetur adipiscing elit. Nulla felis.";
+    NSString *falseLipsumIdentifier = @"_Loremipsumdolorsitametinconsecteturadipiscingelit";
+    XCTAssertTrue([lipsumIdentifier isMatchedByRegex:regex]);
+    XCTAssertFalse([falseLipsumIdentifier isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection73
