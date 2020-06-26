@@ -109,8 +109,17 @@
 }
 
 #pragma mark - 7.7: All Comments
+
+- (void)testRegexForAllLines
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"(?-s://.*)|(?s:/\\*.*?\\*/)";
+    NSString *commentLine = @"/*\n"
+    "This is a test.\n"
+    "This is only a test.\n"
+    "Of the emergencybroadcast system.*/";
+    NSString *singleLineComment = @"// this comment is useless";
+    XCTAssertTrue([commentLine isMatchedByRegex:regex options:RKXDotAll]);
+    XCTAssertTrue([singleLineComment isMatchedByRegex:regex]);
 }
 
 #pragma mark - 7.8: Strings
