@@ -15,6 +15,8 @@
 
 @implementation RegexCookbookCh07Tests
 
+#pragma mark - 7.1: Keywords
+
 - (void)testNaiveRegexForKeywords
 {
     // Keywords
@@ -39,6 +41,7 @@
     XCTAssertTrue([outcome isEqualToString:@"\'in\'"]);
 }
 
+#pragma mark - 7.2: Identifiers
 
 - (void)testRegexForIdentifiers
 {
@@ -51,37 +54,37 @@
     XCTAssertFalse([falseLipsumIdentifier isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection73
+#pragma mark - 7.3: Numeric constants
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection74
+#pragma mark - 7.4: Operators
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection75
+#pragma mark - 7.5: Single-Line Comments
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection76
+#pragma mark - 7.6: Multiline Comments
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection77
+#pragma mark - 7.7: All Comments
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection78
+#pragma mark - 7.8: Strings
 {
     XCTFail(@"Not filled out yet");
 }
 
-- (void)testRegexFromSection79
+#pragma mark - 7.9: Strings with Escapes
 {
     XCTFail(@"Not filled out yet");
 }
