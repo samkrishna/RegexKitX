@@ -55,8 +55,23 @@
 }
 
 #pragma mark - 7.3: Numeric constants
+
+- (void)testRegexForNumericConstants
 {
-    XCTFail(@"Not filled out yet");
+    // Numeric Constants
+    NSString *regex = @"(?xi)"
+    "\\b(?:(?<dec>[1-9][0-9]*)"
+    "| (?<oct>0[0-7]*)"
+    "| 0x(?<hex>[0-9A-F]+)"
+    "| 0b(?<bin>[01]+)"
+    ")(?<L>L)?\\b";
+
+    XCTAssertTrue([@"1101" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"1101L" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"1101M" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"0b1101" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"01234" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"0x1101" isMatchedByRegex:regex]);
 }
 
 #pragma mark - 7.4: Operators
