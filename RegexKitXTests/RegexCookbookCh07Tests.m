@@ -75,8 +75,14 @@
 }
 
 #pragma mark - 7.4: Operators
+
+- (void)testOperatorsRegex
 {
-    XCTFail(@"Not filled out yet");
+    // Operators
+    NSString *regex = @"[-+*/=<>%&^|!~?]";
+
+    XCTAssertTrue([@"2 + 2 = 4" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"2 < 3" isMatchedByRegex:regex]);
 }
 
 #pragma mark - 7.5: Single-Line Comments
