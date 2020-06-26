@@ -132,8 +132,12 @@
 }
 
 #pragma mark - 7.9: Strings with Escapes
+
+- (void)testRegexForStringsWithEscapes
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"\"[^\"\\\r\n]*(?:.[^\"\\\r\n]*)\"";
+    NSString *sample = @"\"No country\" \"for old men\"";
+    XCTAssertTrue([sample isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection710
