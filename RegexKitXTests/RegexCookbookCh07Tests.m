@@ -86,8 +86,12 @@
 }
 
 #pragma mark - 7.5: Single-Line Comments
+
+- (void)testRegexForSingleLineComments
 {
-    XCTFail(@"Not filled out yet");
+    // Single-line comments
+    NSString *regex = @"//.*";
+    XCTAssertTrue([@"// this comment is useless" isMatchedByRegex:regex]);
 }
 
 #pragma mark - 7.6: Multiline Comments
