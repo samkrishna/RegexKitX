@@ -123,8 +123,12 @@
 }
 
 #pragma mark - 7.8: Strings
+
+- (void)testRegexForStrings
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"\"[^\"\\r\\n]*(?:\"\"[^\"\\r\\n]*)*\"";
+    NSString *sample = @"\"this is a test\" but is it reall?";
+    XCTAssertTrue([sample isMatchedByRegex:regex]);
 }
 
 #pragma mark - 7.9: Strings with Escapes
