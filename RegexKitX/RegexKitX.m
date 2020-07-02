@@ -218,7 +218,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
         }];
 #pragma clang diagostic pop
 
-        if (error != NULL && !matches.count && delta > RKXTimeoutInterval) {
+        if (error != NULL && delta > RKXTimeoutInterval) {
             *error = NSRegularExpression.timeoutError;
         }
 
