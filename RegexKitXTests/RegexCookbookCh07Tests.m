@@ -140,9 +140,11 @@
     XCTAssertTrue([sample isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection710
+- (void)testRegexLiterals
 {
-    XCTFail(@"Not filled out yet");
+    NSString *metaRegex = @"(?<=[=:(,](?:\\s{0,10}+!)?\\s{0,10})/[^/\\\r\n]*(?:\\.[^/\\\r\n]*)*/";
+    NSString *regex = @"(?-s://.*)|(?s:/\\*.*?\\*/)";
+    XCTAssertTrue([regex isMatchedByRegex:metaRegex]);
 }
 
 - (void)testRegexFromSection711
