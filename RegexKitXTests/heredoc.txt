@@ -1,0 +1,15 @@
+#!/bin/bash
+
+wall <<zzzEndOfMessagezzz
+E-mail your noontime orders for pizza to the system administrator.
+    (Add an extra dollar for anchovy or mushroom topping.)
+# Additional message text goes here.
+# Note: 'wall' prints comment lines.
+zzzEndOfMessagezzz
+
+# Could have been done more efficiently by
+#         wall <message-file
+#  However, embedding the message template in a script
+#+ is a quick-and-dirty one-off solution.
+
+exit
