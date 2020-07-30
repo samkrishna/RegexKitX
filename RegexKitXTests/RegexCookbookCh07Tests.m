@@ -147,9 +147,12 @@
     XCTAssertTrue([regex isMatchedByRegex:metaRegex]);
 }
 
-- (void)testRegexFromSection711
+- (void)testHereDocumentRegex
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"<<([\"']?)([A-Za-z]+)\\b\\1.*?^\\2\\b";
+    NSString *heredocFilePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"heredoc" ofType:@"txt"];
+    NSString *heredocSample = [NSString stringWithContentsOfFile:heredocFilePath encoding:NSUTF8StringEncoding error:NULL];
+    XCTAssertTrue([heredocSample isMatchedByRegex:regex options:(RKXDotAll | RKXMultiline)]);
 }
 
 - (void)testRegexFromSection712
