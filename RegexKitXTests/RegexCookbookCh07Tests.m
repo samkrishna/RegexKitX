@@ -155,9 +155,14 @@
     XCTAssertTrue([heredocSample isMatchedByRegex:regex options:(RKXDotAll | RKXMultiline)]);
 }
 
-- (void)testRegexFromSection712
+- (void)testRegexForCommonLogFormat
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^(?<client>\\S+) \\S+ (?<userid>\\S+) \\[(?<datetime>[^\\]]+)\\]"
+    " \"(?<method>[A-Z]+) (?<request>[^ \"]+)? HTTP/[0-9.]+\""
+    " (?<status>[0-9]{3}) (?<size>[0-9]+|-)";
+    NSString *sample = @"127.0.0.1 - jg [27/Apr/2012:11:27:36 +0700] \"GET /regexcookbook.html HTTP/1.1\" 200 2326\"\n"
+    "127.0.0.1 - sk [27/Apr/2012:11:27:36 +0700] \"GET /regexcookbook.html HTTP/1.1\" 200 2326\"";
+    XCTAssertTrue([sample isMatchedByRegex:regex options:RKXMultiline]);
 }
 
 - (void)testRegexFromSection713
