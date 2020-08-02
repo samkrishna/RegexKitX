@@ -198,9 +198,27 @@
     XCTAssertNotNil(dict[@"useragent"]);
 }
 
-- (void)testRegexFromSection714
+- (void)testRegexForBrokenLinks
 {
-    XCTFail(@"Not filled out yet");
+    // NOTE: This is slightly modified to make it a bit more usable out-of-the-box
+    // The prior regex versions used "www.yoursite.com" as a part of the "referrer" named capture group
+    NSString *regex = @"^(?<client>\\S+) \\S+ (?<userid>\\S+) \\[(?<datetime>[^\\]]+)\\] "
+                        "\"(?<method>[A-Z]+) (?<request>[^ \"]+)? HTTP\\/[0-9.]+ "
+                        "(?<status>404) (?<size>[0-9]+|-) \"(?<referrer>http://(\\w+\\.?)+\\.com[^\"]*)\"";
+    NSString *sample = @"127.0.0.1 - sk [27/Apr/2012:11:27:36 +0700] \"GET /regexcookbook.html HTTP/1.1 404 2326 "
+                        "\"http://somebad.reference.from.badregexcookbook.com\"";
+
+    XCTAssertTrue([sample isMatchedByRegex:regex options:RKXMultiline]);
+
+    NSDictionary *dict = [sample dictionaryWithNamedCaptureKeysMatchedByRegex:regex options:RKXMultiline];
+    XCTAssertNotNil(dict[@"client"]);
+    XCTAssertNotNil(dict[@"userid"]);
+    XCTAssertNotNil(dict[@"datetime"]);
+    XCTAssertNotNil(dict[@"method"]);
+    XCTAssertNotNil(dict[@"request"]);
+    XCTAssertNotNil(dict[@"status"]);
+    XCTAssertNotNil(dict[@"size"]);
+    XCTAssertNotNil(dict[@"referrer"]);
 }
 
 @end
