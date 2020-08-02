@@ -506,27 +506,27 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
 #pragma mark - dictionaryWithNamedCaptureKeysMatchedByRegex:
 
-- (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern
 {
     return [self dictionaryWithNamedCaptureKeysMatchedByRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
-- (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
 {
     return [self dictionaryWithNamedCaptureKeysMatchedByRegex:pattern range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
 }
 
-- (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options
 {
     return [self dictionaryWithNamedCaptureKeysMatchedByRegex:pattern range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
 }
 
-- (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
 {
     return [self dictionaryWithNamedCaptureKeysMatchedByRegex:pattern range:searchRange options:options matchOptions:kNilOptions error:error];
 }
 
-- (NSDictionary *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+- (NSDictionary<NSString *, NSString *> *)dictionaryWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
 {
     if (![pattern isRegexValidWithOptions:options error:error]) { return nil; }
     NSRange captureNameRange = NSNotFoundRange;
