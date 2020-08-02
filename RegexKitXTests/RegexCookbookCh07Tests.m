@@ -175,9 +175,26 @@
     XCTAssertNotNil(dict[@"size"]);
 }
 
-- (void)testRegexFromSection713
+- (void)testRegexForCombinedLogFormat
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^(?<client>\\S+) \\S+ (?<userid>\\S+) \\[(?<datetime>[^\\]]+)\\]"
+                        " \"(?<method>[A-Z]+) (?<request>[^ \"]+)? HTTP\\/[0-9.]+\""
+                        " (?<status>[0-9]{3}) (?<size>[0-9]+|-) \"(?<referrer>[^\"]*)\""
+                        " \"(?<useragent>[^\"]*)\"";
+    NSString *sample = @"127.0.0.1 - jg [27/Apr/2012:11:27:36 +0700] \"GET /regexcookbook.html HTTP/1.1\" 200 2326 \"http://www.regexcookbook.com/\" \"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)\"";
+
+    XCTAssertTrue([sample isMatchedByRegex:regex options:RKXMultiline]);
+
+    NSDictionary *dict = [sample dictionaryWithNamedCaptureKeysMatchedByRegex:regex options:RKXMultiline];
+    XCTAssertNotNil(dict[@"client"]);
+    XCTAssertNotNil(dict[@"userid"]);
+    XCTAssertNotNil(dict[@"datetime"]);
+    XCTAssertNotNil(dict[@"method"]);
+    XCTAssertNotNil(dict[@"request"]);
+    XCTAssertNotNil(dict[@"status"]);
+    XCTAssertNotNil(dict[@"size"]);
+    XCTAssertNotNil(dict[@"referrer"]);
+    XCTAssertNotNil(dict[@"useragent"]);
 }
 
 - (void)testRegexFromSection714
