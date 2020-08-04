@@ -15,9 +15,15 @@
 
 @implementation RegexCookbookCh08Tests
 
-- (void)testRegexFromSection81
+- (void)testAllowsAlmostAnyURLRegex
 {
-    XCTFail(@"Not filled out yet");
+    NSString *allowAlmostAnyURLRegex = @"^(https?|ftp|file):\\/\\/.+$";
+    NSString *httpSample = @"http://example.com";
+    NSString *ftpSample = @"http://example.com";
+    NSString *fileSample = @"http://example.com";
+    XCTAssertTrue([httpSample isMatchedByRegex:allowAlmostAnyURLRegex options:RKXCaseless]);
+    XCTAssertTrue([ftpSample isMatchedByRegex:allowAlmostAnyURLRegex options:RKXCaseless]);
+    XCTAssertTrue([fileSample isMatchedByRegex:allowAlmostAnyURLRegex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection82
