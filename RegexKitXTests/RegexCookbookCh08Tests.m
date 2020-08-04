@@ -26,9 +26,11 @@
     XCTAssertTrue([fileSample isMatchedByRegex:allowAlmostAnyURLRegex options:RKXCaseless]);
 }
 
-- (void)testRegexFromSection82
+- (void)testRegexForRequiringDomainNameWithoutUsernameOrPassword
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^(https?|ftp)://[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].+)?$";
+    NSString *sample123 = @"https://www.apple.com/easyAs123.html";
+    XCTAssertTrue([sample123 isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection83
