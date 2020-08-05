@@ -33,9 +33,14 @@
     XCTAssertTrue([sample123 isMatchedByRegex:regex options:RKXCaseless]);
 }
 
-- (void)testRegexFromSection83
+- (void)testRegexForRequiringDomainNameWithAllowedOmittanceByInference
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^((https?|ftp):\\/\\/|(www|ftp)\\.)([a-z0-9-]+\\.[a-z0-9-]+)+([\\/?].*)?$";
+    NSString *sample = @"www.apple.com/easyAs123.html";
+    XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
+
+    NSArray<NSString *> *captures = [sample captureSubstringsMatchedByRegex:regex options:RKXCaseless];
+    XCTAssertTrue([captures[4] isEqualToString:@"apple.com"]);
 }
 
 - (void)testRegexFromSection84
