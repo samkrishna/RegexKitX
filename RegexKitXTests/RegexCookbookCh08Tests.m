@@ -43,9 +43,11 @@
     XCTAssertTrue([captures[4] isEqualToString:@"apple.com"]);
 }
 
-- (void)testRegexFromSection84
+- (void)testRegexForMatchingURLWithImageFilePath
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^(https?|ftp)://[a-z0-9-]+(\\.[a-z0-9-]+)+(/[\\w-]+)*/[\\w-]+\\.(gif|png|jpg)$";
+    NSString *sample = @"https://www.apple.com/apple.png";
+    XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection85
