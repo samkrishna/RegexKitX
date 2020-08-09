@@ -59,7 +59,19 @@
 
 - (void)testRegexFromSection86
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regexForURLWithoutSpaces = @"\\b(https?|ftp|file)://\\S+";
+    NSString *sample = @"THis is a lorem ipsum https://www.apple.com/apple.png test of the regex";
+    XCTAssertTrue([sample isMatchedByRegex:regexForURLWithoutSpaces options:RKXCaseless]);
+
+    NSString *regexForURLsSansSpacesOrFinalPunctuation = @"\\b(https?|ftp|file)://[-A-Z0-9+&@#/%?=~"
+                                                          "_|$!:,.;]*[A-Z0-9+&@#/%=~_|$]";
+    XCTAssertTrue([sample isMatchedByRegex:regexForURLsSansSpacesOrFinalPunctuation options:RKXCaseless]);
+
+    NSString *modifiedRegexSansSpacesOrPunctuation = @"\\b((https?|ftp|file)://|(www|ftp)\\.)[-A-Z0-9+&@#/%?"
+                                                      "=~_|$!:,.;]*[A-Z0-9+&@#/%=~_|$]" ;
+    NSString *sample2 = @"THis is a lorem ipsum www.apple.com/apple.png test of the regex";
+    XCTAssertTrue([sample2 isMatchedByRegex:modifiedRegexSansSpacesOrPunctuation options:RKXCaseless]);
+
 }
 
 - (void)testRegexFromSection87
