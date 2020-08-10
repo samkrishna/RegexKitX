@@ -588,7 +588,7 @@ extern NSString *const kEmptyString;
 
  The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
 
- NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
 
  @param pattern A @c NSString containing a regular expression.
  @param captureName The matching range of the named capture group @c captureName in @c pattern. Use @c nil for the entire range that @c pattern matched or if @c capture is not @c NSNotFound.
@@ -604,7 +604,7 @@ extern NSString *const kEmptyString;
 
  NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location. In the event of a location tie, the returned range will be the range that has the LONGEST length.
 
- NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
 
  @param pattern A @c NSString containing a regular expression.
  @param capture The matching range of the capture number from @c pattern to return. Use @c 0 for the entire range that @c pattern matched.
@@ -654,7 +654,7 @@ extern NSString *const kEmptyString;
 
  NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location from the beginning of @c searchRange. In the event of a location tie, the returned range will be the range that has the LONGEST length.
 
- NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c { NSNotFound, 0 },
+ NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
 
  @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
