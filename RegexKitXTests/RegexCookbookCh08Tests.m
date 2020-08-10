@@ -74,13 +74,14 @@
 
 }
 
-- (void)testRegexFromSection87
+- (void)testRegexForFindingQuotedURLsInText
 {
     NSString *regex = @"\\b(?:(?:https?|ftp|file)://|(www|ftp)\\.)[-A-Z0-9+&@#/%?=~_|$!:,.;]*[-A-Z0-9+&@#/%=~_|$]";
     NSString *sample1 = @"THis is a lorem ipsum \"https://www.apple.com/apple.png\" test of the regex";
     NSString *sample2 = @"THis is a lorem ipsum https://www.apple.com/apple.png test of the regex";
-    XCTAssertTrue([sample1 isMatchedByRegex:regex options:RKXCaseless]);
-    XCTAssertTrue([sample2 isMatchedByRegex:regex options:RKXCaseless]);
+    RKXRegexOptions opts = (RKXCaseless | RKXMultiline | RKXDotAll);
+    XCTAssertTrue([sample1 isMatchedByRegex:regex options:opts]);
+    XCTAssertTrue([sample2 isMatchedByRegex:regex options:opts]);
 }
 
 - (void)testRegexFromSection88
