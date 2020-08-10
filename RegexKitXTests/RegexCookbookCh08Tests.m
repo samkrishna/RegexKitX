@@ -84,9 +84,20 @@
     XCTAssertTrue([sample2 isMatchedByRegex:regex options:opts]);
 }
 
-- (void)testRegexFromSection88
+- (void)testRegexForFindingURLsWithOptionalParentheses
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"\\b(?:(?:https?|ftp|file)://|www\\.|ftp\\.)"
+                        "(?:\\([-A-Z0-9+&@#/%=~_|$?!:,.]*\\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*"
+                        "(?:\\([-A-Z0-9+&@#/%=~_|$?!:,.]*\\)|[A-Z0-9+&@#/%=~_|$])";
+    NSString *sample1 = @"THis is a lorem ipsum https://www.apple.com/apple.png test of the regex";
+    NSString *sample2 = @"A paren URL: http://en.wikipedia.org/wiki/PC_Tools_(Central_Point_Software)";
+    NSString *sample3 = @"Another paren URL: http://msdn.microsoft.com/en-us/library/aa752574(VS.85).aspx";
+    NSString *sample4 = @"RegexBuddy\'s website (at http://www.regexbuddy.com) is really cool.";
+    RKXRegexOptions opts = (RKXCaseless | RKXMultiline | RKXDotAll);
+    XCTAssertTrue([sample1 isMatchedByRegex:regex options:opts]);
+    XCTAssertTrue([sample2 isMatchedByRegex:regex options:opts]);
+    XCTAssertTrue([sample3 isMatchedByRegex:regex options:opts]);
+    XCTAssertTrue([sample4 isMatchedByRegex:regex options:opts]);
 }
 
 - (void)testRegexFromSection89
