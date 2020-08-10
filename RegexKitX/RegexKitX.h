@@ -156,7 +156,7 @@ extern NSString *const kEmptyString;
 /**
  Returns an array containing all the matches from the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of an array of the substrings matched by all the capture groups present in the regular expression.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -211,7 +211,7 @@ extern NSString *const kEmptyString;
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of keys and captures.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -243,7 +243,7 @@ extern NSString *const kEmptyString;
 /**
  Returns an array containing all the matches in the receiver that were matched by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions. Each match result consists of a dictionary containing the matched substrings constructed from the specified set of @c keys and @c captures.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -328,7 +328,7 @@ extern NSString *const kEmptyString;
 /**
  Returns an array containing the substrings matched by each capture group present in @c pattern for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -381,7 +381,7 @@ extern NSString *const kEmptyString;
 /**
  Creates and returns a NSDictionary containing the matches constructed from the specified set of keys and captures for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -413,7 +413,7 @@ extern NSString *const kEmptyString;
 /**
  Creates and returns a dictionary containing the matches constructed from the specified set of @c keys and @c captures for the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -452,7 +452,6 @@ extern NSString *const kEmptyString;
 /// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within the receiver using @c options. Each capture group name is a 'key' and the captured match is its value.
 /// @discussion The pattern must have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex). A pattern with ZERO named capture groups will return an empty dictionary, even if the regex successfully matches.
 /// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
-/// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 /// @param pattern A @c NSString containing a regular expression.
 /// @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
 /// @return A @c NSDictionary containing the matched substrings constructed from the capture group names as keys and their captured substrings.
@@ -463,7 +462,6 @@ extern NSString *const kEmptyString;
 /// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options. Each capture group name is a 'key' and the captured match is its value.
 /// @discussion The pattern must have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex). A pattern with ZERO named capture groups will return an empty dictionary, even if the regex successfully matches.
 /// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
-/// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 /// @param pattern A @c NSString containing a regular expression.
 /// @param searchRange The range of the receiver to search.
 /// @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
@@ -476,7 +474,7 @@ extern NSString *const kEmptyString;
 /// Creates and returns a dictionary containing the matches constructed from the named capture groups within the first match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions. Each capture group name is a 'key' and the captured match is its value.
 /// @discussion The pattern must have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex). A pattern with ZERO named capture groups will return an empty dictionary, even if the regex successfully matches.
 /// @discussion NOTE: Named capture groups will only work on macOS 10.13+. Otherwise it will be ignored and return an empty dictionary.
-/// @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+/// @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 /// @param pattern A @c NSString containing a regular expression.
 /// @param searchRange The range of the receiver to search.
 /// @param options A bit mask that specifies the options for regular expression matching. See @c RKXRegexOptions for details. Either @c 0 or @c RKXNoOptions may be used if no options are required.
@@ -533,7 +531,7 @@ extern NSString *const kEmptyString;
 /**
  Returns a Boolean value that indicates whether the receiver is matched by @c pattern within @c searchRange using @c options and @c matchOptions.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression pattern.
  @param searchRange The range of the receiver to search.
@@ -588,7 +586,7 @@ extern NSString *const kEmptyString;
 
  The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
 
- NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
+ @discussion NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
 
  @param pattern A @c NSString containing a regular expression.
  @param captureName The matching substring of the named capture group @c captureName in @c pattern.
@@ -602,9 +600,9 @@ extern NSString *const kEmptyString;
 
  The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
 
- NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location. In the event of a location tie, the returned range will be the range that has the LONGEST length.
+ @discussion NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location. In the event of a location tie, the returned range will be the range that has the LONGEST length.
 
- NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
+ @discussion NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
 
  @param pattern A @c NSString containing a regular expression.
  @param capture The matching range of the capture number from @c pattern to return. Use @c 0 for the entire range that @c pattern matched.
@@ -652,11 +650,11 @@ extern NSString *const kEmptyString;
 
  The pattern may have a named capture group matching the sub-expression of @c (?<\\w+>...) (where @c ... represents the rest of the capture group regex).
 
- NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location from the beginning of @c searchRange. In the event of a location tie, the returned range will be the range that has the LONGEST length.
+ @discussion NOTE: If *BOTH* @c capture and @c captureName are used to find the first occurring range, the returned range will be the first range at the earliest starting location. In the event of a location tie, the returned range will be the range that has the LONGEST length.
 
- NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
+ @discussion NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -716,7 +714,7 @@ extern NSString *const kEmptyString;
 /**
  Returns a @c NSArray of @c NSValue-wrapped @c NSRanges of all captures of @c pattern for all matches within @c searchRange of the receiver using @c options and @c matchOptions.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -789,7 +787,7 @@ extern NSString *const kEmptyString;
 /**
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options and @c matchOptions are replaced with the contents of @c templ after performing capture group substitutions.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
@@ -915,7 +913,7 @@ extern NSString *const kEmptyString;
 
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -1025,7 +1023,7 @@ extern NSString *const kEmptyString;
 
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -1085,7 +1083,7 @@ extern NSString *const kEmptyString;
 /**
  Returns an array containing substrings within @c searchRange of the receiver that have been divided by the regular expression @c pattern using @c options and @c matchOptions.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a regular expression.
  @param searchRange The range of the receiver to search.
@@ -1146,7 +1144,7 @@ extern NSString *const kEmptyString;
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes the block using the enumeration direction defined by @c enumOpts for each match found.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param searchRange The range of the receiver to search.
@@ -1207,7 +1205,7 @@ extern NSString *const kEmptyString;
 /**
  Enumerates the strings of the receiver that have been divided by the regular expression @c pattern within @c searchRange using @c options and and @c matchOptions and executes @c block for each divided string. The enumeration direction is set by @c enumOpts.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param searchRange The range of the receiver to search.
@@ -1271,7 +1269,7 @@ extern NSString *const kEmptyString;
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param searchRange The range of the receiver to search.
@@ -1353,7 +1351,7 @@ extern NSString *const kEmptyString;
 
  NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -1417,7 +1415,7 @@ extern NSString *const kEmptyString;
 /**
  Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Replaces the characters that were matched with the contents of the string returned by @c block, returning the number of replacements made.
 
- @discussion If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
+ @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param searchRange The range of the receiver to search.
