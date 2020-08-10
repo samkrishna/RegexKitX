@@ -591,7 +591,7 @@ extern NSString *const kEmptyString;
  NOTE: @c captureName will only work on macOS 10.13+. Otherwise it will be ignored or return an @c NSRange of @c {NSNotFound, @c 0},
 
  @param pattern A @c NSString containing a regular expression.
- @param captureName The matching range of the named capture group @c captureName in @c pattern. Use @c nil for the entire range that @c pattern matched or if @c capture is not @c NSNotFound.
+ @param captureName The matching substring of the named capture group @c captureName in @c pattern.
  @return A @c NSRange structure giving the location and length of the first match of @c pattern within @c searchRange of the receiver for @c captureName. Returns @c {NSNotFound, @c 0} if the receiver is not matched by @c pattern, or if @c captureName is not found.
  @return Returns @c {NSNotFound, @c 0} if an error occurs.
  */
