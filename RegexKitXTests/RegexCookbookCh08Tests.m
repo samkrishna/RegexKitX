@@ -57,7 +57,7 @@
     XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
-- (void)testRegexFromSection86
+- (void)testRegexForURLsWithoutSpacesOrPunctuation
 {
     NSString *regexForURLWithoutSpaces = @"\\b(https?|ftp|file)://\\S+";
     NSString *sample = @"THis is a lorem ipsum https://www.apple.com/apple.png test of the regex";
