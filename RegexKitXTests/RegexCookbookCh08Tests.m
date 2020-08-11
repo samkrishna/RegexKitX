@@ -100,9 +100,15 @@
     XCTAssertTrue([sample4 isMatchedByRegex:regex options:opts]);
 }
 
-- (void)testRegexFromSection89
+- (void)testRegexForTurningURLsIntoLinks
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"\\b(?:(?:https?|ftp|file)://|www\\.|ftp\\.)"
+                        "(?:\\([-A-Z0-9+&@#/%=~_|$?!:,.]*\\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*"
+                        "(?:\\([-A-Z0-9+&@#/%=~_|$?!:,.]*\\)|[A-Z0-9+&@#/%=~_|$])";
+    NSString *sample2 = @"A paren URL: http://en.wikipedia.org/wiki/PC_Tools_(Central_Point_Software)";
+    RKXRegexOptions opts = (RKXCaseless | RKXMultiline | RKXDotAll);
+    NSString *output = [sample2 stringByReplacingOccurrencesOfRegex:regex withTemplate:@"<a href=\"$0\">$0</a>" options:opts];
+    XCTAssertTrue([output isMatchedByRegex:@"href"]);
 }
 
 - (void)testRegexFromSection810
