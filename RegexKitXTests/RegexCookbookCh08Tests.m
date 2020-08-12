@@ -111,9 +111,11 @@
     XCTAssertTrue([output isMatchedByRegex:@"href"]);
 }
 
-- (void)testRegexFromSection810
+- (void)testRegexForValidatingURNs
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^urn:[a-z0-9][a-z0-9-]{0,31}:[a-z0-9()+,\\-.:=@;$_!*'%/?#]+$";
+    NSString *sample = @"urn:oasis:names:tc:ubl:schema:xsd:Invoice-1.0";
+    XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection811
