@@ -153,6 +153,45 @@
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexWithHashtagCommentsV2 options:(NSRegularExpressionCaseInsensitive | NSRegularExpressionAllowCommentsAndWhitespace) error:NULL];
     XCTAssertNotNil(regex);
 }
+
+- (void)testRegexForValidatingGenericURLsWithoutHashtagComments
+{
+    NSString *regexWithoutHashtagComments = @"(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
+    "\\A"
+    "("
+    "[a-z][a-z0-9+\\-.]*:"
+    "("
+    "\\/\\/"
+    "([a-z0-9\\-._~%!$&'()*+,;=]+@)?"
+    "([a-z0-9\\-._~%]+"
+    "|\\[[a-f0-9:.]+\\]"
+    "|\\[v[a-f0-9][a-z0-9\\-._~%!$&'()*+,;=:]+\\])"
+    "(:[0-9]+)?"
+    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"
+    "|"
+    "(\\/?[a-z0-9\\-._~%!$&'()*+,;=:@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?)?"
+    ")"
+    "|"
+    "("
+    "[a-z0-9\\-._~%!$&'()*+,;=@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"
+    "|"
+    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)+\\/?"
+    ")"
+    ")"
+    ""
+    "(\\?[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
+    ""
+    "(\\#[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
+    "\\Z";
+    XCTAssertTrue([regexWithoutHashtagComments isRegexValid]);
+
+    NSString *sample = @"https://www.apple.com:1024/OldSkoolWOQuery?query=iPod+iPhone+MacBook%20Pro";
+    NSArray *matches = [sample arrayOfCaptureSubstringsMatchedByRegex:regexWithoutHashtagComments];
+    NSArray<NSString *> *captures = matches[0];
+    XCTAssertTrue(captures.count == 14);
+    XCTAssertTrue([captures[5] isEqualToString:@":1024"]);
+    XCTAssertTrue([captures[6] isEqualToString:@"/OldSkoolWOQuery"]);
+    XCTAssertTrue([captures[12] isEqualToString:@"?query=iPod+iPhone+MacBook%20Pro"]);
 }
 
 - (void)testRegexFromSection812
