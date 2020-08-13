@@ -157,30 +157,31 @@
 - (void)testRegexForValidatingGenericURLsWithoutHashtagComments
 {
     NSString *regexWithoutHashtagComments = @"(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
+    // Convert the hashtags into regular comments
     "\\A"
-    "("
+    "("                                                             // Scheme
     "[a-z][a-z0-9+\\-.]*:"
-    "("
+    "("                                                             // Authority and path
     "\\/\\/"
-    "([a-z0-9\\-._~%!$&'()*+,;=]+@)?"
-    "([a-z0-9\\-._~%]+"
-    "|\\[[a-f0-9:.]+\\]"
-    "|\\[v[a-f0-9][a-z0-9\\-._~%!$&'()*+,;=:]+\\])"
-    "(:[0-9]+)?"
-    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"
-    "|"
+    "([a-z0-9\\-._~%!$&'()*+,;=]+@)?"                               // User
+    "([a-z0-9\\-._~%]+"                                             // Named host
+    "|\\[[a-f0-9:.]+\\]"                                            // IPv6 host
+    "|\\[v[a-f0-9][a-z0-9\\-._~%!$&'()*+,;=:]+\\])"                 // IPvFuture host
+    "(:[0-9]+)?"                                                    // Port
+    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"                       // Path
+    "|"                                                             // Path without authority
     "(\\/?[a-z0-9\\-._~%!$&'()*+,;=:@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?)?"
     ")"
-    "|"
-    "("
+    "|"                                                             // Relative URL (no scheme or authority)
+    "("                                                             // Relative path
     "[a-z0-9\\-._~%!$&'()*+,;=@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"
-    "|"
+    "|"                                                             // Absolute path
     "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)+\\/?"
     ")"
     ")"
-    ""
+    "" // Query
     "(\\?[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
-    ""
+    "" // Fragment
     "(\\#[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
     "\\Z";
     XCTAssertTrue([regexWithoutHashtagComments isRegexValid]);
