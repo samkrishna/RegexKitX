@@ -147,7 +147,7 @@
     "                                               # Fragment"
     "(\\#[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
     "\\Z";
-    XCTAssertTrue([regexWithHastagComments isRegexValid]);
+    XCTAssertTrue([regexWithHastagComments isRegexValid], @"This doesn't work because \"Allows Comments and White Space\" option doesn't work with NSRegularExpresion");
 
     NSString *regexWithHashtagCommentsV2 = [regexWithHastagComments substringFromIndex:5];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexWithHashtagCommentsV2 options:(NSRegularExpressionCaseInsensitive | NSRegularExpressionAllowCommentsAndWhitespace) error:NULL];
