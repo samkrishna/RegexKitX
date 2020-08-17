@@ -260,7 +260,10 @@
 
 - (void)testRegexFromSection816
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)?([a-z0-9\\-._~%!$&'()*+,;=:@/]*)";
+    NSString *sample = @"http://www.regexcookbook.com/index.html";
+    NSString *pathCapture = [sample stringMatchedByRegex:regex capture:3 namedCapture:nil options:RKXCaseless];
+    XCTAssertTrue([pathCapture isEqualToString:@"/index.html"]);
 }
 
 - (void)testRegexFromSection817
