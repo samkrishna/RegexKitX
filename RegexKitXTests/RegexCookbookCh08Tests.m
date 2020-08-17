@@ -249,9 +249,13 @@
     XCTAssertTrue([hostCapture isEqualToString:host], @"hostCapture: %@ and host: %@", hostCapture, host);
 }
 
-- (void)testRegexFromSection815
+- (void)testRegexForExtractingThePortFromURL
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^[a-z][a-z0-9+\\-.]*://([a-z0-9\\-._~%!$&'()*+,;=]+@)?"
+    "([a-z0-9\\-._~%]+|\\[[a-z0-9\\-._~%!$&'()*+,;=:]+\\]):([0-9]+)";
+    NSString *sample = @"http://www.regexcookbook.com:80/";
+    NSString *portCapture = [sample stringMatchedByRegex:regex capture:3 namedCapture:nil options:RKXCaseless];
+    XCTAssertTrue([portCapture isEqualToString:@"80"]);
 }
 
 - (void)testRegexFromSection816
