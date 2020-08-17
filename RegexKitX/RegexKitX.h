@@ -84,6 +84,8 @@ extern const NSInteger RKXMatchingTimeoutError;
  */
 extern NSString *const kEmptyString;
 
+#pragma mark -
+
 @interface NSString (RangeMechanics)
 
 /**
