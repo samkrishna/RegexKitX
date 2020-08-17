@@ -268,7 +268,10 @@
 
 - (void)testRegexFromSection817
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^[^?#]+\\?([^#]+)";
+    NSString *sample = @"https://www.apple.com:1024/OldSkoolWOQuery?query=iPod+iPhone+MacBook%20Pro";
+    NSString *queryCapture = [sample stringMatchedByRegex:regex capture:1 namedCapture:nil options:RKXCaseless];
+    XCTAssertTrue([queryCapture isEqualToString:@"query=iPod+iPhone+MacBook%20Pro"]);
 }
 
 - (void)testRegexFromSection818
