@@ -231,7 +231,7 @@
     XCTAssert([scheme isEqualToString:@"https"], @"No Match: scheme = %@", scheme);
 }
 
-- (void)testRegexForExtractingTheUserFromAURL
+- (void)testRegexForExtractingTheUserFromURL
 {
     NSString *regex = @"^[a-z0-9+\\-.]+://([a-z0-9\\-._~%!$&'()*+,;=]+)@";
     NSString *sample = @"ftp://jan@www.regexcookbook.com";
@@ -239,7 +239,7 @@
     XCTAssertTrue([userString isEqualToString:@"jan"]);
 }
 
-- (void)testRegexForExtractingTheHostFromAURL
+- (void)testRegexForExtractingTheHostFromURL
 {
     NSString *regex = @"^[a-z][a-z0-9+\\-.]*://([a-z0-9\\-._~%!$&'()*+,;=]+@)?"
                         "([a-z0-9\\-._~%]+|\\[[a-z0-9\\-._~%!$&'()*+,;=:]+\\])";
