@@ -239,9 +239,14 @@
     XCTAssertTrue([userString isEqualToString:@"jan"]);
 }
 
-- (void)testRegexFromSection814
+- (void)testRegexForExtractingTheHostFromAURL
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^[a-z][a-z0-9+\\-.]*://([a-z0-9\\-._~%!$&'()*+,;=]+@)?"
+                        "([a-z0-9\\-._~%]+|\\[[a-z0-9\\-._~%!$&'()*+,;=:]+\\])";
+    NSString *sample = @"http://www.regexcookbook.com/";
+    NSString *host = @"www.regexcookbook.com";
+    NSString *hostCapture = [sample stringMatchedByRegex:regex capture:2 namedCapture:nil options:RKXCaseless];
+    XCTAssertTrue([hostCapture isEqualToString:host], @"hostCapture: %@ and host: %@", hostCapture, host);
 }
 
 - (void)testRegexFromSection815
