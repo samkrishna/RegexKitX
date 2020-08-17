@@ -258,7 +258,7 @@
     XCTAssertTrue([portCapture isEqualToString:@"80"]);
 }
 
-- (void)testRegexFromSection816
+- (void)testRegexForExtractingThePathFromURL
 {
     NSString *regex = @"^([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)?([a-z0-9\\-._~%!$&'()*+,;=:@/]*)";
     NSString *sample = @"http://www.regexcookbook.com/index.html";
@@ -266,7 +266,7 @@
     XCTAssertTrue([pathCapture isEqualToString:@"/index.html"]);
 }
 
-- (void)testRegexFromSection817
+- (void)testRegexForExtractingTheQueryFromURL
 {
     NSString *regex = @"^[^?#]+\\?([^#]+)";
     NSString *sample = @"https://www.apple.com:1024/OldSkoolWOQuery?query=iPod+iPhone+MacBook%20Pro";
