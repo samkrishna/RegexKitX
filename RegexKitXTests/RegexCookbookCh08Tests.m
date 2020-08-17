@@ -231,9 +231,12 @@
     XCTAssert([scheme isEqualToString:@"https"], @"No Match: scheme = %@", scheme);
 }
 
-- (void)testRegexFromSection813
+- (void)testRegexForExtractingTheUserFromAURL
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^[a-z0-9+\\-.]+://([a-z0-9\\-._~%!$&'()*+,;=]+)@";
+    NSString *sample = @"ftp://jan@www.regexcookbook.com";
+    NSString *userString = [sample stringMatchedByRegex:regex capture:1 namedCapture:nil options:RKXCaseless];
+    XCTAssertTrue([userString isEqualToString:@"jan"]);
 }
 
 - (void)testRegexFromSection814
