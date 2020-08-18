@@ -274,9 +274,12 @@
     XCTAssertTrue([queryCapture isEqualToString:@"query=iPod+iPhone+MacBook%20Pro"]);
 }
 
-- (void)testRegexFromSection818
+- (void)testRegexForExtractingAFragmentFromURL
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"#(.+)";
+    NSString *sample = @"http://www.regexcookbook.com/index.html#top";
+    NSString *fragment = [sample stringMatchedByRegex:regex capture:1 namedCapture:nil options:RKXCaseless];
+    XCTAssertTrue([fragment isEqualToString:@"top"]);
 }
 
 - (void)testRegexFromSection819
