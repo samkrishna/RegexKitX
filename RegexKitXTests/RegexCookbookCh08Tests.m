@@ -291,9 +291,14 @@
     XCTAssertFalse([badSample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
-- (void)testRegexFromSection820
+- (void)testRegexForMatchingIPv4Addresses
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}"
+                        "(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+    NSString *sample = @"255.255.255.255";
+    NSString *badSample = @"255.255.255.256";
+    XCTAssertTrue([sample isMatchedByRegex:regex]);
+    XCTAssertFalse([badSample isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection821
