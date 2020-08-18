@@ -282,9 +282,13 @@
     XCTAssertTrue([fragment isEqualToString:@"top"]);
 }
 
-- (void)testRegexFromSection819
+- (void)testRegexForValidatingDomainNames
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$";
+    NSString *validSample = @"www.regexcookbook.com";
+    NSString *badSample = @"www.regexcookbook.1";
+    XCTAssertTrue([validSample isMatchedByRegex:regex options:RKXCaseless]);
+    XCTAssertFalse([badSample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection820
