@@ -110,6 +110,8 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 }
 @end
 
+#pragma mark -
+
 @interface NSRegularExpression (RKXError)
 @property (class, readonly, strong) NSError *timeoutError;
 @end
