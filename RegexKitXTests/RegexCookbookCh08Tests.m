@@ -308,9 +308,11 @@
     XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
-- (void)testRegexFromSection822
+- (void)testRegexForValidatingWindowsPaths
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^[a-z]:\\\\(?:[^\\\\\\/:*?\"<>|\\r\\n]+\\\\)*[^\\\\/:*?\"<>|\\r\\n]*$";
+    NSString *sample = @"C:\\Documents\\catalina";
+    XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection823
