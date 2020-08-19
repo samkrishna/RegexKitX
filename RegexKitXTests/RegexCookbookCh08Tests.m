@@ -301,9 +301,11 @@
     XCTAssertFalse([badSample isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection821
+- (void)testRegexForMatchingIPv6Addresses
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^(?:[A-F0-9]{1,4}:){7}[A-F0-9]{1,4}$";
+    NSString *sample = @"1762:0:0:0:0:B03:1:AF18";
+    XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
 - (void)testRegexFromSection822
