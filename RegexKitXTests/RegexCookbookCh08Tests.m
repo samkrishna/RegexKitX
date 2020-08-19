@@ -317,7 +317,12 @@
 
 - (void)testRegexFromSection823
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^\\\\\\\\([a-z0-9_.$ -]+)\\\\([a-z0-9_.$ -]+)";
+    NSString *sample = @"\\\\server\\share\\folder\\file.ext";
+    NSString *server = [sample stringMatchedByRegex:regex capture:1 namedCapture:nil options:RKXCaseless];
+    NSString *share = [sample stringMatchedByRegex:regex capture:2 namedCapture:nil options:RKXCaseless];
+    XCTAssertTrue([server isEqualToString:@"server"]);
+    XCTAssertTrue([share isEqualToString:@"share"]);
 }
 
 - (void)testRegexFromSection824
