@@ -301,6 +301,14 @@
     NSString *endFile = [sample stringMatchedByRegex:regex options:RKXCaseless];
     XCTAssertTrue([endFile isEqualToString:@"file.exe"]);
 }
+
+- (void)testRegexForExtractingFileExtensionFromWindowsPath
+{
+    NSString *regex = @"\\.[^.\\\\/:*?\"<>|\\r\\n]+$";
+    NSString *sample = @"c:\\folder\\subfolder\\file.exe";
+    NSString *fileExtension = [sample stringMatchedByRegex:regex options:RKXCaseless];
+    XCTAssertTrue([fileExtension isEqualToString:@".exe"]);
+}
 }
 
 @end
