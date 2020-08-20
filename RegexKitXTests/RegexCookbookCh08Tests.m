@@ -309,6 +309,13 @@
     NSString *fileExtension = [sample stringMatchedByRegex:regex options:RKXCaseless];
     XCTAssertTrue([fileExtension isEqualToString:@".exe"]);
 }
+
+- (void)testRegexForStrippingInvalidCharactersFromFilename
+{
+    NSString *regex = @"[\\\\/:\"*?<>|]+";
+    NSString *sample = @"\\file.exe";
+    NSString *fileExtension = [sample stringByReplacingOccurrencesOfRegex:regex withTemplate:kEmptyString];
+    XCTAssertTrue([fileExtension isEqualToString:@"file.exe"]);
 }
 
 @end
