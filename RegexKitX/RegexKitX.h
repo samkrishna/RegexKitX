@@ -733,7 +733,7 @@ extern NSString *const kEmptyString;
 /**
  Returns a string in which all matches of the regular expression @c pattern are replaced with the contents of @c templ after performing capture group substitutions.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -746,7 +746,7 @@ extern NSString *const kEmptyString;
 /**
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern are replaced with the contents of @c templ after performing capture group substitutions.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -760,7 +760,7 @@ extern NSString *const kEmptyString;
 /**
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the of @c templ after performing capture group substitutions.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -773,7 +773,7 @@ extern NSString *const kEmptyString;
 /**
  Returns a string created from the characters within @c searchRange of the receiver in which all matches of the regular expression @c pattern using @c options are replaced with the contents of the of @c templ after performing capture group substitutions.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -791,7 +791,7 @@ extern NSString *const kEmptyString;
 
  @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -1298,7 +1298,7 @@ extern NSString *const kEmptyString;
 /**
  Replaces all occurrences of the regular expression @c pattern with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -1310,7 +1310,7 @@ extern NSString *const kEmptyString;
 /**
  Replaces all occurrences of the regular expression @c pattern within @c searchRange with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -1323,7 +1323,7 @@ extern NSString *const kEmptyString;
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -1336,7 +1336,7 @@ extern NSString *const kEmptyString;
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options within @c searchRange with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param templ A @c NSString containing a string template. Can use capture group variables.
@@ -1351,7 +1351,7 @@ extern NSString *const kEmptyString;
 /**
  Replaces all occurrences of the regular expression @c pattern using @c options and @c matchOptions within @c searchRange with the contents of @c templ after performing capture group substitutions, returning the number of replacements made.
 
- @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences ("$1") and capture group named backreferences ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
+ @discussion NOTE: As of macOS 10.13, the template string can use both capture group numbered backreferences @c ("$1") and capture group named backreferences @c ("${name}"). If you attempt to use named backreferences prior to 10.13, the backreferenced variables will not be substituted.
 
  @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
