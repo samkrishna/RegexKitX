@@ -286,9 +286,12 @@
     XCTAssertTrue([share isEqualToString:@"share"]);
 }
 
-- (void)testRegexFromSection824
+- (void)testRegexForExtractingFolderFromWindowsPath
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^([a-z]:|\\\\\\\\[a-z0-9_.$ -]+\\\\[a-z0-9_.$ -]+)?((?:\\\\|^)(?:[^\\\\/:*?\"<>|\\r\\n]+\\\\)+)";
+    NSString *sample = @"c:\\folder\\subfolder\\file.exe";
+    NSString *folder = [sample stringMatchedByRegex:regex capture:2 namedCapture:nil options:RKXCaseless];
+    XCTAssertTrue([folder isEqualToString:@"\\folder\\subfolder\\"]);
 }
 
 - (void)testRegexFromSection825
