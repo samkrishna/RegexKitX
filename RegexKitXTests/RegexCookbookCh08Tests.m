@@ -276,7 +276,7 @@
     XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
-- (void)testRegexFromSection823
+- (void)testRegexForExtractingServerAndShareFromUNCPath
 {
     NSString *regex = @"^\\\\\\\\([a-z0-9_.$ -]+)\\\\([a-z0-9_.$ -]+)";
     NSString *sample = @"\\\\server\\share\\folder\\file.ext";
