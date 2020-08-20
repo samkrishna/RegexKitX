@@ -118,76 +118,38 @@
     XCTAssertTrue([sample isMatchedByRegex:regex options:RKXCaseless]);
 }
 
-- (void)testCanonicalAllowWhitespaceAndCommentBug
+- (void)testRegexForValidatingGenericURLs
 {
-    NSString *regexWithHastagComments = @"(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
+    NSString *regex = @"(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
     "\\A"
-    "(                                              # Scheme"
+    "(                                              # Scheme\n"
     "[a-z][a-z0-9+\\-.]*:"
-    "(                                              # Authority & path"
+    "(                                              # Authority & path\n"
     "\\/\\/"
-    "([a-z0-9\\-._~%!$&'()*+,;=]+@)?                # User"
-    "([a-z0-9\\-._~%]+                              # Named host"
-    "|\\[[a-f0-9:.]+\\]                             # IPv6 host"
-    "|\\[v[a-f0-9][a-z0-9\\-._~%!$&'()*+,;=:]+\\])  # IPvFuture host"
-    "(:[0-9]+)?                                     # Port"
-    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?        # Path"
-    "|                                              # Path without authority"
+    "([a-z0-9\\-._~%!$&'()*+,;=]+@)?                # User\n"
+    "([a-z0-9\\-._~%]+                              # Named host\n"
+    "|\\[[a-f0-9:.]+\\]                             # IPv6 host\n"
+    "|\\[v[a-f0-9][a-z0-9\\-._~%!$&'()*+,;=:]+\\])  # IPvFuture host\n"
+    "(:[0-9]+)?                                     # Port\n"
+    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?        # Path\n"
+    "|                                              # Path without authority\n"
     "(\\/?[a-z0-9\\-._~%!$&'()*+,;=:@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?)?"
     ")"
-    "|                                              # Relative URL (no scheme or authority)"
-    "(                                              # Relative path"
+    "|                                              # Relative URL (no scheme or authority)\n"
+    "(                                              # Relative path\n"
     "[a-z0-9\\-._~%!$&'()*+,;=@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"
-    "|                                              # Absolute path"
+    "|                                              # Absolute path\n"
     "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)+\\/?"
     ")"
     ")"
-    "                                               # Query"
+    "                                               # Query\n"
     "(\\?[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
-    "                                               # Fragment"
+    "                                               # Fragment\n"
     "(\\#[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
     "\\Z";
-    XCTAssertTrue([regexWithHastagComments isRegexValid], @"This doesn't work because \"Allows Comments and White Space\" option doesn't work with NSRegularExpresion");
-
-    NSString *regexWithHashtagCommentsV2 = [regexWithHastagComments substringFromIndex:5];
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexWithHashtagCommentsV2 options:(NSRegularExpressionCaseInsensitive | NSRegularExpressionAllowCommentsAndWhitespace) error:NULL];
-    XCTAssertNotNil(regex);
-}
-
-- (void)testRegexForValidatingGenericURLsWithoutHashtagComments
-{
-    NSString *regexWithoutHashtagComments = @"(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
-    // Convert the hashtags into regular comments
-    "\\A"
-    "("                                                             // Scheme
-    "[a-z][a-z0-9+\\-.]*:"
-    "("                                                             // Authority and path
-    "\\/\\/"
-    "([a-z0-9\\-._~%!$&'()*+,;=]+@)?"                               // User
-    "([a-z0-9\\-._~%]+"                                             // Named host
-    "|\\[[a-f0-9:.]+\\]"                                            // IPv6 host
-    "|\\[v[a-f0-9][a-z0-9\\-._~%!$&'()*+,;=:]+\\])"                 // IPvFuture host
-    "(:[0-9]+)?"                                                    // Port
-    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"                       // Path
-    "|"                                                             // Path without authority
-    "(\\/?[a-z0-9\\-._~%!$&'()*+,;=:@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?)?"
-    ")"
-    "|"                                                             // Relative URL (no scheme or authority)
-    "("                                                             // Relative path
-    "[a-z0-9\\-._~%!$&'()*+,;=@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"
-    "|"                                                             // Absolute path
-    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)+\\/?"
-    ")"
-    ")"
-    "" // Query
-    "(\\?[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
-    "" // Fragment
-    "(\\#[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
-    "\\Z";
-    XCTAssertTrue([regexWithoutHashtagComments isRegexValid]);
 
     NSString *sample = @"https://www.apple.com:1024/OldSkoolWOQuery?query=iPod+iPhone+MacBook%20Pro";
-    NSArray *matches = [sample arrayOfCaptureSubstringsMatchedByRegex:regexWithoutHashtagComments];
+    NSArray *matches = [sample arrayOfCaptureSubstringsMatchedByRegex:regex];
     NSArray<NSString *> *captures = matches[0];
     XCTAssertTrue(captures.count == 14);
     XCTAssertTrue([captures[5] isEqualToString:@":1024"]);
@@ -198,31 +160,30 @@
 - (void)testRegexForSchemeExtractionAndURLValidation
 {
     NSString *regex = @"(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
-    // Convert the hashtags into regular comments
     "\\A"
-    "("                                                             // Scheme
+    "(                                              # Scheme\n"
     "([a-z][a-z0-9+\\-.]*):"
-    "("                                                             // Authority and path
+    "(                                              # Authority & path\n"
     "\\/\\/"
-    "([a-z0-9\\-._~%!$&'()*+,;=]+@)?"                               // User
-    "([a-z0-9\\-._~%]+"                                             // Named host
-    "|\\[[a-f0-9:.]+\\]"                                            // IPv6 host
-    "|\\[v[a-f0-9][a-z0-9\\-._~%!$&'()*+,;=:]+\\])"                 // IPvFuture host
-    "(:[0-9]+)?"                                                    // Port
-    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"                       // Path
-    "|"                                                             // Path without authority
+    "([a-z0-9\\-._~%!$&'()*+,;=]+@)?                # User\n"
+    "([a-z0-9\\-._~%]+                              # Named host\n"
+    "|\\[[a-f0-9:.]+\\]                             # IPv6 host\n"
+    "|\\[v[a-f0-9][a-z0-9\\-._~%!$&'()*+,;=:]+\\])  # IPvFuture host\n"
+    "(:[0-9]+)?                                     # Port\n"
+    "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?        # Path\n"
+    "|                                              # Path without authority\n"
     "(\\/?[a-z0-9\\-._~%!$&'()*+,;=:@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?)?"
     ")"
-    "|"                                                             // Relative URL (no scheme or authority)
-    "("                                                             // Relative path
+    "|                                              # Relative URL (no scheme or authority)\n"
+    "(                                              # Relative path\n"
     "[a-z0-9\\-._~%!$&'()*+,;=@]+(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)*\\/?"
-    "|"                                                             // Absolute path
+    "|                                              # Absolute path\n"
     "(\\/[a-z0-9\\-._~%!$&'()*+,;=:@]+)+\\/?"
     ")"
     ")"
-    "" // Query
+    "                                               # Query\n"
     "(\\?[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
-    "" // Fragment
+    "                                               # Fragment\n"
     "(\\#[a-z0-9\\-._~%!$&'()*+,;=:@\\/?]*)?"
     "\\Z";
 
