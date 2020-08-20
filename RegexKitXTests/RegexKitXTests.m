@@ -534,7 +534,8 @@
     NSString *categoryMethod = @"-[SFXOrderContext(StateMachine) startOrderStateWithDictionary:andOrder:]";
 
     NSString *regex = @"(?<methodType>[+-])\\[\\w+(\\+\\w+)? (?<methodName>.+)\\]";
-    NSString *regex2 = @"(?<methodType>[+-])\\[\\w+(\\(\\w+\\))? (?<methodName>.+)\\](?<blockKey>_block_invoke)?";
+    NSString *regex2 = @"(?<methodType>[+-])\\[(?<className>\\w+)"
+                        "(\\((?<categoryName>\\w+)\\))? (?<methodName>.+)\\](?<block>_block_invoke)?";
 
     NSDictionary *cpbDict = [categoryPlusBlock dictionaryWithNamedCaptureKeysMatchedByRegex:regex options:RKXCaseless];
     XCTAssertNil(cpbDict[@"methodType"]);
@@ -547,11 +548,13 @@
     NSDictionary *categoryDict = [categoryMethod dictionaryWithNamedCaptureKeysMatchedByRegex:regex2 options:RKXCaseless];
     XCTAssertNotNil(categoryDict[@"methodType"]);
     XCTAssertNotNil(categoryDict[@"methodName"]);
+    XCTAssertNil(categoryDict[@"blockKey"]);
+    XCTAssertNotNil(categoryDict[@"categoryName"]);
 
     cpbDict = [categoryPlusBlock dictionaryWithNamedCaptureKeysMatchedByRegex:regex2 options:RKXCaseless];
     XCTAssertNotNil(cpbDict[@"methodType"]);
     XCTAssertNotNil(cpbDict[@"methodName"]);
-    XCTAssertNotNil(cpbDict[@"blockKey"]);
+    XCTAssertNotNil(cpbDict[@"block"]);
 }
 
 - (void)testEnumerateStringsSeparatedByRegexUsingBlock
