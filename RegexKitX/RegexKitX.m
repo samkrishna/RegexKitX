@@ -639,6 +639,7 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
 
     if (captureName) {
         NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+        if (!matches || matches.count == 0) { return NSNotFoundRange; }
         NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
