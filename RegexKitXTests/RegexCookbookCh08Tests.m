@@ -294,9 +294,13 @@
     XCTAssertTrue([folder isEqualToString:@"\\folder\\subfolder\\"]);
 }
 
-- (void)testRegexFromSection825
+- (void)testRegexForExtractingFilenameFromWindowsPath
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"[^\\\\/:*?\"<>|\\r\\n]+$";
+    NSString *sample = @"c:\\folder\\subfolder\\file.exe";
+    NSString *endFile = [sample stringMatchedByRegex:regex options:RKXCaseless];
+    XCTAssertTrue([endFile isEqualToString:@"file.exe"]);
+}
 }
 
 @end
