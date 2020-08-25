@@ -52,9 +52,25 @@
     XCTAssertTrue([sub isEqualToString:@"<strong>this is some bolding text</strong>"], @"sub = %@", sub);
 }
 
-- (void)testRegexFromSection93
+- (void)testRegexForRemovingAllXMLStyleTagsExceptEmAndStrongFrom93
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"(?xi)"
+                        "< /?               # Permit closing tags\n"
+                        "(?!"
+                        "(?: em | strong )  # List of tags to avoid matching\n"
+                        "\\b                # Word boundary avoids partial word matches\n"
+                        ")"
+                        "[a-z]              # Tag name initial character must be a-z\n"
+                        "(?: [^>\"']        # Any character except >, \", or '\n"
+                        "| \"[^\"]*\"       # Double-quoted attribute value\n"
+                        "| '[^']*'          # Single-quoted attribute value\n"
+                        ")*"
+                        ">";
+    NSString *sample = @"<em>this is some <b>bolding</b> text</em>";
+    NSArray<NSString *> *matches = [sample substringsMatchedByRegex:regex];
+    XCTAssertTrue(matches.count == 2);
+    XCTAssertTrue([matches[0] isEqualToString:@"<b>"]);
+    XCTAssertTrue([matches[1] isEqualToString:@"</b>"]);
 }
 
 - (void)testRegexFromSection94
