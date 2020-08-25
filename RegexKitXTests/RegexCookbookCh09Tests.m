@@ -34,9 +34,22 @@
     XCTAssertTrue([betterAttribute isEqualToString:@"<title<<whoa>"]);
 }
 
-- (void)testRegexFromSection92
+- (void)testRegexToReplaceBTagsWithStrongTagsFrom92
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"(?xi)"
+                        "<"
+                        "(/?) # Capture the optional leading slash to backreference 1\n"
+                        "b \\b # Tag name, with word boundary\n"
+                        "( # Capture any attributes, etc. to backreference 2\n"
+                        "(?: [^>\"'] # Any character except >, \", or '\n"
+                        "| \"[^\"]*\" # Double-quoted attribute value\n"
+                        "| '[^']*' # Single-quoted attribute value\n"
+                        ")*\n"
+                        ")\n"
+                        ">";
+    NSString *sample = @"<b>this is some bolding text</b>";
+    NSString *sub = [sample stringByReplacingOccurrencesOfRegex:regex withTemplate:@"<$1strong$2>"];
+    XCTAssertTrue([sub isEqualToString:@"<strong>this is some bolding text</strong>"], @"sub = %@", sub);
 }
 
 - (void)testRegexFromSection93
