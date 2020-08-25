@@ -15,9 +15,23 @@
 
 @implementation RegexCookbookCh09Tests
 
-- (void)testRegexFromSection91
+- (void)testQuickRegexForAttributeMatching
 {
-    XCTFail(@"Not filled out yet");
+    NSString *quickRegex = @"<[^>]*>";
+    NSString *sample = @"<title>Boring</title>";
+    NSString *attribute = [sample stringMatchedByRegex:quickRegex];
+    XCTAssertTrue([attribute isEqualToString:@"<title>"]);
+
+    NSString *betterRegex = @"(?x)"
+                             "<"
+                             "(?: [^>\"'] # Non-quoted character\n"
+                             "| \"[^\"]*\" # Double-quoted attribute value\n"
+                             "| '[^']*' # Single-quoted attribute value\n"
+                             ")*"
+                             ">";
+    NSString *betterSample = @"<title<<whoa>>>Coolness</title>";
+    NSString *betterAttribute = [betterSample stringMatchedByRegex:betterRegex];
+    XCTAssertTrue([betterAttribute isEqualToString:@"<title<<whoa>"]);
 }
 
 - (void)testRegexFromSection92
