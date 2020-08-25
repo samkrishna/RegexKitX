@@ -73,9 +73,37 @@
     XCTAssertTrue([matches[1] isEqualToString:@"</b>"]);
 }
 
-- (void)testRegexFromSection94
+- (void)testRegexForMatchingXMLNamesFrom94
 {
-    XCTFail(@"Not filled out yet");
+    NSString *xml11ExactRegex = @"^[:_A-Za-z\\x{C0}-\\x{D6}\\x{D8}-\\x{F6}\\x{F8}-\\x{2FF}\\x{370}-\\x{37D}"
+                                "\\x{37F}-\\x{1FFF}\\x{200C}\\x{200D}\\x{2070}-\\x{218F}\\x{2C00}-\\x{2FEF}"
+                                "\\x{3001}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFFD}]"
+                                "[:_\\-.A-Za-z0-9\\x{B7}\\x{C0}-\\x{D6}\\x{D8}-\\x{F6}\\x{F8}-\\x{36F}"
+                                "\\x{370}-\\x{37D}\\x{37F}-\\x{1FFF}\\x{200C}\\x{200D}"
+                                "\\x{203F}\\x{2040}\\x{2070}-\\x{218F}\\x{2C00}-\\x{2FEF}\\x{3001}-\\x{D7FF}"
+                                "\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFFD}]*$";
+
+    NSString *sample1 = @"thing";
+    NSString *sample2 = @"_thing_2_";
+    NSString *sample3 = @":Российские-Вещь";
+    NSString *sample4 = @"fantastic4:the.thing";
+    NSString *sample5 = @"日本の物";
+    XCTAssertTrue([sample1 isMatchedByRegex:xml11ExactRegex]);
+    XCTAssertTrue([sample2 isMatchedByRegex:xml11ExactRegex]);
+    XCTAssertTrue([sample3 isMatchedByRegex:xml11ExactRegex]);
+    XCTAssertTrue([sample4 isMatchedByRegex:xml11ExactRegex]);
+    XCTAssertTrue([sample5 isMatchedByRegex:xml11ExactRegex]);
+
+    NSString *badSample1 = @"thing!";
+    NSString *badSample2 = @"thing with spaces";
+    NSString *badSample3 = @".thing.with.a.dot.in.front";
+    NSString *badSample4 = @"-thingamajig";
+    NSString *badSample5 = @"2nd_thing";
+    XCTAssertFalse([badSample1 isMatchedByRegex:xml11ExactRegex]);
+    XCTAssertFalse([badSample2 isMatchedByRegex:xml11ExactRegex]);
+    XCTAssertFalse([badSample3 isMatchedByRegex:xml11ExactRegex]);
+    XCTAssertFalse([badSample4 isMatchedByRegex:xml11ExactRegex]);
+    XCTAssertFalse([badSample5 isMatchedByRegex:xml11ExactRegex]);
 }
 
 - (void)testRegexFromSection95
