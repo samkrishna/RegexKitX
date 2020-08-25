@@ -108,7 +108,35 @@
 
 - (void)testRegexFromSection95
 {
-    XCTFail(@"Not filled out yet");
+    NSString *ampersandRegex = @"&";
+    NSString *ltRegex = @"<";
+    NSString *gtRegex = @">";
+    NSString *newlineRegex = @"\\r\\n?|\\n";
+    NSString *brRegex = @"<br>\\s*<br>";
+
+    NSString *(^convertTextToHTML)(NSString *) = ^NSString *(NSString *text) {
+        NSString *newText = [text stringByReplacingOccurrencesOfRegex:ampersandRegex withTemplate:@"&amp;"];
+        newText = [newText stringByReplacingOccurrencesOfRegex:ltRegex withTemplate:@"&lt;"];
+        newText = [newText stringByReplacingOccurrencesOfRegex:gtRegex withTemplate:@"&gt;"];
+        newText = [newText stringByReplacingOccurrencesOfRegex:newlineRegex withTemplate:@"<br>"];
+        newText = [newText stringByReplacingOccurrencesOfRegex:brRegex withTemplate:@"</p><p>"];
+        newText = [NSString stringWithFormat:@"<p>%@</p>", newText];
+        return newText;
+    };
+
+    NSString *output1 = convertTextToHTML(@"Test.");
+    NSString *output2 = convertTextToHTML(@"Test.\n");
+    NSString *output3 = convertTextToHTML(@"Test.\n\n");
+    NSString *output4 = convertTextToHTML(@"Test1.\nTest2.");
+    NSString *output5 = convertTextToHTML(@"Test1.\n\nTest2.");
+    NSString *output6 = convertTextToHTML(@"< AT&T >");
+
+    XCTAssertTrue([output1 isEqualToString:@"<p>Test.</p>"]);
+    XCTAssertTrue([output2 isEqualToString:@"<p>Test.<br></p>"]);
+    XCTAssertTrue([output3 isEqualToString:@"<p>Test.</p><p></p>"]);
+    XCTAssertTrue([output4 isEqualToString:@"<p>Test1.<br>Test2.</p>"]);
+    XCTAssertTrue([output5 isEqualToString:@"<p>Test1.</p><p>Test2.</p>"]);
+    XCTAssertTrue([output6 isEqualToString:@"<p>&lt; AT&amp;T &gt;</p>"]);
 }
 
 - (void)testRegexFromSection96
