@@ -24,9 +24,9 @@
 
     NSString *betterRegex = @"(?x)"
                              "<"
-                             "(?: [^>\"'] # Non-quoted character\n"
-                             "| \"[^\"]*\" # Double-quoted attribute value\n"
-                             "| '[^']*' # Single-quoted attribute value\n"
+                             "(?: [^>\"']       # Non-quoted character\n"
+                             "| \"[^\"]*\"      # Double-quoted attribute value\n"
+                             "| '[^']*'         # Single-quoted attribute value\n"
                              ")*"
                              ">";
     NSString *betterSample = @"<title<<whoa>>>Coolness</title>";
@@ -38,12 +38,12 @@
 {
     NSString *regex = @"(?xi)"
                         "<"
-                        "(/?) # Capture the optional leading slash to backreference 1\n"
-                        "b \\b # Tag name, with word boundary\n"
-                        "( # Capture any attributes, etc. to backreference 2\n"
-                        "(?: [^>\"'] # Any character except >, \", or '\n"
-                        "| \"[^\"]*\" # Double-quoted attribute value\n"
-                        "| '[^']*' # Single-quoted attribute value\n"
+                        "(/?)           # Capture the optional leading slash to backreference 1\n"
+                        "b \\b          # Tag name, with word boundary\n"
+                        "(              # Capture any attributes, etc. to backreference 2\n"
+                        "(?: [^>\"']    # Any character except >, \", or '\n"
+                        "| \"[^\"]*\"   # Double-quoted attribute value\n"
+                        "| '[^']*'      # Single-quoted attribute value\n"
                         ")*\n"
                         ")\n"
                         ">";
