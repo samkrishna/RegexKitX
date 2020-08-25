@@ -120,6 +120,9 @@
 
 - (void)testRegexForValidatingGenericURLs
 {
+    // NOTE: Be sure to ADD '\n' (newline marks) at the end of every hashtag comment-terminated line in a multiline
+    // regex, or the underlying NSRegularExpression object will not be able to instantiate correctly and your matching
+    // test will fail.
     NSString *regex = @"(?xi)" // This allows for white space, #comments and case-insensitive matching within the pattern
     "\\A"
     "(                                              # Scheme\n"
