@@ -15,7 +15,7 @@
 
 @implementation RegexCookbookCh09Tests
 
-- (void)testQuickRegexForAttributeMatching
+- (void)testQuickRegexForAttributeMatchingFrom91
 {
     NSString *quickRegex = @"<[^>]*>";
     NSString *sample = @"<title>Boring</title>";
