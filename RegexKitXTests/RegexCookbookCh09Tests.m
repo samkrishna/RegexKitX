@@ -165,9 +165,25 @@
     XCTAssertTrue([convertedText isEqualToString:@"< AT&T >"]);
 }
 
-- (void)testRegexFromSection97
+- (void)testRegexForFindingSpecificAttributeInXMLStyleTags97
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"(?xi)"
+                        "<"
+                        "(?: [^>\"']                # Tag and attribute names, etc.\n"
+                        "| \"[^\"]*\"               # and quoted attribute values\n"
+                        "| '[^']*'"
+                        ")+?"
+                        "\\s id                     # The target attribute name, as a whole word\n"
+                        "\\s* = \\s*                # Attribute name-value delimiter\n"
+                        "( \"[^\"]*\" | '[^']*' )   # Capture the attribute value to backreference 1\n"
+                        "(?: [^>\"']                # Any remaining characters\n"
+                        "| \"[^\"]*\"               # and quoted attribute values\n"
+                        "| '[^']*'"
+                        ")*"
+                        ">";
+    NSString *sample = @"<meta id=\"og:site_name\" content=\"Optimize - Your potential. Actualized.\">";
+    NSArray<NSString *> *captures = [sample captureSubstringsMatchedByRegex:regex];
+    XCTAssertTrue([captures[1] isEqualToString:@"\"og:site_name\""]);
 }
 
 - (void)testRegexFromSection98
