@@ -139,9 +139,30 @@
     XCTAssertTrue([output6 isEqualToString:@"<p>&lt; AT&amp;T &gt;</p>"]);
 }
 
-- (void)testRegexFromSection96
+- (void)testRegexForDecodingXMLEntities96
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"&(?:#([0-9]+)|#x([0-9a-fA-F]+)|([0-9a-zA-Z]+));";
+    NSString *sample = @"&lt; AT&amp;T &gt;";
+    NSString *(^convertEntitiesToLiterals)(NSString *) = ^NSString *(NSString *text) {
+        NSDictionary *names = @{
+            @"quot" : @34,
+            @"amp" : @38,
+            @"apos" : @39,
+            @"lt" : @60,
+            @"gt" : @62
+        };
+
+        NSString *subbedText = [text stringByReplacingOccurrencesOfRegex:regex usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+            NSNumber *subCode = names[capturedStrings[3]];
+            NSString *subText = [NSString stringWithFormat:@"%c", subCode.intValue];
+            return subText;
+        }];
+
+        return subbedText;
+    };
+
+    NSString *convertedText = convertEntitiesToLiterals(sample);
+    XCTAssertTrue([convertedText isEqualToString:@"< AT&T >"]);
 }
 
 - (void)testRegexFromSection97
