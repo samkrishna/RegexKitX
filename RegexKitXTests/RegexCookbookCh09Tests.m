@@ -240,9 +240,27 @@
     XCTAssertTrue([todoCapture isMatchedByRegex:@"^TODO$"]);
 }
 
-- (void)testRegexFromSection911
+- (void)testRegexForChangingDelimiterInCSVFile911
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"(,|\\r?\\n|^)([^\",\\r\\n]+|\"(?:[^\"]|\"\")*\")?";
+    NSString *csv = @""
+    "2020-08-24 17:22:33 -0700,1.825,0.5865,0.2291,0.9768,0.9756,0.9769,0.966,51.1489,1.85054,1.8462625,1.841985,1.837708,1.83343,1.83104,1.82865,1.8267625,1.824875,1.822485,1.820095,1.818208,1.81632,1.8120425,1.807765,1.803488,1.79921\n"
+    "2020-08-24 17:33:55 -0700,1.823,0.4212,0.1429,0.9737,0.9756,0.9768,0.966,54.1829,1.85054,1.8462625,1.841985,1.837708,1.83343,1.83104,1.82865,1.8267625,1.824875,1.822485,1.820095,1.818208,1.81632,1.8120425,1.807765,1.803488,1.79921\n"
+    "\"Test\",Word,\"There,are,a,lot,of,commas,like,a lot\",don\'t,do,this,type,of,thing";
+    NSArray<NSString *> *lines = [csv componentsSeparatedByString:@"\n"];
+    NSMutableArray *tsvArray = [NSMutableArray array];
+
+    for (NSString *line in lines) {
+        NSString *tsv = [line stringByReplacingOccurrencesOfRegex:regex usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+            NSRange openRange = [capturedRanges[1] rangeValue];
+            NSString *tabMarker = (openRange.location != 0) ? @"\t" : kEmptyString;
+            NSString *output = [NSString stringWithFormat:@"%@%@", tabMarker, capturedStrings.lastObject];
+            return output;
+        }];
+
+        XCTAssertFalse([tsv isMatchedByRegex:@"^\t"]);
+        [tsvArray addObject:tsv];
+    }
 }
 
 - (void)testRegexFromSection912
