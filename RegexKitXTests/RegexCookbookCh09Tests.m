@@ -304,9 +304,11 @@
     XCTAssertTrue(sectionHeaders.count > 1);
 }
 
-- (void)testRegexFromSection914
+- (void)testRegexForMatchingINISectionBlocks914
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^\\[[^\\]\\r\\n]+](?:\\r?\\n(?:[^\\[\\r\\n].*)?)*";
+    NSArray<NSString *> *sectionBlocks = [self.sampleINIFileString substringsMatchedByRegex:regex options:RKXMultiline];
+    XCTAssertTrue(sectionBlocks.count > 1);
 }
 
 - (void)testRegexFromSection915
