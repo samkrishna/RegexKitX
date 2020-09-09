@@ -10,10 +10,23 @@
 #import <XCTest/XCTest.h>
 
 @interface RegexCookbookCh09Tests : XCTestCase
-
+@property (nonatomic, readwrite, strong) NSString *sampleINIFileString;
 @end
 
 @implementation RegexCookbookCh09Tests
+
+- (void)setUp
+{
+    NSString *filepath = [[NSBundle bundleForClass:[self class]] pathForResource:@"sample" ofType:@"ini"];
+    NSParameterAssert(filepath);
+    self.sampleINIFileString = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:NULL];
+    NSAssert(self.sampleINIFileString, @"We have an empty string!!");
+}
+
+- (void)tearDown
+{
+    self.sampleINIFileString = nil;
+}
 
 - (void)testQuickRegexForAttributeMatchingFrom91
 {
