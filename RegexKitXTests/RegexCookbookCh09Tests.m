@@ -231,9 +231,13 @@
     XCTAssertFalse([cleanedUp isMatchedByRegex:regex]);
 }
 
-- (void)testRegexFromSection910
+- (void)testRegexForFindingWordsWithinXMLStyleComments910
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"\\bTODO\\b(?=(?:(?!<!--).)*?-->)";
+    NSString *xml = @"<?xml version=\"1.0\"?>"
+                    "<!-- TODO Get a life -->";
+    NSString *todoCapture = [xml stringMatchedByRegex:regex];
+    XCTAssertTrue([todoCapture isMatchedByRegex:@"^TODO$"]);
 }
 
 - (void)testRegexFromSection911
