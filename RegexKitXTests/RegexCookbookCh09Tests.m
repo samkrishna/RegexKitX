@@ -186,9 +186,40 @@
     XCTAssertTrue([captures[1] isEqualToString:@"\"og:site_name\""]);
 }
 
-- (void)testRegexFromSection98
+- (void)testRegexForAddingCellspacingAttribute98
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"(?xi)"
+                       "<table \\b                         # Match \"<table\", as a complete word\n"
+                       "(?!                                # Not followed by: Any attributes, etc., then \"cellspacing\"\n"
+                       "(?:[^>\"']|\"[^\"]*\"|'[^']*')*?"
+                       "\\s cellspacing \\b"
+                       ")"
+                       "(                                  # Capture attributes, etc. to backreference 1\n"
+                       "(?:[^>\"']|\"[^\"]*\"|'[^']*')*"
+                       ")"
+                       ">";
+    NSString *templateString = @"<table cellspacing=\"0\"$1>";
+    NSString *tableString = @""
+    "<table style=\"width:100%\">"
+      "<tr>"
+        "<th>Firstname</th>"
+        "<th>Lastname</th>"
+        "<th>Age</th>"
+      "</tr>"
+      "<tr>"
+        "<td>Jill</td>"
+        "<td>Smith</td>"
+        "<td>50</td>"
+      "</tr>"
+      "<tr>"
+        "<td>Eve</td>"
+        "<td>Jackson</td>"
+        "<td>94</td>"
+      "</tr>"
+    "</table>";
+
+    NSString *substitutionString = [tableString stringByReplacingOccurrencesOfRegex:regex withTemplate:templateString];
+    XCTAssertTrue([substitutionString isMatchedByRegex:@"cellspacing"]);
 }
 
 - (void)testRegexFromSection99
