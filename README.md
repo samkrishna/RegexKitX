@@ -57,6 +57,6 @@ This is a Swift 5.x implementation inspired by the [RegexKitLite 4.0](http://reg
 1. @johnezang also included a few test executables in his *RKL4* sources, which are now ported and exist as test cases.
 1. I've also started adding a few pedagogical examples that have helped me learn some of the more nuanced aspects of regexes.
 1. I've included [a set of performance tests from Jon Clayden](https://rpubs.com/jonclayden/regex-performance) performing matches against a non-trivial size of text.
-1. I've begun implementing examples and exercises from the [Regular Expressions Cookbook, 2nd Ed.](http://www.regular-expressions-cookbook.com) by Steven Levithan and Jan Goyvaerts.
+1. I've implemented the vast majority of examples and implemented AT LEAST one sample from ALL of the exercises from the [Regular Expressions Cookbook, 2nd Ed.](http://www.regular-expressions-cookbook.com) by Steven Levithan and Jan Goyvaerts.
 
 Additional test cases and pull requests are welcome.
