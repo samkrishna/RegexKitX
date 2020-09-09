@@ -297,9 +297,11 @@
     XCTAssertTrue([csvCaptures[2] isEqualToString:@"\"There,are,a,lot,of,commas,like,a lot\""]);
 }
 
-- (void)testRegexFromSection913
+- (void)testRegexForMatchingINISectionHeaders913
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^\\[[^\\]\\r\\n]+]";
+    NSArray *sectionHeaders = [self.sampleINIFileString substringsMatchedByRegex:regex options:RKXMultiline];
+    XCTAssertTrue(sectionHeaders.count > 1);
 }
 
 - (void)testRegexFromSection914
