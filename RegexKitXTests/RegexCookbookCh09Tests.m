@@ -311,9 +311,14 @@
     XCTAssertTrue(sectionBlocks.count > 1);
 }
 
-- (void)testRegexFromSection915
+- (void)testRegexForMatchingININameValueParameters915
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"^([^#=;\\r\\n]+)=([^;\\r\\n]*)";
+    NSArray<NSString *> *nameValuePairs = [self.sampleINIFileString substringsMatchedByRegex:regex options:RKXMultiline];
+
+    for (NSString *pair in nameValuePairs) {
+        XCTAssertTrue([pair isMatchedByRegex:@"\\w+=.+"], @"%@ doesn't conform to standard name=value parameter format!", pair);
+    }
 }
 
 @end
