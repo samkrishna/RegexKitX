@@ -14,6 +14,7 @@
 		6F2B4E8A1EF5BE5C00DB6629 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 6F2B4E881EF5BE5C00DB6629 /* LICENSE */; };
 		6F3813731EF5CF5C00E459F6 /* RegexKitX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2B4E811EF5BA6500DB6629 /* RegexKitX.m */; };
 		6F3FDB2421EA43B1006450B8 /* RegexTipTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FDB2321EA43B1006450B8 /* RegexTipTests.m */; };
+		6F54B0EF25095C1600B858D0 /* sample.ini in Resources */ = {isa = PBXBuildFile; fileRef = 6F54B0EE25095C1600B858D0 /* sample.ini */; };
 		6F83CE8E24D3668F00C79F5C /* heredoc.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F83CE8D24D3668F00C79F5C /* heredoc.txt */; };
 		6F9CEEB21F5336BC003BAC04 /* SwiftRegexKitX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9CEEA91F5336BB003BAC04 /* SwiftRegexKitX.framework */; };
 		6F9CEEB71F5336BC003BAC04 /* RegexKitXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CEEB61F5336BC003BAC04 /* RegexKitXTests.swift */; };
@@ -58,6 +59,7 @@
 		6F2B4E881EF5BE5C00DB6629 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		6F2B4E891EF5BE5C00DB6629 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6F3FDB2321EA43B1006450B8 /* RegexTipTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexTipTests.m; sourceTree = "<group>"; };
+		6F54B0EE25095C1600B858D0 /* sample.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.ini; sourceTree = "<group>"; };
 		6F83CE8D24D3668F00C79F5C /* heredoc.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = heredoc.txt; sourceTree = "<group>"; };
 		6F9CEEA01F53345B003BAC04 /* RegexKitX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexKitX.swift; sourceTree = "<group>"; };
 		6F9CEEA91F5336BB003BAC04 /* SwiftRegexKitX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRegexKitX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +151,7 @@
 			children = (
 				6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */,
 				6F83CE8D24D3668F00C79F5C /* heredoc.txt */,
+				6F54B0EE25095C1600B858D0 /* sample.ini */,
 				6F2B4E841EF5BA7F00DB6629 /* RegexKitXTests.m */,
 				6F3FDB2321EA43B1006450B8 /* RegexTipTests.m */,
 				6FB9D31021BC35DE00FACEFD /* RegexCookbookCh03Tests.m */,
@@ -352,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F9D40CB2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */,
+				6F54B0EF25095C1600B858D0 /* sample.ini in Resources */,
 				6F83CE8E24D3668F00C79F5C /* heredoc.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
