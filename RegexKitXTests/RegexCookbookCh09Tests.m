@@ -222,9 +222,13 @@
     XCTAssertTrue([substitutionString isMatchedByRegex:@"cellspacing"]);
 }
 
-- (void)testRegexFromSection99
+- (void)testRegexForRemovingXMLStyleComments99
 {
-    XCTFail(@"Not filled out yet");
+    NSString *regex = @"<!--.*?-->";
+    NSString *xml = @"<?xml version=\"1.0\"?>"
+                    "<!-- just kidding -- >";
+    NSString *cleanedUp = [xml stringByReplacingOccurrencesOfRegex:regex withTemplate:kEmptyString];
+    XCTAssertFalse([cleanedUp isMatchedByRegex:regex]);
 }
 
 - (void)testRegexFromSection910
