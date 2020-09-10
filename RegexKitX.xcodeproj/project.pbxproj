@@ -293,7 +293,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Sam Krishna";
 				TargetAttributes = {
 					6F2B4E061EF5B85000DB6629 = {
@@ -322,11 +322,11 @@
 			};
 			buildConfigurationList = 6F2B4E011EF5B85000DB6629 /* Build configuration list for PBXProject "RegexKitX" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = 6F2B4DFD1EF5B85000DB6629;
 			productRefGroup = 6F2B4E081EF5B85000DB6629 /* Products */;
@@ -659,7 +659,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -687,7 +687,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -762,7 +762,7 @@
 				6F2B4E1A1EF5B85000DB6629 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6F2B4E1B1EF5B85000DB6629 /* Build configuration list for PBXNativeTarget "RegexKitX" */ = {
 			isa = XCConfigurationList;
@@ -771,7 +771,7 @@
 				6F2B4E1D1EF5B85000DB6629 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6F2B4E1E1EF5B85000DB6629 /* Build configuration list for PBXNativeTarget "RegexKitXTests" */ = {
 			isa = XCConfigurationList;
@@ -780,7 +780,7 @@
 				6F2B4E201EF5B85000DB6629 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6F9CEEBA1F5336BC003BAC04 /* Build configuration list for PBXNativeTarget "SwiftRegexKitX" */ = {
 			isa = XCConfigurationList;
@@ -789,7 +789,7 @@
 				6F9CEEBC1F5336BC003BAC04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6F9CEEBD1F5336BC003BAC04 /* Build configuration list for PBXNativeTarget "SwiftRegexKitXTests" */ = {
 			isa = XCConfigurationList;
@@ -798,7 +798,7 @@
 				6F9CEEBF1F5336BC003BAC04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
