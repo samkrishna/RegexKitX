@@ -1117,24 +1117,26 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
         [backreferenceNameSetM intersectSet:captureNameSet];
         backreferenceNames = [backreferenceNameSetM allObjects];
 
-        for (NSString *groupName in backreferenceNames) {
-            for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
+        for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
+            NSMutableString *templateM = [templ mutableCopy];
+
+            for (NSString *groupName in backreferenceNames) {
                 // (?<name>...) <- define a named capture group named "name"
                 // ${name} <- captured named group reference
                 NSRange namedGroupRange = [match rangeWithName:groupName];
                 NSString *namedGroupCapture = [self substringWithRange:namedGroupRange];
                 NSString *templateCapturePattern = [NSString stringWithFormat:@"\\$\\{%@\\}", groupName];
-                NSArray<NSValue *> *templateRanges = [templ rangesOfRegex:templateCapturePattern];
-                NSMutableString *templateM = [templ mutableCopy];
+                NSArray<NSValue *> *templateRanges = [templateM rangesOfRegex:templateCapturePattern];
 
                 for (NSValue *range in [templateRanges reverseObjectEnumerator]) {
                     [templateM replaceCharactersInRange:range.rangeValue withString:namedGroupCapture];
                 }
 
-                NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:[templateM copy]];
-                [self replaceCharactersInRange:match.range withString:swap];
                 count++;
             }
+
+            NSString *swap = [regex replacementStringForResult:match inString:self offset:0 template:[templateM copy]];
+            [self replaceCharactersInRange:match.range withString:swap];
         }
     }
     else {

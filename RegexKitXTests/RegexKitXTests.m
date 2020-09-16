@@ -667,6 +667,12 @@
     XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 310-555-1212\\)"]);
     XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 919-555-1212\\)"]);
     XCTAssertTrue([output isMatchedByRegex:@"\\(old number: 212-555-1212\\)$"]);
+
+    NSString *da = @"310-555-1212";
+    NSString *pattern = @"(?<area>\\d{3})-((?<exch>\\d{3})-(?<num>\\d{4}))";
+    NSString *output2 = [da stringByReplacingOccurrencesOfRegex:pattern withTemplate:@"Reversed number: ${num}-${exch}-${area}"];
+    NSString *testControl = @"Reversed number: 1212-555-310";
+    XCTAssertTrue([output2 isEqualToString:testControl], @"Output is %@", output2);
 }
 
 #pragma mark - NSMutableString tests
