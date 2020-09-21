@@ -867,7 +867,7 @@
     NSString *rawUSPop = @"328807309";
     NSString *testControl = @"328,807,309";
 
-    // Positive lookbehind and lookahead
+    // Positive lookbehind (?<=...) and positive lookahead (?=...)
     NSString *formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(\\d\\d\\d)+$)" withTemplate:@","];
     XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
 
