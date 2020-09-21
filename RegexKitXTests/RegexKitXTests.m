@@ -1203,6 +1203,21 @@
     }
 }
 
+#pragma mark - Palindrome
+
+- (void)testPalindromeRegex
+{
+    NSString *regex = @"\\b(\\w)[ \\t,'\"]*(?:(\\w)[ \\t,'\"]*(?:(\\w)[ \\t,'\"]*"
+                        "(?:(\\w)[ \\t,'\"]*(?:(\\w)[ \\t,'\"]*(?:(\\w)[ \\t,'\"]*(?:(\\w)[ \\t,'\"]*"
+                        "(?:(\\w)[ \\t,'\"]*(?:(\\w)[ \\t,'\"]*(?:(\\w)[ \\t,'\"]*(?:(\\w)[ \\t,'\"]*\\11?"
+                        "[ \\t,'\"]*\\10|\\10?)[ \\t,'\"]*\\9|\\9?)[ \\t,'\"]*\\8|\\8?)"
+                        "[ \\t,'\"]*\\7|\\7?)[ \\t,'\"]*\\6|\\6?)[ \\t,'\"]*\\5|\\5?)"
+                        "[ \\t,'\"]*\\4|\\4?)[ \\t,'\"]*\\3|\\3?)[ \\t,'\"]*\\2|\\2?))?[ \\t,'\"]*\\1\\b";
+    NSString *palindrome = @"A man, a plan, a canal, Panama!";
+    NSString *reversedString = [palindrome stringByReplacingOccurrencesOfRegex:regex withTemplate:@"$11$10$9$8$7 $6$5$4$3$2$1" options:RKXCaseless];
+    XCTAssertTrue([reversedString isEqualToString:@"canal panamA!"]);
+}
+
 #pragma mark - Test Internal Assertions
 
 - (void)testNilRegex
