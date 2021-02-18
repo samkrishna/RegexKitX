@@ -1232,4 +1232,16 @@
     XCTAssertThrows([self.candidate isMatchedByRegex:kEmptyString range:NSMakeRange(NSNotFound, self.candidate.stringRange.length)]);
 }
 
+#pragma mark - Miscellaneous
+
+- (void)testCaptureSplitting
+{
+    NSString *regex = @"([RS])(\\d{1,2})";
+    NSArray<NSString *> *captures = [@"R5" captureSubstringsMatchedByRegex:regex];
+    NSString *letter = captures[1];
+    NSString *number = captures[2];
+    XCTAssertTrue([letter isEqualToString:@"R"]);
+    XCTAssertTrue([number isEqualToString:@"5"]);
+}
+
 @end

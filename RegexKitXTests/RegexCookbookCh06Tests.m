@@ -169,7 +169,7 @@
     // Find a hexadecimal number with a 0x prefix:
     // \b0x[0-9A-F]+\b
 
-    NSString *regex = @"\\b0x[0-9A-Fa-f]+\\b";
+    NSString *regex = @"\\b0[xX][0-9A-Fa-f]+\\b";
     NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, 0xBADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"0xBADF00D";
@@ -183,7 +183,7 @@
     // Find a hexadecimal number with an &H prefix:
     // &H[0-9A-F]+\b
 
-    NSString *regex = @"&H[0-9A-Fa-f]+\\b";
+    NSString *regex = @"&[hH][0-9A-Fa-f]+\\b";
     NSString *shortLipsumWithPrefixedNumber = @"Lorem ipsum dolor sit amet, &HBADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, BADF00D consectetur adipiscing elit. Nulla felis.";
     NSString *numberOnly = @"&HBADF00D";
@@ -1015,7 +1015,7 @@
 {
     // Find any hexadecimal integer with optional underscores in a larger body of text:
     // \b0x[0-9A-F]+(_+[0-9A-F]+)*\b
-    NSString *regex = @"\\b0x[0-9A-F]+(_+[0-9A-F]+)*\\b";
+    NSString *regex = @"\\b0[xX][0-9A-F]+(_+[0-9A-F]+)*\\b";
 
     NSString *shortLipsumWithNumber = @"Lorem ipsum dolor sit amet, 0x077 consectetur adipiscing elit. Nulla felis.";
     NSString *shortLipsumWithPositiveSignedNumber = @"Lorem ipsum dolor sit amet, 0x0_77 consectetur adipiscing elit. Nulla felis.";
@@ -1045,7 +1045,7 @@
 {
     // Find any decimal, octal, hexadecimal, or binary integer with optional underscores in a larger body of text:
     // \b([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)\b
-    NSString *regex = @"\\b([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)\\b";
+    NSString *regex = @"\\b([0-9]+(_+[0-9]+)*|0[xX][0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)\\b";
 
     NSString *shortLipsumWithBadNumber = @"Lorem ipsum dolor sit amet, 0b077 consectetur adipiscing elit. Nulla felis.";
     NSString *shortLipsumWithBinaryNumber = @"Lorem ipsum dolor sit amet, 0b0_110010010_110_01 consectetur adipiscing elit. Nulla felis.";
@@ -1062,7 +1062,7 @@
 {
     // Check whether a text string holds just a decimal, octal, hexadecimal, or binary integer with optional underscores:
     // ^([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)$
-    NSString *regex = @"^([0-9]+(_+[0-9]+)*|0x[0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)$";
+    NSString *regex = @"^([0-9]+(_+[0-9]+)*|0[xX][0-9A-F]+(_+[0-9A-F]+)*|0b[01]+(_+[01]+)*)$";
 
     NSString *shortLipsumWithBadNumber = @"Lorem ipsum dolor sit amet, 0b077 consectetur adipiscing elit. Nulla felis.";
     NSString *binaryNumber = @"0b0_110010010_110_01";
