@@ -39,7 +39,7 @@ I've also added documentation that is option-clickable for all the *RKX* categor
 ## A few caveats:
 
 1. I've re-ordered and modernized some of the argument and block parameters for a number of APIs.
-1. I've renamed a few APIs as well to make them grammatically and contextually consistent.
+1. I've renamed a few APIs as well to make them grammatically and contextually consistent and follow Apple naming conventions from NSString.
 1. The regex syntax is [100%-pure ICU syntax](http://userguide.icu-project.org/strings/regexp) (the original *RKL4* diverged slightly away from ICU).
 1. For some of the block methods, I'm exposing `NSEnumerationOptions` to provide an option for directional control of the enumeration. As usual, `NSEnumerationConcurrent` behavior is undefined.
 
@@ -50,6 +50,7 @@ This is a Swift 5.x implementation inspired by the [RegexKitLite 4.0](http://reg
 - Yet another cover for `NSRegularExpression` and `NSTextCheckingResult`.
 - 100% pure ICU regex syntax
 - Allows the developer the ability to use either *NSRange* or *Range<String.UTF16View.Index>* to operate on portions of substrings.
+- Not yet feature-complete *vis-a-vis* its Objective-C counterpart.
 
 ## Test Suite
 
