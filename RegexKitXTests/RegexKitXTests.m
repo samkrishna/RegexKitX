@@ -714,7 +714,7 @@
     
     [searchString enumerateStringsMatchedByRegex:regexString usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
         NSString *matchedString = capturedStrings[0];
-        NSLog(@"%lu: %lu '%@'", ++line, matchedString.length, matchedString);
+        NSLog(@"Line: %lu, length: %lu, matched string: '%@'", ++line, matchedString.length, matchedString);
         matchCount++;
     }];
     
@@ -732,7 +732,7 @@
     NSLog(@"regexString : '%@'", regexString);
     
     for (NSString *matchedString in [searchString substringsMatchedByRegex:regexString]) {
-        NSLog(@"%lu: %lu '%@'", ++line, matchedString.length, matchedString);
+        NSLog(@"Line: %lu, length: %lu, matched string: '%@'", ++line, matchedString.length, matchedString);
         matchCount++;
     }
     
@@ -758,23 +758,16 @@
 
 #pragma mark - Ported RegexKit 0.6 Test Cases
 
-- (void)testRegexString
-{
-    NSString *pattern123 = [NSString stringWithFormat:@"123"];
-    XCTAssertTrue([pattern123 isRegexValidWithOptions:RKXNoOptions error:NULL], @"Should be valid");
-    NSString *patternMAGIC = [NSString stringWithFormat:@"^(Match)\\s+the\\s+(MAGIC)$"];
-    XCTAssertTrue([patternMAGIC isRegexValidWithOptions:RKXNoOptions error:NULL], @"Should be valid");
-}
-
-- (void)testValidRegexString
+- (void)testValidationOfRegexStrings
 {
     XCTAssertTrue([@"123" isRegexValidWithOptions:RKXNoOptions error:NULL], @"Should be valid");
     XCTAssertTrue([@"^(Match)\\s+the\\s+(MAGIC)$" isRegexValidWithOptions:RKXNoOptions error:NULL], @"Should be valid");
     
     // ICU likes this regex under a weird options combo (that included ignoring all metacharacters)
-    XCTAssertTrue([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:0xffffffff error:NULL]);
+    NSString *weirdMetacharacterRegex = @"\\( ( ( ([^()]+) | (?R) )* ) \\)";
+    XCTAssertTrue([weirdMetacharacterRegex isRegexValidWithOptions:0xffffffff error:NULL]);
     // But didn't when options = 0
-    XCTAssertFalse([@"\\( ( ( ([^()]+) | (?R) )* ) \\)" isRegexValidWithOptions:RKXNoOptions error:NULL]);
+    XCTAssertFalse([weirdMetacharacterRegex isRegexValidWithOptions:RKXNoOptions error:NULL]);
 
     // ICU fails a number of perfectly good PCRE regexes.
     NSError *error;
