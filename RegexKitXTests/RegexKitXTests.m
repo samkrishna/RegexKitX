@@ -739,7 +739,7 @@
     XCTAssertTrue(matchCount == 4);
 }
 
-- (void)testLinkExample
+- (void)testCaptureExample
 {
     // Copyright COPYRIGHT_SIGN APPROXIMATELY_EQUAL_TO 2008
     // Copyright \u00a9 \u2245 2008
