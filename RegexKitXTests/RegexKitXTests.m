@@ -382,7 +382,7 @@
 
 - (void)testArrayOfCaptureSubstringsMatchedByRegex
 {
-    NSString *list      = @"$10.23, $1024.42, $3099";
+    NSString *list = @"$10.23, $1024.42, $3099";
     NSArray *listItems = [list arrayOfCaptureSubstringsMatchedByRegex:@"\\$((\\d+)(?:\\.(\\d+)|\\.?))"];
     XCTAssertTrue(listItems.count == 3);
 
@@ -724,7 +724,7 @@
 - (void)testForInExample
 {
     NSString *searchString = @"one\ntwo\n\nfour\n";
-    NSString *regexString  = @"(?m)^.*$";
+    NSString *regexString = @"(?m)^.*$";
     NSUInteger line = 0UL;
     NSUInteger matchCount = 0;
     
