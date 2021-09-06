@@ -290,6 +290,12 @@
 
     NSString *datestamp = [self.candidate stringMatchedByRegex:regex namedCapture:@"calendardate"];
     XCTAssertTrue([datestamp isEqualToString:@"2014-05-06"]);
+
+    NSString *tickSizeKey = @"10-Tick";
+    NSString *tickSizeCapture = [tickSizeKey stringMatchedByRegex:@"(\\d+)" range:[tickSizeKey stringRange] capture:1 options:RKXCaseless error:NULL];
+    NSUInteger tickSize = (NSUInteger)tickSizeCapture.integerValue;
+    NSUInteger control = 10;
+    XCTAssertTrue(tickSize == control, @"tickSize = %lu, should be %lu", tickSize, control);
 }
 
 - (void)testStringMatchedByRegexCaptureNamedCapture
