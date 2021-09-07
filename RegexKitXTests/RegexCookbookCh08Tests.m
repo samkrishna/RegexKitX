@@ -71,7 +71,6 @@
                                                       "=~_|$!:,.;]*[A-Z0-9+&@#/%=~_|$]" ;
     NSString *sample2 = @"THis is a lorem ipsum www.apple.com/apple.png test of the regex";
     XCTAssertTrue([sample2 isMatchedByRegex:modifiedRegexSansSpacesOrPunctuation options:RKXCaseless]);
-
 }
 
 - (void)testRegexForFindingQuotedURLsInText

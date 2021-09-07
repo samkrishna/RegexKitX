@@ -72,7 +72,6 @@
     NSString *stevenTest = @"Is it spelled Steve, Steven, or Stephen?";
     NSArray<NSString *> *stevenMatches = [stevenTest substringsMatchedByRegex:stevenRegex options:RKXCaseless];
     XCTAssertTrue(stevenMatches.count == 3);
-
 }
 
 - (void)testRegexFromSection54
