@@ -607,7 +607,7 @@
     // This is from the RKL4 sources:
     
     // "I|at|ice I eat rice" split using the regex "\b\s*" demonstrates the problem.
-    // ICU bug http://bugs.icu-project.org/trac/ticket/6826
+    // ICU bug https://unicode-org.atlassian.net/browse/ICU-6826
     //
     // ICU : "", "I", "|", "at", "|", "ice", "", "I", "", "eat", "", "rice" <- Results that RegexKitX produces
     // PERL:     "I", "|", "at", "|", "ice",     "I",     "eat",     "rice" <- Results that RKL4 produces.
