@@ -240,7 +240,7 @@
     NSString *regex = @"<!--.*?-->";
     NSString *xml = @"<?xml version=\"1.0\"?>"
                     "<!-- just kidding -- >";
-    NSString *cleanedUp = [xml stringByReplacingOccurrencesOfRegex:regex withTemplate:kEmptyString];
+    NSString *cleanedUp = [xml stringByReplacingOccurrencesOfRegex:regex withTemplate:kRKXEmptyStringKey];
     XCTAssertFalse([cleanedUp isMatchedByRegex:regex]);
 }
 
@@ -266,7 +266,7 @@
     for (NSString *line in lines) {
         NSString *tsv = [line stringByReplacingOccurrencesOfRegex:regex usingBlock:^NSString *(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
             NSRange openRange = [capturedRanges[1] rangeValue];
-            NSString *tabMarker = (openRange.location != 0) ? @"\t" : kEmptyString;
+            NSString *tabMarker = (openRange.location != 0) ? @"\t" : kRKXEmptyStringKey;
             NSString *output = [NSString stringWithFormat:@"%@%@", tabMarker, capturedStrings.lastObject];
             return output;
         }];

@@ -82,7 +82,7 @@ extern const NSInteger RKXMatchingTimeoutError;
 /**
  The empty string, represented by @@"".
  */
-extern NSString *const kEmptyString;
+extern NSString *const kRKXEmptyStringKey;
 
 #pragma mark -
 

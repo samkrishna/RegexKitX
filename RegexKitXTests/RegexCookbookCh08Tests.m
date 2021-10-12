@@ -316,7 +316,7 @@
 {
     NSString *regex = @"[\\\\/:\"*?<>|]+";
     NSString *sample = @"\\file.exe";
-    NSString *fileExtension = [sample stringByReplacingOccurrencesOfRegex:regex withTemplate:kEmptyString];
+    NSString *fileExtension = [sample stringByReplacingOccurrencesOfRegex:regex withTemplate:kRKXEmptyStringKey];
     XCTAssertTrue([fileExtension isEqualToString:@"file.exe"]);
 }
 

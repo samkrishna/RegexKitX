@@ -401,7 +401,7 @@
     XCTAssertTrue(result1);
 
     NSArray *list2 = listItems[2];
-    BOOL result2 = [list2 isEqualToArray:@[ @"$3099", @"3099", @"3099", kEmptyString ]];
+    BOOL result2 = [list2 isEqualToArray:@[ @"$3099", @"3099", @"3099", kRKXEmptyStringKey ]];
     XCTAssertTrue(result2);
 }
 
@@ -412,7 +412,7 @@
     
     XCTAssertTrue([listItems[0] isEqualToString:@"23"]);
     XCTAssertTrue([listItems[1] isEqualToString:@"42"]);
-    XCTAssertTrue([listItems[2] isEqualToString:kEmptyString]);
+    XCTAssertTrue([listItems[2] isEqualToString:kRKXEmptyStringKey]);
 }
 
 - (void)testCaptureSubstringsMatchedByRegex
@@ -442,7 +442,7 @@
                                               withKeysAndCaptures:firstKey, 1, lastKey, 2, nil];
 
     XCTAssertTrue([nameDictionary[firstKey] isEqualToString:@"Joe"]);
-    XCTAssertTrue([nameDictionary[lastKey] isEqualToString:kEmptyString]);
+    XCTAssertTrue([nameDictionary[lastKey] isEqualToString:kRKXEmptyStringKey]);
     
     NSString *badRegex = @"Name:\\s*(\\w*)\\s*(\\w*";
     NSError *error;
@@ -493,7 +493,7 @@
 
     NSDictionary *name1 = nameArray[0];
     XCTAssertTrue([name1[firstKey] isEqualToString:@"Bob"]);
-    XCTAssertTrue([name1[lastKey] isEqualToString:kEmptyString]);
+    XCTAssertTrue([name1[lastKey] isEqualToString:kRKXEmptyStringKey]);
 
     NSDictionary *name2 = nameArray[1];
     XCTAssertTrue([name2[firstKey] isEqualToString:@"John"]);
@@ -620,7 +620,7 @@
     NSString *regex = @"\\b\\s*";
     NSArray<NSString *> *substrings = [testString substringsSeparatedByRegex:regex];
     XCTAssertFalse([substrings.firstObject isEqualToString:@"I"]);
-    XCTAssertTrue([substrings.firstObject isEqualToString:kEmptyString]);
+    XCTAssertTrue([substrings.firstObject isEqualToString:kRKXEmptyStringKey]);
     XCTAssertTrue([substrings.lastObject isEqualToString:@"rice"]);
 }
 
@@ -1226,9 +1226,9 @@
 
 - (void)testInvalidRanges
 {
-    XCTAssertThrows([self.candidate isMatchedByRegex:kEmptyString range:NSMakeRange(0, NSNotFound)]);
-    XCTAssertThrows([self.candidate isMatchedByRegex:kEmptyString range:NSMakeRange(NSNotFound, 0)]);
-    XCTAssertThrows([self.candidate isMatchedByRegex:kEmptyString range:NSMakeRange(NSNotFound, self.candidate.stringRange.length)]);
+    XCTAssertThrows([self.candidate isMatchedByRegex:kRKXEmptyStringKey range:NSMakeRange(0, NSNotFound)]);
+    XCTAssertThrows([self.candidate isMatchedByRegex:kRKXEmptyStringKey range:NSMakeRange(NSNotFound, 0)]);
+    XCTAssertThrows([self.candidate isMatchedByRegex:kRKXEmptyStringKey range:NSMakeRange(NSNotFound, self.candidate.stringRange.length)]);
 }
 
 #pragma mark - Miscellaneous
