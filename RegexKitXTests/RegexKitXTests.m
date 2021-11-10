@@ -886,6 +886,11 @@
     // Negative lookbehind (?<!...)
     formattedUSPop = [rawUSPop stringByReplacingOccurrencesOfRegex:@"(?<!\\b)(?=(?:\\d{3})+$)" withTemplate:@","];
     XCTAssertTrue([formattedUSPop isEqualToString:testControl]);
+
+    // Positive lookbehind (?<=...), positive lookahead (?=...)
+    NSString *someBillions = @"8927369280";
+    NSString *commaOutput = [someBillions stringByReplacingOccurrencesOfRegex:@"(?<=\\d)(?=(\\d{3})+$)" withTemplate:@","];
+    XCTAssertTrue([commaOutput isEqualToString:@"8,927,369,280"]);
 }
 
 #if NFA_FAIL_TEST
@@ -1241,6 +1246,21 @@
     NSString *number = captures[2];
     XCTAssertTrue([letter isEqualToString:@"R"]);
     XCTAssertTrue([number isEqualToString:@"5"]);
+}
+
+- (void)testAnotherNegativeLookahead
+{
+    // ^(?!(.)\1*$)[0-9A-Z]{0,25}$
+    // 111112 - match
+    // AABD333434 - match
+    // 55555555 - no match
+    // 555 - no match
+    NSString *regex = @"^(?!(.)\\1*$)[0-9A-Z]{0,25}$";
+
+    XCTAssertTrue([@"111112" isMatchedByRegex:regex]);
+    XCTAssertTrue([@"AABD333434" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"55555555" isMatchedByRegex:regex]);
+    XCTAssertFalse([@"555" isMatchedByRegex:regex]);
 }
 
 @end
