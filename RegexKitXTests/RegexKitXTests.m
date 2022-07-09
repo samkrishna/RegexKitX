@@ -989,8 +989,9 @@
     XCTAssertTrue(substitutionCount == 3, @"substitution count = %lu", substitutionCount);
     XCTAssertTrue([mutableDA isEqualToString:testControl], @"mutatated string is %@", output);
 }
+#endif
 
-- (void)testAppleBugWithCaseSensitiveUnicodeMatching
+- (void)testWithCaseInsensitiveUnicodeMatching
 {
     // In Greek, the "BRAVO" characters are:
     // 'B' - Beta
@@ -999,19 +1000,17 @@
     // 'V' - Upsilon (Best I could do instead of a classic "V"
     // 'O' - Omicron
 
-    // rdar://46309431
-    NSString *upperCaseBravo = @"𝛣𝛲𝛢𝛶𝛰";
-    NSString *lowerCaseBravo = @"𝛽𝜌𝛂𝜐𝜊";
+    NSString *upperCaseBravo = @"ΒΡΑΥΟ";
+    NSString *lowerCaseBravo = @"βραυο";
     NSRegularExpression *bravoRegex = [NSRegularExpression regularExpressionWithPattern:upperCaseBravo options:NSRegularExpressionCaseInsensitive error:NULL];
     NSRange ucBravoRange = [bravoRegex rangeOfFirstMatchInString:upperCaseBravo options:kNilOptions range:NSMakeRange(0, upperCaseBravo.length)];
     XCTAssertTrue(ucBravoRange.location == 0, @"Failed match: location = %@", (ucBravoRange.location == NSNotFound) ? @"NSNotFound" : @(ucBravoRange.location));
-    XCTAssertTrue(ucBravoRange.length == 10, @"Failed match: length = %lu", ucBravoRange.length);
+    XCTAssertTrue(ucBravoRange.length == 5, @"Failed match: length = %lu", ucBravoRange.length);
 
     NSRange lcBravoRange = [bravoRegex rangeOfFirstMatchInString:lowerCaseBravo options:kNilOptions range:NSMakeRange(0, lowerCaseBravo.length)];
     XCTAssertTrue(lcBravoRange.location == 0, @"Failed match: location = %@", (lcBravoRange.location == NSNotFound) ? @"NSNotFound" : @(lcBravoRange.location));
-    XCTAssertTrue(lcBravoRange.length == 10, @"Failed match: length = %lu", lcBravoRange.length);
+    XCTAssertTrue(lcBravoRange.length == 5, @"Failed match: length = %lu", lcBravoRange.length);
 }
-#endif
 
 #pragma mark - Performance Tests
 // These performance tests were adapted from https://rpubs.com/jonclayden/regex-performance
