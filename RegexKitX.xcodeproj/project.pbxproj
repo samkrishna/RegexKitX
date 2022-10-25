@@ -16,12 +16,7 @@
 		6F3FDB2421EA43B1006450B8 /* RegexTipTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FDB2321EA43B1006450B8 /* RegexTipTests.m */; };
 		6F54B0EF25095C1600B858D0 /* sample.ini in Resources */ = {isa = PBXBuildFile; fileRef = 6F54B0EE25095C1600B858D0 /* sample.ini */; };
 		6F83CE8E24D3668F00C79F5C /* heredoc.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F83CE8D24D3668F00C79F5C /* heredoc.txt */; };
-		6F9CEEB21F5336BC003BAC04 /* SwiftRegexKitX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9CEEA91F5336BB003BAC04 /* SwiftRegexKitX.framework */; };
-		6F9CEEB71F5336BC003BAC04 /* RegexKitXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CEEB61F5336BC003BAC04 /* RegexKitXTests.swift */; };
-		6F9CEEB91F5336BC003BAC04 /* SwiftRegexKitX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F9CEEAB1F5336BB003BAC04 /* SwiftRegexKitX.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6F9CEEC01F5336D8003BAC04 /* RegexKitX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CEEA01F53345B003BAC04 /* RegexKitX.swift */; };
 		6F9D40CB2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */; };
-		6F9D40CC2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */; };
 		6FB9D31121BC35DE00FACEFD /* RegexCookbookCh03Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB9D31021BC35DE00FACEFD /* RegexCookbookCh03Tests.m */; };
 		6FBAB410235509CC001A62CD /* RegexCookbookCh05Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FBAB40F235509CC001A62CD /* RegexCookbookCh05Tests.m */; };
 		6FBAB41223555674001A62CD /* RegexCookbookCh06Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FBAB41123555674001A62CD /* RegexCookbookCh06Tests.m */; };
@@ -37,13 +32,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6F2B4E061EF5B85000DB6629;
 			remoteInfo = RegexKitLite5;
-		};
-		6F9CEEB31F5336BC003BAC04 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6F2B4DFE1EF5B85000DB6629 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6F9CEEA81F5336BB003BAC04;
-			remoteInfo = SwiftRegexKitLite5;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -61,13 +49,6 @@
 		6F3FDB2321EA43B1006450B8 /* RegexTipTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexTipTests.m; sourceTree = "<group>"; };
 		6F54B0EE25095C1600B858D0 /* sample.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.ini; sourceTree = "<group>"; };
 		6F83CE8D24D3668F00C79F5C /* heredoc.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = heredoc.txt; sourceTree = "<group>"; };
-		6F9CEEA01F53345B003BAC04 /* RegexKitX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexKitX.swift; sourceTree = "<group>"; };
-		6F9CEEA91F5336BB003BAC04 /* SwiftRegexKitX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRegexKitX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F9CEEAB1F5336BB003BAC04 /* SwiftRegexKitX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftRegexKitX.h; sourceTree = "<group>"; };
-		6F9CEEAC1F5336BB003BAC04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F9CEEB11F5336BB003BAC04 /* SwiftRegexKitXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftRegexKitXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F9CEEB61F5336BC003BAC04 /* RegexKitXTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 1; path = RegexKitXTests.swift; sourceTree = "<group>"; };
-		6F9CEEB81F5336BC003BAC04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "sherlock-utf-8.txt"; sourceTree = "<group>"; };
 		6FB9D31021BC35DE00FACEFD /* RegexCookbookCh03Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh03Tests.m; sourceTree = "<group>"; };
 		6FBAB40F235509CC001A62CD /* RegexCookbookCh05Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh05Tests.m; sourceTree = "<group>"; };
@@ -93,21 +74,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F9CEEA51F5336BB003BAC04 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F9CEEAE1F5336BB003BAC04 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F9CEEB21F5336BC003BAC04 /* SwiftRegexKitX.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -116,8 +82,6 @@
 			children = (
 				6F2B4E091EF5B85000DB6629 /* RegexKitX */,
 				6F2B4E141EF5B85000DB6629 /* RegexKitXTests */,
-				6F9CEEAA1F5336BB003BAC04 /* SwiftRegexKitX */,
-				6F9CEEB51F5336BC003BAC04 /* SwiftRegexKitXTests */,
 				6F2B4E081EF5B85000DB6629 /* Products */,
 				6F2B4E881EF5BE5C00DB6629 /* LICENSE */,
 				6F2B4E891EF5BE5C00DB6629 /* README.md */,
@@ -130,8 +94,6 @@
 			children = (
 				6F2B4E071EF5B85000DB6629 /* RegexKitX.framework */,
 				6F2B4E101EF5B85000DB6629 /* RegexKitXTests.xctest */,
-				6F9CEEA91F5336BB003BAC04 /* SwiftRegexKitX.framework */,
-				6F9CEEB11F5336BB003BAC04 /* SwiftRegexKitXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,25 +135,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6F9CEEAA1F5336BB003BAC04 /* SwiftRegexKitX */ = {
-			isa = PBXGroup;
-			children = (
-				6F9CEEA01F53345B003BAC04 /* RegexKitX.swift */,
-				6F9CEEAB1F5336BB003BAC04 /* SwiftRegexKitX.h */,
-				6F9CEEAC1F5336BB003BAC04 /* Info.plist */,
-			);
-			path = SwiftRegexKitX;
-			sourceTree = "<group>";
-		};
-		6F9CEEB51F5336BC003BAC04 /* SwiftRegexKitXTests */ = {
-			isa = PBXGroup;
-			children = (
-				6F9CEEB61F5336BC003BAC04 /* RegexKitXTests.swift */,
-				6F9CEEB81F5336BC003BAC04 /* Info.plist */,
-			);
-			path = SwiftRegexKitXTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -200,14 +143,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F2B4E821EF5BA6500DB6629 /* RegexKitX.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F9CEEA61F5336BB003BAC04 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F9CEEB91F5336BC003BAC04 /* SwiftRegexKitX.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,42 +185,6 @@
 			productReference = 6F2B4E101EF5B85000DB6629 /* RegexKitXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		6F9CEEA81F5336BB003BAC04 /* SwiftRegexKitX */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6F9CEEBA1F5336BC003BAC04 /* Build configuration list for PBXNativeTarget "SwiftRegexKitX" */;
-			buildPhases = (
-				6F9CEEA41F5336BB003BAC04 /* Sources */,
-				6F9CEEA51F5336BB003BAC04 /* Frameworks */,
-				6F9CEEA61F5336BB003BAC04 /* Headers */,
-				6F9CEEA71F5336BB003BAC04 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SwiftRegexKitX;
-			productName = SwiftRegexKitLite5;
-			productReference = 6F9CEEA91F5336BB003BAC04 /* SwiftRegexKitX.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		6F9CEEB01F5336BB003BAC04 /* SwiftRegexKitXTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6F9CEEBD1F5336BC003BAC04 /* Build configuration list for PBXNativeTarget "SwiftRegexKitXTests" */;
-			buildPhases = (
-				6F9CEEAD1F5336BB003BAC04 /* Sources */,
-				6F9CEEAE1F5336BB003BAC04 /* Frameworks */,
-				6F9CEEAF1F5336BB003BAC04 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6F9CEEB41F5336BC003BAC04 /* PBXTargetDependency */,
-			);
-			name = SwiftRegexKitXTests;
-			productName = SwiftRegexKitLite5Tests;
-			productReference = 6F9CEEB11F5336BB003BAC04 /* SwiftRegexKitXTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -306,18 +205,6 @@
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
-					6F9CEEA81F5336BB003BAC04 = {
-						CreatedOnToolsVersion = 9.0;
-						DevelopmentTeam = LJWQXKAD69;
-						LastSwiftMigration = 1010;
-						ProvisioningStyle = Manual;
-					};
-					6F9CEEB01F5336BB003BAC04 = {
-						CreatedOnToolsVersion = 9.0;
-						DevelopmentTeam = LJWQXKAD69;
-						LastSwiftMigration = 1010;
-						ProvisioningStyle = Manual;
-					};
 				};
 			};
 			buildConfigurationList = 6F2B4E011EF5B85000DB6629 /* Build configuration list for PBXProject "RegexKitX" */;
@@ -335,8 +222,6 @@
 			targets = (
 				6F2B4E061EF5B85000DB6629 /* RegexKitX */,
 				6F2B4E0F1EF5B85000DB6629 /* RegexKitXTests */,
-				6F9CEEA81F5336BB003BAC04 /* SwiftRegexKitX */,
-				6F9CEEB01F5336BB003BAC04 /* SwiftRegexKitXTests */,
 			);
 		};
 /* End PBXProject section */
@@ -357,21 +242,6 @@
 				6F9D40CB2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */,
 				6F54B0EF25095C1600B858D0 /* sample.ini in Resources */,
 				6F83CE8E24D3668F00C79F5C /* heredoc.txt in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F9CEEA71F5336BB003BAC04 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F9CEEAF1F5336BB003BAC04 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F9D40CC2178CFB60015E3E4 /* sherlock-utf-8.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,22 +272,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F9CEEA41F5336BB003BAC04 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F9CEEC01F5336D8003BAC04 /* RegexKitX.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F9CEEAD1F5336BB003BAC04 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F9CEEB71F5336BC003BAC04 /* RegexKitXTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -425,11 +279,6 @@
 			isa = PBXTargetDependency;
 			target = 6F2B4E061EF5B85000DB6629 /* RegexKitX */;
 			targetProxy = 6F2B4E121EF5B85000DB6629 /* PBXContainerItemProxy */;
-		};
-		6F9CEEB41F5336BC003BAC04 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6F9CEEA81F5336BB003BAC04 /* SwiftRegexKitX */;
-			targetProxy = 6F9CEEB31F5336BC003BAC04 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -654,104 +503,6 @@
 			};
 			name = Release;
 		};
-		6F9CEEBB1F5336BC003BAC04 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = SwiftRegexKitX/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sectormobile.SwiftRegexKitX;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		6F9CEEBC1F5336BC003BAC04 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = SwiftRegexKitX/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sectormobile.SwiftRegexKitX;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		6F9CEEBE1F5336BC003BAC04 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = SwiftRegexKitXTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sectormobile.SwiftRegexKitXTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-			};
-			name = Debug;
-		};
-		6F9CEEBF1F5336BC003BAC04 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = SwiftRegexKitXTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sectormobile.SwiftRegexKitXTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -778,24 +529,6 @@
 			buildConfigurations = (
 				6F2B4E1F1EF5B85000DB6629 /* Debug */,
 				6F2B4E201EF5B85000DB6629 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		6F9CEEBA1F5336BC003BAC04 /* Build configuration list for PBXNativeTarget "SwiftRegexKitX" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6F9CEEBB1F5336BC003BAC04 /* Debug */,
-				6F9CEEBC1F5336BC003BAC04 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		6F9CEEBD1F5336BC003BAC04 /* Build configuration list for PBXNativeTarget "SwiftRegexKitXTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6F9CEEBE1F5336BC003BAC04 /* Debug */,
-				6F9CEEBF1F5336BC003BAC04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
