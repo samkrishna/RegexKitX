@@ -1010,6 +1010,8 @@
     NSRange lcBravoRange = [bravoRegex rangeOfFirstMatchInString:lowerCaseBravo options:kNilOptions range:NSMakeRange(0, lowerCaseBravo.length)];
     XCTAssertTrue(lcBravoRange.location == 0, @"Failed match: location = %@", (lcBravoRange.location == NSNotFound) ? @"NSNotFound" : @(lcBravoRange.location));
     XCTAssertTrue(lcBravoRange.length == 5, @"Failed match: length = %lu", lcBravoRange.length);
+
+    XCTAssertTrue([upperCaseBravo isMatchedByRegex:lowerCaseBravo options:RKXCaseless] == YES);
 }
 
 #pragma mark - Performance Tests
