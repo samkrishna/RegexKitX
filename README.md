@@ -45,21 +45,4 @@ I've also added documentation that is option-clickable for all the *RKX* categor
 
 ## Swift
 
-I have deprecated the *SwiftRegexKitX* extension and tests. The new Apple Swift Regex additions pretty much negate any prior extensions. Apple has added a `Regex` struct and associated types along with a [RegexBuilder](https://developer.apple.com/documentation/regexbuilder) DSL. Much more sophisticated than anything I came up with for *SwiftRegexKitX*.
-
-~~This is a Swift 5.x implementation inspired by the [RegexKitLite 4.0](http://regexkit.sourceforge.net/#RegexKitLite) API. It is:~~
-
-~~- Yet another cover for `NSRegularExpression` and `NSTextCheckingResult`.~~
-~~- 100% pure ICU regex syntax~~
-~~- Allows the developer the ability to use either *NSRange* or *Range<String.UTF16View.Index>* to operate on portions of substrings.~~
-~~- Not yet feature-complete *vis-a-vis* its Objective-C counterpart.~~
-
-## ~~Test Suite~~
-
-~~1. I have started a Unit Test file that tests the baseline argument-rich methods for expected behavior.~~
-~~1. @johnezang also included a few test executables in his *RKL4* sources, which are now ported and exist as test cases.~~
-~~1. I've also started adding a few pedagogical examples that have helped me learn some of the more nuanced aspects of regexes.~~
-~~1. I've included [a set of performance tests from Jon Clayden](https://rpubs.com/jonclayden/regex-performance) performing matches against a non-trivial size of text.~~
-~~1. I've implemented the vast majority of examples and implemented AT LEAST one sample from ALL of the exercises from the [Regular Expressions Cookbook, 2nd Ed.](http://www.regular-expressions-cookbook.com) by Steven Levithan and Jan Goyvaerts.~~
-
-~~Additional test cases and pull requests are welcome.~~
+I have deprecated the *SwiftRegexKitX* extension and tests. The new Apple Swift Regex additions pretty much negate any prior extensions. Apple has added a `Regex` struct and associated types along with a [RegexBuilder](https://developer.apple.com/documentation/regexbuilder) DSL, which is much more sophisticated than anything I came up with for *SwiftRegexKitX*.
