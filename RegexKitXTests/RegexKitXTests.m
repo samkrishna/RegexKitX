@@ -60,7 +60,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.candidate = @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU275587, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
+    self.candidate = @"2014-05-06 17:03:17.967 EXECUTION_DATA: -1 EUR EUR.JPY 14321016 orderId:439: clientId:75018, execId:0001f4e8.536956da.01.01, time:20140506  17:03:18, acctNumber:DU987456, exchange:IDEALPRO, side:SLD, shares:141500, price:141.73, permId:825657452, liquidation:0, cumQty:141500, avgPrice:141.73";
 
     const char *unicodeCStrings[] = {
         /* 0 */ "pi \xE2\x89\x85 3 (apx eq)",
@@ -679,6 +679,26 @@
     NSString *output2 = [da stringByReplacingOccurrencesOfRegex:pattern withTemplate:@"Reversed number: ${num}-${exch}-${area}"];
     NSString *testControl = @"Reversed number: 1212-555-310";
     XCTAssertTrue([output2 isEqualToString:testControl], @"Output is %@", output2);
+}
+
+- (void)testStringByReplaceOccurrencesOfRegexWithTemplateUsingReservedCharacterExceptions
+{
+    NSArray *keys = @[
+        @"key 01",
+        @"key 02",
+        @"key 03",
+        @"key 04",
+        @"key 05",
+        @"key 06",
+        @"key 07",
+        @"key 08",
+        @"key 09",
+        @"key 10"
+    ];
+
+    NSString *concatenatedKeys = [keys componentsJoinedByString:@", "];
+    NSString *dollaredUpKeys = [concatenatedKeys stringByReplacingOccurrencesOfRegex:@"key \\d+" withTemplate:@"\\$$0\\$"];
+    XCTAssert([dollaredUpKeys isMatchedByRegex:@"\\$key 01\\$"]);
 }
 
 #pragma mark - NSMutableString tests
