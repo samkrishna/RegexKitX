@@ -681,7 +681,7 @@
     XCTAssertTrue([output2 isEqualToString:testControl], @"Output is %@", output2);
 }
 
-- (void)testStringByReplaceOccurrencesOfRegexWithTemplateUsingReservedCharacterExceptions
+- (void)testStringByReplaceOccurrencesOfRegexWithTemplateUsingReservedCharacters
 {
     NSArray *keys = @[
         @"key 01",
