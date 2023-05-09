@@ -403,6 +403,10 @@
     NSArray *list2 = listItems[2];
     BOOL result2 = [list2 isEqualToArray:@[ @"$3099", @"3099", @"3099", RKXEmptyStringKey ]];
     XCTAssertTrue(result2);
+
+    NSString *multiline = @"\"2023-03-26 18:10:38 -0700\" = \"1.621\";\r\"2023-03-26 23:45:08 -0700\" = \"1.619\";\r\"2023-03-27 02:59:17 -0700\" = \"1.617\";\r\"2023-03-27 07:28:44 -0700\" = \"1.622\";";
+    NSArray *mlCaptures = [multiline arrayOfCaptureSubstringsMatchedByRegex:@"^\"(.+)\"?$" options:RKXMultiline];
+    XCTAssertTrue(mlCaptures.count == 4);
 }
 
 - (void)testSubstringsMatchedByRegex
