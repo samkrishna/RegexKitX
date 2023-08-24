@@ -230,8 +230,8 @@
 - (void)testRegexFromSection322
 {
     NSString *regex = @"\\b(?<keyword>table|row|cell)\\b"
-                         "| %(?<string>[^%]*(?:%%[^%]*)*)%"
-                         "| (?<error>\\S+)";
+                       "| %(?<string>[^%]*(?:%%[^%]*)*)%"
+                       "| (?<error>\\S+)";
 
     NSString *sample = @"table %First table%\n"
                         "row cell %A1% cell %B1% cell%C1%cell%D1%\n"
