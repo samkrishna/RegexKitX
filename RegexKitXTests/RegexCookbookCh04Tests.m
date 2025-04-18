@@ -102,7 +102,8 @@
         NSString *monthString = [testString stringMatchedByRegex:pattern namedCapture:@"month"];
         NSString *dayString = [testString stringMatchedByRegex:pattern namedCapture:@"day"];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateStyle = NSDateFormatterShortStyle;
+        formatter.dateFormat = @"MM/dd/yyyy";
+
         NSString *dateString = [NSString stringWithFormat:@"%@/%@/%ld", monthString, dayString, year];
         NSDate *date = [formatter dateFromString:dateString];
         return date;
