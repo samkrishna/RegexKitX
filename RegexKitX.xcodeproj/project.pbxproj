@@ -36,26 +36,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6F2114F821D284DD00BCFD28 /* RegexCookbookCh04Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh04Tests.m; sourceTree = "<group>"; };
+		6F2114F821D284DD00BCFD28 /* RegexCookbookCh04Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh04Tests.m; sourceTree = "<group>"; };
 		6F2B4E071EF5B85000DB6629 /* RegexKitX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RegexKitX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F2B4E0B1EF5B85000DB6629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F2B4E101EF5B85000DB6629 /* RegexKitXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegexKitXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F2B4E171EF5B85000DB6629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F2B4E801EF5BA6500DB6629 /* RegexKitX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitX.h; sourceTree = "<group>"; };
 		6F2B4E811EF5BA6500DB6629 /* RegexKitX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitX.m; sourceTree = "<group>"; };
-		6F2B4E841EF5BA7F00DB6629 /* RegexKitXTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitXTests.m; sourceTree = "<group>"; };
+		6F2B4E841EF5BA7F00DB6629 /* RegexKitXTests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = RegexKitXTests.m; sourceTree = "<group>"; };
 		6F2B4E881EF5BE5C00DB6629 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		6F2B4E891EF5BE5C00DB6629 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		6F3FDB2321EA43B1006450B8 /* RegexTipTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexTipTests.m; sourceTree = "<group>"; };
+		6F3FDB2321EA43B1006450B8 /* RegexTipTests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexTipTests.m; sourceTree = "<group>"; };
 		6F54B0EE25095C1600B858D0 /* sample.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.ini; sourceTree = "<group>"; };
 		6F83CE8D24D3668F00C79F5C /* heredoc.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = heredoc.txt; sourceTree = "<group>"; };
 		6F9D40CA2178CFB60015E3E4 /* sherlock-utf-8.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "sherlock-utf-8.txt"; sourceTree = "<group>"; };
-		6FB9D31021BC35DE00FACEFD /* RegexCookbookCh03Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh03Tests.m; sourceTree = "<group>"; };
-		6FBAB40F235509CC001A62CD /* RegexCookbookCh05Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh05Tests.m; sourceTree = "<group>"; };
-		6FBAB41123555674001A62CD /* RegexCookbookCh06Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh06Tests.m; sourceTree = "<group>"; };
-		6FBAB413235556D2001A62CD /* RegexCookbookCh07Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh07Tests.m; sourceTree = "<group>"; };
-		6FBAB4152355570D001A62CD /* RegexCookbookCh08Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh08Tests.m; sourceTree = "<group>"; };
-		6FBAB41723555796001A62CD /* RegexCookbookCh09Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegexCookbookCh09Tests.m; sourceTree = "<group>"; };
+		6FB9D31021BC35DE00FACEFD /* RegexCookbookCh03Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh03Tests.m; sourceTree = "<group>"; };
+		6FBAB40F235509CC001A62CD /* RegexCookbookCh05Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh05Tests.m; sourceTree = "<group>"; };
+		6FBAB41123555674001A62CD /* RegexCookbookCh06Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh06Tests.m; sourceTree = "<group>"; };
+		6FBAB413235556D2001A62CD /* RegexCookbookCh07Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh07Tests.m; sourceTree = "<group>"; };
+		6FBAB4152355570D001A62CD /* RegexCookbookCh08Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh08Tests.m; sourceTree = "<group>"; };
+		6FBAB41723555796001A62CD /* RegexCookbookCh09Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh09Tests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
