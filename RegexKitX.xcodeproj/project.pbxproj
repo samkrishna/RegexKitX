@@ -23,6 +23,10 @@
 		6FBAB414235556D2001A62CD /* RegexCookbookCh07Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FBAB413235556D2001A62CD /* RegexCookbookCh07Tests.m */; };
 		6FBAB4162355570D001A62CD /* RegexCookbookCh08Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FBAB4152355570D001A62CD /* RegexCookbookCh08Tests.m */; };
 		6FBAB41823555796001A62CD /* RegexCookbookCh09Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FBAB41723555796001A62CD /* RegexCookbookCh09Tests.m */; };
+		AA00000001000000AABB0002 /* MasteringRegexCh01Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA00000001000000AABB0001 /* MasteringRegexCh01Tests.m */; };
+		AA00000002000000AABB0002 /* MasteringRegexCh02Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA00000002000000AABB0001 /* MasteringRegexCh02Tests.m */; };
+		AA00000003000000AABB0002 /* MasteringRegexCh03Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA00000003000000AABB0001 /* MasteringRegexCh03Tests.m */; };
+		AA00000005000000AABB0002 /* MasteringRegexCh05Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA00000005000000AABB0001 /* MasteringRegexCh05Tests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +60,10 @@
 		6FBAB413235556D2001A62CD /* RegexCookbookCh07Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh07Tests.m; sourceTree = "<group>"; };
 		6FBAB4152355570D001A62CD /* RegexCookbookCh08Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh08Tests.m; sourceTree = "<group>"; };
 		6FBAB41723555796001A62CD /* RegexCookbookCh09Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexCookbookCh09Tests.m; sourceTree = "<group>"; };
+		AA00000001000000AABB0001 /* MasteringRegexCh01Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = MasteringRegexCh01Tests.m; sourceTree = "<group>"; };
+		AA00000002000000AABB0001 /* MasteringRegexCh02Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = MasteringRegexCh02Tests.m; sourceTree = "<group>"; };
+		AA00000003000000AABB0001 /* MasteringRegexCh03Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = MasteringRegexCh03Tests.m; sourceTree = "<group>"; };
+		AA00000005000000AABB0001 /* MasteringRegexCh05Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = MasteringRegexCh05Tests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +131,10 @@
 				6FBAB413235556D2001A62CD /* RegexCookbookCh07Tests.m */,
 				6FBAB4152355570D001A62CD /* RegexCookbookCh08Tests.m */,
 				6FBAB41723555796001A62CD /* RegexCookbookCh09Tests.m */,
+				AA00000001000000AABB0001 /* MasteringRegexCh01Tests.m */,
+				AA00000002000000AABB0001 /* MasteringRegexCh02Tests.m */,
+				AA00000003000000AABB0001 /* MasteringRegexCh03Tests.m */,
+				AA00000005000000AABB0001 /* MasteringRegexCh05Tests.m */,
 				6F2B4E171EF5B85000DB6629 /* Info.plist */,
 			);
 			path = RegexKitXTests;
@@ -270,6 +282,10 @@
 				6FBAB41223555674001A62CD /* RegexCookbookCh06Tests.m in Sources */,
 				6F2B4E851EF5BA7F00DB6629 /* RegexKitXTests.m in Sources */,
 				6F2114F921D284DD00BCFD28 /* RegexCookbookCh04Tests.m in Sources */,
+				AA00000001000000AABB0002 /* MasteringRegexCh01Tests.m in Sources */,
+				AA00000002000000AABB0002 /* MasteringRegexCh02Tests.m in Sources */,
+				AA00000003000000AABB0002 /* MasteringRegexCh03Tests.m in Sources */,
+				AA00000005000000AABB0002 /* MasteringRegexCh05Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
