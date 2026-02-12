@@ -489,4 +489,130 @@
     XCTAssertTrue([codesWithoutExtensions containsObject:@"ND52"]);
 }
 
+#pragma mark - Prime Number Detection via Regex
+#pragma mark   Source: https://www.noulakaz.net/2007/03/18/a-regular-expression-to-check-for-prime-numbers/
+
+- (void)testPrimeDetectionRegexBasicMechanism
+{
+    // The trick: represent N as a string of N ones, then use a regex to detect composites.
+    // Pattern: ^1?$ matches 0 or 1 (not prime)
+    //          ^(11+?)\1+$ matches composites (the captured group is a factor, repeated 2+ times)
+    // If the regex does NOT match, the number is prime.
+    NSString *compositePattern = @"^1?$|^(11+?)\\1+$";
+
+    // 0 and 1 are not prime (matched by ^1?$)
+    XCTAssertTrue([@"" isMatchedByRegex:compositePattern]);   // 0
+    XCTAssertTrue([@"1" isMatchedByRegex:compositePattern]);  // 1
+
+    // 2 is prime (not matched)
+    XCTAssertFalse([@"11" isMatchedByRegex:compositePattern]);
+
+    // 3 is prime
+    XCTAssertFalse([@"111" isMatchedByRegex:compositePattern]);
+
+    // 4 = 2*2 is composite (matched: "11" repeated twice)
+    XCTAssertTrue([@"1111" isMatchedByRegex:compositePattern]);
+
+    // 5 is prime
+    XCTAssertFalse([@"11111" isMatchedByRegex:compositePattern]);
+
+    // 6 = 2*3 is composite
+    XCTAssertTrue([@"111111" isMatchedByRegex:compositePattern]);
+
+    // 7 is prime
+    XCTAssertFalse([@"1111111" isMatchedByRegex:compositePattern]);
+
+    // 9 = 3*3 is composite (key example from the blog: "111" repeated 3 times)
+    XCTAssertTrue([@"111111111" isMatchedByRegex:compositePattern]);
+
+    // 10 = 2*5 is composite
+    XCTAssertTrue([@"1111111111" isMatchedByRegex:compositePattern]);
+
+    // 11 is prime
+    XCTAssertFalse([@"11111111111" isMatchedByRegex:compositePattern]);
+}
+
+- (void)testFirst100PrimesViaRegex
+{
+    // The first 100 prime numbers
+    NSArray<NSNumber *> *first100Primes = @[
+        @2, @3, @5, @7, @11, @13, @17, @19, @23, @29,
+        @31, @37, @41, @43, @47, @53, @59, @61, @67, @71,
+        @73, @79, @83, @89, @97, @101, @103, @107, @109, @113,
+        @127, @131, @137, @139, @149, @151, @157, @163, @167, @173,
+        @179, @181, @191, @193, @197, @199, @211, @223, @227, @229,
+        @233, @239, @241, @251, @257, @263, @269, @271, @277, @281,
+        @283, @293, @307, @311, @313, @317, @331, @337, @347, @349,
+        @353, @359, @367, @373, @379, @383, @389, @397, @401, @409,
+        @419, @421, @431, @433, @439, @443, @449, @457, @461, @463,
+        @467, @479, @487, @491, @499, @503, @509, @521, @523, @541
+    ];
+
+    // Composite pattern: matches non-primes (0, 1, and composites)
+    NSString *compositePattern = @"^1?$|^(11+?)\\1+$";
+
+    // Build a set for quick lookup
+    NSSet<NSNumber *> *primeSet = [NSSet setWithArray:first100Primes];
+
+    // Test every number from 0 to 541 (the 100th prime)
+    NSMutableArray<NSNumber *> *detectedPrimes = [NSMutableArray array];
+
+    for (NSUInteger n = 0; n <= 541; n++) {
+        // Build unary representation: string of n ones
+        NSString *unary = [@"" stringByPaddingToLength:n withString:@"1" startingAtIndex:0];
+
+        BOOL isComposite = [unary isMatchedByRegex:compositePattern];
+
+        if (!isComposite) {
+            [detectedPrimes addObject:@(n)];
+        }
+
+        // Cross-check: if n is in our known primes list, regex must NOT match
+        if ([primeSet containsObject:@(n)]) {
+            XCTAssertFalse(isComposite, @"%lu should be detected as prime", (unsigned long)n);
+        }
+        // If n > 1 and not in primes list, regex MUST match (composite)
+        else if (n > 1) {
+            XCTAssertTrue(isComposite, @"%lu should be detected as composite", (unsigned long)n);
+        }
+    }
+
+    // Verify we detected exactly the first 100 primes
+    XCTAssertEqual(detectedPrimes.count, first100Primes.count);
+    XCTAssertEqualObjects(detectedPrimes, first100Primes);
+}
+
+- (void)testPrimeRegexWithSmallCompositeFactorization
+{
+    // Demonstrate that the regex effectively finds a factor by checking what the
+    // captured group matches. For composite numbers, capture group 1 contains the
+    // unary representation of the smallest factor >= 2.
+    NSString *compositePattern = @"^1?$|^(11+?)\\1+$";
+
+    // 12 = 2 * 6: the lazy quantifier finds "11" (factor 2) first
+    NSString *twelve = [@"" stringByPaddingToLength:12 withString:@"1" startingAtIndex:0];
+    NSString *factor = [twelve stringMatchedByRegex:compositePattern capture:1];
+    XCTAssertEqualObjects(factor, @"11"); // factor = 2
+
+    // 15 = 3 * 5: smallest factor is 3
+    NSString *fifteen = [@"" stringByPaddingToLength:15 withString:@"1" startingAtIndex:0];
+    factor = [fifteen stringMatchedByRegex:compositePattern capture:1];
+    XCTAssertEqualObjects(factor, @"111"); // factor = 3
+
+    // 25 = 5 * 5: smallest factor is 5
+    NSString *twentyfive = [@"" stringByPaddingToLength:25 withString:@"1" startingAtIndex:0];
+    factor = [twentyfive stringMatchedByRegex:compositePattern capture:1];
+    XCTAssertEqualObjects(factor, @"11111"); // factor = 5
+
+    // 49 = 7 * 7: smallest factor is 7
+    NSString *fortynine = [@"" stringByPaddingToLength:49 withString:@"1" startingAtIndex:0];
+    factor = [fortynine stringMatchedByRegex:compositePattern capture:1];
+    XCTAssertEqualObjects(factor, @"1111111"); // factor = 7
+
+    // Prime numbers should return nil for capture 1
+    NSString *thirteen = [@"" stringByPaddingToLength:13 withString:@"1" startingAtIndex:0];
+    NSString *noFactor = [thirteen stringMatchedByRegex:compositePattern capture:1];
+    XCTAssertNil(noFactor);
+}
+
 @end
