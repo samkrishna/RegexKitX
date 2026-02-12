@@ -363,4 +363,130 @@
     XCTAssertEqualObjects(slug, @"hello-world-this-is-a-test-of-slug-generation");
 }
 
+#pragma mark - ICD-11 Code Validation
+#pragma mark   Source: https://www.johndcook.com/blog/2022/10/06/icd11-regex/
+
+- (void)testICD11StemCodeValidation
+{
+    // ICD-11 stem code: no letters I or O; position 1=alphanumeric, position 2=alpha, position 3=digit,
+    // position 4=alphanumeric, optionally followed by dot + 1-2 alphanumeric chars
+    // Character class [A-HJ-NP-Z] excludes I and O
+    NSString *icd11Pattern = @"^[A-HJ-NP-Z0-9][A-HJ-NP-Z][0-9][A-HJ-NP-Z0-9](?:\\.[A-HJ-NP-Z0-9][A-HJ-NP-Z0-9]?)?$";
+
+    // Valid ICD-11 codes from WHO classification
+    XCTAssertTrue([@"ND52" isMatchedByRegex:icd11Pattern]);      // Fracture of forearm
+    XCTAssertTrue([@"9D00.3" isMatchedByRegex:icd11Pattern]);    // Presbyopia
+    XCTAssertTrue([@"8B60.Y" isMatchedByRegex:icd11Pattern]);    // Increased intracranial pressure
+    XCTAssertTrue([@"DB98.7Z" isMatchedByRegex:icd11Pattern]);   // Portal hypertension
+    XCTAssertTrue([@"BA00" isMatchedByRegex:icd11Pattern]);      // Essential hypertension
+    XCTAssertTrue([@"CA40.0" isMatchedByRegex:icd11Pattern]);    // Asthma
+    XCTAssertTrue([@"5A11" isMatchedByRegex:icd11Pattern]);      // Type 2 diabetes
+    XCTAssertTrue([@"MG30" isMatchedByRegex:icd11Pattern]);      // Headache
+
+    // Invalid: contains letter I or O
+    XCTAssertFalse([@"IA00" isMatchedByRegex:icd11Pattern]);     // I not allowed
+    XCTAssertFalse([@"AO00" isMatchedByRegex:icd11Pattern]);     // O not allowed
+    XCTAssertFalse([@"AB0I" isMatchedByRegex:icd11Pattern]);     // I in 4th position
+    XCTAssertFalse([@"AB00.O" isMatchedByRegex:icd11Pattern]);   // O in extension
+
+    // Invalid structure
+    XCTAssertFalse([@"A100" isMatchedByRegex:icd11Pattern]);     // Position 2 must be alpha
+    XCTAssertFalse([@"AAA0" isMatchedByRegex:icd11Pattern]);     // Position 3 must be digit
+    XCTAssertFalse([@"AB0" isMatchedByRegex:icd11Pattern]);      // Too short (3 chars)
+    XCTAssertFalse([@"AB00.ABC" isMatchedByRegex:icd11Pattern]); // Extension too long
+    XCTAssertFalse([@"AB00." isMatchedByRegex:icd11Pattern]);    // Trailing dot with no extension
+}
+
+- (void)testICD11NamedCaptureComponentExtraction
+{
+    // Named capture version for parsing ICD-11 code components
+    NSString *icd11NamedPattern = @"^(?<block>[A-HJ-NP-Z0-9][A-HJ-NP-Z])(?<category>[0-9][A-HJ-NP-Z0-9])(?:\\.(?<extension>[A-HJ-NP-Z0-9]{1,2}))?$";
+
+    NSDictionary *parts = [@"DB98.7Z" dictionaryWithNamedCaptureKeysMatchedByRegex:icd11NamedPattern];
+    XCTAssertEqualObjects(parts[@"block"], @"DB");
+    XCTAssertEqualObjects(parts[@"category"], @"98");
+    XCTAssertEqualObjects(parts[@"extension"], @"7Z");
+
+    NSDictionary *simple = [@"BA00" dictionaryWithNamedCaptureKeysMatchedByRegex:icd11NamedPattern];
+    XCTAssertEqualObjects(simple[@"block"], @"BA");
+    XCTAssertEqualObjects(simple[@"category"], @"00");
+
+    NSDictionary *withExt = [@"9D00.3" dictionaryWithNamedCaptureKeysMatchedByRegex:icd11NamedPattern];
+    XCTAssertEqualObjects(withExt[@"block"], @"9D");
+    XCTAssertEqualObjects(withExt[@"category"], @"00");
+    XCTAssertEqualObjects(withExt[@"extension"], @"3");
+}
+
+- (void)testICD11CodeExtractionFromClinicalText
+{
+    // Extract ICD-11 codes embedded in clinical text (word-bounded)
+    NSString *icd11InTextPattern = @"\\b[A-HJ-NP-Z0-9][A-HJ-NP-Z][0-9][A-HJ-NP-Z0-9](?:\\.[A-HJ-NP-Z0-9]{1,2})?\\b";
+
+    NSString *note = @"Patient diagnosed with BA00 (essential hypertension), "
+                      "CA40.0 (asthma), and 5A11 (type 2 diabetes). "
+                      "Also see DB98.7Z for portal hypertension.";
+
+    NSArray *codes = [note substringsMatchedByRegex:icd11InTextPattern];
+    XCTAssertEqual(codes.count, 4UL);
+    XCTAssertEqualObjects(codes[0], @"BA00");
+    XCTAssertEqualObjects(codes[1], @"CA40.0");
+    XCTAssertEqualObjects(codes[2], @"5A11");
+    XCTAssertEqualObjects(codes[3], @"DB98.7Z");
+}
+
+- (void)testICD11BatchExtractionWithCaptures
+{
+    NSString *icd11CapturePattern = @"\\b([A-HJ-NP-Z0-9][A-HJ-NP-Z])([0-9][A-HJ-NP-Z0-9])(?:\\.([A-HJ-NP-Z0-9]{1,2}))?\\b";
+
+    NSString *records = @"Codes: ND52, 9D00.3, MG30, 8B60.Y";
+    NSArray<NSArray *> *allCaptures = [records arrayOfCaptureSubstringsMatchedByRegex:icd11CapturePattern];
+
+    XCTAssertEqual(allCaptures.count, 4UL);
+
+    // ND52: block=ND, category=52, no extension
+    XCTAssertEqualObjects(allCaptures[0][1], @"ND");
+    XCTAssertEqualObjects(allCaptures[0][2], @"52");
+
+    // 9D00.3: block=9D, category=00, extension=3
+    XCTAssertEqualObjects(allCaptures[1][1], @"9D");
+    XCTAssertEqualObjects(allCaptures[1][2], @"00");
+    XCTAssertEqualObjects(allCaptures[1][3], @"3");
+
+    // MG30: block=MG, category=30
+    XCTAssertEqualObjects(allCaptures[2][1], @"MG");
+    XCTAssertEqualObjects(allCaptures[2][2], @"30");
+
+    // 8B60.Y: block=8B, category=60, extension=Y
+    XCTAssertEqualObjects(allCaptures[3][1], @"8B");
+    XCTAssertEqualObjects(allCaptures[3][2], @"60");
+    XCTAssertEqualObjects(allCaptures[3][3], @"Y");
+}
+
+- (void)testICD11EnumerationWithBlockAPI
+{
+    NSString *icd11Pattern = @"\\b([A-HJ-NP-Z0-9][A-HJ-NP-Z][0-9][A-HJ-NP-Z0-9](?:\\.[A-HJ-NP-Z0-9]{1,2})?)\\b";
+    NSString *report = @"Discharge: BA00, CA40.0, 5A11, DB98.7Z, ND52";
+
+    NSMutableArray<NSString *> *codesWithExtensions = [NSMutableArray array];
+    NSMutableArray<NSString *> *codesWithoutExtensions = [NSMutableArray array];
+
+    [report enumerateStringsMatchedByRegex:icd11Pattern usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+        NSString *code = capturedStrings[1];
+        if ([code isMatchedByRegex:@"\\."]) {
+            [codesWithExtensions addObject:code];
+        } else {
+            [codesWithoutExtensions addObject:code];
+        }
+    }];
+
+    XCTAssertEqual(codesWithExtensions.count, 2UL);
+    XCTAssertTrue([codesWithExtensions containsObject:@"CA40.0"]);
+    XCTAssertTrue([codesWithExtensions containsObject:@"DB98.7Z"]);
+
+    XCTAssertEqual(codesWithoutExtensions.count, 3UL);
+    XCTAssertTrue([codesWithoutExtensions containsObject:@"BA00"]);
+    XCTAssertTrue([codesWithoutExtensions containsObject:@"5A11"]);
+    XCTAssertTrue([codesWithoutExtensions containsObject:@"ND52"]);
+}
+
 @end
