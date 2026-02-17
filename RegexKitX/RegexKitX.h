@@ -1513,7 +1513,7 @@ extern NSString *const RKXEmptyStringKey;
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlockWithNamedCaptures:
 
 /**
- Enumerates the matches in the receiver by @c pattern and executes @c block with a dictionary of named captures for each match. Returns the string with replacements.
+ Enumerates the matches in the receiver by @c pattern and executes @c block with a dictionary of named captures for each match. Returns the string with replacements. On each enumeration, the matched named capture pattern is replaced by the returned value of @c block. If there is no match of @c pattern, the original string is returned.
 
  @param pattern A @c NSString containing a regular expression with named capture groups.
  @param block The block executed for each match. Takes a dictionary of named captures and a stop flag. Returns the replacement string.
@@ -1522,7 +1522,7 @@ extern NSString *const RKXEmptyStringKey;
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block;
 
 /**
- Enumerates the matches in the receiver by @c pattern using @c options and executes @c block with a dictionary of named captures for each match.
+ Enumerates the matches in the receiver by @c pattern using @c options and executes @c block with a dictionary of named captures for each match. On each enumeration, the matched named capture pattern is replaced by the returned value of @c block. If there is no match of @c pattern, the original string is returned.
 
  @param pattern A @c NSString containing a regular expression with named capture groups.
  @param options The regex options to use. See @c RKXRegexOptions for possible values.
@@ -1532,7 +1532,7 @@ extern NSString *const RKXEmptyStringKey;
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block;
 
 /**
- Enumerates the matches in the receiver by @c pattern within @c searchRange using @c options and executes @c block with named captures.
+ Enumerates the matches in the receiver by @c pattern within @c searchRange using @c options and executes @c block with named captures. On each enumeration, the matched named capture pattern is replaced by the returned value of @c block. If there is no match of @c pattern, the substring of @c searchRange is returned.
 
  @param pattern A @c NSString containing a regular expression with named capture groups.
  @param searchRange The range of the receiver to search.
@@ -1544,7 +1544,7 @@ extern NSString *const RKXEmptyStringKey;
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block;
 
 /**
- Enumerates the matches in the receiver by @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block with named captures.
+ Enumerates the matches in the receiver by @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block with named captures. On each enumeration, the matched named capture pattern is replaced by the returned value of @c block. If there is no match of @c pattern, the substring of @c searchRange is returned.
 
  @param pattern A @c NSString containing a regular expression with named capture groups.
  @param searchRange The range of the receiver to search.
