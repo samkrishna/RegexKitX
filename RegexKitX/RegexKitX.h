@@ -1191,6 +1191,23 @@ extern NSString *const RKXEmptyStringKey;
  */
 + (NSUInteger)regexCacheCount;
 
+#pragma mark - regexValidationError
+
+/**
+ Returns an @c NSError describing why the receiver is not a valid regular expression, or @c nil if it is valid.
+
+ @return An @c NSError if the receiver is an invalid regex, or @c nil if valid.
+ */
+- (NSError *)regexValidationError;
+
+/**
+ Returns an @c NSError describing why the receiver is not a valid regular expression with @c options, or @c nil if it is valid.
+
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @return An @c NSError if the receiver is an invalid regex, or @c nil if valid.
+ */
+- (NSError *)regexValidationErrorWithOptions:(RKXRegexOptions)options;
+
 #pragma mark - Blocks-based API
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
 

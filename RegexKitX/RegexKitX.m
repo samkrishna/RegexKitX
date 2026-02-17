@@ -1145,6 +1145,21 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return count;
 }
 
+#pragma mark - regexValidationError
+
+- (NSError *)regexValidationError
+{
+    return [self regexValidationErrorWithOptions:RKXNoOptions];
+}
+
+- (NSError *)regexValidationErrorWithOptions:(RKXRegexOptions)options
+{
+    NSError *error = nil;
+    NSRegularExpressionOptions regexOptions = (NSRegularExpressionOptions)options;
+    [NSRegularExpression regularExpressionWithPattern:self options:regexOptions error:&error];
+    return error;
+}
+
 @end
 
 @implementation NSMutableString (RegexKitX)

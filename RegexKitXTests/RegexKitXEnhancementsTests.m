@@ -176,4 +176,47 @@
     XCTAssertEqual([NSString regexCacheCount], 1UL);
 }
 
+#pragma mark - regexValidationError
+
+- (void)testRegexValidationErrorValidPattern
+{
+    NSError *error = [@"\\d+" regexValidationError];
+    XCTAssertNil(error);
+}
+
+- (void)testRegexValidationErrorInvalidPattern
+{
+    NSError *error = [@"[invalid" regexValidationError];
+    XCTAssertNotNil(error);
+}
+
+- (void)testRegexValidationErrorInvalidPatternHasDescription
+{
+    NSError *error = [@"(?<" regexValidationError];
+    XCTAssertNotNil(error);
+    XCTAssertNotNil(error.localizedDescription);
+    XCTAssertGreaterThan(error.localizedDescription.length, 0UL);
+}
+
+- (void)testRegexValidationErrorWithOptions
+{
+    NSError *error = [@"hello world" regexValidationErrorWithOptions:RKXNoOptions];
+    XCTAssertNil(error);
+
+    error = [@"hello   world" regexValidationErrorWithOptions:RKXIgnoreWhitespace];
+    XCTAssertNil(error);
+}
+
+- (void)testRegexValidationErrorUnbalancedParenthesis
+{
+    NSError *error = [@"(unbalanced" regexValidationError];
+    XCTAssertNotNil(error);
+}
+
+- (void)testRegexValidationErrorComplexValidPattern
+{
+    NSError *error = [@"(?:(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2}))" regexValidationError];
+    XCTAssertNil(error);
+}
+
 @end
