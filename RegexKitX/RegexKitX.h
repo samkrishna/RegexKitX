@@ -1448,6 +1448,53 @@ extern NSString *const RKXEmptyStringKey;
  @return Returns @c nil if there was an error and indirectly returns a @c NSError object if @c error is not @c NULL.
  */
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(NSString *(NS_NOESCAPE ^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
+
+#pragma mark - stringByReplacingOccurrencesOfRegex:usingBlockWithNamedCaptures:
+
+/**
+ Enumerates the matches in the receiver by @c pattern and executes @c block with a dictionary of named captures for each match. Returns the string with replacements.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @param block The block executed for each match. Takes a dictionary of named captures and a stop flag. Returns the replacement string.
+ @return A @c NSString with all matches replaced by the block's return values.
+ */
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block;
+
+/**
+ Enumerates the matches in the receiver by @c pattern using @c options and executes @c block with a dictionary of named captures for each match.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @param block The block executed for each match.
+ @return A @c NSString with all matches replaced by the block's return values.
+ */
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block;
+
+/**
+ Enumerates the matches in the receiver by @c pattern within @c searchRange using @c options and executes @c block with named captures.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use.
+ @param error An optional error parameter.
+ @param block The block executed for each match.
+ @return A @c NSString with all matches replaced.
+ */
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block;
+
+/**
+ Enumerates the matches in the receiver by @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block with named captures.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use.
+ @param matchOptions The matching options to use.
+ @param error An optional error parameter.
+ @param block The block executed for each match.
+ @return A @c NSString with all matches replaced.
+ */
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block;
+
 #pragma clang diagnostic pop
 
 @end

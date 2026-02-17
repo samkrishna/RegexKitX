@@ -279,4 +279,51 @@
     XCTAssertNotNil(error);
 }
 
+#pragma mark - stringByReplacingOccurrencesOfRegex:usingBlockWithNamedCaptures:
+
+- (void)testReplacingWithNamedCaptureBlockBasic
+{
+    NSString *string = @"John:30 Jane:25";
+    NSString *pattern = @"(?<name>\\w+):(?<age>\\d+)";
+    NSString *result = [string stringByReplacingOccurrencesOfRegex:pattern usingBlockWithNamedCaptures:^NSString *(NSDictionary<NSString *,NSString *> *namedCaptures, BOOL *stop) {
+        return [NSString stringWithFormat:@"%@ (age %@)", namedCaptures[@"name"], namedCaptures[@"age"]];
+    }];
+    XCTAssertEqualObjects(result, @"John (age 30) Jane (age 25)");
+}
+
+- (void)testReplacingWithNamedCaptureBlockNoMatch
+{
+    NSString *string = @"Hello World";
+    NSString *result = [string stringByReplacingOccurrencesOfRegex:@"(?<digit>\\d+)" usingBlockWithNamedCaptures:^NSString *(NSDictionary<NSString *,NSString *> *namedCaptures, BOOL *stop) {
+        return @"REPLACED";
+    }];
+    XCTAssertEqualObjects(result, @"Hello World");
+}
+
+- (void)testReplacingWithNamedCaptureBlockStopFlag
+{
+    NSString *string = @"a:1 b:2 c:3";
+    NSString *pattern = @"(?<key>\\w):(?<val>\\d)";
+    __block NSUInteger callCount = 0;
+    NSString *result = [string stringByReplacingOccurrencesOfRegex:pattern usingBlockWithNamedCaptures:^NSString *(NSDictionary<NSString *,NSString *> *namedCaptures, BOOL *stop) {
+        callCount++;
+        *stop = YES;
+        return [NSString stringWithFormat:@"%@=%@", namedCaptures[@"key"], namedCaptures[@"val"]];
+    }];
+    // Block uses reverse iteration, so stop after first (last match becomes first processed)
+    XCTAssertEqual(callCount, 1UL);
+    // The last match (c:3) gets replaced since we iterate in reverse
+    XCTAssertTrue([result containsString:@"c=3"]);
+}
+
+- (void)testReplacingWithNamedCaptureBlockWithOptions
+{
+    NSString *string = @"KEY:value";
+    NSString *pattern = @"(?<k>key):(?<v>\\w+)";
+    NSString *result = [string stringByReplacingOccurrencesOfRegex:pattern options:RKXCaseless usingBlockWithNamedCaptures:^NSString *(NSDictionary<NSString *,NSString *> *namedCaptures, BOOL *stop) {
+        return [NSString stringWithFormat:@"%@->%@", namedCaptures[@"k"], namedCaptures[@"v"]];
+    }];
+    XCTAssertEqualObjects(result, @"KEY->value");
+}
+
 @end

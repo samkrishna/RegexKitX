@@ -1214,6 +1214,58 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return [results copy];
 }
 
+#pragma mark - stringByReplacingOccurrencesOfRegex:usingBlockWithNamedCaptures:
+
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block
+{
+    return [self stringByReplacingOccurrencesOfRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL usingBlockWithNamedCaptures:block];
+}
+
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block
+{
+    return [self stringByReplacingOccurrencesOfRegex:pattern range:self.stringRange options:options matchOptions:kNilOptions error:NULL usingBlockWithNamedCaptures:block];
+}
+
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block
+{
+    return [self stringByReplacingOccurrencesOfRegex:pattern range:searchRange options:options matchOptions:kNilOptions error:error usingBlockWithNamedCaptures:block];
+}
+
+- (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block
+{
+    NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+    if (!matches) { return nil; }
+    if (!matches.count) { return [self substringWithRange:searchRange]; }
+
+    NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
+    NSMutableString *target = [self mutableCopy];
+    BOOL stop = NO;
+
+    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
+        NSMutableDictionary *namedCaptures = [NSMutableDictionary dictionary];
+
+        if (captureNames) {
+            for (NSString *captureName in captureNames) {
+                if (@available(macOS 10.13, *)) {
+                    NSRange nameRange = [match rangeWithName:captureName];
+                    if (nameRange.location != NSNotFound) {
+                        namedCaptures[captureName] = [self substringWithRange:nameRange];
+                    }
+                    else {
+                        namedCaptures[captureName] = RKXEmptyStringKey;
+                    }
+                }
+            }
+        }
+
+        NSString *swap = block([namedCaptures copy], &stop);
+        [target replaceCharactersInRange:match.range withString:swap];
+        if (stop) { break; }
+    }
+
+    return [target copy];
+}
+
 @end
 
 @implementation NSMutableString (RegexKitX)
