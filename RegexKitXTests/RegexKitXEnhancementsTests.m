@@ -219,4 +219,64 @@
     XCTAssertNil(error);
 }
 
+#pragma mark - arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:
+
+- (void)testArrayOfDictionariesWithNamedCaptureKeysBasic
+{
+    NSString *string = @"John:30 Jane:25 Bob:40";
+    NSString *pattern = @"(?<name>\\w+):(?<age>\\d+)";
+    NSArray<NSDictionary<NSString *, NSString *> *> *results = [string arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern];
+    XCTAssertEqual(results.count, 3UL);
+    XCTAssertEqualObjects(results[0][@"name"], @"John");
+    XCTAssertEqualObjects(results[0][@"age"], @"30");
+    XCTAssertEqualObjects(results[1][@"name"], @"Jane");
+    XCTAssertEqualObjects(results[1][@"age"], @"25");
+    XCTAssertEqualObjects(results[2][@"name"], @"Bob");
+    XCTAssertEqualObjects(results[2][@"age"], @"40");
+}
+
+- (void)testArrayOfDictionariesWithNamedCaptureKeysNoMatch
+{
+    NSString *string = @"no matches here";
+    NSString *pattern = @"(?<digit>\\d+)";
+    NSArray *results = [string arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern];
+    XCTAssertNotNil(results);
+    XCTAssertEqual(results.count, 0UL);
+}
+
+- (void)testArrayOfDictionariesWithNamedCaptureKeysNoNamedGroups
+{
+    NSString *string = @"abc 123";
+    NSString *pattern = @"\\d+"; // No named capture groups
+    NSArray *results = [string arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern];
+    XCTAssertNotNil(results);
+    XCTAssertEqual(results.count, 0UL);
+}
+
+- (void)testArrayOfDictionariesWithNamedCaptureKeysWithRange
+{
+    NSString *string = @"a:1 b:2 c:3";
+    NSString *pattern = @"(?<key>\\w):(?<val>\\d)";
+    NSArray *results = [string arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern range:NSMakeRange(0, 7)]; // "a:1 b:2"
+    XCTAssertEqual(results.count, 2UL);
+}
+
+- (void)testArrayOfDictionariesWithNamedCaptureKeysWithOptions
+{
+    NSString *string = @"Name:ALICE Name:BOB";
+    NSString *pattern = @"name:(?<person>\\w+)";
+    NSArray *results = [string arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern options:RKXCaseless];
+    XCTAssertEqual(results.count, 2UL);
+    XCTAssertEqualObjects(results[0][@"person"], @"ALICE");
+}
+
+- (void)testArrayOfDictionariesWithNamedCaptureKeysInvalidRegex
+{
+    NSString *string = @"test";
+    NSError *error = nil;
+    NSArray *results = [string arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:@"(?<broken" range:string.stringRange options:RKXNoOptions error:&error];
+    XCTAssertNil(results);
+    XCTAssertNotNil(error);
+}
+
 @end

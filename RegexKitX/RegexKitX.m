@@ -1160,6 +1160,60 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return error;
 }
 
+#pragma mark - arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:
+
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern
+{
+    return [self arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange
+{
+    return [self arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options
+{
+    return [self arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
+}
+
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
+{
+    return [self arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:pattern range:searchRange options:options matchOptions:kNilOptions error:error];
+}
+
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+{
+    if (![pattern isRegexValidWithOptions:options error:error]) { return nil; }
+    NSArray<NSString *> *captureNames = [pattern _captureNamesWithMetaPattern:RKXNamedCapturePattern];
+    if (!captureNames || !captureNames.count) { return @[]; }
+
+    NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+    if (!matches) { return nil; }
+    if (!matches.count) { return @[]; }
+    NSMutableArray *results = [NSMutableArray array];
+
+    for (NSTextCheckingResult *match in matches) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+        for (NSString *captureName in captureNames) {
+            if (@available(macOS 10.13, *)) {
+                NSRange nameRange = [match rangeWithName:captureName];
+                if (nameRange.location != NSNotFound) {
+                    dict[captureName] = [self substringWithRange:nameRange];
+                }
+                else {
+                    dict[captureName] = RKXEmptyStringKey;
+                }
+            }
+        }
+
+        [results addObject:[dict copy]];
+    }
+
+    return [results copy];
+}
+
 @end
 
 @implementation NSMutableString (RegexKitX)

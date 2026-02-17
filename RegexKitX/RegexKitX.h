@@ -1208,6 +1208,57 @@ extern NSString *const RKXEmptyStringKey;
  */
 - (NSError *)regexValidationErrorWithOptions:(RKXRegexOptions)options;
 
+#pragma mark - arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:
+
+/**
+ Returns an array of dictionaries for ALL matches of @c pattern, using named capture group names as keys.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @return A @c NSArray of @c NSDictionary objects, one per match, with named capture group names as keys and their matched substrings as values.
+ */
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern;
+
+/**
+ Returns an array of dictionaries for ALL matches of @c pattern within @c searchRange, using named capture group names as keys.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @param searchRange The range of the receiver to search.
+ @return A @c NSArray of @c NSDictionary objects with named captures as key-value pairs.
+ */
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange;
+
+/**
+ Returns an array of dictionaries for ALL matches of @c pattern using @c options, using named capture group names as keys.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @return A @c NSArray of @c NSDictionary objects with named captures as key-value pairs.
+ */
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern options:(RKXRegexOptions)options;
+
+/**
+ Returns an array of dictionaries for ALL matches of @c pattern within @c searchRange using @c options, using named capture group names as keys.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem.
+ @return A @c NSArray of @c NSDictionary objects with named captures as key-value pairs.
+ */
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+
+/**
+ Returns an array of dictionaries for ALL matches of @c pattern within @c searchRange using @c options and @c matchOptions, using named capture group names as keys.
+
+ @param pattern A @c NSString containing a regular expression with named capture groups.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
+ @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem.
+ @return A @c NSArray of @c NSDictionary objects with named captures as key-value pairs.
+ */
+- (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+
 #pragma mark - Blocks-based API
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
 
