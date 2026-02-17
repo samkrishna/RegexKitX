@@ -82,4 +82,61 @@
     XCTAssertEqual(count, 3UL);
 }
 
+#pragma mark - firstMatchOfRegex:
+
+- (void)testFirstMatchOfRegexBasic
+{
+    NSString *string = @"foo 123 bar 456";
+    NSTextCheckingResult *match = [string firstMatchOfRegex:@"\\d+"];
+    XCTAssertNotNil(match);
+    XCTAssertEqual(match.range.location, 4UL);
+    XCTAssertEqual(match.range.length, 3UL);
+}
+
+- (void)testFirstMatchOfRegexNoMatch
+{
+    NSString *string = @"Hello World";
+    NSTextCheckingResult *match = [string firstMatchOfRegex:@"\\d+"];
+    XCTAssertNil(match);
+}
+
+- (void)testFirstMatchOfRegexWithCaptures
+{
+    NSString *string = @"2026-02-16";
+    NSTextCheckingResult *match = [string firstMatchOfRegex:@"(\\d{4})-(\\d{2})-(\\d{2})"];
+    XCTAssertNotNil(match);
+    XCTAssertEqual(match.numberOfRanges, 4UL);
+    NSRange yearRange = [match rangeAtIndex:1];
+    XCTAssertEqualObjects([string substringWithRange:yearRange], @"2026");
+}
+
+- (void)testFirstMatchOfRegexWithNamedCaptures
+{
+    NSString *string = @"John Smith, age 30";
+    NSTextCheckingResult *match = [string firstMatchOfRegex:@"(?<name>\\w+ \\w+), age (?<age>\\d+)"];
+    XCTAssertNotNil(match);
+    if (@available(macOS 10.13, *)) {
+        NSRange nameRange = [match rangeWithName:@"name"];
+        XCTAssertEqualObjects([string substringWithRange:nameRange], @"John Smith");
+        NSRange ageRange = [match rangeWithName:@"age"];
+        XCTAssertEqualObjects([string substringWithRange:ageRange], @"30");
+    }
+}
+
+- (void)testFirstMatchOfRegexWithRange
+{
+    NSString *string = @"123 456 789";
+    NSTextCheckingResult *match = [string firstMatchOfRegex:@"\\d+" range:NSMakeRange(4, 7)];
+    XCTAssertNotNil(match);
+    XCTAssertEqual(match.range.location, 4UL);
+}
+
+- (void)testFirstMatchOfRegexWithOptions
+{
+    NSString *string = @"HELLO world";
+    NSTextCheckingResult *match = [string firstMatchOfRegex:@"hello" options:RKXCaseless];
+    XCTAssertNotNil(match);
+    XCTAssertEqual(match.range.location, 0UL);
+}
+
 @end

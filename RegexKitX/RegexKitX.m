@@ -1094,6 +1094,29 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return matches.count;
 }
 
+#pragma mark - firstMatchOfRegex:
+
+- (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern
+{
+    return [self firstMatchOfRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern range:(NSRange)searchRange
+{
+    return [self firstMatchOfRegex:pattern range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern options:(RKXRegexOptions)options
+{
+    return [self firstMatchOfRegex:pattern range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
+}
+
+- (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+{
+    NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+    return matches.firstObject;
+}
+
 @end
 
 @implementation NSMutableString (RegexKitX)

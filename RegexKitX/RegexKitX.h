@@ -1137,6 +1137,46 @@ extern NSString *const RKXEmptyStringKey;
  */
 - (NSUInteger)countOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
+#pragma mark - firstMatchOfRegex:
+
+/**
+ Returns the first @c NSTextCheckingResult for a match of @c pattern in the receiver.
+
+ @param pattern A @c NSString containing a regular expression.
+ @return The first @c NSTextCheckingResult matched by @c pattern, or @c nil if no match.
+ */
+- (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern;
+
+/**
+ Returns the first @c NSTextCheckingResult for a match of @c pattern within @c searchRange of the receiver.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range of the receiver to search.
+ @return The first @c NSTextCheckingResult matched by @c pattern, or @c nil if no match.
+ */
+- (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern range:(NSRange)searchRange;
+
+/**
+ Returns the first @c NSTextCheckingResult for a match of @c pattern in the receiver using @c options.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @return The first @c NSTextCheckingResult matched by @c pattern, or @c nil if no match.
+ */
+- (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern options:(RKXRegexOptions)options;
+
+/**
+ Returns the first @c NSTextCheckingResult for a match of @c pattern within @c searchRange of the receiver using @c options and @c matchOptions.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
+ @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
+ @return The first @c NSTextCheckingResult matched by @c pattern, or @c nil if no match or an error occurs.
+ */
+- (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+
 #pragma mark - Blocks-based API
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
 
