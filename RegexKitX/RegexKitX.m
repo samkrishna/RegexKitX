@@ -1070,6 +1070,30 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return [target copy];
 }
 
+#pragma mark - countOfRegex:
+
+- (NSUInteger)countOfRegex:(NSString *)pattern
+{
+    return [self countOfRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSUInteger)countOfRegex:(NSString *)pattern range:(NSRange)searchRange
+{
+    return [self countOfRegex:pattern range:searchRange options:RKXNoOptions matchOptions:kNilOptions error:NULL];
+}
+
+- (NSUInteger)countOfRegex:(NSString *)pattern options:(RKXRegexOptions)options
+{
+    return [self countOfRegex:pattern range:self.stringRange options:options matchOptions:kNilOptions error:NULL];
+}
+
+- (NSUInteger)countOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error
+{
+    NSArray *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+    if (!matches) { return 0; }
+    return matches.count;
+}
+
 @end
 
 @implementation NSMutableString (RegexKitX)

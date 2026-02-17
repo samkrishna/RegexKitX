@@ -31,6 +31,7 @@
 		AA00000006000000AABB0002 /* MasteringRegexCh06Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA00000006000000AABB0001 /* MasteringRegexCh06Tests.m */; };
 		AA00000710000000AABB0002 /* MasteringRegexCh07_10Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA00000710000000AABB0001 /* MasteringRegexCh07_10Tests.m */; };
 		BB00000001000000CCDD0002 /* RealWorldRegexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB00000001000000CCDD0001 /* RealWorldRegexTests.m */; };
+		CC00000001000000EEFF0002 /* RegexKitXEnhancementsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC00000001000000EEFF0001 /* RegexKitXEnhancementsTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		AA00000006000000AABB0001 /* MasteringRegexCh06Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = MasteringRegexCh06Tests.m; sourceTree = "<group>"; };
 		AA00000710000000AABB0001 /* MasteringRegexCh07_10Tests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = MasteringRegexCh07_10Tests.m; sourceTree = "<group>"; };
 		BB00000001000000CCDD0001 /* RealWorldRegexTests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RealWorldRegexTests.m; sourceTree = "<group>"; };
+		CC00000001000000EEFF0001 /* RegexKitXEnhancementsTests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; path = RegexKitXEnhancementsTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				AA00000006000000AABB0001 /* MasteringRegexCh06Tests.m */,
 				AA00000710000000AABB0001 /* MasteringRegexCh07_10Tests.m */,
 				BB00000001000000CCDD0001 /* RealWorldRegexTests.m */,
+				CC00000001000000EEFF0001 /* RegexKitXEnhancementsTests.m */,
 				6F2B4E171EF5B85000DB6629 /* Info.plist */,
 			);
 			path = RegexKitXTests;
@@ -302,6 +305,7 @@
 				AA00000006000000AABB0002 /* MasteringRegexCh06Tests.m in Sources */,
 				AA00000710000000AABB0002 /* MasteringRegexCh07_10Tests.m in Sources */,
 				BB00000001000000CCDD0002 /* RealWorldRegexTests.m in Sources */,
+				CC00000001000000EEFF0002 /* RegexKitXEnhancementsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

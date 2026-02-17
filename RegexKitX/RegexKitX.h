@@ -1097,6 +1097,46 @@ extern NSString *const RKXEmptyStringKey;
  */
 - (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
+#pragma mark - countOfRegex:
+
+/**
+ Returns the number of times the regular expression @c pattern matches in the receiver.
+
+ @param pattern A @c NSString containing a regular expression.
+ @return The number of matches of @c pattern in the receiver.
+ */
+- (NSUInteger)countOfRegex:(NSString *)pattern;
+
+/**
+ Returns the number of times the regular expression @c pattern matches within @c searchRange of the receiver.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range of the receiver to search.
+ @return The number of matches of @c pattern within @c searchRange.
+ */
+- (NSUInteger)countOfRegex:(NSString *)pattern range:(NSRange)searchRange;
+
+/**
+ Returns the number of times the regular expression @c pattern matches in the receiver using @c options.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @return The number of matches of @c pattern in the receiver.
+ */
+- (NSUInteger)countOfRegex:(NSString *)pattern options:(RKXRegexOptions)options;
+
+/**
+ Returns the number of times the regular expression @c pattern matches within @c searchRange of the receiver using @c options and @c matchOptions.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
+ @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem. This may be set to @c NULL if information about any errors is not required.
+ @return The number of matches of @c pattern within @c searchRange. Returns 0 if there are no matches or an error occurs.
+ */
+- (NSUInteger)countOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
+
 #pragma mark - Blocks-based API
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
 
