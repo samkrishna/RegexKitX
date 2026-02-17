@@ -1428,8 +1428,68 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
         count++;
         if (stop) { break; }
     }
-    
+
     return count;
+}
+
+@end
+
+#pragma mark -
+@implementation NSAttributedString (RegexKitX)
+
+- (NSAttributedString *)attributedStringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ
+{
+    return [self attributedStringByReplacingOccurrencesOfRegex:pattern withTemplate:templ range:self.string.stringRange options:RKXNoOptions error:NULL];
+}
+
+- (NSAttributedString *)attributedStringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ options:(RKXRegexOptions)options
+{
+    return [self attributedStringByReplacingOccurrencesOfRegex:pattern withTemplate:templ range:self.string.stringRange options:options error:NULL];
+}
+
+- (NSAttributedString *)attributedStringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
+{
+    NSArray<NSTextCheckingResult *> *matches = [self.string _matchesForRegex:pattern range:searchRange options:options matchOptions:kNilOptions error:error];
+    if (!matches || !matches.count) { return [self copy]; }
+    NSMutableAttributedString *result = [self mutableCopy];
+    NSRegularExpression *regex = matches.firstObject.regularExpression;
+
+    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
+        NSString *replacement = [regex replacementStringForResult:match inString:self.string offset:0 template:templ];
+        [result replaceCharactersInRange:match.range withString:replacement];
+    }
+
+    return [result copy];
+}
+
+- (void)enumerateMatchesForRegex:(NSString *)pattern usingBlock:(void (NS_NOESCAPE ^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block
+{
+    [self enumerateMatchesForRegex:pattern range:self.string.stringRange options:RKXNoOptions matchOptions:kNilOptions error:NULL usingBlock:block];
+}
+
+- (void)enumerateMatchesForRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(void (NS_NOESCAPE ^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block
+{
+    [self.string enumerateStringsMatchedByRegex:pattern range:searchRange options:options matchOptions:matchOptions enumerationOptions:kNilOptions error:error usingBlock:block];
+}
+
+@end
+
+#pragma mark -
+@implementation NSMutableAttributedString (RegexKitX)
+
+- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attrs forMatchesOfRegex:(NSString *)pattern
+{
+    [self addAttributes:attrs forMatchesOfRegex:pattern range:self.string.stringRange options:RKXNoOptions error:NULL];
+}
+
+- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attrs forMatchesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error
+{
+    NSArray<NSTextCheckingResult *> *matches = [self.string _matchesForRegex:pattern range:searchRange options:options matchOptions:kNilOptions error:error];
+    if (!matches) { return; }
+
+    for (NSTextCheckingResult *match in matches) {
+        [self addAttributes:attrs range:match.range];
+    }
 }
 
 @end

@@ -1700,3 +1700,94 @@ extern NSString *const RKXEmptyStringKey;
 #pragma clang diagnostic pop
 
 @end
+
+#pragma mark -
+
+/**
+ Category on @c NSAttributedString providing regex-based search and replacement.
+ */
+@interface NSAttributedString (RegexKitX)
+
+/**
+ Returns a new attributed string with all matches of @c pattern replaced by @c templ, preserving attributes of non-matched regions.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param templ A @c NSString containing a replacement template.
+ @return A new @c NSAttributedString with replacements applied.
+ */
+- (NSAttributedString *)attributedStringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ;
+
+/**
+ Returns a new attributed string with all matches of @c pattern replaced by @c templ using @c options.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param templ A @c NSString containing a replacement template.
+ @param options The regex options to use.
+ @return A new @c NSAttributedString with replacements applied.
+ */
+- (NSAttributedString *)attributedStringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ options:(RKXRegexOptions)options;
+
+/**
+ Returns a new attributed string with all matches of @c pattern within @c searchRange replaced by @c templ using @c options.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param templ A @c NSString containing a replacement template.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use.
+ @param error An optional error parameter.
+ @return A new @c NSAttributedString with replacements applied.
+ */
+- (NSAttributedString *)attributedStringByReplacingOccurrencesOfRegex:(NSString *)pattern withTemplate:(NSString *)templ range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+/**
+ Enumerates matches of @c pattern in the receiver's string content and calls @c block for each match.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param block The block executed for each match with captured strings, ranges, and stop flag.
+ */
+- (void)enumerateMatchesForRegex:(NSString *)pattern usingBlock:(void (NS_NOESCAPE ^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
+
+/**
+ Enumerates matches of @c pattern within @c searchRange using @c options and @c matchOptions.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range to search.
+ @param options The regex options to use.
+ @param matchOptions The matching options to use.
+ @param error An optional error parameter.
+ @param block The block executed for each match.
+ */
+- (void)enumerateMatchesForRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error usingBlock:(void (NS_NOESCAPE ^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
+#pragma clang diagnostic pop
+
+@end
+
+#pragma mark -
+
+/**
+ Category on @c NSMutableAttributedString providing regex-based attribute application.
+ */
+@interface NSMutableAttributedString (RegexKitX)
+
+/**
+ Adds @c attrs to all ranges matched by @c pattern in the receiver.
+
+ @param attrs The attributes to apply.
+ @param pattern A @c NSString containing a regular expression.
+ */
+- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attrs forMatchesOfRegex:(NSString *)pattern;
+
+/**
+ Adds @c attrs to all ranges matched by @c pattern within @c searchRange using @c options.
+
+ @param attrs The attributes to apply.
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range to search.
+ @param options The regex options to use.
+ @param error An optional error parameter.
+ */
+- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attrs forMatchesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error;
+
+@end

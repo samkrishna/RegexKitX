@@ -30,6 +30,7 @@
 */
 
 #import "RegexKitX.h"
+@import AppKit;
 #import <XCTest/XCTest.h>
 
 @interface RegexKitXEnhancementsTests : XCTestCase
@@ -406,6 +407,88 @@
     XCTAssertEqualObjects(result[0], @"word1");
     XCTAssertEqualObjects(result[1], @"word2");
     XCTAssertEqualObjects(result[2], @"word3\nword4");
+}
+
+#pragma mark - NSAttributedString Support
+
+- (void)testAttributedStringReplacement
+{
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:@"Hello 123 World 456"];
+    NSAttributedString *result = [attrStr attributedStringByReplacingOccurrencesOfRegex:@"\\d+" withTemplate:@"NUM"];
+    XCTAssertEqualObjects(result.string, @"Hello NUM World NUM");
+}
+
+- (void)testAttributedStringReplacementNoMatch
+{
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:@"Hello World"];
+    NSAttributedString *result = [attrStr attributedStringByReplacingOccurrencesOfRegex:@"\\d+" withTemplate:@"NUM"];
+    XCTAssertEqualObjects(result.string, @"Hello World");
+}
+
+- (void)testAttributedStringReplacementWithOptions
+{
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:@"Hello WORLD hello"];
+    NSAttributedString *result = [attrStr attributedStringByReplacingOccurrencesOfRegex:@"hello" withTemplate:@"HI" options:RKXCaseless];
+    XCTAssertEqualObjects(result.string, @"HI WORLD HI");
+}
+
+- (void)testAttributedStringReplacementWithRange
+{
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:@"aaa bbb aaa"];
+    NSAttributedString *result = [attrStr attributedStringByReplacingOccurrencesOfRegex:@"aaa" withTemplate:@"X" range:NSMakeRange(0, 3) options:RKXNoOptions error:NULL];
+    XCTAssertEqualObjects(result.string, @"X bbb aaa");
+}
+
+- (void)testAttributedStringEnumerateMatches
+{
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:@"one 1 two 2 three 3"];
+    __block NSUInteger matchCount = 0;
+    [attrStr enumerateMatchesForRegex:@"\\d+" usingBlock:^(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop) {
+        matchCount++;
+    }];
+    XCTAssertEqual(matchCount, 3UL);
+}
+
+- (void)testMutableAttributedStringAddAttributesForMatches
+{
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@"Hello 123 World 456"];
+    NSDictionary *attrs = @{ NSForegroundColorAttributeName: [NSColor redColor] };
+    [attrStr addAttributes:attrs forMatchesOfRegex:@"\\d+"];
+
+    // Check that attributes were applied to "123" (range 6-9)
+    NSDictionary *attrsAt6 = [attrStr attributesAtIndex:6 effectiveRange:NULL];
+    XCTAssertNotNil(attrsAt6[NSForegroundColorAttributeName]);
+
+    // Check that attributes were NOT applied to "Hello" (range 0)
+    NSDictionary *attrsAt0 = [attrStr attributesAtIndex:0 effectiveRange:NULL];
+    XCTAssertNil(attrsAt0[NSForegroundColorAttributeName]);
+}
+
+- (void)testMutableAttributedStringAddAttributesForMatchesWithOptions
+{
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@"hello HELLO"];
+    NSDictionary *attrs = @{ NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle) };
+    [attrStr addAttributes:attrs forMatchesOfRegex:@"hello" range:attrStr.string.stringRange options:RKXCaseless error:NULL];
+
+    NSDictionary *attrsAt0 = [attrStr attributesAtIndex:0 effectiveRange:NULL];
+    XCTAssertNotNil(attrsAt0[NSUnderlineStyleAttributeName]);
+
+    NSDictionary *attrsAt6 = [attrStr attributesAtIndex:6 effectiveRange:NULL];
+    XCTAssertNotNil(attrsAt6[NSUnderlineStyleAttributeName]);
+}
+
+- (void)testAttributedStringReplacementPreservesAttributes
+{
+    NSDictionary *boldAttrs = @{ NSFontAttributeName: [NSFont boldSystemFontOfSize:12] };
+    NSMutableAttributedString *mutableAttr = [[NSMutableAttributedString alloc] initWithString:@"Hello 123 World"];
+    [mutableAttr addAttributes:boldAttrs range:NSMakeRange(0, 5)]; // Bold "Hello"
+
+    NSAttributedString *result = [mutableAttr attributedStringByReplacingOccurrencesOfRegex:@"\\d+" withTemplate:@"NUM"];
+    XCTAssertEqualObjects(result.string, @"Hello NUM World");
+
+    // "Hello" should still have bold attributes
+    NSDictionary *resultAttrs = [result attributesAtIndex:0 effectiveRange:NULL];
+    XCTAssertNotNil(resultAttrs[NSFontAttributeName]);
 }
 
 @end
