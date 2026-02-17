@@ -491,4 +491,52 @@
     XCTAssertNotNil(resultAttrs[NSFontAttributeName]);
 }
 
+#pragma mark - Thread Safety
+
+- (void)testConcurrentRegexOperations
+{
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    __block NSUInteger successCount = 0;
+    NSUInteger iterations = 100;
+
+    for (NSUInteger i = 0; i < iterations; i++) {
+        dispatch_group_async(group, queue, ^{
+            NSString *string = [NSString stringWithFormat:@"Thread test %lu with number 42", (unsigned long)i];
+            BOOL matched = [string isMatchedByRegex:@"\\d+"];
+            if (matched) {
+                @synchronized (self) {
+                    successCount++;
+                }
+            }
+        });
+    }
+
+    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    XCTAssertEqual(successCount, iterations);
+}
+
+- (void)testConcurrentDifferentPatterns
+{
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    NSArray *patterns = @[@"\\d+", @"[a-z]+", @"\\w+", @"\\s+", @"[A-Z]+"];
+    NSString *testString = @"Hello World 123 FOO bar";
+    __block NSUInteger successCount = 0;
+
+    for (NSString *pattern in patterns) {
+        dispatch_group_async(group, queue, ^{
+            NSUInteger count = [testString countOfRegex:pattern];
+            if (count > 0) {
+                @synchronized (self) {
+                    successCount++;
+                }
+            }
+        });
+    }
+
+    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    XCTAssertEqual(successCount, 5UL);
+}
+
 @end

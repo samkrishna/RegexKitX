@@ -106,6 +106,11 @@ extern NSString *const RKXEmptyStringKey;
 
 #pragma mark -
 
+/**
+ @c NSString (RegexKitX) provides a comprehensive Objective-C wrapper around @c NSRegularExpression using ICU regex syntax.
+
+ @discussion Thread Safety: All methods in this category are thread-safe. Regex objects are cached per-thread using @c NSThread.currentThread.threadDictionary, so no locks are needed and there is no contention between threads. Each thread maintains its own independent regex cache.
+ */
 @interface NSString (RegexKitX)
 
 #pragma mark - arrayOfCaptureSubstringsMatchedByRegex:
