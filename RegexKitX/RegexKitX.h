@@ -1177,6 +1177,20 @@ extern NSString *const RKXEmptyStringKey;
  */
 - (NSTextCheckingResult *)firstMatchOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
+#pragma mark - Regex Cache Management
+
+/**
+ Clears all cached @c NSRegularExpression objects from the current thread's cache.
+ */
++ (void)clearRegexCache;
+
+/**
+ Returns the number of cached @c NSRegularExpression objects in the current thread's cache.
+
+ @return The number of cached regex objects.
+ */
++ (NSUInteger)regexCacheCount;
+
 #pragma mark - Blocks-based API
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
 

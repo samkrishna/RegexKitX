@@ -139,4 +139,41 @@
     XCTAssertEqual(match.range.location, 0UL);
 }
 
+#pragma mark - Regex Cache Management
+
+- (void)testRegexCacheCount
+{
+    [NSString clearRegexCache];
+    NSUInteger initialCount = [NSString regexCacheCount];
+    XCTAssertEqual(initialCount, 0UL);
+
+    // Trigger caching by matching
+    [@"test" isMatchedByRegex:@"test"];
+    NSUInteger afterOneCount = [NSString regexCacheCount];
+    XCTAssertEqual(afterOneCount, 1UL);
+
+    [@"test" isMatchedByRegex:@"\\w+"];
+    NSUInteger afterTwoCount = [NSString regexCacheCount];
+    XCTAssertEqual(afterTwoCount, 2UL);
+}
+
+- (void)testClearRegexCache
+{
+    // Ensure cache has entries
+    [@"test" isMatchedByRegex:@"cache_test_pattern_1"];
+    [@"test" isMatchedByRegex:@"cache_test_pattern_2"];
+    XCTAssertGreaterThan([NSString regexCacheCount], 0UL);
+
+    [NSString clearRegexCache];
+    XCTAssertEqual([NSString regexCacheCount], 0UL);
+}
+
+- (void)testCacheSamePatternNotDuplicated
+{
+    [NSString clearRegexCache];
+    [@"hello" isMatchedByRegex:@"hello"];
+    [@"world" isMatchedByRegex:@"hello"];
+    XCTAssertEqual([NSString regexCacheCount], 1UL);
+}
+
 @end

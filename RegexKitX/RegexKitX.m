@@ -1117,6 +1117,34 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return matches.firstObject;
 }
 
+#pragma mark - Regex Cache Management
+
++ (void)clearRegexCache
+{
+    NSMutableDictionary *threadDict = NSThread.currentThread.threadDictionary;
+    NSArray *keys = [threadDict.allKeys copy];
+
+    for (NSString *key in keys) {
+        if ([threadDict[key] isKindOfClass:[NSRegularExpression class]]) {
+            [threadDict removeObjectForKey:key];
+        }
+    }
+}
+
++ (NSUInteger)regexCacheCount
+{
+    NSMutableDictionary *threadDict = NSThread.currentThread.threadDictionary;
+    NSUInteger count = 0;
+
+    for (NSString *key in threadDict) {
+        if ([threadDict[key] isKindOfClass:[NSRegularExpression class]]) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
 @end
 
 @implementation NSMutableString (RegexKitX)
