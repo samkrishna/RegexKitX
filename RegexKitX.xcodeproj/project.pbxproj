@@ -51,7 +51,7 @@
 		6F2B4E101EF5B85000DB6629 /* RegexKitXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegexKitXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F2B4E171EF5B85000DB6629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F2B4E801EF5BA6500DB6629 /* RegexKitX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitX.h; sourceTree = "<group>"; };
-		6F2B4E811EF5BA6500DB6629 /* RegexKitX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitX.m; sourceTree = "<group>"; };
+		6F2B4E811EF5BA6500DB6629 /* RegexKitX.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = RegexKitX.m; sourceTree = "<group>"; };
 		6F2B4E841EF5BA7F00DB6629 /* RegexKitXTests.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = RegexKitXTests.m; sourceTree = "<group>"; };
 		6F2B4E881EF5BE5C00DB6629 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		6F2B4E891EF5BE5C00DB6629 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
