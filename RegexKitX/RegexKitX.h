@@ -1449,7 +1449,7 @@ extern NSString *const RKXEmptyStringKey;
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlock:
 
 /**
- Enumerates the matches in the receiver by the regular expression @c pattern and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
+ Enumerates the matches in the receiver by the regular expression @c pattern and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block. If @c pattern does not match within the string, return the string unmodified.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param block The block that is executed for each match of @c pattern in the receiver. The block returns a @c NSString and takes four arguments:
@@ -1462,7 +1462,7 @@ extern NSString *const RKXEmptyStringKey;
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlock:(NSString *(NS_NOESCAPE ^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
- Enumerates the matches in the receiver by the regular expression @c pattern using @c options and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
+ Enumerates the matches in the receiver by the regular expression @c pattern using @c options and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block. If @c pattern does not match within the string, return the string unmodified.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param options The regex options to use. See @c RKXRegexOptions for possible values.
@@ -1476,7 +1476,7 @@ extern NSString *const RKXEmptyStringKey;
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern options:(RKXRegexOptions)options usingBlock:(NSString *(NS_NOESCAPE ^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
- Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
+ Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block. If @c pattern does not match within the string, return the string unmodified for the range of @c searchRange.
 
  @param pattern A @c NSString containing a valid regular expression.
  @param searchRange The range of the receiver to search.
@@ -1492,7 +1492,7 @@ extern NSString *const RKXEmptyStringKey;
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options error:(NSError **)error usingBlock:(NSString *(NS_NOESCAPE ^)(NSArray<NSString *> *capturedStrings, NSArray<NSValue *> *capturedRanges, BOOL *stop))block;
 
 /**
- Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block.
+ Enumerates the matches in the receiver by the regular expression @c pattern within @c searchRange using @c options and @c matchOptions and executes @c block for each match found. Returns a string created by replacing the characters that were matched in the receiver with the contents of the string returned by @c block. If @c pattern does not match within the string, return the string unmodified for the range of @c searchRange.
 
  @discussion NOTE: If @c RKXReportProgress is passed as an option of @c matchOptions and the matching operation fails to match because of a very slow match operation, a @c NSError object is returned indicating a timeout error.
 
