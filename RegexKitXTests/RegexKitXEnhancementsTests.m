@@ -326,4 +326,86 @@
     XCTAssertEqualObjects(result, @"KEY->value");
 }
 
+#pragma mark - substringsSeparatedByRegex:limit:
+
+- (void)testSplitWithLimitZeroUnlimited
+{
+    NSString *string = @"a,b,c,d,e";
+    NSArray *result = [string substringsSeparatedByRegex:@"," limit:0];
+    XCTAssertEqual(result.count, 5UL);
+    XCTAssertEqualObjects(result[0], @"a");
+    XCTAssertEqualObjects(result[4], @"e");
+}
+
+- (void)testSplitWithLimitOne
+{
+    NSString *string = @"a,b,c";
+    NSArray *result = [string substringsSeparatedByRegex:@"," limit:1];
+    XCTAssertEqual(result.count, 1UL);
+    XCTAssertEqualObjects(result[0], @"a,b,c");
+}
+
+- (void)testSplitWithLimitTwo
+{
+    NSString *string = @"a,b,c,d";
+    NSArray *result = [string substringsSeparatedByRegex:@"," limit:2];
+    XCTAssertEqual(result.count, 2UL);
+    XCTAssertEqualObjects(result[0], @"a");
+    XCTAssertEqualObjects(result[1], @"b,c,d");
+}
+
+- (void)testSplitWithLimitThree
+{
+    NSString *string = @"one::two::three::four";
+    NSArray *result = [string substringsSeparatedByRegex:@"::" limit:3];
+    XCTAssertEqual(result.count, 3UL);
+    XCTAssertEqualObjects(result[0], @"one");
+    XCTAssertEqualObjects(result[1], @"two");
+    XCTAssertEqualObjects(result[2], @"three::four");
+}
+
+- (void)testSplitWithLimitGreaterThanMatches
+{
+    NSString *string = @"a-b-c";
+    NSArray *result = [string substringsSeparatedByRegex:@"-" limit:10];
+    XCTAssertEqual(result.count, 3UL);
+}
+
+- (void)testSplitWithLimitNoMatch
+{
+    NSString *string = @"no delimiters here";
+    NSArray *result = [string substringsSeparatedByRegex:@"," limit:3];
+    XCTAssertEqual(result.count, 1UL);
+    XCTAssertEqualObjects(result[0], @"no delimiters here");
+}
+
+- (void)testSplitWithLimitAndRange
+{
+    NSString *string = @"a,b,c,d,e";
+    NSArray *result = [string substringsSeparatedByRegex:@"," range:NSMakeRange(0, 5) limit:2]; // "a,b,c"
+    XCTAssertEqual(result.count, 2UL);
+    XCTAssertEqualObjects(result[0], @"a");
+    XCTAssertEqualObjects(result[1], @"b,c");
+}
+
+- (void)testSplitWithLimitAndOptions
+{
+    NSString *string = @"aSEPbSEPcSEPd";
+    NSArray *result = [string substringsSeparatedByRegex:@"sep" options:RKXCaseless limit:3];
+    XCTAssertEqual(result.count, 3UL);
+    XCTAssertEqualObjects(result[0], @"a");
+    XCTAssertEqualObjects(result[1], @"b");
+    XCTAssertEqualObjects(result[2], @"cSEPd");
+}
+
+- (void)testSplitWithLimitRegexDelimiter
+{
+    NSString *string = @"word1   word2\tword3\nword4";
+    NSArray *result = [string substringsSeparatedByRegex:@"\\s+" limit:3];
+    XCTAssertEqual(result.count, 3UL);
+    XCTAssertEqualObjects(result[0], @"word1");
+    XCTAssertEqualObjects(result[1], @"word2");
+    XCTAssertEqualObjects(result[2], @"word3\nword4");
+}
+
 @end

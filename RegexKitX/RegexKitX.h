@@ -1259,6 +1259,62 @@ extern NSString *const RKXEmptyStringKey;
  */
 - (NSArray<NSDictionary<NSString *, NSString *> *> *)arrayOfDictionariesWithNamedCaptureKeysMatchedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions error:(NSError **)error;
 
+#pragma mark - substringsSeparatedByRegex:limit:
+
+/**
+ Returns an array containing substrings of the receiver that have been divided by @c pattern, limited to @c limit elements.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param limit The maximum number of substrings to return. Use @c 0 for unlimited.
+ @return A @c NSArray of substrings.
+ */
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern limit:(NSUInteger)limit;
+
+/**
+ Returns an array containing substrings within @c searchRange divided by @c pattern, limited to @c limit elements.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range of the receiver to search.
+ @param limit The maximum number of substrings to return. Use @c 0 for unlimited.
+ @return A @c NSArray of substrings.
+ */
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange limit:(NSUInteger)limit;
+
+/**
+ Returns an array containing substrings divided by @c pattern using @c options, limited to @c limit elements.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @param limit The maximum number of substrings to return. Use @c 0 for unlimited.
+ @return A @c NSArray of substrings.
+ */
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options limit:(NSUInteger)limit;
+
+/**
+ Returns an array containing substrings within @c searchRange divided by @c pattern using @c options, limited to @c limit elements.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @param limit The maximum number of substrings to return. Use @c 0 for unlimited.
+ @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem.
+ @return A @c NSArray of substrings.
+ */
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options limit:(NSUInteger)limit error:(NSError **)error;
+
+/**
+ Returns an array containing substrings within @c searchRange divided by @c pattern using @c options and @c matchOptions, limited to @c limit elements.
+
+ @param pattern A @c NSString containing a regular expression.
+ @param searchRange The range of the receiver to search.
+ @param options The regex options to use. See @c RKXRegexOptions for possible values.
+ @param matchOptions The matching options to use. See @c RKXMatchOptions for possible values.
+ @param limit The maximum number of substrings to return. Use @c 0 for unlimited.
+ @param error An optional parameter that if set and an error occurs, will contain a @c NSError object that describes the problem.
+ @return A @c NSArray of substrings.
+ */
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions limit:(NSUInteger)limit error:(NSError **)error;
+
 #pragma mark - Blocks-based API
 #pragma mark - enumerateStringsMatchedByRegex:usingBlock:
 

@@ -1214,6 +1214,60 @@ static inline BOOL OptionsHasValue(NSUInteger options, NSUInteger value) {
     return [results copy];
 }
 
+#pragma mark - substringsSeparatedByRegex:limit:
+
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern limit:(NSUInteger)limit
+{
+    return [self substringsSeparatedByRegex:pattern range:self.stringRange options:RKXNoOptions matchOptions:kNilOptions limit:limit error:NULL];
+}
+
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange limit:(NSUInteger)limit
+{
+    return [self substringsSeparatedByRegex:pattern range:searchRange options:RKXNoOptions matchOptions:kNilOptions limit:limit error:NULL];
+}
+
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern options:(RKXRegexOptions)options limit:(NSUInteger)limit
+{
+    return [self substringsSeparatedByRegex:pattern range:self.stringRange options:options matchOptions:kNilOptions limit:limit error:NULL];
+}
+
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options limit:(NSUInteger)limit error:(NSError **)error
+{
+    return [self substringsSeparatedByRegex:pattern range:searchRange options:options matchOptions:kNilOptions limit:limit error:error];
+}
+
+- (NSArray<NSString *> *)substringsSeparatedByRegex:(NSString *)pattern range:(NSRange)searchRange options:(RKXRegexOptions)options matchOptions:(RKXMatchOptions)matchOptions limit:(NSUInteger)limit error:(NSError **)error
+{
+    if (limit == 0) {
+        return [self substringsSeparatedByRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+    }
+    if (limit == 1) {
+        return @[ [self substringWithRange:searchRange] ];
+    }
+
+    NSArray<NSTextCheckingResult *> *matches = [self _matchesForRegex:pattern range:searchRange options:options matchOptions:matchOptions error:error];
+    if (!matches) { return nil; }
+    if (!matches.count) { return @[ self ]; }
+    NSMutableArray *components = [NSMutableArray array];
+    NSUInteger pos = searchRange.location;
+    NSUInteger splitCount = 0;
+    NSUInteger maxSplits = limit - 1;
+
+    for (NSTextCheckingResult *match in matches) {
+        if (splitCount >= maxSplits) { break; }
+        NSRange subrange = NSMakeRange(pos, match.range.location - pos);
+        [components addObject:[self substringWithRange:subrange]];
+        pos = match.range.location + match.range.length;
+        splitCount++;
+    }
+
+    // Append the remainder
+    NSRange remainderRange = NSMakeRange(pos, NSMaxRange(searchRange) - pos);
+    [components addObject:[self substringWithRange:remainderRange]];
+
+    return [components copy];
+}
+
 #pragma mark - stringByReplacingOccurrencesOfRegex:usingBlockWithNamedCaptures:
 
 - (NSString *)stringByReplacingOccurrencesOfRegex:(NSString *)pattern usingBlockWithNamedCaptures:(NSString *(NS_NOESCAPE ^)(NSDictionary<NSString *, NSString *> *namedCaptures, BOOL *stop))block
